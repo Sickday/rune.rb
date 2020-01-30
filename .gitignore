@@ -1,9 +1,0 @@
-/data/
-/logs/
-/lib/rsrs/db/scripts/
-/sorbet/
-/.idea/
-.rakeTasks
-.rspec
-rsrs.gemspec
-.gitignore
