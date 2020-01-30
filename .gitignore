@@ -1,0 +1,6 @@
+/data/
+/logs/
+/sorbet/
+.rakeTasks
+.rspec
+rsrs.gemspec
