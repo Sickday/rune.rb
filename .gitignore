@@ -1,5 +1,6 @@
 /data/
 /logs/
+/lib/rsrs/db/scripts/
 /sorbet/
 /.idea/
 .rakeTasks
