@@ -1,4 +1,4 @@
-# RuneScape Ruby Suite [dev]
+# RuneScape Ruby Suite [master]
 
 
 ## About
