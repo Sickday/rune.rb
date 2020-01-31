@@ -1,11 +1,9 @@
-# (R)une(S)cape (R)uby (S)uite
+# RuneScape Ruby Suite [dev]
 
 
 ## About
 
-I wanted to make a server suite that is fun use, and easy to extend. I'm sure many would frown on the use of Ruby for this entire project, but the reason behind it is more rooted in the fact that it's generally easier for someone who is not tenured in Software Development to follow what's going on. Ruby is a fun language to use and it's very expressive. A good portion of Ruby code you see these days can be read in individual lines, and still make sense! For this reason (and the fact Ruby is the only language I'm comfortable using) Ruby is the language of choice here. 
-
-Take this project and make it your own. It's here for you to expand upon, experiment with, and share with everyone. 
+**RuneScape Ruby Suite** is a passion project I've been working over the passed couple years. I wanted to make a server suite that is fun use, and easy to extend. I'm sure many would frown on the use of Ruby for this entire project, but the reason behind it is more rooted in the fact that it's generally easier for someone who is not tenured in Software Development to follow what's going on. Take this project and make it your own. It's here for you to expand upon, experiment with, and share with everyone. 
 
 Feedback is always welcome.
 
@@ -39,33 +37,9 @@ $ cd rsrs
 $ bundle install
 ```
 
-## JAGGRAB
-
-You'll need to acquire your own cache. By default **JAGGRAB is enabled**, and it will look for cache files within the the `data/cache/[revision]` directory. Be sure to place your cache there.
-
-
 ## Usage
 
-After all necessary gems have been downloaded and installed, you can run the server with:
-
-```shell
-$ ruby node.rb
-```
-This will start a local server that will accept connections from port **43594** and the JAGGRAB server will be started on **43595**.
-
-You can run the server without JAGGRAB using the following:
-
-```shell
-$ ruby bootstrap.rb --no-jaggrab
-```
-
-or shorthand
-
-```shell
-$ ruby bootstrap.rb -j
-```
-
-As for a Client, I also cannot supply that. I've personally been using [Major's Refactored #317 Client](https://gitlab.com/jscranton55/refactored-317).
+The server is far from a state where it could even be used. There's still much work to be done before it can be used for anything at all!
 
 
 ## Contribution
@@ -79,15 +53,15 @@ Or send me an email. (**Sickday@pm.me**)
 
 | Contributor | Role | Contact |
 | ----------- | ---- | ------- |
-| Patrick W | Maintainer | Sickday@pm.me/**Sickday#0001** |
+| Patrick W | Maintainer + Developer | Sickday@pm.me/**Sickday#0001** |
 
-
-Blog for changelog/updates coming soon(tm)
+[Logs]: http://jco.xyz
 
 #### P.S.
 
 > Hi.
-This project is as much a learning experience for me as it is for anyone else. I do this all in free-time and have not (nor do I plan to) develop software professionally. That's not to say I don't want to write great code, but I don't expect to be landing any Software Dev jobs any time in the future nor is it my passion. I only ask that you have some patience with me and everyone else working on the project; **we're trying as hard as we can**. As much as we'd like to be, we're not all incredibly talented programmers. This is just a passtime. Try to keep in mind the immortal words of Bill and Ted, "Be excellent to each other." 8}
+>
+> Quick background: I'm not a programmer and this project is a big learning experience for me. I do this all in free-time and have not (nor do I plan to) develop software professionally. That's not to say I don't want to write great code, but I don't expect to be landing any Software Dev jobs any time in the future nor is it my passion. I only ask that you have some patience with me and everyone else working on the project; **we're trying as hard as we can**. As much as we'd like to be, we're not all incredibly talented programmers. This is just a pass-time. Try to keep in mind the immortal words of Bill and Ted, "Be excellent to each other." 8}
 
 > Kind regards,
 > Pat W.
