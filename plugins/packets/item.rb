@@ -139,7 +139,7 @@ on_packet(87) {|player, packet|
   item = player.inventory.items[slot]
   
   if item.id == id
-    gitem = Calyx::GroundItems::GroundItem.new player, item
+    gitem = RuneRb::GroundItems::GroundItem.new player, item
     player.io.send_grounditem_creation gitem
     WORLD.submit_event gitem.life
     player.inventory.remove slot, item
@@ -151,12 +151,12 @@ on_packet(236) {|player, packet|
   item_y = packet.read_leshort.ushort
   item_id = packet.read_short.ushort
   item_x = packet.read_leshort.ushort
-  loc = Calyx::Model::Location.new item_x, item_y, player.location.z
+  loc = RuneRb::Model::Location.new item_x, item_y, player.location.z
   item = nil
   
   # Check if this item is a world item
   world_item = false
-  Calyx::World::ItemSpawns.items.each {|i|
+  RuneRb::World::ItemSpawns.items.each { |i|
     if !i.picked_up && i.item.id == item_id && i.location == loc
       world_item = true
       item = i
@@ -171,8 +171,8 @@ on_packet(236) {|player, packet|
 
   unless item == nil
     player.face(item.location) if item.on_table
-    player.play_animation Calyx::Model::Animation.new(832, 10) if item.on_table
-    player.action_queue.add(Calyx::GroundItems::PickupItemAction.new(player, item))
+    player.play_animation RuneRb::Model::Animation.new(832, 10) if item.on_table
+    player.action_queue.add(RuneRb::GroundItems::PickupItemAction.new(player, item))
   end
 }
 
@@ -281,7 +281,7 @@ on_packet(192) {|player, packet|
   slot = packet.read_leshort.ushort
   obj_x = packet.read_leshort_a.ushort
   item_id = packet.read_short.ushort
-  loc = Calyx::Model::Location.new obj_x, obj_y, player.location.z
+  loc = RuneRb::Model::Location.new obj_x, obj_y, player.location.z
   next unless player.location.within_interaction_distance?(loc)
   
   player.used_loc = loc

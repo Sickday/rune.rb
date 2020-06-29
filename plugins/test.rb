@@ -7,7 +7,7 @@ on_int_button(2458) {|player|
 on_command("objspawn") {|player, params|
  temp_loc = player.location
   
- object = Calyx::Objects::Object.new(params[0].to_i, temp_loc, 2, params[1].to_i, -1, temp_loc, 0, params[2].to_i)
+ object = RuneRb::Objects::Object.new(params[0].to_i, temp_loc, 2, params[1].to_i, -1, temp_loc, 0, params[2].to_i)
  object.change 
  
  # Add this to the object manager
@@ -20,7 +20,7 @@ on_command("pos") {|player, params|
 
 on_command("update") {|player, params|
   time = params.first.to_i
-  WORLD.submit_event Calyx::Tasks::SystemUpdateEvent.new(time)
+  WORLD.submit_event RuneRb::Tasks::SystemUpdateEvent.new(time)
 }
 
 on_command("dc") {|player, params|
@@ -38,7 +38,7 @@ on_command("godown") {|player, params|
 on_command("item") {|player, params|
   id = params[0].to_i
   count = params.length == 2 ? params[1].to_i : 1
-  player.inventory.add Calyx::Item::Item.new(id, count)
+  player.inventory.add RuneRb::Item::Item.new(id, count)
 }
 
 on_command("design") {|player, params|
@@ -65,7 +65,7 @@ on_command("reload") {|player, params|
 
 on_command("spawn") {|player, params|
    id = params[0].to_i
-   npc = Calyx::NPC::NPC.new Calyx::NPC::NPCDefinition.for_id(id)
+   npc = RuneRb::NPC::NPC.new RuneRb::NPC::NPCDefinition.for_id(id)
    npc.location = player.location.transform(1, 1, 0)
    
    WORLD.register_npc npc
@@ -110,7 +110,7 @@ on_command("tele") {|player, params|
   x = params[0].to_i
   y = params[1].to_i
   z = params.length > 2 ? params[2].to_i : 0
-  loc = Calyx::Model::Location.new(x, y, z)
+  loc = RuneRb::Model::Location.new(x, y, z)
   player.io.send_message "Teleporting to #{loc.inspect}..."
   player.teleport_location = loc
 }
@@ -152,12 +152,12 @@ on_command("g") {|player, params|
   x = player.location.x + 1
   y = player.location.y
   z = player.location.z
-  
-  player.face Calyx::Model::Location.new(x, y, z)
+
+  player.face RuneRb::Model::Location.new(x, y, z)
 }
 
 on_command("max") {|player, params|
-  Calyx::Player::Skills::SKILLS.each {|skill|
+  RuneRb::Player::Skills::SKILLS.each { |skill|
     player.skills.set_skill skill, 99, 13034431
   }
   player.flags.flag :appearance
@@ -224,6 +224,6 @@ end
 
 @@emotes.each {|button, anim|
   on_int_button(button) {|player|
-    player.play_animation Calyx::Model::Animation.new(anim)
+    player.play_animation RuneRb::Model::Animation.new(anim)
   }
 }

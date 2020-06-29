@@ -20,7 +20,7 @@ on_packet(210) {|player, packet|
   }
   
   # Spawn local world items
-  Calyx::World::ItemSpawns.items.each {|item|
+  RuneRb::World::ItemSpawns.items.each { |item|
     if !item.picked_up && item.within_distance?(player)
       item.spawn(player)
     end

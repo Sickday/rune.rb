@@ -20,7 +20,7 @@ module Cooking
         if player.inventory.count(item) > 1
           player.io.send_chat_interface 1743
           player.io.send_interface_model 13716, 175, item
-          player.io.send_string 13717, Calyx::Item::ItemDefinition.for_id(item).name
+          player.io.send_string 13717, RuneRb::Item::ItemDefinition.for_id(item).name
         else
           player.action_queue.add CookAction.new(player, loc, item)
         end
@@ -47,13 +47,13 @@ module Cooking
   on_int_enter_amount(1743) {|player, enterAmountId, enterAmountSlot, amount|
     player.action_queue.add CookAction.new(player, player.used_loc, player.used_item, amount)
   }
-  
-  class CookAction < Calyx::Engine::Action
+
+  class CookAction < RuneRb::Engine::Action
     attr_accessor :face
     attr_accessor :food
     attr_accessor :amount
     attr_accessor :count
-    
+
     def initialize(player, face, item, amount = 1)
       super(player, 0)
       @face = face
@@ -90,7 +90,7 @@ module Cooking
         end
       when :animation
         if @count < @amount
-          @player.play_animation Calyx::Model::Animation.new(883)
+          @player.play_animation RuneRb::Model::Animation.new(883)
           @stage = :cook
           @delay = 600 * 4
         else
@@ -105,16 +105,16 @@ module Cooking
     
     def cook_item
       chance = 52 - ((player.skills.skills[:cooking] - @food[:lvl]) * (52 / (@food[:stop] - @food[:lvl])))
-      item_name = Calyx::Item::ItemDefinition.for_id(@food[:cooked]).name.downcase
-      
-      player.inventory.remove -1, Calyx::Item::Item.new(@food[:raw])
+      item_name = RuneRb::Item::ItemDefinition.for_id(@food[:cooked]).name.downcase
+
+      player.inventory.remove -1, RuneRb::Item::Item.new(@food[:raw])
         
       if chance <= rand * 100.0
-        player.inventory.add Calyx::Item::Item.new(@food[:cooked])
+        player.inventory.add RuneRb::Item::Item.new(@food[:cooked])
         player.skills.add_exp :cooking, @food[:xp]
         player.io.send_message "You successfully cook the #{item_name}."
       else
-        player.inventory.add Calyx::Item::Item.new(@food[:burnt])
+        player.inventory.add RuneRb::Item::Item.new(@food[:burnt])
         player.io.send_message "You accidentally burn the #{item_name}."
       end
       
@@ -122,11 +122,11 @@ module Cooking
     end
     
     def queue_policy
-      Calyx::Engine::QueuePolicy::ALWAYS
+      RuneRb::Engine::QueuePolicy::ALWAYS
     end
     
     def walkable_policy
-      Calyx::Engine::WalkablePolicy::WALKABLE
+      RuneRb::Engine::WalkablePolicy::WALKABLE
     end
   end
 end

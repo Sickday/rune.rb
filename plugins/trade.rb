@@ -188,7 +188,7 @@ class Trade
       amount = player.inventory.count item.id
     end
     
-    offeredItem = Calyx::Item::Item.new item.id, amount
+    offeredItem = RuneRb::Item::Item.new item.id, amount
     player.inventory.remove slot, offeredItem
     player.offered_items.add offeredItem
     target.gained_items.add offeredItem
@@ -213,8 +213,8 @@ class Trade
     if amount > player.offered_items.count(item.id)
       amount = player.offered_items.count item.id
     end
-    
-    removedItem = Calyx::Item::Item.new item.id, amount
+
+    removedItem = RuneRb::Item::Item.new item.id, amount
     player.inventory.add removedItem
     player.offered_items.remove slot, removedItem
     target.gained_items.remove slot, removedItem
@@ -320,12 +320,12 @@ class Trade
         end
         
         if count == 0
-          output = Calyx::Item::ItemDefinition.for_id(i.id).name
+          output = RuneRb::Item::ItemDefinition.for_id(i.id).name
         else
-          output << "\\n#{Calyx::Item::ItemDefinition.for_id(i.id).name}"
+          output << "\\n#{RuneRb::Item::ItemDefinition.for_id(i.id).name}"
         end
-        
-        if Calyx::Item::ItemDefinition.for_id(i.id).stackable
+
+        if RuneRb::Item::ItemDefinition.for_id(i.id).stackable
           output << " x #{amount}"
         end
         

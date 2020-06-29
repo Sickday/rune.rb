@@ -18,10 +18,10 @@
 @@effects.each {|item|
   method("on_#{item[:hook]}").call(item[:id]) {|player, slot|
     if item.include?(:anim)
-      player.play_animation Calyx::Model::Animation.new(item[:anim], item[:adelay] || 0)
+      player.play_animation RuneRb::Model::Animation.new(item[:anim], item[:adelay] || 0)
     end
     if item.include?(:graphic)
-      player.play_graphic Calyx::Model::Graphic.new(item[:graphic], item[:gdelay] || 0)
+      player.play_graphic RuneRb::Model::Graphic.new(item[:graphic], item[:gdelay] || 0)
     end
   }
 }

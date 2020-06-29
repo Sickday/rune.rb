@@ -5,29 +5,29 @@ on_packet(4) {|player, packet|
   effect = packet.read_byte_s.ubyte
   color = packet.read_byte_s.ubyte
   size = packet.buffer.size
-      
+
   # Prevent message flooding
   #next if player.chat_queue.size >= @@queue_size
-      
+
   # Unpack string
-  copy = Calyx::Net::Packet.new(nil, nil, packet.buffer.clone)
+  copy = RuneRb::Net::Packet.new(nil, nil, packet.buffer.clone)
   raw_data = copy.read_bytes(size).unpack("C" * size)
-  chat_data = (0...size).collect {|i| (raw_data[size - i - 1] - 128).byte }
-  message = Calyx::Misc::TextUtils.unpack(chat_data, chat_data.size)
-  message = Calyx::Misc::TextUtils.filter(message)
-  message = Calyx::Misc::TextUtils.optimize(message)
-  
+  chat_data = (0...size).collect { |i| (raw_data[size - i - 1] - 128).byte }
+  message = RuneRb::Misc::TextUtils.unpack(chat_data, chat_data.size)
+  message = RuneRb::Misc::TextUtils.filter(message)
+  message = RuneRb::Misc::TextUtils.optimize(message)
+
   default = true
-  
-  HOOKS[:chat].each {|k, v| 
+
+  HOOKS[:chat].each { |k, v|
     default &= v.call(player, effect, color, message) != :nodefault
   }
-  
+
   # Send to all clients
   if default
-    packed = Calyx::Misc::TextUtils.repack(size, packet)
+    packed = RuneRb::Misc::TextUtils.repack(size, packet)
     packed = packed.pack("C" * packed.size)
-    player.chat_queue << Calyx::Model::ChatMessage.new(color, effect, packed)
+    player.chat_queue << RuneRb::Model::ChatMessage.new(color, effect, packed)
   end
 }
 

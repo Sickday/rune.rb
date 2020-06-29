@@ -53,18 +53,18 @@ on_magic_on_npc(1152) {|player, npc|
 }
 
 def projectile(src, dest, angle, speed, id, start_z, end_z, index)
-  offset = Calyx::Model::Location.new(-(src.x-dest.x), -(src.x-dest.y), 0)
+  offset = RuneRb::Model::Location.new(-(src.x - dest.x), -(src.x - dest.y), 0)
   
   WORLD.region_manager.get_local_players(src).each {|p|
     if p && p.location.within_distance?(src)
       # Region
-      region = Calyx::Net::PacketBuilder.new(85)
+      region = RuneRb::Net::PacketBuilder.new(85)
       region.add_byte_c(src.get_local_y(p.last_location) -2 )
       region.add_byte_c(src.get_local_x(p.last_location) -3)
       p.connection.send_data region.to_packet
       
       # Graphic
-      graphic = Calyx::Net::PacketBuilder.new(117)
+      graphic = RuneRb::Net::PacketBuilder.new(117)
       graphic.add_byte angle
       graphic.add_byte offset.y
       graphic.add_byte offset.x
@@ -82,18 +82,18 @@ def projectile(src, dest, angle, speed, id, start_z, end_z, index)
 end
 
 def stillgfx(id, x, y, z)
-  loc = Calyx::Model::Location.new(x, y, z)
+  loc = RuneRb::Model::Location.new(x, y, z)
 
   WORLD.region_manager.get_local_players(loc).each {|p|
     if p && p.location.within_distance?(loc)
       # Region
-      region = Calyx::Net::PacketBuilder.new(85)
+      region = RuneRb::Net::PacketBuilder.new(85)
       region.add_byte_c loc.get_local_y(p.last_location)
       region.add_byte_c loc.get_local_x(p.last_location)
       p.connection.send_data region.to_packet
 
       # Graphic
-      graphic = Calyx::Net::PacketBuilder.new(4)
+      graphic = RuneRb::Net::PacketBuilder.new(4)
       graphic.add_byte 0    # Tiles away = (X >> 4 + Y & 7)
       graphic.add_short id  # Graphic ID
       graphic.add_byte 80   # Height
@@ -107,9 +107,9 @@ on_magic_on_npc(1183) {|player, npc|
   player.walking_queue.reset
   player.interacting_entity = npc
   player.walking_queue.reset
-  
-  player.play_graphic Calyx::Model::Graphic.new(158, 6553600)
-  player.play_animation Calyx::Model::Animation.new(711)
-  
+
+  player.play_graphic RuneRb::Model::Graphic.new(158, 6553600)
+  player.play_animation RuneRb::Model::Animation.new(711)
+
   projectile(player.location, npc.location, 50, 90, 159, 40, 40, npc.index)
 }

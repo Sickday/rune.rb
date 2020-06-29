@@ -7,8 +7,8 @@ on_item_swap(3214) {|player, from_slot, to_slot|
 }
 
 # Listener
-on_player_login(:inventory) {|player|
-  player.inventory.add_listener Calyx::Item::InterfaceContainerListener.new(player, 3214)
-  player.inventory.add_listener Calyx::Item::WeightListener.new(player)
+on_player_login(:inventory) { |player|
+  player.inventory.add_listener RuneRb::Item::InterfaceContainerListener.new(player, 3214)
+  player.inventory.add_listener RuneRb::Item::WeightListener.new(player)
 }
 

@@ -1,14 +1,14 @@
-module Calyx::PM
+module RuneRb::PM
   class Presence
-  
+
     @@last_message_index = 0
-    
+
     def initialize(player)
       @player = player
-      
+
       # Update friends list status
       send_friend_server 2
-      
+
       # Send lists
       send_friends @player.varp.friends
       send_ignores @player.varp.ignores
@@ -40,10 +40,10 @@ module Calyx::PM
       player = WORLD.players.find {|p| p && p.name_long == to }
         
       if player
-        bldr = Calyx::Net::PacketBuilder.new(196, :VAR)
+        bldr = RuneRb::Net::PacketBuilder.new(196, :VAR)
         bldr.add_long @player.name_long
         bldr.add_int player.var.pm.last_index
-        bldr.add_byte [Calyx::World::RIGHTS.index(@player.rights), 2].min
+        bldr.add_byte [RuneRb::World::RIGHTS.index(@player.rights), 2].min
         bldr.add_bytes message
         player.connection.send_data bldr.to_packet
       end
@@ -52,7 +52,7 @@ module Calyx::PM
     def send_friend(name, world=nil)
       world ||= get_world(name)
       world += 9 unless world == 0
-      @player.connection.send_data Calyx::Net::PacketBuilder.new(50).add_long(name).add_byte(world.byte).to_packet
+      @player.connection.send_data RuneRb::Net::PacketBuilder.new(50).add_long(name).add_byte(world.byte).to_packet
     end
     
     def send_friends(list)
@@ -61,7 +61,7 @@ module Calyx::PM
   
     def send_ignores(list)
       unless list.empty?
-        bldr = Calyx::Net::PacketBuilder.new(214)
+        bldr = RuneRb::Net::PacketBuilder.new(214)
         
         list.each {|user|
           bldr.add_long user
@@ -73,7 +73,7 @@ module Calyx::PM
      
     def send_friend_server(status)
       # 0 = Loading, 1 = Connecting, 2 = OK
-      @player.connection.send_data Calyx::Net::PacketBuilder.new(221).add_byte(status).to_packet
+      @player.connection.send_data RuneRb::Net::PacketBuilder.new(221).add_byte(status).to_packet
     end
     
     def get_world(friend)
@@ -90,7 +90,7 @@ end
 on_player_login(:pm) {|player|
   player.varp.friends ||= []
   player.varp.ignores ||= []
-  player.var.pm = Calyx::PM::Presence.new(player)
+  player.var.pm = RuneRb::PM::Presence.new(player)
 }
 
 # Logout
@@ -120,7 +120,7 @@ on_packet(188) {|player, packet|
   end
   
   if friends.include?(name)
-    player.io.send_message "#{Calyx::Misc::NameUtils.long_to_name(name)} is already on your friends list."
+    player.io.send_message "#{RuneRb::Misc::NameUtils.long_to_name(name)} is already on your friends list."
     next
   end
   
@@ -145,7 +145,7 @@ on_packet(133) {|player, packet|
   end
   
   if ignores.include?(name)
-    player.io.send_message "#{Calyx::Misc::NameUtils.long_to_name(name)} is already on your ignore list."
+    player.io.send_message "#{RuneRb::Misc::NameUtils.long_to_name(name)} is already on your ignore list."
     next
   end
   

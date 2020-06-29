@@ -7,6 +7,6 @@ horse_phrases = [
 (2520..2526).step(2) {|id|
   on_item_click(id) {|player, slot|
     player.force_chat horse_phrases[rand(horse_phrases.size)]
-    player.play_animation Calyx::Model::Animation.new(918 + (id - 2520) / 2)
+    player.play_animation RuneRb::Model::Animation.new(918 + (id - 2520) / 2)
   }
 }
