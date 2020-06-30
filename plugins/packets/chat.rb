@@ -43,3 +43,14 @@ on_packet(103) do |player, packet|
     log.error e
   end
 end
+
+# Disable chat if player is muted
+on_chat(:mute) do |player, _effect, _color, _message|
+  :nodefault if player.settings[:muted]
+end
+
+# Send message on login
+on_player_login(:mute) do |player|
+  player.io.send_message('You have been muted for breaking a rule.') if player.settings[:muted]
+end
+

@@ -1,3 +1,8 @@
+# Listener
+on_player_login(:inventory) do |player|
+  player.inventory.add_listener(RuneRb::Item::InterfaceContainerListener.new(player, 3214))
+  player.inventory.add_listener(RuneRb::Item::WeightListener.new(player))
+end
 on_player_login(:move_speed) do |player|
   value = player.settings[:move_speed]
   player.walking_queue.run_toggle = value == 1
