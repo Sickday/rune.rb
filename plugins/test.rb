@@ -199,6 +199,13 @@ on_command('empty') do |player, _params|
   player.inventory.fire_items_changed
 end
 ##
+# ::bank
+# Opens the bank interface (and adds random ass items to the container for some reason.)
+on_command("bank") do |player, _params|
+  21.times { player.bank.add(RuneRb::Item::Item.new(rand(1040...1056))) }
+  Bank.open(player)
+end
+##
 # Attmpts to retreived a player given their name. 
 # TODO: rename this function and perhaps move it to the WORLD object?
 # `WORLD#by_name(name) seems cleaner`
