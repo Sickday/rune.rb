@@ -1,6 +1,3 @@
-require 'xmlsimple'
-require 'pp'
-
 RUNES ||= {}
 
 XmlSimple.xml_in('data/magic_runes.xml', 'KeyToSymbol' => true)[:rune].each do |data|

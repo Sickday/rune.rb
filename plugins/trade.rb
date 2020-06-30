@@ -1,3 +1,11 @@
+# Trade options
+on_packet(153, 139) do |player, packet|
+  handler = HOOKS[:trade_option][packet.opcode]
+  raise 'unhandled trade option opcode' unless handler.instance_of?(Proc)
+
+  handler.call(player, packet)
+end
+
 # Interface container sizes
 set_int_size(3322, 28)
 set_int_size(3415, 28)

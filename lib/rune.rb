@@ -3,6 +3,10 @@ require 'eventmachine'
 require 'sqlite3'
 require 'rufus/scheduler'
 require 'ostruct'
+require 'shellwords'
+require 'to_regexp'
+require 'xmlsimple'
+require 'pp'
 
 module RuneRb
   autoload :Server, 'runerb/server'

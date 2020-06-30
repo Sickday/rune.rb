@@ -1,5 +1,4 @@
-require 'to_regexp'
-require 'xmlsimple'
+
 
 module RuneRb::Equipment
   SIDEBARS ||= {}
