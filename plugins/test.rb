@@ -1,7 +1,3 @@
-
-# Logout
-on_int_button(2458) { |player| player.io.send_logout }
-
 ##
 # ::objspawn parameters command.
 # Spawns an object with the supplied parameters.
@@ -213,36 +209,7 @@ def self.get_player(name)
   WORLD.players.find { |e| e.name.downcase == name.downcase }
 end
 
-{161 => 860,
- 162 => 857,
- 163 => 863,
- 164 => 858,
- 165 => 859,
- 166 => 866,
- 167 => 864,
- 168 => 855,
- 169 => 856,
- 170 => 861,
- 171 => 862,
- 172 => 865,
- 13_362 => 2105,
- 13_363 => 2106,
- 13_364 => 2107,
- 13_365 => 2108,
- 13_366 => 2109,
- 13_367 => 2110,
- 13_368 => 2111,
- 13_383 => 2127,
- 13_384 => 2128,
- 13_369 => 2112,
- 13_370 => 2113,
- 11_100 => 1368,
- 667 => 1131,
- 6503 => 1130,
- 6506 => 1129,
- 666 => 1128}.each do |button, anim|
-  on_int_button(button) { |player| player.play_animation(RuneRb::Model::Animation.new(anim)) }
-end
+
 =begin
 on_item_on_player(1050) do |player, used_player|
   player.io.send_message('You used 1050 on a player')
@@ -258,4 +225,5 @@ on_int_button(3651) do |player|
 end
 on_npc_option2(592) do |player, _npc|
   player.io.send_message 'Open shop'
-end=end
+end
+=end

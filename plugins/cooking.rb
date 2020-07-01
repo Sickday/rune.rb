@@ -105,13 +105,4 @@ module Cooking
       end
     end
   end
-
-  on_int_button(13_720) { |player| player.action_queue.add(CookAction.new(player, player.used_loc, player.used_item)) }
-  on_int_button(13_719) { |player| player.action_queue.add(CookAction.new(player, player.used_loc, player.used_item, 5)) }
-  on_int_button(13_717) { |player| player.action_queue.add(CookAction.new(player, player.used_loc, player.used_item, player.inventory.count(player.used_item))) }
-  on_int_button(13_718) { |player| player.interface_state.open_amount_interface(1743, -1, -1) }
-
-  on_int_enter_amount(1743) do |player, enterAmountId, enterAmountSlot, amount|
-    player.action_queue.add(CookAction.new(player, player.used_loc, player.used_item, amount))
-  end
 end

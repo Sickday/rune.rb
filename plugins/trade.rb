@@ -6,9 +6,6 @@ on_packet(153, 139) do |player, packet|
   handler.call(player, packet)
 end
 
-# Interface container sizes
-set_int_size(3322, 28)
-set_int_size(3415, 28)
 
 # Trade window buttons
 on_int_button(3651) { |player|
@@ -20,11 +17,6 @@ on_int_button(3651) { |player|
     player.interface_state.interface_closed
   end
 }
-
-##
-# Accept offer button
-on_int_button(3420) { |player| Trade.accept(player) }
-on_int_button(3546) { |player| Trade.accept(player) }
 
 # Item offer/remove amount 1
 on_item_option(3322) { |player, id, slot| Trade.offer_item(player, slot, id, 1) }

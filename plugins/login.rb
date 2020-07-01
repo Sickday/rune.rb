@@ -23,5 +23,19 @@ on_player_login(:pm) do |player|
   player.var.pm = RuneRb::PM::Presence.new(player)
 end
 
+# Listener
+on_player_login(:equipment) do |player|
+  # Have to send sidebar interfaces so the sidebar listener's update takes effect
+  player.io.send_sidebar_interfaces
+
+  # Register equipment container listeners
+  player.equipment.add_listener(RuneRb::Item::InterfaceContainerListener.new(player, 1688))
+  player.equipment.add_listener(RuneRb::Equipment::AppearanceContainerListener.new(player))
+  player.equipment.add_listener(RuneRb::Equipment::SidebarContainerListener.new(player))
+  player.equipment.add_listener(RuneRb::Item::WeightListener.new(player))
+  player.equipment.add_listener(RuneRb::Item::BonusListener.new(player))
+end
+
+
 # Logout
 on_player_logout(:pm) { |player| player.var.pm.unregistered }

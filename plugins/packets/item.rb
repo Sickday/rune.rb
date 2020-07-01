@@ -262,8 +262,6 @@ on_packet(57) do |player, packet|
   handler.call(player, npc) if handler.instance_of?(Proc)
 end
 
-# Interface container sizes
-set_int_size(3214, 28)
 
 # Item swap
 on_item_swap(3214) do |player, from_slot, to_slot|

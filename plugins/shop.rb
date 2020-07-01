@@ -1,6 +1,4 @@
-# Interface container sizes
-set_int_size(3900, 40)
-set_int_size(3823, 28)
+
 
 # Value of item
 on_item_option(3900) do |player, id, slot|

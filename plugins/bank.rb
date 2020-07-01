@@ -1,17 +1,3 @@
-# Interface container sizes
-set_int_size(5382, 352)
-set_int_size(5064, 28)
-
-# Bank window mode buttons
-on_int_button(5386) { |player| player.settings[:withdraw_note] = true }
-on_int_button(5387) { |player| player.settings[:withdraw_note] = false }
-on_int_button(8130) { |player| player.settings[:swapping] = true }
-on_int_button(8131) { |player| player.settings[:swapping] = false }
-
-# Enter amount withdraw/deposit
-on_int_enter_amount(5064) { |player, id, slot, amount| Bank.deposit(player, slot, id, amount) }
-on_int_enter_amount(5382) { |player, id, slot, amount| Bank.withdraw(player, slot, id, amount) }
-
 # Bank booth object
 on_obj_option2(6084) { |player, _loc| Bank.open(player) }
 
