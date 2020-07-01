@@ -7,6 +7,8 @@ require 'shellwords'
 require 'to_regexp'
 require 'xmlsimple'
 require 'pp'
+require 'yaml'
+
 
 module RuneRb
   autoload :Server, 'runerb/server'
@@ -114,6 +116,7 @@ module RuneRb
   end
 
   module World
+    autoload :Constants, 'runerb/world/constants'
     autoload :Profile, 'runerb/world/profile'
     autoload :Pathfinder, 'runerb/world/walking'
     autoload :Point, 'runerb/world/walking'

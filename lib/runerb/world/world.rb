@@ -1,11 +1,4 @@
-require 'yaml'
-
 module RuneRb::World
-  RIGHTS = [:player, :mod, :admin, :owner]
-
-  PROFILE_LOG = Logging.logger['profile']
-  PLUGIN_LOG = Logging.logger['plugin']
-
   class World
     attr :players
     attr :npcs
@@ -149,25 +142,15 @@ module RuneRb::World
       return LoginResult.new(3, nil) unless validate_credentials(session.username, session.password)
 
       existing = WORLD.players.find(nil) { |p| p.name.eql?(session.username) }
-
-      if existing.nil?
-        # no existing user with this name, new login
-        LoginResult.new(2, RuneRb::Model::Player.new(session))
-      else
-        # existing user = already logged in
-        return LoginResult.new(5, nil)
-      end
+      # no existing user with this name, new login
+      # existing user = already logged in
+      existing ? LoginResult.new(2, RuneRb::Model::Player.new(session)) : LoginResult.new(5, nil)
     end
 
     def load_profile(player)
       begin
         key = RuneRb::Misc::NameUtils.format_name_protocol(player.name)
-
-        profile = if FileTest.exists?("./data/profiles/#{key}.yaml")
-                    YAML::load(File.open("./data/profiles/#{key}.yaml"))
-                  else
-                    nil
-                  end
+        profile = YAML::load(File.open("./data/profiles/#{key}.yaml")) if FileTest.exists?("./data/profiles/#{key}.yaml")
 
         PROFILE_LOG.info "Retrieving profile: #{key}"
 

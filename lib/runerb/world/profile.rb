@@ -1,28 +1,10 @@
 module RuneRb::World
   class Profile
-    #include MongoMapper::Document
-
-    #set_collection_name "profiles"
-
-    #key :hash, Integer
-    #key :node, String
-    #key :banned, Boolean
-    #key :member, Boolean
-    #key :x, Integer
-    #key :y, Integer
-    #key :z, Integer
-    #key :appearance, Array
-    #key :skills, Array
-    #key :equipment, Array
-    #key :inventory, Array
-    #key :bank, Array
-    #key :friends, Array
-    #key :ignores, Array
-    
     attr_accessor :hash
     attr_accessor :node
     attr_accessor :banned
     attr_accessor :member
+    attr_accessor :rights
     attr_accessor :x
     attr_accessor :y
     attr_accessor :z
