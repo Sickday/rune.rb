@@ -78,48 +78,49 @@ module RuneRb::PM
 end
 
 # Send message
-on_packet(126) { |player, packet|
-  player.var.pm.send_message packet.read_long, packet
-}
+on_packet(126) do |player, packet|
+  player.var.pm.send_message(packet.read_long, packet)
+end
 
 # Add friend
-on_packet(188) { |player, packet|
+on_packet(188) do |player, packet|
   name = packet.read_long
 
   if player.name_long == name
-    player.io.send_message "You cannot add yourself as a friend."
+    player.io.send_message('Silly.')
+    player.io.send_message('You cannot add yourself as a friend. Silly.')
     next
   end
 
   friends = player.varp.friends
 
   if friends.size >= 200
-    player.io.send_message "Your friends list is full."
+    player.io.send_message('Your friends list is full.')
     next
   end
 
   if friends.include?(name)
-    player.io.send_message "#{RuneRb::Misc::NameUtils.long_to_name(name)} is already on your friends list."
+    player.io.send_message("#{RuneRb::Misc::NameUtils.long_to_name(name)} is already on your friends list.")
     next
   end
 
   friends << name
-  player.var.pm.send_friend name
-}
+  player.var.pm.send_friend(name)
+end
 
 # Add ignore
-on_packet(133) { |player, packet|
+on_packet(133) do |player, packet|
   name = packet.read_long
 
   if player.name_long == name
-    player.io.send_message "You cannot ignore yourself."
+    player.io.send_message 'You cannot ignore yourself.'
     next
   end
 
   ignores = player.varp.ignores
 
   if ignores.size >= 200
-    player.io.send_message "Your ignore list is full."
+    player.io.send_message 'Your ignore list is full.'
     next
   end
 
@@ -129,14 +130,8 @@ on_packet(133) { |player, packet|
   end
 
   ignores << name
-}
-
+end
 # Remove friend
-on_packet(215) { |player, packet|
-  player.varp.friends.delete packet.read_long
-}
-
+on_packet(215) { |player, packet| player.varp.friends.delete(packet.read_long) }
 # Remove ignore
-on_packet(74) { |player, packet|
-  player.varp.ignores.delete packet.read_long
-}
+on_packet(74) { |player, packet| player.varp.ignores.delete(packet.read_long) }

@@ -18,10 +18,8 @@ end
 
 
 # Quiet packet handler
-QUIET ||= [
-    0, 77, 78, 3, 226, 148, 36,
-    246, 165, 121, 150, 238, 183,
-    230, 136, 189, 152, 200, 85
-].freeze
+QUIET ||= [0, 77, 78, 3, 226, 148, 36,
+           246, 165, 121, 150, 238, 183,
+           230, 136, 189, 152, 200, 85].freeze
 
 on_packet(*QUIET) { puts 'Received Quiet packet.' }
