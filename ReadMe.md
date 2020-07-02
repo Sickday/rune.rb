@@ -34,4 +34,4 @@ Want to contribute? Great!
 | Patrick W. | Maintainer | Sickday@pm.me |
 
 
-<sub><sub><sub>* This is the `refactor` branch! Most of the code here is fresh from the fork despite on-going refactoring and documentation.
+*<sub><sub>This is the `refactor` branch! Most of the code here is fresh from the fork despite on-going refactoring and documentation.
