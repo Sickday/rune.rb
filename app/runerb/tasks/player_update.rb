@@ -177,71 +177,35 @@ module RuneRb::Tasks
         props.add_short -1
         props.add_short p.model
       else
-        (0...4).each { |i|
-          if eq.is_slot_used(i)
-            props.add_short (0x200 + eq.items[i].id).short
-          else
-            props.add_byte 0
-          end
-        }
+        4.times do |i|
+          eq.is_slot_used(i) ? props.add_short((0x200 + eq.items[i].id).short) : props.add_byte(0)
+        end
 
         # Chest
-        if eq.is_slot_used(4)
-          props.add_short (0x200 + eq.items[4].id).short
-        else
-          props.add_short (0x100 + app.chest).short
-        end
-
+        eq.is_slot_used(4) ? props.add_short((0x200 + eq.items[4].id).short) : props.add_short((0x100 + app.chest).short)
         # Shield
-        if eq.is_slot_used(5)
-          props.add_short (0x200 + eq.items[5].id).short
-        else
-          props.add_byte 0
-        end
-
+        eq.is_slot_used(5) ? props.add_short((0x200 + eq.items[5].id).short) : props.add_byte(0)
         # Arms (shown unless a platebody is worn)
         if eq.is_slot_used(4) && RuneRb::Equipment.is(eq.items[4], 10)
           props.add_short (0x200 + eq.items[4].id).short
         else
           props.add_short (0x100 + app.arms).short
         end
-
         # Legs
-        if eq.is_slot_used(7)
-          props.add_short (0x200 + eq.items[7].id).short
-        else
-          props.add_short (0x100 + app.legs).short
-        end
-
+        eq.is_slot_used(7) ? props.add_short((0x200 + eq.items[7].id).short) : props.add_short (0x100 + app.legs).short
         # Head (shown unless a full helm or mask is worn)
         if eq.is_slot_used(0) && (RuneRb::Equipment.is(eq.items[0], 11) || RuneRb::Equipment.is(eq.items[0], 12))
           props.add_byte 0
         else
           props.add_short (0x100 + app.head).short
         end
-
         # Gloves
-        if eq.is_slot_used(9)
-          props.add_short (0x200 + eq.items[9].id).short
-        else
-          props.add_short (0x100 + app.hands).short
-        end
-
+        eq.is_slot_used(9) ? props.add_short((0x200 + eq.items[9].id).short) : props.add_short((0x100 + app.hands).short)
         # Boots
-        if eq.is_slot_used(10)
-          props.add_short (0x200 + eq.items[10].id).short
-        else
-          props.add_short (0x100 + app.feet).short
-        end
-
+        eq.is_slot_used(10) ? props.add_short((0x200 + eq.items[10].id).short) : props.add_short((0x100 + app.feet).short)
         # Beard
         fullhelm = eq.is_slot_used(0) && (RuneRb::Equipment.is(eq.items[0], 11) || RuneRb::Equipment.is(eq.items[0], 12))
-
-        if fullhelm || app.gender == 1
-          props.add_byte 0
-        else
-          props.add_short (0x100 + app.beard).short
-        end
+        fullhelm || app.gender == 1 ? props.add_byte(0) : props.add_short((0x100 + app.beard).short)
       end
 
       # Colors
