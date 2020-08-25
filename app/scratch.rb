@@ -22,6 +22,12 @@ module Scratch
   end
 
   ##
+  # Scratch::Patches
+  module Patches
+    autoload :SetOverride,            'patches/set'
+  end
+
+  ##
   # Scratch::Types
   module Types
     autoload :OperationChain,         'types/operation_chain'
@@ -33,7 +39,7 @@ module Scratch
   FileUtils.mkdir_p("#{FileUtils.pwd}/assets/log")
 
   # Initialize a new log file
-  LOG_FILE = Logger.new(LOG_FILE_PATH, progname: 'SFW')
+  LOG_FILE = Logger.new(LOG_FILE_PATH, progname: ENV['TITLE'] || 'SFW')
   # Initialize a new logger
   LOG = Console.logger
   COL = Pastel.new
