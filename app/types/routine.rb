@@ -8,10 +8,9 @@ module Scratch::Types
 
     # Called when a new Routine object is created.
     # @param self_exec [Boolean] silly way to auto-start the routine after it's initialization.
-    # @param operation_list [Array, Set] an optional list of operations.
     # @param assets [Array, Hash] parameters passed to the block operations
-    def initialize(self_exec = false, operation_list = Set.new, assets = [], &block)
-      super(self_exec, operation_list, assets, block_given? ? -> { block.call(@assets) } : nil)
+    def initialize(self_exec = false, assets = [], &block)
+      block_given? ? super(self_exec, assets) { block.call(assets) } : super(self_exec, assets)
     end
 
     # Begins the execution of the routine.

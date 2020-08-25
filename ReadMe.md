@@ -6,17 +6,14 @@
 
 Clone the Repo
  ```shell script
- git clone https://gitlab.com/sickday/rune.rb.git
+ git clone --branch --single-branch scratch https://gitlab.com/sickday/rune.rb.git
 ```
 Enter the project directory and install required gems
 ```shell script
 cd rune.rb
 bundle install
 ```
-Use the command below to launch an instance of the server on `localhost@43594`
-```shell script
-ruby node.rb
-```
+
 ## Contribution
 
 Want to contribute? Great!
@@ -34,4 +31,4 @@ Want to contribute? Great!
 | Patrick W. | Maintainer | Sickday@pm.me |
 
 
-*<sub><sub>This is the `refactor` branch! Most of the code here is fresh from the fork despite on-going refactoring and documentation.
+*<sub><sub>This is the `scratch` branch! I'm writing all this from scratch and coverage is an on-going effort! Let me know if anything is unclear!

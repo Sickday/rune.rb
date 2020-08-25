@@ -14,12 +14,12 @@ module Scratch::Types
       start if self_exec
     end
 
-    # Attempts to execute all operations in this chain.
+    # Attempts to execute all operations in this chain in sequential order.
     def start
       @operations.each_consume { |operation| spin { operation&.call(@assets) } }
     end
 
-    # Pushes a new operation to the OperationChain
+    # Pushes a new operation to the operations collection.
     def add_operation(blck, &block)
       if block_given?
         @operations.add(block)
