@@ -1,4 +1,4 @@
-require_relative '../app/scratch'
+require_relative '../app/rune'
 malpractice = [->(_assets) { puts 'Darker than the east river,' },
                ->(_assets) { puts 'Larger than the empire state,' },
                ->(_assets) { puts 'Where the beast that guard the barbed wire gate,' },

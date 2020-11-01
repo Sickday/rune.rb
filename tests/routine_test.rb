@@ -1,4 +1,4 @@
-require_relative '../app/scratch'
+require_relative '../app/rune'
 
 
 succ = lambda do

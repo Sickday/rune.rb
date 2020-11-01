@@ -1,0 +1,1057 @@
+# Logfile created on 2020-10-07 09:44:39 -0400 by logger.rb/v1.4.2
+I, [2020-10-07T09:44:39.338280 #323647]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:44:39.338463 #323647]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:44:39.338536 #323647]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:45:38.211019 #326692]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:45:38.211212 #326692]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:45:38.211288 #326692]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:45:40.766984 #327004]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439207185992671088
+I, [2020-10-07T09:45:40.767244 #327004]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:45:41.217441 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:41.818662 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:42.419631 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:43.020693 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:43.621628 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:44.222256 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:44.823345 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:45.424511 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:46.025624 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:46.626616 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:47.227600 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:47.828765 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:48.429606 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:49.030704 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:49.631830 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:50.232609 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:50.833610 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:51.434614 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:52.035638 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:52.636634 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:53.237641 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:53.838724 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:54.439640 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:55.040630 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:45:55.641633 #327004]  INFO -- RuneRb: current_size: 
+I, [2020-10-07T09:47:17.233077 #329529]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:47:17.233272 #329529]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:47:17.233345 #329529]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:47:20.457120 #329847]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439208022251498875
+I, [2020-10-07T09:47:20.457385 #329847]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:47:20.459568 #329847]  INFO -- RuneRb: Got connection Type: 14
+I, [2020-10-07T09:47:20.459778 #329847]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:47:20.459939 #329847]  INFO -- RuneRb: Sent Seed 13439208022273104962
+I, [2020-10-07T09:47:47.409276 #332315]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:47:47.409480 #332315]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:47:47.409553 #332315]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:48:01.784004 #333253]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:48:01.784217 #333253]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:48:01.784288 #333253]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:48:03.817620 #333562]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439208385977416799
+I, [2020-10-07T09:48:03.817864 #333562]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:48:03.819887 #333562]  INFO -- RuneRb: Got connection Type: 14
+I, [2020-10-07T09:48:03.820137 #333562]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:48:03.820256 #333562]  INFO -- RuneRb: Sent Seed 13439208386003644200
+E, [2020-10-07T09:48:04.189602 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:04.790489 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:05.391664 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:05.992675 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:06.595319 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:07.196639 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:07.797736 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:08.398685 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:48:08.999876 #333562] ERROR -- RuneRb: An error occurred during flush cycle!
+I, [2020-10-07T09:49:39.880877 #336398]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:49:39.881067 #336398]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:49:39.881139 #336398]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:49:42.189671 #336709]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439209211188558426
+I, [2020-10-07T09:49:42.189924 #336709]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:49:42.192159 #336709]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:50:40.190307 #337675]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:50:40.190498 #337675]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:50:40.190570 #337675]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:50:42.634558 #337986]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439209718231707570
+I, [2020-10-07T09:50:42.634804 #337986]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:50:42.636875 #337986]  INFO -- RuneRb: [Type]: Login
+E, [2020-10-07T09:50:43.195618 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:43.796714 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:44.397721 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:44.998852 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:45.599680 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:46.200693 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:46.801682 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:47.402734 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:48.003770 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:48.604676 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:49.205746 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:49.806670 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:50:50.407667 #337986] ERROR -- RuneRb: An error occurred during flush cycle!
+I, [2020-10-07T09:52:37.651402 #341126]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:52:37.651617 #341126]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:52:37.651692 #341126]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:52:48.744621 #341441]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439210776126100244
+I, [2020-10-07T09:52:48.744871 #341441]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:52:48.747020 #341441]  INFO -- RuneRb: [Type]: Login
+E, [2020-10-07T09:52:49.069342 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:49.670619 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:50.271808 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:50.873031 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:51.473785 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:52.074691 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:52.675871 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:53.276639 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:53.877862 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:54.478710 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:55.079878 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:55.680642 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:56.281740 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:52:56.882687 #341441] ERROR -- RuneRb: An error occurred during flush cycle!
+I, [2020-10-07T09:54:12.835832 #343045]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:54:12.836050 #343045]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:54:12.836124 #343045]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:54:14.718975 #343357]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439211497328646256
+I, [2020-10-07T09:54:14.719326 #343357]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:54:14.721430 #343357]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:54:14.721988 #343357]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T09:54:44.327707 #343700]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:54:44.327901 #343700]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:54:44.327974 #343700]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:54:46.087604 #344014]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439211760472692572
+I, [2020-10-07T09:54:46.087916 #344014]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:54:46.090047 #344014]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:54:46.090805 #344014]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T09:54:46.090948 #344014]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=71, Magic=255, Protocol=317, Memory=:LOW, :LowMem?=[0, 0, 0, 0, 0, 0, 0, 0, 0], CRC=0, RSA_Size=0, RSA_OpCode=0, ClientPart=0, ServerPart=0, UID="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Username="\u0002;\u0081\a\u0005\u0089³Ù$\u0000:eä«\u0081º\u0004â\u0011BPat", Password=nil>
+E, [2020-10-07T09:54:46.132675 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:54:46.733649 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:54:47.334630 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:54:47.935607 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:54:48.536807 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:54:49.137746 #344014] ERROR -- RuneRb: An error occurred during flush cycle!
+I, [2020-10-07T09:55:18.811899 #345575]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T09:55:18.812109 #345575]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T09:55:18.812180 #345575]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T09:55:20.420326 #345883]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439212048472652970
+I, [2020-10-07T09:55:20.420589 #345883]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T09:55:20.422653 #345883]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T09:55:20.423358 #345883]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T09:55:20.423468 #345883]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=71, Magic=255, Protocol=317, Memory=[0, 0, 0, 0, 0, 0, 0, 0, 0], :LowMem?=:LOW, CRC=0, RSA_Size=0, RSA_OpCode=0, ClientPart=0, ServerPart=0, UID="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Username="\u0005¶\u0006£\u0004r(Pà\u001A÷s'¬\u0081º\u0004â\u0011BPat", Password=nil>
+E, [2020-10-07T09:55:20.616703 #345883] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:55:21.217692 #345883] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-10-07T09:55:21.818914 #345883] ERROR -- RuneRb: An error occurred during flush cycle!
+I, [2020-10-07T10:05:53.211114 #362053]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:05:53.211307 #362053]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:05:53.211386 #362053]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:05:54.905594 #362365]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439217370907434349
+I, [2020-10-07T10:05:54.905987 #362365]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:06:41.839602 #362715]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:06:41.839786 #362715]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:06:41.839878 #362715]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:06:43.876377 #363028]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439217781700701771
+I, [2020-10-07T10:06:43.876686 #363028]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:06:43.876920 #363028]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:06:43.878337 #363028]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:06:43.878506 #363028]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Protocol=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=0, ServerPart=0, UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0004Ñ1ö\u0002\t\u000EÈj\u0005¸R^±\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:07:34.094958 #363390]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:07:34.095168 #363390]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:07:34.095261 #363390]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:07:35.915504 #363700]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439218218239087313
+I, [2020-10-07T10:07:35.915807 #363700]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:07:35.916036 #363700]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:07:49.898747 #364026]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:07:49.898952 #364026]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:07:49.899025 #364026]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:07:51.318176 #364338]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439218347442491520
+I, [2020-10-07T10:07:51.318708 #364338]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:07:51.318885 #364338]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:07:51.319488 #364338]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:07:51.319588 #364338]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Protocol=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, RSA_Size=0, ClientPart=0, ServerPart=0, UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0000\u001CÅ7\u0002\u009BÌÿê\u009A·\vâ±\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:13:13.128321 #369570]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:13:13.128547 #369570]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:13:13.128618 #369570]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:13:15.370726 #369885]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439221065796871072
+I, [2020-10-07T10:13:15.371030 #369885]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:13:15.371244 #369885]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:13:15.371859 #369885]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:13:15.371959 #369885]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Protocol=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, RSA_Size=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0001\u0090r£\u0001þÕ­0'òõZ´\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:15:22.760381 #370316]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:15:22.760588 #370316]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:15:22.760680 #370316]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:20:08.175349 #384212]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:20:08.175556 #384212]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:20:08.175628 #384212]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:20:17.276088 #384648]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439224604995937068
+I, [2020-10-07T10:20:17.276414 #384648]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:20:17.276561 #384648]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:20:17.277151 #384648]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:20:17.277301 #384648]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_Size=0, RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0001ñÎ¡\u0000Ò\u0083R£³\u008Bþ\u0092·\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:30:20.019613 #386750]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:30:20.019802 #386750]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:30:20.019893 #386750]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:30:24.013879 #387058]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439229694680614720
+I, [2020-10-07T10:30:24.014199 #387058]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:30:24.014395 #387058]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:30:24.014940 #387058]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:30:24.015057 #387058]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0002óÃ¡\u0003¶">
+I, [2020-10-07T10:31:17.735600 #389539]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:31:17.735799 #389539]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:31:17.735897 #389539]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:31:41.484916 #391088]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:31:41.485152 #391088]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:31:41.485230 #391088]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:31:43.442714 #391401]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439230360978751105
+I, [2020-10-07T10:31:43.443155 #391401]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:31:43.443438 #391401]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:31:43.444605 #391401]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:31:43.444790 #391401]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0004²\"V\u0004\u009E²Rro\u0091)Ï¼\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:31:58.643412 #392028]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:31:58.643603 #392028]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:31:58.643692 #392028]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:32:16.450331 #393880]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:32:16.450539 #393880]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:32:16.450627 #393880]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:32:18.746518 #394190]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439230657122048415
+I, [2020-10-07T10:32:18.746836 #394190]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:32:18.746996 #394190]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:32:18.747617 #394190]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:32:18.747723 #394190]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0000=×\u0016\u0003ÊôÈ¾Ôµ\u001D\u0014½\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:32:45.000755 #394825]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:32:45.000975 #394825]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:32:45.001048 #394825]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:32:46.370286 #395133]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439230888846009710
+I, [2020-10-07T10:32:46.370603 #395133]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:32:46.370759 #395133]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:32:46.371404 #395133]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:32:46.371561 #395133]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0000±.è\u0002]`P/\u0014ê\u0011J½\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:32:46.371646 #395133]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T10:33:00.441297 #395152]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T10:33:00.441486 #395152]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T10:33:00.441558 #395152]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T10:33:02.008796 #395460]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439231020041695562
+I, [2020-10-07T10:33:02.009318 #395460]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T10:33:02.009497 #395460]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T10:33:02.010174 #395460]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T10:33:02.010299 #395460]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock OpCode=16, Size=31, Magic=255, Version=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0], RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0000nR\u0090\u0003l»÷1ô\u009Ch½\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T10:33:02.010418 #395460]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T10:33:02.010501 #395460]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T11:05:18.817621 #415995]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T11:05:18.817844 #415995]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T11:05:18.817938 #415995]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T11:05:28.262876 #416306]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439247346403177142
+I, [2020-10-07T11:05:28.263261 #416306]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T11:05:28.263438 #416306]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T11:06:13.212477 #418184]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T11:06:13.212665 #418184]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T11:06:13.212755 #418184]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T11:06:17.876935 #418495]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439247762591492303
+I, [2020-10-07T11:06:17.877358 #418495]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T11:06:17.877538 #418495]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T11:06:17.877997 #418495]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T11:06:17.878128 #418495]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock ConnectionType=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T11:06:17.878301 #418495]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T11:06:17.878406 #418495]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001E", Password="\u0005\t=¨\u0001^ùbç¾mË¢Ì\u0081º\u0004â\u0011BPat">
+I, [2020-10-07T11:06:17.878502 #418495]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T11:06:17.878579 #418495]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T12:05:47.862122 #431691]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:05:47.862301 #431691]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:05:47.862378 #431691]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:05:49.651838 #432003]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439277724815050029
+I, [2020-10-07T12:05:49.652172 #432003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:05:49.652320 #432003]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:05:49.654867 #432003]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:05:49.654993 #432003]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock ConnectionType=16, PayloadSize=129, Magic=255, Revision=377, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:05:49.655337 #432003]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:05:49.655443 #432003]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0080\u001A¥º§\u0018*\u0017Å-\u0018Ýµcim\u0089\u0081\u008C5Tí\"ï¯È\u0013\u000F¬63c\u0005¦)E\u008B­Ò\u0087ò\u0006Ù*\u0086d\u0098\u0001\u0014ë\u0019\u001F&U%?ã\u0084Úº\u0094P\u009A\u0001gÑ­¤E{Júa\u0080¡ë¾:ô\u0019§Çß\u0088\u009AB?\u008D\u0090¿4³ÛÞÑÄÅ\u0087aÎ\u000F!%\u0092\aÊÁ@Dz½Tª¶¦ÈC}«[ f\t\u0099¦\u0089ª\u0092º", Password="">
+I, [2020-10-07T12:05:49.655561 #432003]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:05:49.655632 #432003]  INFO -- RuneRb: []
+I, [2020-10-07T12:06:53.270360 #432184]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:06:53.270567 #432184]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:06:53.270638 #432184]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:06:55.472537 #432498]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439278276955857219
+I, [2020-10-07T12:06:55.472835 #432498]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:06:55.473084 #432498]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:06:55.473901 #432498]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:06:55.474092 #432498]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock ConnectionType=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:06:55.474263 #432498]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:06:55.474356 #432498]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", Password="\u0002@¿r\u0000þ\u0013ä»wÑxcè\u0081º\u0000¦WHPat">
+I, [2020-10-07T12:06:55.474484 #432498]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:06:55.474561 #432498]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T12:30:58.535847 #435312]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:30:58.536047 #435312]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:30:58.536119 #435312]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:31:00.853955 #435626]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439290401696954003
+I, [2020-10-07T12:31:00.854246 #435626]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:31:00.854396 #435626]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:31:00.854921 #435626]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:31:00.855065 #435626]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock ConnectionType=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:31:00.855284 #435626]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:31:00.855424 #435626]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", Password="\u0005ìsq\u0002:\u0001÷\f#K{jó\u0081º\u0000¦WHPat">
+I, [2020-10-07T12:31:00.855521 #435626]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:31:00.855598 #435626]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T12:33:23.751973 #437039]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:33:23.752179 #437039]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:33:23.752250 #437039]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:33:27.932473 #437355]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439291635476354786
+I, [2020-10-07T12:33:27.932756 #437355]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:33:27.932948 #437355]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:33:27.933388 #437355]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:33:27.933469 #437355]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock ConnectionType=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:33:27.933677 #437355]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:33:27.933763 #437355]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", Password="\u0003\u007FÿC\u0005)<Ç²¨Á¾\u0089ô\u0081º\u0000¦WHPat">
+I, [2020-10-07T12:33:27.933881 #437355]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:33:27.933951 #437355]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T12:34:17.554130 #438659]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:34:17.554313 #438659]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:34:17.554397 #438659]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:34:21.507434 #438971]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439292084892922802
+I, [2020-10-07T12:34:21.507727 #438971]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:34:21.507900 #438971]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:34:21.508291 #438971]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:34:21.508364 #438971]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:LOW, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:34:21.508567 #438971]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:34:21.508662 #438971]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=0, ClientPart=[0, 0], ServerPart=[0, 0], UID=0, Username="\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000", Password="\u0004Ï¿å\u0004ªëZA³Fbòô\u0081º\u0000¦WHPat">
+I, [2020-10-07T12:34:21.508768 #438971]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:34:21.508868 #438971]  INFO -- RuneRb: [110, 105, 99, 101, 10]
+I, [2020-10-07T12:39:29.222517 #443575]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:39:29.222717 #443575]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:39:29.222790 #443575]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:39:30.696032 #443889]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439294678559061205
+I, [2020-10-07T12:39:30.696429 #443889]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:39:30.696589 #443889]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:39:30.697084 #443889]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:39:30.697157 #443889]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:39:30.697305 #443889]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:39:30.697380 #443889]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=[58541151, 98893504], ServerPart=[0, 1324843450], UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T12:39:30.697454 #443889]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:39:30.697565 #443889]  INFO -- RuneRb: []
+I, [2020-10-07T12:45:08.096476 #450736]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:45:08.096699 #450736]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:45:08.096770 #450736]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:45:22.049076 #451982]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:45:22.049258 #451982]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:45:22.049347 #451982]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:45:24.444056 #452290]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439297646008558764
+I, [2020-10-07T12:45:24.444354 #452290]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:45:24.444594 #452290]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:45:24.445052 #452290]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:45:24.445128 #452290]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:45:24.445245 #452290]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:45:24.445357 #452290]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=227071549410716150, ServerPart=15078257358712504762, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T12:45:24.445438 #452290]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:45:24.445501 #452290]  INFO -- RuneRb: []
+I, [2020-10-07T12:50:31.474002 #457045]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:50:31.474200 #457045]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:50:31.474274 #457045]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:50:33.447326 #457359]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439300238112538791
+I, [2020-10-07T12:50:33.447626 #457359]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:50:33.447838 #457359]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:50:33.448484 #457359]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:50:33.448681 #457359]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:50:33.448849 #457359]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:50:33.448928 #457359]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=6138431738599839, ServerPart=4907797693926998016, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T12:50:33.449044 #457359]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:50:33.449123 #457359]  INFO -- RuneRb: []
+I, [2020-10-07T12:59:29.250629 #458893]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:59:29.250844 #458893]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:59:29.250915 #458893]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:59:31.510523 #459204]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439304751719159339
+I, [2020-10-07T12:59:31.510805 #459204]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:59:31.511029 #459204]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:59:31.511441 #459204]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:59:31.511605 #459204]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:59:31.511716 #459204]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:59:31.511838 #459204]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=290953351153968131, ServerPart=2079285919596150784, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T12:59:31.511911 #459204]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:59:31.511972 #459204]  INFO -- RuneRb: []
+I, [2020-10-07T12:59:47.773321 #460140]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T12:59:47.773509 #460140]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T12:59:47.773581 #460140]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T12:59:48.554987 #460452]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439304894702664554
+I, [2020-10-07T12:59:48.555295 #460452]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T12:59:48.555542 #460452]  INFO -- RuneRb: Generated seed: 2914909877
+I, [2020-10-07T12:59:48.555617 #460452]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T12:59:48.556131 #460452]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T12:59:48.556204 #460452]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T12:59:48.556352 #460452]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T12:59:48.556427 #460452]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=239056604099315698, ServerPart=13114127715676454912, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T12:59:48.556496 #460452]  INFO -- RuneRb: Incoming Data:
+I, [2020-10-07T12:59:48.556557 #460452]  INFO -- RuneRb: []
+I, [2020-10-07T13:00:28.920094 #461711]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:00:28.920284 #461711]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:00:28.920383 #461711]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:00:32.415299 #462020]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439305262626831014
+I, [2020-10-07T13:00:32.415617 #462020]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:00:32.415762 #462020]  INFO -- RuneRb: Generated seed: 659576372
+I, [2020-10-07T13:00:32.415869 #462020]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:00:32.416300 #462020]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:00:32.416430 #462020]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:00:32.416534 #462020]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:00:32.416604 #462020]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=341866413154738203, ServerPart=3771289866403315712, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:00:32.421451 #462020]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:01:15.270429 #462681]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:01:15.270614 #462681]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:01:15.270718 #462681]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:01:17.229104 #462995]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439305638553287079
+I, [2020-10-07T13:01:17.229426 #462995]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:01:17.229654 #462995]  INFO -- RuneRb: Generated seed: 3821132119
+I, [2020-10-07T13:01:17.229732 #462995]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:01:17.230231 #462995]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:01:17.230306 #462995]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:01:17.230471 #462995]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:01:17.230537 #462995]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=63055613182907908, ServerPart=6330303931947679744, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:01:17.235443 #462995]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:01:41.711397 #464551]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:01:41.711615 #464551]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:01:41.711689 #464551]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:01:42.484079 #464859]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439305850401444519
+I, [2020-10-07T13:01:42.484389 #464859]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:01:42.484609 #464859]  INFO -- RuneRb: Generated seed: 1372157578
+I, [2020-10-07T13:01:42.484683 #464859]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:01:42.485205 #464859]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:01:42.485279 #464859]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:01:42.485458 #464859]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:01:42.485531 #464859]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=373476483375012733, ServerPart=9977383374215446528, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:01:42.490392 #464859]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:03:38.887800 #471091]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:03:38.887984 #471091]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:03:38.888074 #471091]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:03:40.685435 #471402]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439306841948657035
+I, [2020-10-07T13:03:40.685736 #471402]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:03:40.685967 #471402]  INFO -- RuneRb: Generated seed: 1201955707
+I, [2020-10-07T13:03:40.686041 #471402]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:03:40.686519 #471402]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:03:40.686592 #471402]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:03:40.686702 #471402]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:03:40.686820 #471402]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=153845634112377912, ServerPart=8891130714209124352, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:03:40.691627 #471402]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:03:40.691860 #471402]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:04:11.103561 #471758]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:04:11.103761 #471758]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:04:11.103834 #471758]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:04:11.881668 #472066]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439307103646837764
+I, [2020-10-07T13:04:11.882062 #472066]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:04:11.882211 #472066]  INFO -- RuneRb: Generated seed: 386481596
+I, [2020-10-07T13:04:11.882284 #472066]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:04:11.882790 #472066]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:04:11.882891 #472066]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:04:11.883005 #472066]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:04:11.883070 #472066]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=276865059505812396, ServerPart=13564007647098699776, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:04:11.888123 #472066]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:04:11.888299 #472066]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:04:11.888489 #472066]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:14:37.201712 #473132]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:14:37.201912 #473132]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:14:37.201985 #473132]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:14:38.769904 #473447]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439312362365418468
+I, [2020-10-07T13:14:38.770291 #473447]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:14:38.770441 #473447]  INFO -- RuneRb: Generated seed: 3903118807
+I, [2020-10-07T13:14:38.770523 #473447]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:14:38.771033 #473447]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:14:38.771133 #473447]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:14:38.771242 #473447]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:14:38.771307 #473447]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=83999883789513401, ServerPart=15554770004346929152, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:14:38.776327 #473447]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:14:38.776530 #473447]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:14:38.776605 #473447]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:14:55.202106 #473781]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:14:55.202294 #473781]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:14:55.202391 #473781]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:14:58.512246 #474089]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439312527970452606
+I, [2020-10-07T13:14:58.512572 #474089]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:14:58.512759 #474089]  INFO -- RuneRb: Generated seed: 2162469969
+I, [2020-10-07T13:14:58.512834 #474089]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:14:58.513301 #474089]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:14:58.513383 #474089]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:14:58.513493 #474089]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:14:58.513590 #474089]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=386677503472666575, ServerPart=5885330051473342464, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:14:58.518461 #474089]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:14:58.518705 #474089]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:14:58.518788 #474089]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:14:58.518873 #474089]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:15:38.750232 #475968]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:15:38.750439 #475968]  INFO -- RuneRb: [HOST]	127.0.0.1
+I, [2020-10-07T13:15:38.750512 #475968]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:15:40.351655 #476276]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439312878951815220
+I, [2020-10-07T13:15:40.351958 #476276]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:15:40.352108 #476276]  INFO -- RuneRb: Generated seed: 2343009307
+I, [2020-10-07T13:15:40.352270 #476276]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:15:40.352727 #476276]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:15:40.352800 #476276]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:15:40.352905 #476276]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:15:40.353025 #476276]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=148586584095343271, ServerPart=1980642151578468352, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:15:40.357887 #476276]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:15:40.358179 #476276]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:15:40.358265 #476276]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:15:40.358357 #476276]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:15:40.358438 #476276]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:18:21.639772 #477432]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:18:21.639963 #477432]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:18:21.640036 #477432]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:18:25.125015 #477739]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439314261164117697
+I, [2020-10-07T13:18:25.125317 #477739]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:18:25.125555 #477739]  INFO -- RuneRb: Generated seed: 599356415
+I, [2020-10-07T13:18:25.125630 #477739]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:18:25.126255 #477739]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:18:25.126327 #477739]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:18:25.126444 #477739]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:18:25.126544 #477739]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=312609813127936782, ServerPart=18407259661968343040, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:18:25.131494 #477739]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:18:25.131694 #477739]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:18:25.131834 #477739]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:18:25.131923 #477739]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:18:25.131993 #477739]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:19:31.746939 #479144]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:19:31.747142 #479144]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:19:31.747215 #479144]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:19:35.111928 #479456]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439314848262098402
+I, [2020-10-07T13:19:35.112278 #479456]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:19:35.112435 #479456]  INFO -- RuneRb: Generated seed: 2387495451
+I, [2020-10-07T13:19:35.112571 #479456]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:19:35.113117 #479456]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:19:35.113199 #479456]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:19:35.113491 #479456]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:19:35.113560 #479456]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=92244137990704268, ServerPart=1966470559092965376, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:19:35.118440 #479456]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:19:35.118668 #479456]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:19:35.118772 #479456]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:19:35.118902 #479456]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:19:35.118974 #479456]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:20:05.917616 #482539]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:20:05.917849 #482539]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:20:05.917920 #482539]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:20:52.567110 #482850]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439315497997504574
+I, [2020-10-07T13:20:52.567440 #482850]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:20:52.567589 #482850]  INFO -- RuneRb: Generated seed: 3204888951
+I, [2020-10-07T13:20:52.567727 #482850]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:20:52.568231 #482850]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:20:52.568303 #482850]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:20:52.568552 #482850]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:20:52.568644 #482850]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=213721751668001148, ServerPart=8626933978613415936, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:20:52.577232 #482850]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:20:52.577449 #482850]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:20:52.577535 #482850]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:20:52.577602 #482850]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:20:52.577692 #482850]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:20:52.638272 #482850]  INFO -- RuneRb: Registered new profile for Pat
+I, [2020-10-07T13:41:25.029962 #484646]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:41:25.030158 #484646]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:41:25.030230 #484646]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:41:26.315282 #484959]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439325847429496919
+I, [2020-10-07T13:41:26.315598 #484959]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:41:26.315864 #484959]  INFO -- RuneRb: Generated seed: 3010430966
+I, [2020-10-07T13:41:26.315943 #484959]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:41:26.316410 #484959]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:41:26.316482 #484959]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:41:26.316589 #484959]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:41:26.316718 #484959]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=367428692704935650, ServerPart=17764290069776039936, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:41:26.321893 #484959]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:41:26.322118 #484959]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:41:26.322195 #484959]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:41:26.322314 #484959]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:41:26.322393 #484959]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:41:26.382067 #484959]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T13:42:46.783409 #488369]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:42:46.783594 #488369]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:42:46.783667 #488369]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:42:54.710385 #488689]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439326588940574461
+I, [2020-10-07T13:42:54.710742 #488689]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:42:54.710970 #488689]  INFO -- RuneRb: Generated seed: 3818630175
+I, [2020-10-07T13:42:54.711046 #488689]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:42:54.711502 #488689]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:42:54.711575 #488689]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:42:54.711781 #488689]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:42:54.711850 #488689]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=155260941817587083, ServerPart=2282370510429880320, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:42:54.716804 #488689]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:42:54.717029 #488689]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:42:54.717129 #488689]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:42:54.717195 #488689]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:42:54.717316 #488689]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:42:54.776857 #488689]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T13:48:41.544772 #494571]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:48:41.544954 #494571]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:48:41.545038 #494571]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:48:56.580803 #494890]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439329624535981535
+I, [2020-10-07T13:48:56.581111 #494890]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:48:56.581400 #494890]  INFO -- RuneRb: Generated seed: 2281028143
+I, [2020-10-07T13:48:56.581477 #494890]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:48:56.581886 #494890]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:48:56.581996 #494890]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:48:56.582106 #494890]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:48:56.582176 #494890]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=32927770518760536, ServerPart=3439331225620185088, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:48:56.587880 #494890]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:48:56.588066 #494890]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:48:56.588174 #494890]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:48:56.588238 #494890]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:48:56.588402 #494890]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:48:56.649670 #494890]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T13:50:38.933482 #496002]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:50:38.933685 #496002]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:50:38.933771 #496002]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:50:40.428751 #496316]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439330495677382762
+I, [2020-10-07T13:50:40.429040 #496316]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:50:40.429244 #496316]  INFO -- RuneRb: Generated seed: 3779941100
+I, [2020-10-07T13:50:40.429319 #496316]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:50:40.429846 #496316]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:50:40.429934 #496316]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:50:40.430042 #496316]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:50:40.430155 #496316]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=251486119252726261, ServerPart=17028758769804247040, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:50:40.435216 #496316]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:50:40.435388 #496316]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:50:40.435510 #496316]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:50:40.435659 #496316]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:50:40.435729 #496316]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:50:40.494441 #496316]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T13:52:50.527100 #498593]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T13:52:50.527317 #498593]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T13:52:50.527394 #498593]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T13:52:52.263288 #498907]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439331601576964702
+I, [2020-10-07T13:52:52.263626 #498907]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T13:52:52.263775 #498907]  INFO -- RuneRb: Generated seed: 3091765177
+I, [2020-10-07T13:52:52.263849 #498907]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T13:52:52.264373 #498907]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T13:52:52.264447 #498907]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T13:52:52.264616 #498907]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T13:52:52.264683 #498907]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=31315968098020403, ServerPart=13373237573611159552, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T13:52:52.269453 #498907]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T13:52:52.269659 #498907]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T13:52:52.269735 #498907]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T13:52:52.269831 #498907]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T13:52:52.269994 #498907]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T13:52:52.314944 #498907]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:33:36.264789 #507319]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:33:36.264984 #507319]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:33:36.265056 #507319]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:33:38.028477 #507633]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439352118149086173
+I, [2020-10-07T14:33:38.028833 #507633]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:33:38.028980 #507633]  INFO -- RuneRb: Generated seed: 3095567829
+I, [2020-10-07T14:33:38.029140 #507633]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:33:38.029933 #507633]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:33:38.030011 #507633]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:33:38.030158 #507633]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:33:38.030227 #507633]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=191507944606410871, ServerPart=15392602828207816704, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:33:38.035286 #507633]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:33:38.035459 #507633]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:33:38.035578 #507633]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:33:38.035644 #507633]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:33:38.035714 #507633]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:33:38.083456 #507633]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:34:06.835076 #507699]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:34:06.835261 #507699]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:34:06.835334 #507699]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:34:09.361907 #508006]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439352380987218267
+I, [2020-10-07T14:34:09.362197 #508006]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:34:09.362452 #508006]  INFO -- RuneRb: Generated seed: 83600640
+I, [2020-10-07T14:34:09.362529 #508006]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:34:09.363081 #508006]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:34:09.363184 #508006]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:34:09.363291 #508006]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:34:09.363357 #508006]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=163808579546309118, ServerPart=46719365755699200, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:34:09.368151 #508006]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:34:09.368321 #508006]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:34:09.368417 #508006]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:34:09.368485 #508006]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:34:09.368624 #508006]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:34:09.415117 #508006]  INFO -- RuneRb: Registered new profile for Pat
+I, [2020-10-07T14:36:33.344641 #508129]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:36:33.344835 #508129]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:36:33.344924 #508129]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:37:46.794214 #510927]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:37:46.794438 #510927]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:37:46.794510 #510927]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:37:48.994320 #511242]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439354223398791251
+I, [2020-10-07T14:37:48.994681 #511242]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:37:48.994824 #511242]  INFO -- RuneRb: Generated seed: 3882179607
+I, [2020-10-07T14:37:48.994898 #511242]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:37:48.995297 #511242]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:37:48.995380 #511242]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:37:48.995573 #511242]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:37:48.995640 #511242]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=190433086154924567, ServerPart=1683332403541573632, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:37:49.000573 #511242]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:37:49.000720 #511242]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:37:49.000795 #511242]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:37:49.000908 #511242]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:37:49.000982 #511242]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:37:49.045866 #511242]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:38:03.501505 #511269]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:38:03.501697 #511269]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:38:03.501767 #511269]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:38:04.508923 #511577]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439354353546337207
+I, [2020-10-07T14:38:04.509209 #511577]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:38:04.509421 #511577]  INFO -- RuneRb: Generated seed: 2379246613
+I, [2020-10-07T14:38:04.509503 #511577]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:38:04.509953 #511577]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:38:04.510026 #511577]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:38:04.510134 #511577]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:38:04.510246 #511577]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=94342951054193737, ServerPart=1543838076290203648, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:38:04.515337 #511577]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:38:04.515521 #511577]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:38:04.515610 #511577]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:38:04.515719 #511577]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:38:04.515867 #511577]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:38:04.562733 #511577]  INFO -- RuneRb: Registered new profile for Pat
+I, [2020-10-07T14:47:50.306087 #517774]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:47:50.306295 #517774]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:47:50.306385 #517774]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:47:54.508063 #518088]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439359302817900120
+I, [2020-10-07T14:47:54.508403 #518088]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:47:54.508552 #518088]  INFO -- RuneRb: Generated seed: 882198568
+I, [2020-10-07T14:47:54.508626 #518088]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:47:54.509070 #518088]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:47:54.509146 #518088]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:47:54.509324 #518088]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:47:54.509407 #518088]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=208213975802844287, ServerPart=2902734010411122688, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:47:54.514545 #518088]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:47:54.515063 #518088]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:47:54.515200 #518088]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:47:54.515353 #518088]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:47:54.515434 #518088]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:47:54.560651 #518088]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:48:03.925976 #518110]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:48:03.926161 #518110]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:48:03.926233 #518110]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:48:07.285318 #518419]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439359410000200948
+I, [2020-10-07T14:48:07.286333 #518419]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:48:07.286576 #518419]  INFO -- RuneRb: Generated seed: 709185375
+I, [2020-10-07T14:48:07.286843 #518419]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:48:07.287456 #518419]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:48:07.287547 #518419]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:48:07.287663 #518419]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:48:07.287793 #518419]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=68611217809951151, ServerPart=6867784003454238720, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:48:07.293038 #518419]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:48:07.293242 #518419]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:48:07.293402 #518419]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:48:07.293490 #518419]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:48:07.293563 #518419]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:48:07.340055 #518419]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:48:07.340235 #518419]  INFO -- RuneRb: {}
+I, [2020-10-07T14:59:06.623758 #525615]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T14:59:06.623946 #525615]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T14:59:06.624036 #525615]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T14:59:08.994015 #525929]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439364960818647674
+I, [2020-10-07T14:59:08.994307 #525929]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T14:59:08.994467 #525929]  INFO -- RuneRb: Generated seed: 2074025229
+I, [2020-10-07T14:59:08.994542 #525929]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T14:59:08.994988 #525929]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T14:59:08.995060 #525929]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T14:59:08.995214 #525929]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T14:59:08.995280 #525929]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=323218262113599993, ServerPart=945086847447465984, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T14:59:09.000146 #525929]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T14:59:09.000320 #525929]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T14:59:09.000395 #525929]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T14:59:09.000513 #525929]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T14:59:09.000614 #525929]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T14:59:09.061395 #525929]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T14:59:09.061575 #525929]  INFO -- RuneRb: {}
+I, [2020-10-07T15:01:00.810114 #527307]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:01:00.810331 #527307]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:01:00.810427 #527307]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:01:06.366694 #527618]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439365945413087370
+I, [2020-10-07T15:01:06.367050 #527618]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:01:06.367211 #527618]  INFO -- RuneRb: Generated seed: 2450684863
+I, [2020-10-07T15:01:06.367291 #527618]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:01:06.367770 #527618]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:01:06.367847 #527618]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:01:06.367967 #527618]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:01:06.368082 #527618]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=231599639007656571, ServerPart=13797642301654171648, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:01:06.373495 #527618]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:01:06.373774 #527618]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:01:06.373859 #527618]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:01:06.373950 #527618]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:01:06.374066 #527618]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:01:06.434816 #527618]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:01:06.435008 #527618]  INFO -- RuneRb: {}
+I, [2020-10-07T15:03:01.862668 #528360]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:03:01.862888 #528360]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:03:01.862965 #528360]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:03:04.299322 #528674]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439366934699534454
+I, [2020-10-07T15:03:04.299635 #528674]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:03:04.299837 #528674]  INFO -- RuneRb: Generated seed: 1004968512
+I, [2020-10-07T15:03:04.299918 #528674]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:03:04.300294 #528674]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:03:04.300430 #528674]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:03:04.300546 #528674]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:03:04.300613 #528674]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=325670134402830718, ServerPart=4655286305918287872, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:03:04.306407 #528674]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:03:04.306688 #528674]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:03:04.306790 #528674]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:03:04.306856 #528674]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:03:04.306998 #528674]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:03:19.005337 #529308]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:03:19.005528 #529308]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:03:19.005602 #529308]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:03:22.775232 #529616]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439367089683360674
+I, [2020-10-07T15:03:22.775658 #529616]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:03:22.775817 #529616]  INFO -- RuneRb: Generated seed: 658641898
+I, [2020-10-07T15:03:22.775893 #529616]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:03:22.776302 #529616]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:03:22.776388 #529616]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:03:22.776542 #529616]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:03:22.776610 #529616]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=100078755277711200, ServerPart=16866897764703797248, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:03:22.781325 #529616]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:03:22.781540 #529616]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:03:22.781629 #529616]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:03:22.781809 #529616]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:03:22.781884 #529616]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:03:22.845564 #529616]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:03:22.845757 #529616]  INFO -- RuneRb: {}
+I, [2020-10-07T15:03:53.678049 #531181]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:03:53.678235 #531181]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:03:53.678307 #531181]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:03:57.686300 #531492]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439367382540738924
+I, [2020-10-07T15:03:57.686751 #531492]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:03:57.686902 #531492]  INFO -- RuneRb: Generated seed: 355325889
+I, [2020-10-07T15:03:57.686978 #531492]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:03:57.687438 #531492]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:03:57.687517 #531492]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:03:57.687661 #531492]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:03:57.687728 #531492]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=69758592599004635, ServerPart=13967682337530445824, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:03:57.692599 #531492]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:03:57.692927 #531492]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:03:57.693144 #531492]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:03:57.693227 #531492]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:03:57.693333 #531492]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:03:57.754983 #531492]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:03:57.755167 #531492]  INFO -- RuneRb: {}
+I, [2020-10-07T15:04:23.084673 #532442]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:04:23.084866 #532442]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:04:23.084937 #532442]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:04:26.948292 #532753]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439367628006638150
+I, [2020-10-07T15:04:26.948610 #532753]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:04:26.948946 #532753]  INFO -- RuneRb: Generated seed: 3732214689
+I, [2020-10-07T15:04:26.949022 #532753]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:04:26.949487 #532753]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:04:26.949566 #532753]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:04:26.949710 #532753]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:04:26.949777 #532753]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=233035519507889471, ServerPart=11606750261007089664, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:04:26.954669 #532753]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:04:26.954895 #532753]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:04:26.954986 #532753]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:04:26.955056 #532753]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:04:26.955188 #532753]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:04:27.016809 #532753]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:07:17.556440 #535110]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:07:17.556643 #535110]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:07:17.556719 #535110]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:07:19.367008 #535425]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439369074364711682
+I, [2020-10-07T15:07:19.367342 #535425]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:07:19.367634 #535425]  INFO -- RuneRb: Generated seed: 2567231300
+I, [2020-10-07T15:07:19.367711 #535425]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:07:19.368566 #535425]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:07:19.368693 #535425]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:07:19.368814 #535425]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:07:19.368878 #535425]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=164838040280167842, ServerPart=4960438569748398080, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:07:19.374785 #535425]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:07:19.375020 #535425]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:07:19.375103 #535425]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:07:19.375168 #535425]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:07:19.375297 #535425]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:07:19.443134 #535425]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:07:19.443551 #535425]  INFO -- RuneRb: Loc:nil
+I, [2020-10-07T15:07:19.443637 #535425]  INFO -- RuneRb: {}
+I, [2020-10-07T15:22:41.863417 #545858]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:22:41.863609 #545858]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:22:41.863694 #545858]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:23:01.318290 #547422]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:23:01.318517 #547422]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:23:01.318603 #547422]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:23:05.918491 #548034]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439377014607300536
+I, [2020-10-07T15:23:05.918801 #548034]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:23:05.918977 #548034]  INFO -- RuneRb: Generated seed: 4095633248
+I, [2020-10-07T15:23:05.919053 #548034]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:23:05.919458 #548034]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:23:05.919567 #548034]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:23:05.919684 #548034]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:23:05.919750 #548034]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=278393518069922342, ServerPart=6946554983563132928, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:23:05.924415 #548034]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:23:05.924568 #548034]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:23:05.924740 #548034]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:23:05.924804 #548034]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:23:05.924927 #548034]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:24:14.155138 #550543]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:24:14.155320 #550543]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:24:14.155399 #550543]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:24:18.086490 #550854]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439377620000576968
+I, [2020-10-07T15:24:18.086886 #550854]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:24:18.087036 #550854]  INFO -- RuneRb: Generated seed: 1291527631
+I, [2020-10-07T15:24:18.087110 #550854]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:24:18.087522 #550854]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:24:18.087598 #550854]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:24:18.087732 #550854]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:24:18.087799 #550854]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=313813971645310420, ServerPart=14926612843825463296, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:24:18.092629 #550854]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:24:18.092821 #550854]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:24:18.092898 #550854]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:24:18.093034 #550854]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:24:18.093105 #550854]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:24:18.170623 #550854]  INFO -- RuneRb: Registered new profile for Pat
+I, [2020-10-07T15:26:35.459917 #553147]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:26:35.460132 #553147]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:26:35.460204 #553147]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:26:39.910563 #553461]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439378809714574849
+I, [2020-10-07T15:26:39.910871 #553461]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:26:39.911025 #553461]  INFO -- RuneRb: Generated seed: 612670990
+I, [2020-10-07T15:26:39.911159 #553461]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:26:39.911604 #553461]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:26:39.911681 #553461]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:26:39.911785 #553461]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:26:39.911851 #553461]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=37402512336534543, ServerPart=1053424653004963840, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:26:39.917313 #553461]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:26:39.917528 #553461]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:26:39.917599 #553461]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:26:39.917678 #553461]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:26:39.917789 #553461]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:26:39.978582 #553461]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:32:03.235869 #555112]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:32:03.236070 #555112]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:32:03.236141 #555112]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:32:06.157689 #555429]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439381546467150399
+I, [2020-10-07T15:32:06.158073 #555429]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:32:06.158282 #555429]  INFO -- RuneRb: Generated seed: 1713922768
+I, [2020-10-07T15:32:06.158363 #555429]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:32:06.158848 #555429]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:32:06.158922 #555429]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:32:06.159033 #555429]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:32:06.159160 #555429]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=120717022347219502, ServerPart=15015608526158430208, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:32:06.164285 #555429]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:32:06.164465 #555429]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:32:06.164571 #555429]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:32:06.164693 #555429]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:32:06.164766 #555429]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:32:06.225357 #555429]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:32:52.243030 #556393]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:32:52.243217 #556393]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:32:52.243291 #556393]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:32:54.457173 #556701]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439381951632146350
+I, [2020-10-07T15:32:54.457573 #556701]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:32:54.457827 #556701]  INFO -- RuneRb: Generated seed: 2926874655
+I, [2020-10-07T15:32:54.457903 #556701]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:32:54.458473 #556701]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:32:54.458546 #556701]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:32:54.458712 #556701]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:32:54.458779 #556701]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=298324404078328134, ServerPart=2274446102495232000, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:32:54.463517 #556701]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:32:54.463701 #556701]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:32:54.463778 #556701]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:32:54.463841 #556701]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:32:54.463956 #556701]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:32:54.525599 #556701]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:42:37.527858 #559230]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:42:37.528061 #559230]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:42:37.528135 #559230]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:42:42.421662 #559548]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439386883834013993
+I, [2020-10-07T15:42:42.421993 #559548]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:42:42.422136 #559548]  INFO -- RuneRb: Generated seed: 412990175
+I, [2020-10-07T15:42:42.422210 #559548]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:42:42.422694 #559548]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:42:42.422768 #559548]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:42:42.422916 #559548]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:42:42.422983 #559548]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=8236978545285026, ServerPart=16121370542530887680, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:42:42.427805 #559548]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:42:42.428021 #559548]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:42:42.428099 #559548]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:42:42.428193 #559548]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:42:42.428329 #559548]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:42:42.489562 #559548]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:42:57.508061 #559548]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439387010409523922
+I, [2020-10-07T15:42:57.508286 #559548]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-10-07T15:42:57.508425 #559548] ERROR -- RuneRb: Socket has no data
+I, [2020-10-07T15:42:57.508557 #559548]  INFO -- RuneRb: Generated seed: 2005462502
+I, [2020-10-07T15:42:57.508650 #559548]  INFO -- RuneRb: [Type]: Login
+E, [2020-10-07T15:42:57.508986 #559548] ERROR -- RuneRb: Socket has no data
+I, [2020-10-07T15:42:57.509158 #559548]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:42:57.509235 #559548]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=18, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:42:57.509350 #559548]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:42:57.509425 #559548]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=144727371308646214, ServerPart=16640106242886336512, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:42:57.512194 #559548]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:42:57.512321 #559548]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:42:57.512400 #559548]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:42:57.512466 #559548]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:42:57.512564 #559548]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:42:57.513384 #559548]  INFO -- RuneRb: Loaded profile for Pat!
+E, [2020-10-07T15:42:57.514409 #559548] ERROR -- RuneRb: Reached EOF!
+I, [2020-10-07T15:42:57.514602 #559548]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-10-07T15:45:15.207733 #560928]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:45:15.207917 #560928]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:45:15.207989 #560928]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:45:19.076698 #561239]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439388197959242727
+I, [2020-10-07T15:45:19.077003 #561239]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:45:19.077318 #561239]  INFO -- RuneRb: Generated seed: 2540986486
+I, [2020-10-07T15:45:19.077400 #561239]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:45:19.078044 #561239]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:45:19.078128 #561239]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:45:19.078268 #561239]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:45:19.078336 #561239]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=307155943426952960, ServerPart=8529945886128603136, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:45:19.082988 #561239]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:45:19.083201 #561239]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:45:19.083295 #561239]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:45:19.083463 #561239]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:45:19.083541 #561239]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:45:19.144753 #561239]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:48:21.743935 #566584]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:48:21.744156 #566584]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:48:21.744232 #566584]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:48:26.727997 #566898]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439389772087013106
+I, [2020-10-07T15:48:26.728335 #566898]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:48:26.728541 #566898]  INFO -- RuneRb: Generated seed: 2741410481
+I, [2020-10-07T15:48:26.728616 #566898]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:48:26.729080 #566898]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:48:26.729153 #566898]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:48:26.729273 #566898]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:48:26.729385 #566898]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=5087208460155490, ServerPart=12797654141392388096, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:48:26.734116 #566898]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:48:26.734346 #566898]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:48:26.734433 #566898]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:48:26.734498 #566898]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:48:26.734636 #566898]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:48:37.207529 #567836]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:48:37.207723 #567836]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:48:37.207792 #567836]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:48:41.036629 #568147]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439389892115952997
+I, [2020-10-07T15:48:41.037073 #568147]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:48:41.037225 #568147]  INFO -- RuneRb: Generated seed: 3136050190
+I, [2020-10-07T15:48:41.037315 #568147]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:48:41.037804 #568147]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:48:41.037883 #568147]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:48:41.038051 #568147]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:48:41.038117 #568147]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=304619224089746293, ServerPart=1032710498182758400, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:48:41.043206 #568147]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:48:41.043491 #568147]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:48:41.043572 #568147]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:48:41.043660 #568147]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:48:41.043742 #568147]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:48:41.104788 #568147]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:51:57.242407 #570876]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:51:57.242604 #570876]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:51:57.242677 #570876]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:52:41.171328 #572177]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:52:41.171531 #572177]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:52:41.171600 #572177]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:52:42.377654 #572487]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439391916638563307
+I, [2020-10-07T15:52:42.378009 #572487]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:52:42.378153 #572487]  INFO -- RuneRb: Generated seed: 1866272260
+I, [2020-10-07T15:52:42.378226 #572487]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:52:42.378698 #572487]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:52:42.378773 #572487]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:52:42.378929 #572487]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:52:42.378996 #572487]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=343104123932176499, ServerPart=292238572776325120, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:52:42.384088 #572487]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:52:42.384262 #572487]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:52:42.384385 #572487]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:52:42.384450 #572487]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:52:42.384581 #572487]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:52:42.443344 #572487]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-10-07T15:54:44.258578 #574201]  INFO -- RuneRb: New Endpoint instance!
+I, [2020-10-07T15:54:44.258780 #574201]  INFO -- RuneRb: [HOST]	0.0.0.0
+I, [2020-10-07T15:54:44.258851 #574201]  INFO -- RuneRb: [PORT]	43594
+I, [2020-10-07T15:54:51.472741 #574516]  INFO -- RuneRb: Client initialized from 127.0.0.1 with UUID: 13439392999561826336
+I, [2020-10-07T15:54:51.473027 #574516]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-10-07T15:54:51.473165 #574516]  INFO -- RuneRb: Generated seed: 2284852155
+I, [2020-10-07T15:54:51.473278 #574516]  INFO -- RuneRb: [Type]: Login
+I, [2020-10-07T15:54:51.473665 #574516]  INFO -- RuneRb: Read Connection block!
+I, [2020-10-07T15:54:51.473789 #574516]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=30, Magic=255, Revision=377, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-10-07T15:54:51.473898 #574516]  INFO -- RuneRb: Read login block!
+I, [2020-10-07T15:54:51.473969 #574516]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_OpCode=10, ClientPart=205708991990712745, ServerPart=13480171470323712000, UID=10901320, Username="Pat", Password="nice">
+I, [2020-10-07T15:54:51.479115 #574516]  INFO -- RuneRb: Ready for Validation
+I, [2020-10-07T15:54:51.479359 #574516]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-10-07T15:54:51.479444 #574516]  INFO -- RuneRb: Session key Validated!
+I, [2020-10-07T15:54:51.479510 #574516]  INFO -- RuneRb: Magic Validated!
+I, [2020-10-07T15:54:51.479633 #574516]  INFO -- RuneRb: Revision Validated!
+I, [2020-10-07T15:54:51.539876 #574516]  INFO -- RuneRb: Loaded profile for Pat!
