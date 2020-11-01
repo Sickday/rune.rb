@@ -7,7 +7,7 @@ module RuneRb::Patches::StringOverrides
 
     # returns the next byte.
     def next_byte
-      slice!(0).unpack1('c')
+      slice!(1).unpack1('c')
     end
 
     # Returns the next x amount of byte values.

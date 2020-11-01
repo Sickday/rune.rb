@@ -22,6 +22,7 @@ module RuneRb::Network::FrameReader
     raise 'Invalid cipher for Peer!' unless @cipher
 
     frame.header[:op_code] -= @cipher[:decryptor].next_value.unsigned(:byte)
+    log frame.inspect
     frame
   end
 

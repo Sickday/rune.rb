@@ -10,7 +10,8 @@ module RuneRb::Network
       @selector.register(@server, :r).value = proc { accept_peer }
       @peers = {}
       @clients = {}
-      log 'New Endpoint instance!', "[HOST]\t#{@server.addr[-1]}", "[PORT]\t#{@server.addr[1]}"
+      log RuneRb::COL.blue('[HOST]:' + RuneRb::COL.cyan("\t#{@server.addr[-1]}")),
+          RuneRb::COL.blue('[PORT]:' + RuneRb::COL.cyan("\t#{@server.addr[1]}"))
     end
 
     # Spawns a new process and executes the selection loop within that process. *

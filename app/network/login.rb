@@ -1,5 +1,6 @@
 module RuneRb::Network::AuthenticationHelper
   using RuneRb::Patches::IntegerOverrides
+  using RuneRb::Patches::StringOverrides
 
   Cipher = Struct.new(:decryptor, :encryptor)
 
@@ -11,19 +12,19 @@ module RuneRb::Network::AuthenticationHelper
   rescue RuneRb::Errors::LoginError => e
     case e.type
     when :UnrecognizedConnectionType, :MagicMismatch
-      write_now([11].pack('C')) # 11	"Login server rejected session. Please try again."
+      write([11].pack('C')) # 11	"Login server rejected session. Please try again."
       disconnect
     when :SeverHalfMismatch
-      write_now([10].pack('C')) # 10	"Unable to connect. Bad session-id."
+      write([10].pack('C')) # 10	"Unable to connect. Bad session-id."
       disconnect
     when :LoginOpcode
-      write_now([20].pack('C')) # 20	"Invalid loginserver requested. Please try using a different world."
+      write([20].pack('C')) # 20	"Invalid loginserver requested. Please try using a different world."
       disconnect
     when :InvalidCredentials
-      write_now([3].pack('C')) # 3	"Invalid username or password."
+      write([3].pack('C')) # 3	"Invalid username or password."
       disconnect
     when :VersionMismatch
-      write_now([6].pack('C')) # 6	"RuneScape has been updated! Please reload this page."
+      write([6].pack('C')) # 6	"RuneScape has been updated! Please reload this page."
       disconnect
     end
   end
@@ -31,24 +32,24 @@ module RuneRb::Network::AuthenticationHelper
   private
 
   def read_connection
-    connection_type = @channel[:in].read_byte(false)
-    @name_long = @channel[:in].read_byte(false)
+    connection_type = @login.read_byte
+    @name_long = @login.read_byte
     @generated_seed = rand(1 << 32) # Druuid.gen
 
     log "Generated seed: #{@generated_seed & 0xFFFFFFFF}"
     case connection_type
     when RuneRb::Network::CONNECTION_TYPES[:GAME_NEW]
       log! '[Type]: Online'
-      write_now([0].pack('n'))
+      write([0].pack('n'))
       disconnect
     when RuneRb::Network::CONNECTION_TYPES[:GAME_UPDATE]
       log! '[Type]: Update'
-      write_now(Array.new(8, 0)).pack('C' * 8)
+      write(Array.new(8, 0)).pack('C' * 8)
     when RuneRb::Network::CONNECTION_TYPES[:GAME_LOGIN]
       log '[Type]: Login'
-      write_now([0].pack('q')) # Ignored 8 bytes
-      write_now([0].pack('C')) # Response
-      write_now([@generated_seed & 0xFFFFFFFF].pack('q')) # Server key
+      write([0].pack('q')) # Ignored 8 bytes
+      write([0].pack('C')) # Response
+      write([@generated_seed & 0xFFFFFFFF].pack('q')) # Server key
       @stage = :PENDING_BLOCK
     else
       raise RuneRb::Errors::LoginError.new(:UnrecognizedConnectionType, RuneRb::Network::CONNECTION_TYPES.values, connection_type)
@@ -71,21 +72,21 @@ module RuneRb::Network::AuthenticationHelper
                           :Password)
 
   def read_block
-    @connection_block = ConnectionBlock.new(@channel[:in].read_byte,               # Type
-                                            @channel[:in].read_byte - 40,          # Size
-                                            @channel[:in].read_byte,               # Magic (255)
-                                            @channel[:in].read_short(false),       # Version
-                                            @channel[:in].read_byte.positive? ? :LOW : :HIGH, # Low memory?
-                                            [].tap { |arr| 9.times { arr << @channel[:in].read_int } }) # CRC
+    @connection_block = ConnectionBlock.new(@login.read_byte,               # Type
+                                            @login.read_byte - 40,          # Size
+                                            @login.read_byte,               # Magic (255)
+                                            @login.read_short(false),              # Version
+                                            @login.read_byte.positive? ? :LOW : :HIGH, # Low memory?
+                                            [].tap { |arr| 9.times { arr << @login.read_int } })
     log 'Read Connection block!', @connection_block.inspect
 
-    @login_block = LoginBlock.new(@channel[:in].read_byte,                          # RSA_Block Length
-                                  @channel[:in].read_byte,                          # RSA_Block OpCode (10)
-                                  @channel[:in].read_long,                          # Client Part
-                                  @channel[:in].read_long,                          # Server Part
-                                  @channel[:in].read_int,                           # UID
-                                  @channel[:in].read_string,                        # Username
-                                  @channel[:in].read_string)                        # Password
+    @login_block = LoginBlock.new(@login.read_byte,                          # RSA_Block Length
+                                  @login.next_byte,                          # RSA_Block OpCode (10)
+                                  @login.read_long,                          # Client Part
+                                  @login.read_long,                          # Server Part
+                                  @login.read_int,                           # UID
+                                  @login.read_string,                        # Username
+                                  @login.read_string)                        # Password
 
     log 'Read login block!', @login_block.inspect
     log "Received #{[@login_block[:ServerPart] >> 32, @login_block[:ServerPart]].pack('NN').unpack1('L')}"
@@ -103,7 +104,7 @@ module RuneRb::Network::AuthenticationHelper
   end
 
   def login(profile)
-    write_now([2, profile[:rights], 0].pack('C*')) # Successful Login!
+    write([2, profile[:rights], 0].pack('C*')) # Successful Login!
     write_region(region_x: profile.location.x, region_y: profile.location.y)
     write_sidebars
     #write_text('Thanks for testing Rune.rb.')

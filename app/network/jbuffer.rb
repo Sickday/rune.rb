@@ -199,21 +199,18 @@ module RuneRb::Network
   end
 
   class JReadableBuffer
+    using RuneRb::Patches::StringOverrides
 
-    def initialize(socket, size)
-      @io = NIO::ByteBuffer.new(size)
-      @io.read_from(socket)
-      @io.position = 0
+    def initialize
+      @io = ''
     end
-
-    alias initialize from
 
     # Read a byte from the underlying buffer
     # @param signed [Boolean] Should the byte be signed?
     # @param type [Symbol] the type of byte to read. Accommodates Jagex-specific types (:STD, :A, :C, :S)
     def read_byte(signed = false, type = :STD)
       valid_type?(type)
-      val = @io.get(1)
+      val = @io.next_byte
       case type
       when :A then val -= 128
       when :C then val = -val
@@ -315,10 +312,6 @@ module RuneRb::Network
       val
     end
 
-    def reset_cursor(to = 0)
-      @io.position = to
-    end
-
     # Reset the io to an empty string
     def reset
       @io.clear
@@ -326,18 +319,20 @@ module RuneRb::Network
 
     # Duplicates the underlying io and returns an unpacked 'view' of the io.
     def view
-      pos = @io.position
-      reset_cursor
-      res = @io.get
-      reset_cursor(pos)
-      res
+      @io.unpack('c*').to_s
     end
 
     def size
-      view.size
+      @io.size
     end
 
     alias length size
+
+    def write(data)
+      @io << data
+    end
+
+    alias << write
 
     private
 

@@ -80,6 +80,8 @@ module RuneRb
     autoload :Endpoint,             'network/endpoint'
 
     autoload :Frame,                'network/frame'
+    autoload :FrameReader,          'network/frame/reader'
+    autoload :FrameWriter,          'network/frame/writer'
     autoload :InFrame,              'network/frame'
 
     autoload :ISAAC,                'network/isaac'

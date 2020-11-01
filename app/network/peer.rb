@@ -14,14 +14,21 @@ module RuneRb::Network
       @status = { active: true, authenticated: false }
       @in = { raw: '', parsed: [] }
       @out = { raw: '', encoded: [] }
+      @login = RuneRb::Network::JReadableBuffer.new
       @id = Druuid.gen
     end
 
     # Reads at most 5,120 bytes into the Peer#in object.
     def receive_data
-      @in[:raw] << @socket.read_nonblock(5120)
-      authenticate unless @status[:authenticated]
-      read_frames
+      if @status[:active]
+        if @status[:authenticated]
+          @in[:raw] << @socket.read_nonblock(64)
+          read_frames
+        else
+          @login << @socket.read_nonblock(256)
+          authenticate
+        end
+      end
     rescue IO::EAGAINWaitReadable
       err 'Socket has no data'
     rescue EOFError
@@ -60,7 +67,10 @@ module RuneRb::Network
     # @param data [String, StringIO] the the data to write.
     def write(data = '')
       @out[:raw] << data
+      write_now
     end
+
+    alias << write
 
     def flush
       unless @out[:encoded].empty?
