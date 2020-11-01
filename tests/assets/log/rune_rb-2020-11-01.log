@@ -10,3 +10,278 @@ I, [2020-11-01T00:07:51.746625 #248489]  INFO -- RuneRb: [Type]: Login
 I, [2020-11-01T00:09:42.964997 #249856]  INFO -- RuneRb: [HOST]:	0.0.0.0
 I, [2020-11-01T00:09:42.965195 #249856]  INFO -- RuneRb: [PORT]:	43594
 I, [2020-11-01T00:09:46.193618 #250167]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T00:18:44.690167 #256838]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T00:18:44.690366 #256838]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T00:18:46.161916 #257149]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:01:37.827665 #17672]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:01:37.827867 #17672]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:01:40.336744 #17987]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-01T17:01:40.337193 #17987] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T17:04:52.947994 #19605]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:04:52.948252 #19605]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:04:55.386860 #19921]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:05:54.615420 #22382]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:05:54.615662 #22382]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:05:56.610561 #22696]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:05:56.612158 #22696]  INFO -- RuneRb: Buffer: #<RuneRb::Network::JReadableBuffer:0x000055c2a8afb3b8>
+I, [2020-11-01T17:06:10.328825 #23317]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:06:10.329031 #23317]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:06:13.420356 #23629]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:06:13.421843 #23629]  INFO -- RuneRb: Buffer: [14, 0]
+I, [2020-11-01T17:10:44.701298 #25405]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:10:44.701522 #25405]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:10:47.353105 #25719]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:10:47.354608 #25719]  INFO -- RuneRb: Buffer: [14, 0]
+I, [2020-11-01T17:10:47.354738 #25719]  INFO -- RuneRb: Generated seed: 716170884
+I, [2020-11-01T17:10:47.354816 #25719]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T17:13:48.976268 #28648]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:13:48.976503 #28648]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:13:50.739859 #28963]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:13:50.741404 #28963]  INFO -- RuneRb: Buffer: [14, 0]
+I, [2020-11-01T17:13:50.741566 #28963]  INFO -- RuneRb: Generated seed: 2999422169
+I, [2020-11-01T17:13:50.741642 #28963]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T17:13:50.741824 #28963]  INFO -- RuneRb: Buffer
+I, [2020-11-01T17:13:50.741896 #28963]  INFO -- RuneRb: []
+I, [2020-11-01T17:16:08.418820 #31575]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:16:08.419055 #31575]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:16:10.107992 #31888]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:16:10.109504 #31888]  INFO -- RuneRb: Buffer: [14, 0]
+I, [2020-11-01T17:16:10.109626 #31888]  INFO -- RuneRb: Generated seed: 1275915730
+I, [2020-11-01T17:16:10.109747 #31888]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T17:16:10.110181 #31888]  INFO -- RuneRb: Buffer
+I, [2020-11-01T17:16:10.110256 #31888]  INFO -- RuneRb: [16, 71, -1, 1, 61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 10, 4, -111, 92, -2, 1, -21, 81, -74, 0, 0, 0, 0, 0, 0, 0, 0, 0, -90, 87, 72, 80, 97, 116, 10, 110, 105, 99, 101, 10]
+I, [2020-11-01T17:16:10.110457 #31888]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T17:16:10.110540 #31888]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T17:16:10.110720 #31888]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T17:16:10.110793 #31888]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=329146493798404534, ServerPart=0, UID=10901320, Username="Pat", Password="nice">
+I, [2020-11-01T17:16:10.110892 #31888]  INFO -- RuneRb: Received 0
+I, [2020-11-01T17:16:10.117785 #31888]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T17:16:10.118035 #31888]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-01T17:17:03.681664 #33150]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:17:03.681860 #33150]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:17:08.035856 #33459]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:17:08.037368 #33459]  INFO -- RuneRb: Generated seed: 1384186780
+I, [2020-11-01T17:17:08.037502 #33459]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T17:17:08.038072 #33459]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T17:17:08.038150 #33459]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T17:17:08.038288 #33459]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T17:17:08.038407 #33459]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=228230245678483092, ServerPart=0, UID=10901320, Username="Pat", Password="nice">
+I, [2020-11-01T17:17:08.038485 #33459]  INFO -- RuneRb: Received 0
+I, [2020-11-01T17:17:08.043263 #33459]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T17:17:08.043435 #33459]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-01T17:35:11.780225 #60648]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T17:35:11.780411 #60648]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T17:35:25.494625 #60962]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T17:35:25.496250 #60962]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T17:35:25.496353 #60962]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T17:35:25.497057 #60962]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T17:35:25.497144 #60962]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T17:35:25.497393 #60962]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T17:35:25.497461 #60962]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=379843634971982635, ServerPart=0, UID=10901320, Username="Pat", Password="nice", Seed=0>
+I, [2020-11-01T17:35:25.502230 #60962]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T17:35:25.502409 #60962]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T17:35:25.502506 #60962] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T17:35:25.502630 #60962] ERROR -- RuneRb: Expected: 3674554412, Received: 0
+I, [2020-11-01T17:35:25.502706 #60962]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T17:35:25.502784 #60962]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T17:35:25.621032 #60962]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:28:43.519824 #117700]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:28:43.520027 #117700]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:28:45.998980 #118016]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:28:45.999825 #118016]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:28:45.999970 #118016]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:28:46.000557 #118016]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:28:46.000674 #118016]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T18:28:46.000810 #118016]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:28:46.000967 #118016]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=137060227579059050, ServerPart=0, UID=10901320, Username="Pat", Password="nice", Seed=0>
+I, [2020-11-01T18:28:46.006137 #118016]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:28:46.006354 #118016]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:28:46.006491 #118016] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:28:46.006581 #118016] ERROR -- RuneRb: Expected: 3619763028, Received: 0
+I, [2020-11-01T18:28:46.006662 #118016]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:28:46.006804 #118016]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:28:46.067283 #118016]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:29:16.190553 #119868]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:29:16.190740 #119868]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:29:17.351711 #120179]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:29:17.352542 #120179]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:29:17.352644 #120179]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:29:17.353185 #120179]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:29:17.353263 #120179]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T18:29:17.353441 #120179]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:29:17.353519 #120179]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=63362192289142880, ServerPart=0, UID=10901320, Username="Pat", Password="nice", Seed=0>
+I, [2020-11-01T18:29:17.358560 #120179]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:29:17.358747 #120179]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:29:17.358834 #120179] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:29:17.358956 #120179] ERROR -- RuneRb: Expected: 330295471, Received: 0
+I, [2020-11-01T18:29:17.359032 #120179]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:29:17.359156 #120179]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:29:17.419950 #120179]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:31:48.460740 #124503]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:31:48.460945 #124503]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:31:54.679498 #124817]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:31:54.680327 #124817]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:31:54.680453 #124817]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:31:54.681027 #124817]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:31:54.681122 #124817]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::ConnectionBlock Type=16, PayloadSize=31, Magic=255, Revision=317, :LowMem?=:HIGH, CRC=[0, 0, 0, 0, 0, 0, 0, 0, 0]>
+I, [2020-11-01T18:31:54.681271 #124817]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:31:54.681399 #124817]  INFO -- RuneRb: #<struct RuneRb::Network::AuthenticationHelper::LoginBlock RSA_Length=30, RSA_OpCode=10, ClientPart=303183901863257926, ServerPart=0, UID=10901320, Username="Pat", Password="nice", Seed=0>
+I, [2020-11-01T18:31:54.686438 #124817]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:31:54.686685 #124817]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:31:54.686772 #124817] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:31:54.686858 #124817] ERROR -- RuneRb: Expected: 1538918196, Received: 0
+I, [2020-11-01T18:31:54.686993 #124817]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:31:54.687075 #124817]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:31:54.747053 #124817]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:32:19.336844 #125759]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:32:19.337044 #125759]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:32:21.253018 #126067]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:32:21.253839 #126067]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:32:21.253995 #126067]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:32:21.254472 #126067]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:32:21.254650 #126067]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:32:21.259815 #126067]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:32:21.259991 #126067]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:32:21.260135 #126067] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:32:21.260230 #126067] ERROR -- RuneRb: Expected: 1118287801, Received: 0
+I, [2020-11-01T18:32:21.260306 #126067]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:32:21.260428 #126067]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:32:21.321628 #126067]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:35:08.615632 #129178]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:35:08.615864 #129178]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:35:10.232023 #129497]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:35:10.232979 #129497]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:35:10.233105 #129497]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:35:10.233586 #129497]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:35:10.233702 #129497]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:35:10.238805 #129497]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:35:10.239023 #129497]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:35:10.239174 #129497] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:35:10.239272 #129497] ERROR -- RuneRb: Expected: 1281832814, Received: 0
+I, [2020-11-01T18:35:10.239342 #129497]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:35:10.239543 #129497]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:35:10.300247 #129497]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:00.062371 #131681]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:37:00.062567 #131681]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:37:01.892146 #131992]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:37:01.892968 #131992]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:01.893123 #131992]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:37:01.893548 #131992]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:01.893714 #131992]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:01.899357 #131992]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:01.899575 #131992]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:01.899726 #131992] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:01.899819 #131992] ERROR -- RuneRb: Expected: 1645721562, Received: 0
+I, [2020-11-01T18:37:01.899932 #131992]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:01.900012 #131992]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:01.961752 #131992]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:01.961931 #131992]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:01.963213 #131992]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:37:12.721805 #131992]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-01T18:37:12.722034 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:12.722167 #131992]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:12.722251 #131992]  INFO -- RuneRb: [Type]: Login
+E, [2020-11-01T18:37:12.724570 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:12.724772 #131992]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:12.724953 #131992]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:12.729954 #131992]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:12.730111 #131992]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:12.730193 #131992] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:12.730266 #131992] ERROR -- RuneRb: Expected: 2306076086, Received: 0
+I, [2020-11-01T18:37:12.730337 #131992]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:12.731297 #131992]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:12.731903 #131992]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:12.732002 #131992]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:12.732930 #131992]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:37:14.738120 #131992]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-01T18:37:14.738325 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:14.738415 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:14.739266 #131992]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:14.739341 #131992]  INFO -- RuneRb: [Type]: Login
+E, [2020-11-01T18:37:14.739714 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:14.739801 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:14.740460 #131992]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:14.740576 #131992]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:14.753831 #131992]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:14.754008 #131992]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:14.754087 #131992] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:14.754158 #131992] ERROR -- RuneRb: Expected: 2038314980, Received: 0
+I, [2020-11-01T18:37:14.754242 #131992]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:14.754318 #131992]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:14.754911 #131992]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:14.755016 #131992]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:14.755283 #131992]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:37:15.973564 #131992]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-01T18:37:15.973769 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:15.973856 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:15.973939 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:15.974028 #131992]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:15.974134 #131992]  INFO -- RuneRb: [Type]: Login
+E, [2020-11-01T18:37:15.974439 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:15.974531 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:15.974609 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:15.974775 #131992]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:15.974872 #131992]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:15.977702 #131992]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:15.977798 #131992]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:15.977900 #131992] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:15.977969 #131992] ERROR -- RuneRb: Expected: 3807223213, Received: 0
+I, [2020-11-01T18:37:15.978036 #131992]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:15.978110 #131992]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:15.978689 #131992]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:15.978783 #131992]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:15.979047 #131992]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:37:19.265499 #131992]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-01T18:37:19.265722 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.265810 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.265923 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.266018 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:19.266106 #131992]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:19.266176 #131992]  INFO -- RuneRb: [Type]: Login
+E, [2020-11-01T18:37:19.266494 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.266579 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.266657 #131992] ERROR -- RuneRb: Socket has no data
+E, [2020-11-01T18:37:19.266753 #131992] ERROR -- RuneRb: Socket has no data
+I, [2020-11-01T18:37:19.266873 #131992]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:19.266969 #131992]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:19.269668 #131992]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:19.269801 #131992]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:19.269874 #131992] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:19.269943 #131992] ERROR -- RuneRb: Expected: 1357507163, Received: 0
+I, [2020-11-01T18:37:19.270011 #131992]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:19.270080 #131992]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:19.270723 #131992]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:19.270834 #131992]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:19.271079 #131992]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:37:54.793994 #132345]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:37:54.794194 #132345]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:37:56.501686 #132956]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:37:56.502607 #132956]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:37:56.502717 #132956]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:37:56.503257 #132956]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:37:56.503437 #132956]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:37:56.508760 #132956]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:37:56.508979 #132956]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:37:56.509066 #132956] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:37:56.509154 #132956] ERROR -- RuneRb: Expected: 180139255, Received: 0
+I, [2020-11-01T18:37:56.509262 #132956]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:37:56.509341 #132956]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:37:56.570486 #132956]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:37:56.570676 #132956]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:37:56.571920 #132956]  INFO -- RuneRb: Sent Sidebars
+I, [2020-11-01T18:38:55.198763 #135423]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-01T18:38:55.198958 #135423]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-01T18:38:57.384707 #135731]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-01T18:38:57.385574 #135731]  INFO -- RuneRb: Generated seed: false
+I, [2020-11-01T18:38:57.385773 #135731]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-01T18:38:57.386194 #135731]  INFO -- RuneRb: Read Connection block!
+I, [2020-11-01T18:38:57.386372 #135731]  INFO -- RuneRb: Read login block!
+I, [2020-11-01T18:38:57.391386 #135731]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-01T18:38:57.391565 #135731]  INFO -- RuneRb: Connection Type Validated!
+E, [2020-11-01T18:38:57.391699 #135731] ERROR -- RuneRb: Seed Mismatch!:
+E, [2020-11-01T18:38:57.391788 #135731] ERROR -- RuneRb: Expected: 4098723239, Received: 0
+I, [2020-11-01T18:38:57.391857 #135731]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-01T18:38:57.391983 #135731]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-01T18:38:57.455150 #135731]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-01T18:38:57.455349 #135731]  INFO -- RuneRb: Sent Status
+I, [2020-11-01T18:38:57.456650 #135731]  INFO -- RuneRb: Sent Sidebars

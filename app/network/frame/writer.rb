@@ -79,12 +79,10 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_sidebar(data)
-    out = RuneRb::Network::JOutStream.new(@cipher)
-    out.start_header(71)
-    out.write_short(data[:form])
-    out.write_byte(data[:menu_id], :A)
-    out.finish_header(false, false)
-    @channel[:out] << out.flush
+    frame = RuneRb::Network::MetaFrame.new(71)
+    frame.write_short(data[:form])
+    frame.write_byte(data[:menu_id], :A)
+    write(frame.compile)
   end
 
   # Write the region

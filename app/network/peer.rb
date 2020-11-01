@@ -14,7 +14,6 @@ module RuneRb::Network
       @status = { active: true, authenticated: false }
       @in = { raw: '', parsed: [] }
       @out = { raw: '', encoded: [] }
-      @login = RuneRb::Network::JReadableBuffer.new
       @id = Druuid.gen
     end
 
@@ -25,7 +24,6 @@ module RuneRb::Network
           @in[:raw] << @socket.read_nonblock(64)
           read_frames
         else
-          @login << @socket.read_nonblock(256)
           authenticate
         end
       end

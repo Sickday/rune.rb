@@ -72,7 +72,7 @@ module RuneRb
 
   # RuneRb::Network
   module Network
-    require_relative                'network/constants'
+    require_relative 'network/constants'
     include Constants
 
     autoload :AuthenticationHelper, 'network/login'
@@ -80,13 +80,13 @@ module RuneRb
     autoload :Endpoint,             'network/endpoint'
 
     autoload :Frame,                'network/frame'
+    autoload :MetaFrame,            'network/frame'
+    autoload :InFrame,              'network/frame'
     autoload :FrameReader,          'network/frame/reader'
     autoload :FrameWriter,          'network/frame/writer'
-    autoload :InFrame,              'network/frame'
 
     autoload :ISAAC,                'network/isaac'
     autoload :JReadableBuffer,      'network/jbuffer'
-    autoload :JWritableBuffer,      'network/jbuffer'
   end
 
   ###
