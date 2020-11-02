@@ -18,12 +18,10 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_skill(data)
-    frame = RuneRb::Network::Frame.new
-    header = RuneRb::Network::FrameHeader.new(134)
-    payload = RuneRb::Network::JWriteBuffer.new
-    payload.write_byte(data[:skill_id])
-    payload.write_byte(data[:level])
-    payload.write_int(data[:experience], :MIDDLE)
+    frame = RuneRb::Network::Frame.new(134)
+    frame.write_byte(data[:skill_id])
+    frame.write_byte(data[:level])
+    frame.write_int(data[:experience], :MIDDLE)
     out.finish_header(false, false)
     @channel[:out] << out.flush
   end
@@ -76,15 +74,16 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_sidebars
-    RuneRb::Network::SIDEBAR_INTERFACES.each { |menu_id, form_id| write_sidebar({ menu_id: menu_id, form: form_id }) }
+    RuneRb::Network::SIDEBAR_INTERFACES.each do |key, value|
+      write_sidebar({ menu_id: key, form: value })
+    end
   end
 
   def write_sidebar(data)
     frame = RuneRb::Network::MetaFrame.new(71)
     frame.write_short(data[:form])
     frame.write_byte(data[:menu_id], :A)
-    frame = encode_frame(frame)
-    send_data(frame.compile)
+    send_data(encode_frame(frame).compile)
   end
 
   # Write the region

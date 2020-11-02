@@ -20,8 +20,10 @@ module RuneRb::Network::AuthenticationHelper
                           :Password,
                           :Seed)
   def authenticate
-    @buffer = RuneRb::Network::JReadableBuffer.new(@socket.read_nonblock(98))
+    @login = RuneRb::Network::InFrame.new(-1)
+    @login.push(@socket.read_nonblock(98))
     @stage ||= :PENDING_CONNECTION
+
     case @stage
     when :PENDING_CONNECTION then read_connection
     when :PENDING_BLOCK then read_block
@@ -50,8 +52,8 @@ module RuneRb::Network::AuthenticationHelper
   private
 
   def read_connection
-    connection_type = @buffer.read_byte
-    @name_long = @buffer.read_byte
+    connection_type = @login.read_byte
+    @name_long = @login.read_byte
     @seed = @id & 0xFFFFFFFF
 
     log "Generated seed: #{@generated_seed & 0xFFFFFFFF}"
@@ -75,23 +77,23 @@ module RuneRb::Network::AuthenticationHelper
   end
 
   def read_block
-    @connection_block = ConnectionBlock.new(@buffer.read_byte,               # Type
-                                            @buffer.read_byte - 40,          # Size
-                                            @buffer.read_byte,               # Magic (255)
-                                            @buffer.read_short(false), # Version
-                                            @buffer.read_byte.positive? ? :LOW : :HIGH, # Low memory?
-                                            [].tap { |arr| 9.times { arr << @buffer.read_int } })
-    log 'Read Connection block!'
+    @connection_block = ConnectionBlock.new(@login.read_byte,               # Type
+                                            @login.read_byte - 40,          # Size
+                                            @login.read_byte,               # Magic (255)
+                                            @login.read_short(false), # Version
+                                            @login.read_byte.positive? ? :LOW : :HIGH, # Low memory?
+                                            [].tap { |arr| 9.times { arr << @login.read_int } })
+    log 'Read Connection half!'
 
-    @login_block = LoginBlock.new(@buffer.read_byte,                          # RSA_Block Length
-                                  @buffer.read_byte,                          # RSA_Block OpCode (10)
-                                  @buffer.read_long,                          # Client Part
-                                  @buffer.read_long,                          # Server Part
-                                  @buffer.read_int,                           # UID
-                                  @buffer.read_string,                        # Username
-                                  @buffer.read_string)                        # Password
+    @login_block = LoginBlock.new(@login.read_byte,                          # RSA_Block Length
+                                  @login.read_byte,                          # RSA_Block OpCode (10)
+                                  @login.read_long,                          # Client Part
+                                  @login.read_long,                          # Server Part
+                                  @login.read_int,                           # UID
+                                  @login.read_string,                        # Username
+                                  @login.read_string)                        # Password
     @login_block[:Seed] = [@login_block[:ServerPart] >> 32, @login_block[:ServerPart]].pack('NN').unpack1('L')
-    log 'Read login block!'
+    log 'Read Credential half!'
 
     @isaac_seed = [@login_block[:ClientPart] >> 32, @login_block[:ClientPart], # It's important NOT to modify these. Originally was passing Integer#signed(:int). DONT DO THAT.
                    @login_block[:ServerPart] >> 32, @login_block[:ServerPart]]
@@ -107,7 +109,6 @@ module RuneRb::Network::AuthenticationHelper
   def login(profile)
     send_data([2, profile[:rights], 0].pack('CCC')) # Successful Login!
     write_sidebars
-    log 'Sent Sidebars'
     #write_text('Thanks for testing Rune.rb.')
     #write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
   end

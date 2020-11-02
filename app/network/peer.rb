@@ -5,7 +5,7 @@ module RuneRb::Network
     include RuneRb::Network::FrameReader
     include RuneRb::Network::FrameWriter
 
-    attr :ip, :id, :status
+    attr :ip, :id, :status, :socket
 
     # Called when a new Peer object is created.
     # @param socket [Socket] the socket for the peer.
@@ -17,15 +17,10 @@ module RuneRb::Network
       @id = Druuid.gen
     end
 
-    # Reads at most 5,120 bytes into the Peer#in object.
+    # Reads data into the Peer#in
     def receive_data
       if @status[:active]
-        if @status[:authenticated]
-          @in << @socket.read_nonblock(128)
-          next_frame
-        else
-          authenticate
-        end
+        @status[:authenticated] ? next_frame : authenticate
       end
     rescue IO::EAGAINWaitReadable
       err 'Socket has no data'
@@ -47,7 +42,6 @@ module RuneRb::Network
     end
 
     def send_data(data)
-      log 'Writing to socket:', data.unpack('c*').to_s
       @socket.write_nonblock(data)
     rescue EOFError
       err 'Peer disconnected!'
@@ -88,8 +82,8 @@ module RuneRb::Network
 
     # Close the socket.
     def disconnect
-      @socket.close
       @status[:active] = false
+      @socket.close
     end
   end
 end

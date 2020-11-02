@@ -1,4 +1,3 @@
-## TODO: Lots. Delegate handling of certain frames to their own objects.
 module RuneRb::Network::FrameReader
   using RuneRb::Patches::IntegerOverrides
   using RuneRb::Patches::StringOverrides
@@ -7,11 +6,12 @@ module RuneRb::Network::FrameReader
 
   # Parses the next readable frame
   def next_frame
+    @in << @socket.read_nonblock(128)
     @current = RuneRb::Network::InFrame.new(@in.next_byte)
     @current = decode_frame(@current)
     @current.header[:length] = @in.next_byte if @current.header[:length] == -1
     @current.header[:length].times { @current.push(@in.slice!(0)) }
-    log 'Parsed frame:', @current.inspect
+    handle_frame(@current)
   end
 
   # Decodes a frame using the Peer#cipher.
@@ -22,44 +22,51 @@ module RuneRb::Network::FrameReader
     frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
     frame.header[:op_code] = frame.header[:op_code] & 0xFF
     frame.header[:length] = RuneRb::Network::Constants::PACKET_MAP[frame.header[:op_code]]
-    log frame.inspect
     frame
   end
 
+  # Processes the frame parameter
+  # @param frame [RuneRb::Network::InFrame] the frame to handle
   def handle_frame(frame)
     case frame.header[:op_code]
+    when 0 then nil
     when 145 # Remove item in slot
-      interface_id = frame.payload.read_short(false, :A)
-      slot = @in.read_short(false, :A)
-      item_id = @in.read_short(false, :A)
-      @player.equipment.remove(slot) if interface_id == 1688
+      interface_id = frame.read_short(false, :A)
+      slot = frame.read_short(false, :A)
+      item_id = frame.read_short(false, :A)
+      # TODO: Parse RemoveItemInSlot frame
     when 41
-      item_id = @in.read_short(false)
-      slot = @in.read_short(false, :A)
-      interface_id = @in.read_short(false)
-      @player.equipment.equip(slot, item_id)
+      item_id = frame.read_short(false)
+      slot = frame.read_short(false, :A)
+      interface_id = frame.read_short(false)
+      # TODO: Parse EquipItem frame
     when 4
-      effects = @in.read_byte(false, :S)
-      color = @in.read_byte(false, :S)
-      length = @current_packet[:length] - 2
-      message = @in.read_bytes_reverse(length, :A)
+      effects = frame.read_byte(false, :S)
+      color = frame.read_byte(false, :S)
+      message = frame.read_bytes_reverse(frame.header[:length] - 2, :A)
+      # TODO: Parse Chat frame
     when 103
+      command = frame.read_string
+      # TODO: Parse Command frame
     when 248, 164, 98
-      length = @current_packet[:length]
-      length -= 14 if @current_packet[:op_code] == 248
+      length = frame.header[:length]
+      length -= 14 if frame.header[:op_code] == 248
 
       steps = (length - 5) / 24
       path = Array.new(steps, Array.new(2))
-      first_x = @in.read_short(false, :A, :LITTLE)
+      first_x = frame.read_short(false, :A, :LITTLE)
 
       steps.times do |step|
-        path[step][0] = @in.read_byte(false)
-        path[step][1] = @in.read_byte(false)
+        path[step][0] = frame.read_byte(false)
+        path[step][1] = frame.read_byte(false)
       end
 
-      first_y = @in.read_short(false, :STD, :LITTLE)
-      run = @in.read_byte(false,:C) == 1
-
+      first_y = frame.read_short(false, :STD, :LITTLE)
+      run = frame.read_byte(false, :C) == 1
+      # TODO: Finish reading
+      # TODO: Parse WalkingFrame
+    else
+      err "Unhandled frame: #{frame.inspect}"
     end
   end
 end

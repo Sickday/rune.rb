@@ -29,19 +29,11 @@ module RuneRb::Network
     end
 
     # De-registers a socket from the selector and removes it's reference from the internal client list.
-    def deregister(peer, socket)
+    def deregister(peer)
       log "De-registered socket for #{peer.ip}"
-      @selector.deregister(socket)
+      @selector.deregister(peer.socket)
       @peers[peer.ip].delete(peer)
     end
-
-=begin
-    def attach(client, to)
-      # Make sure the world exists?
-      # Make sure the world isn't full
-      @world_list[to].receive(RuneRb::Entity::Context.new(client))
-    end
-=end
 
     private
 
@@ -55,13 +47,22 @@ module RuneRb::Network
       log RuneRb::COL.green("Registered new socket for #{RuneRb::COL.cyan(host)}")
     end
 
-    # Attempts to update clients registered with the Endpoint object. This is done by calling Client#receive_data on each client.**
+    # Attempts to update peer streams via Peer#receive_data
     def update_peers
-      @peers.each { |_ip, peers| peers.each(&:receive_data) }
+      @peers.each do |_ip, peers|
+        peers.each do |peer|
+          peer.status[:active] ? peer.receive_data : deregister(peer)
+        end
+      end
     end
 
+    # Attempts to flush all peer streams.
     def flush
-      @peers.each { |_ip, peers| peers.each(&:flush) }
+      @peers.each do |_ip, peers|
+        peers.each do |peer|
+          peer.status[:active] ? peer.flush : deregister(peer)
+        end
+      end
     end
   end
 end

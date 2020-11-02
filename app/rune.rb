@@ -84,9 +84,7 @@ module RuneRb
     autoload :InFrame,              'network/frame'
     autoload :FrameReader,          'network/frame/reader'
     autoload :FrameWriter,          'network/frame/writer'
-
     autoload :ISAAC,                'network/isaac'
-    autoload :JReadableBuffer,      'network/jbuffer'
   end
 
   ###
