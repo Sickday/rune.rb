@@ -12,8 +12,8 @@ module RuneRb::Network
     def initialize(socket)
       @socket, @ip = socket, socket.peeraddr[-1]
       @status = { active: true, authenticated: false }
-      @in = { raw: '', parsed: [] }
-      @out = { raw: '', encoded: [] }
+      @in = ''
+      @out = []
       @id = Druuid.gen
     end
 
@@ -21,8 +21,8 @@ module RuneRb::Network
     def receive_data
       if @status[:active]
         if @status[:authenticated]
-          @in[:raw] << @socket.read_nonblock(64)
-          read_frames
+          @in << @socket.read_nonblock(128)
+          next_frame
         else
           authenticate
         end
@@ -46,8 +46,9 @@ module RuneRb::Network
       disconnect
     end
 
-    def write_now
-      @socket.write_nonblock(@out[:raw])
+    def send_data(data)
+      log 'Writing to socket:', data.unpack('c*').to_s
+      @socket.write_nonblock(data)
     rescue EOFError
       err 'Peer disconnected!'
       disconnect
@@ -65,17 +66,12 @@ module RuneRb::Network
     # @param data [String, StringIO] the the data to write.
     def write(data = '')
       @out[:raw] << data
-      write_now
     end
 
     alias << write
 
     def flush
-      unless @out[:encoded].empty?
-        payload = ''
-        @out[:encoded].each { |frame| payload << frame.compile }
-        @socket.write_nonblock(payload)
-      end
+      @socket.write_nonblock(@out.each_with_object('') { |str, frame| str << frame.compile }) unless @out.empty?
     rescue EOFError
       err 'Peer disconnected!'
       disconnect

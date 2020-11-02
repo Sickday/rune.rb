@@ -6,14 +6,12 @@ module RuneRb::Network::FrameReader
   private
 
   # Parses the next readable frame
-  def read_frames
-    op_code = @in[:raw].next_byte
-    length = RuneRb::Network::Constants::PACKET_MAP[op_code]
-    length = @in[:raw].next_byte if length == -1
-    frame = RuneRb::Network::InFrame.new(op_code, length)
-    frame.parse(@socket)
-    @in[:parsed] << decode_frame(frame)
-    read_frames unless @in[:raw].empty?
+  def next_frame
+    @current = RuneRb::Network::InFrame.new(@in.next_byte)
+    @current = decode_frame(@current)
+    @current.header[:length] = @in.next_byte if @current.header[:length] == -1
+    @current.header[:length].times { @current.push(@in.slice!(0)) }
+    log 'Parsed frame:', @current.inspect
   end
 
   # Decodes a frame using the Peer#cipher.
@@ -21,7 +19,9 @@ module RuneRb::Network::FrameReader
   def decode_frame(frame)
     raise 'Invalid cipher for Peer!' unless @cipher
 
-    frame.header[:op_code] -= @cipher[:decryptor].next_value.unsigned(:byte)
+    frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
+    frame.header[:op_code] = frame.header[:op_code] & 0xFF
+    frame.header[:length] = RuneRb::Network::Constants::PACKET_MAP[frame.header[:op_code]]
     log frame.inspect
     frame
   end

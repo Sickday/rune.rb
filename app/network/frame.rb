@@ -5,7 +5,7 @@ module RuneRb::Network
 
     Header = Struct.new(:op_code, :length) do
       def inspect
-        [self.op_code, self.length].to_s
+        RuneRb::COL.cyan("[OpCode]: #{self.op_code} || [Size]: #{self.length} || ")
       end
     end
 
@@ -14,7 +14,7 @@ module RuneRb::Network
     end
 
     def inspect
-      "#{@header.inspect}\#[#{@payload.unpack('c*')}]"
+      @header.inspect + RuneRb::COL.blue("[Payload]: #{@payload&.unpack('c*')}")
     end
   end
 
@@ -23,13 +23,13 @@ module RuneRb::Network
     using RuneRb::Patches::StringOverrides
     using RuneRb::Patches::IntegerOverrides
 
-    def initialize(op_code, length)
-      super(op_code)
-      @header[:length] = length
+    def initialize(op_code)
+      super(op_code & 0xFF)
+      @payload = ''
     end
 
-    def parse(socket)
-      @payload = RuneRb::Network::JReadableBuffer.new(socket.read_nonblock(@header[:length]))
+    def push(data)
+      @payload << data
     end
   end
 
@@ -47,6 +47,7 @@ module RuneRb::Network
       @type = Type.new(fixed, variable_short)
     end
 
+    # Compiles the MetaFrame object to a binary string ready to be sent.
     def compile
       compile_header + @payload
     end

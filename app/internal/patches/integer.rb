@@ -30,19 +30,39 @@ module RuneRb::Patches::IntegerOverrides
     # Returned unsigned
     # @param type [Symbol] the type of primitive ths value will be returned as
     def unsigned(type)
+      0 unless positive?
       case type
       when :Byte, :byte, :b, :B
-        self > 0xFF ? 0xFF : self
+        if to_i > 0xFF
+          0xFF
+        else
+          to_i
+        end
       when :Short, :short, :s, :S
-        self > 0xFFFF ? 0xFFFF : self
+        if to_i > 0xFFFF
+          0xFFFF
+        else
+          to_i
+        end
       when :Integer, :Int, :int, :integer, :i, :I
-        self > 0xFFFFFFFF ? 0xFFFFFFFF : self
+        if to_i > 0xFFFFFFFF
+          0xFFFFFFFF
+        else
+          to_i
+        end
       when :Long, :long, :l, :L
-        self > 0xFFFFFFFFFFFFFFFF ? 0xFFFFFFFFFFFFFFFF : self
+        if to_i > 0xFFFFFFFFFFFFFFFF
+          0xFFFFFFFFFFFFFFFF
+        else
+          to_i
+        end
       else
-        self > 0xFFFFFFFF ? 0xFFFFFFFF : self
+        if to_i > 0xFFFFFFFF
+          0xFFFFFFFF
+        else
+          to_i
+        end
       end
-      0 unless positive?
     end
 
     # Shorthand

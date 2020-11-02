@@ -6,7 +6,8 @@ module RuneRb::Network::FrameWriter
   def encode_frame(frame)
     raise 'Invalid cipher for client!' unless @cipher
 
-    frame.header[:op_code] += @cipher[:encryptor].next_value.unsigned(:byte)
+    log "Encoding frame: #{frame.inspect}"
+    frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
     frame
   end
 
@@ -82,7 +83,8 @@ module RuneRb::Network::FrameWriter
     frame = RuneRb::Network::MetaFrame.new(71)
     frame.write_short(data[:form])
     frame.write_byte(data[:menu_id], :A)
-    write(frame.compile)
+    frame = encode_frame(frame)
+    send_data(frame.compile)
   end
 
   # Write the region

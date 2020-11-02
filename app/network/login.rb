@@ -58,16 +58,16 @@ module RuneRb::Network::AuthenticationHelper
     case connection_type
     when RuneRb::Network::CONNECTION_TYPES[:GAME_NEW]
       log! '[Type]: Online'
-      write([0].pack('n'))
+      send_data([0].pack('n'))
       disconnect
     when RuneRb::Network::CONNECTION_TYPES[:GAME_UPDATE]
       log! '[Type]: Update'
-      write(Array.new(8, 0)).pack('C' * 8)
+      send_data(Array.new(8, 0)).pack('C' * 8)
     when RuneRb::Network::CONNECTION_TYPES[:GAME_LOGIN]
       log '[Type]: Login'
-      write([0].pack('q')) # Ignored 8 bytes
-      write([0].pack('C')) # Response
-      write([@seed].pack('q')) # Server key
+      send_data([0].pack('q')) # Ignored 8 bytes
+      send_data([0].pack('C')) # Response
+      send_data([@seed].pack('q')) # Server key
       @stage = :PENDING_BLOCK
     else
       raise RuneRb::Errors::LoginError.new(:UnrecognizedConnectionType, RuneRb::Network::CONNECTION_TYPES.values, connection_type)
@@ -105,10 +105,7 @@ module RuneRb::Network::AuthenticationHelper
   end
 
   def login(profile)
-    status = [2, profile[:rights], 0]
-    write(status.pack('CCC')) # Successful Login!
-    log 'Sent Status'
-
+    send_data([2, profile[:rights], 0].pack('CCC')) # Successful Login!
     write_sidebars
     log 'Sent Sidebars'
     #write_text('Thanks for testing Rune.rb.')

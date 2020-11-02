@@ -21,7 +21,7 @@ module RuneRb::Network
           begin
             flush
           rescue StandardError => e
-            err 'An error occurred during flush cycle!', e
+            err 'An error occurred during flush cycle!', e.message
           end
         end
         loop { @selector.select { |monitor| monitor.value.call } }
