@@ -62,7 +62,7 @@ module RuneRb::Network::AuthenticationHelper
     @name_long = @login.read_byte
     @seed = @id & 0xFFFFFFFF
 
-    log "Generated seed: #{@generated_seed & 0xFFFFFFFF}"
+    log "Generated seed: #{@seed}"
     case connection_type
     when RuneRb::Network::CONNECTION_TYPES[:GAME_NEW]
       log! '[Type]: Online'

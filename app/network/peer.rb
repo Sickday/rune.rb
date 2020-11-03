@@ -15,11 +15,11 @@ module RuneRb::Network
       @in = ''
       @out = []
       @id = Druuid.gen
-      @base_tile = Tile.new(3222, 3222) # Outside Yanile bank
-      @region_tile = Tile.new((@base_tile[:x] / 8),
-                              (@base_tile[:y] / 8))
-      @local_tile = Tile.new(@base_tile[:x] - (@region_tile[:x] - 6) * 8,
-                             @base_tile[:y] - (@region_tile[:y] - 6) * 8)
+      @base_tile = Tile.new(2606, 3095) # Outside Yanile bank
+      @region_tile = Tile.new((@base_tile[:x] >> 3) - 6,
+                              (@base_tile[:y] >> 3) - 6)
+      @local_tile = Tile.new(@base_tile[:x] - 8 * @region_tile[:x],
+                             @base_tile[:y] - 8 * @region_tile[:y])
     end
 
     # Reads data into the Peer#in
