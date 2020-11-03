@@ -108,7 +108,7 @@ module RuneRb::Network::FrameWriter
     log "LOCAL:\t#{@local_tile.inspect}"
 
     #write_region(region_x: @region_tile[:x], region_y: @region_tile[:y]) if @context_update # Write the region.
-    write_region(region_x: @base_tile[:x], region_y: @base_tile[:y])
+    write_region(region_x: @region_tile[:x], region_y: @region_tile[:y])
     # block_frame = RuneRb::Network::MetaFrame.new(-1)
     sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
     sync_frame.switch_access # Enable Bit access

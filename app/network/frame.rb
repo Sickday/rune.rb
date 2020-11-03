@@ -171,7 +171,7 @@ module RuneRb::Network
 
     # Compiles the MetaFrame object to a binary string ready to be sent.
     def compile
-      compile_header + @payload
+      @payload.prepend(compile_header)
     end
 
     # Switches the access mode for this buffer. If the current access mode is :BYTE it will be :BIT and vice versa.
@@ -212,11 +212,11 @@ module RuneRb::Network
     def write_short(value, type = :STD, order = :BIG)
       case order
       when :BIG
-        write_byte((value.signed(:byte) >> 8))
-        write_byte(value.signed(:byte), type)
+        write_byte((value >> 8))
+        write_byte(value, type)
       when :LITTLE
-        write_byte(value.signed(:byte), type)
-        write_byte((value.signed(:byte) >> 8))
+        write_byte(value, type)
+        write_byte((value >> 8))
       end
       self
     end
