@@ -15,17 +15,17 @@ module RuneRb::Network
       @in = ''
       @out = []
       @id = Druuid.gen
-      @base_tile = Tile.new(2606, 3095) # Outside Yanile bank
-      @region_tile = Tile.new((@base_tile[:x] >> 3) - 6,
-                              (@base_tile[:y] >> 3) - 6)
-      @local_tile = Tile.new(@base_tile[:x] - 8 * @region_tile[:x],
-                             @base_tile[:y] - 8 * @region_tile[:y])
     end
 
     # Reads data into the Peer#in
     def receive_data
       if @status[:active]
-        @status[:authenticated] ? next_frame : authenticate
+        if @status[:authenticated]
+          next_frame
+          @context ||= RuneRb::Entity::Context.new(self, @profile)
+        else
+          authenticate
+        end
       end
     rescue IO::EAGAINWaitReadable
       err 'Socket has no data'
@@ -64,13 +64,13 @@ module RuneRb::Network
 
     # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
     def write_frame(frame)
-      @out << frame
+      @out << encode_frame(frame)
     end
 
     alias << write_frame
 
     def flush
-      write_mock_update
+      write_mock_update if @context
       if @status[:active] && !@out.empty?
         @socket.write_nonblock(@out.first.compile)
         @out.delete(@out.first)
@@ -93,6 +93,16 @@ module RuneRb::Network
     def disconnect
       @status[:active] = false
       @socket.close
+    end
+
+    # Encodes a frame using the Peer#cipher.
+    # @param frame [RuneRb::Network::Frame] the frame to encode.
+    def encode_frame(frame)
+      raise 'Invalid cipher for client!' unless @cipher
+
+      log "Encoding frame: #{frame.inspect}"
+      frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
+      frame
     end
   end
 end

@@ -1,29 +1,35 @@
 module RuneRb::Entity
   class Context < RuneRb::Entity::Type
     include RuneRb::Types::Loggable
-    include RuneRb::Network::FrameWriter
 
+    attr :updates, :location
 
-    def disconnect
-      write_disconnect
-      super
-    end
     # Called when a new Context Entity is created.
-    # @param client [RuneRb::Network::Client] the peer client to be associated with the entity.
-    def initialize(client)
-      super()
-      @client = client
+    # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
+    def initialize(peer, profile)
+      super({ x: 2606, y: 3095, z: 0 })
+
+      @session = peer
+      @profile = profile
+      @location = profile.location
       @inventory = RuneRb::Entity::Inventory.new
-      @tile = RuneRb::Game::Map::Tile.new(3222, 3222, 0)
-      @update = true
-      @region_changed = true # Region changed?
-      @reset_movement = false
-      #self[:equipment] = RuneRb::Entity::Equipment.new
+      @updates = {}
+      log profile.inspect
+      reset_updates
     end
 
     def inspect
       str = super
       str << "[INVENTORY]: #{@inventory.inspect}"
+    end
+
+    # Reset the context entity's updates.
+    def reset_updates
+      @updates[:state?] = true
+      @updates[:region?] = true
+      @updates[:reset_move?] = true
+      @updates[:required?] = true
+      @updates[:placement?] = true
     end
   end
 end

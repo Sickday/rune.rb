@@ -45,8 +45,7 @@ module RuneRb
     module Map
       autoload :Boundary,           'game/map/boundary'
       autoload :Movement,           'game/map/move'
-      autoload :Tile,               'game/map/tile'
-      autoload :Region,             'game/map/region'
+      autoload :Position,           'game/map/position'
     end
 
     # RuneRb::Game::Services

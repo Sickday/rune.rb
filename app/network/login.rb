@@ -24,6 +24,7 @@ module RuneRb::Network::AuthenticationHelper
                           :UID,
                           :Username,
                           :Password,
+                          :NameHash,
                           :Seed)
   def authenticate
     @login = RuneRb::Network::InFrame.new(-1)
@@ -33,7 +34,6 @@ module RuneRb::Network::AuthenticationHelper
     case @stage
     when :PENDING_CONNECTION then read_connection
     when :PENDING_BLOCK then read_block
-    when :PENDING_VALIDATION then login(validate)
     end
   rescue RuneRb::Errors::LoginError => e
     case e.type
@@ -97,7 +97,8 @@ module RuneRb::Network::AuthenticationHelper
                                   @login.read_long,                          # Server Part
                                   @login.read_int,                           # UID
                                   @login.read_string,                        # Username
-                                  @login.read_string)                        # Password
+                                  @login.read_string,                        # Password
+                                  @name_long)                                # Base37 name
     @login_block[:Seed] = [@login_block[:ServerPart] >> 32, @login_block[:ServerPart]].pack('NN').unpack1('L')
     log 'Read Credential half!'
 
@@ -108,13 +109,12 @@ module RuneRb::Network::AuthenticationHelper
                          RuneRb::Network::ISAAC.new(@isaac_seed.map { |seed_idx| seed_idx + 50 }))
 
     log 'Ready for Validation'
-    @stage = :PENDING_VALIDATION
-    login(validate)
+    @profile = validate
+    login
   end
 
-  def login(profile)
-    send_data([2, profile[:rights], 0].pack('CCC')) # Successful Login!
-    @context_update = true
+  def login
+    send_data([2, @profile[:rights], 0].pack('CCC')) # Successful Login!
     #write_region(region_x: @region_tile[:x], region_y: @region_tile[:y])
     #write_mock_update
     #write_sidebars
@@ -130,7 +130,7 @@ module RuneRb::Network::AuthenticationHelper
     end
 
     if @seed == @login_block[:Seed]
-      log 'Connection Type Validated!'
+      log 'Seed Validated!'
     else
       err 'Seed Mismatch!:', "Expected: #{@seed}, Received: #{[@login_block[:ServerPart] >> 32, @login_block[:ServerPart]].pack('NN').unpack1('L')}"
     end
@@ -147,16 +147,16 @@ module RuneRb::Network::AuthenticationHelper
       err 'Unexpected Protocol', "Expected: #{[317, 377, ENV['TARGET_PROTOCOL']]}, Received: #{@connection_block[:Revision]}"
     end
 
-    if RuneRb::Database::Profile[@login_block[:UID]]
-      profile = RuneRb::Database::Profile[@login_block[:UID]]
-      log RuneRb::COL.blue("Loaded profile for #{RuneRb::COL.cyan(profile[:username])}!")
+    if RuneRb::Database::Profile[@login_block[:Username]]
+      profile = RuneRb::Database::Profile[@login_block[:Username]]
+      log RuneRb::COL.blue("Loaded profile for #{RuneRb::COL.cyan(profile[:name])}!")
       raise RuneRb::Errors::LoginError.new(:InvalidCredentials, profile[:password], @login_block[:Password]) unless profile[:password] == @login_block[:Password]
 
     else
       #raise RuneRb::Errors::LoginError.new(:InvalidUsername, nil, @login_block[:Username]) if RuneRb::Database::SYSTEM[:banned_names].include?(@login_block[:Username])
 
-      RuneRb::Database::Profile.register(@login_block, @name_long)
-      profile = RuneRb::Database::Profile[@login_block[:UID]]
+      RuneRb::Database::Profile.register(@login_block)
+      profile = RuneRb::Database::Profile[@login_block[:Username]]
       log RuneRb::COL.blue("Registered new profile for #{RuneRb::COL.cyan(profile[:username])}")
     end
 

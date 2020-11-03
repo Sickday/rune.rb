@@ -191,8 +191,12 @@ module RuneRb::Network
     end
 
     # Writes multiple bytes to the underlying buffer.
-    def write_bytes(bytes)
-      bytes.each { |byte| write_byte(byte) }
+    def write_bytes(data)
+      if data.class == RuneRb::Network::MetaFrame
+        @payload << bytes.compile
+      else
+        data.each { |byte| write_byte(byte) }
+      end
       self
     end
 
@@ -363,6 +367,8 @@ module RuneRb::Network
 
     def compile_header
       head = ''
+      return head if @header[:op_code] == -1
+
       head << [@header[:op_code]].pack('C')
       return head if @type[:fixed]
 

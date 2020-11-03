@@ -1,9 +1,9 @@
 module RuneRb::Game
   class World
-    include RuneRb::Types::Serializable
+    include RuneRb::Types::Loggable
 
     def initialize
-      self[:entities] = { players: [], mobs: [] }
+      @entities = { players: [], mobs: [] }
     end
 
     def receive(entity)
@@ -27,62 +27,31 @@ module RuneRb::Game
         raise "Unrecognized entity release! #{entity.inspect}"
       end
     end
-=begin
-
-    # Loads a serialized string and returns a new instance of self
-    def self.restore(serialized_string)
-      parsed_world = Oj.safe_load(serialized_string)
-      parse_entities(parsed_world)
-    end
-=end
 
     private
 
     def register_player(player)
-      self[:entities][:players] << player
+      @entities[:players] << player
     end
 
     def register_mob(mob)
-      self[:entities][:mobs] << mob
+      @entities[:mobs] << mob
     end
 
     def deregister_player(player)
-      self[:entities][:players].delete(player)
+      @entities[:players].delete(player)
     end
 
     def deregister_mob(mob)
-      self[:entities][:mobs].delete(mob)
+      @entities[:mobs].delete(mob)
     end
-
-    def launch_services
-      self[:services] = {
-        map: RuneRb::Services::MapService.new(self),
-        update: RuneRb::Services::UpdateService.new(self)
-      }
-    end
-
-=begin
-    def dump_entities
-      base = super
-      self[:entities].each do |type, collection|
-
-      end
-    end
-
-    def parse_entities(string)
-      self[:entities] = { players: [], mobs: [] }
-      string[':entities'][':players'].each do |unparsed_player|
-        self[:entities][:players] << RuneRb::Entity::Context.restore(unparsed_player)
-      end
-    end
-=end
 
     def valid_player?(entity)
-      false if entity.session.idle? || entity[:data].banned || !self[:entities][:players].include?(entity)
+      false if !entity.session.status[:active] ||  !@entities[:players].include?(entity) || entity.status[:banned?]
     end
 
     def valid_mob?(entity)
-      false if entity.status[:dead?] || !self[:entities][:mobs].include?(entity)
+      false if entity.status[:dead?] || !@entities[:mobs].include?(entity)
     end
   end
 end

@@ -1,16 +1,6 @@
 module RuneRb::Network::FrameWriter
   using RuneRb::Patches::IntegerOverrides
 
-  # Encodes a frame using the Peer#cipher.
-  # @param frame [RuneRb::Network::Frame] the frame to encode.
-  def encode_frame(frame)
-    raise 'Invalid cipher for client!' unless @cipher
-
-    log "Encoding frame: #{frame.inspect}"
-    frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
-    frame
-  end
-
   def write_skills(data)
     data[:skill_data].each do |id, skill_data|
       write_skill({ skill_id: id, experience: skill_data[:experience], level: skill_data[:level] })
@@ -22,8 +12,7 @@ module RuneRb::Network::FrameWriter
     frame.write_byte(data[:skill_id])
     frame.write_byte(data[:level])
     frame.write_int(data[:experience], :MIDDLE)
-    out.finish_header(false, false)
-    @channel[:out] << out.flush
+    write_frame(frame)
   end
 
   def write_equipment(data)
@@ -79,11 +68,13 @@ module RuneRb::Network::FrameWriter
     end
   end
 
+  # Write a sidebar interface
+  # @param data [Hash] data for the sidebar to write. { form : Integer, menu_id: Integer }
   def write_sidebar(data)
     frame = RuneRb::Network::MetaFrame.new(71)
     frame.write_short(data[:form])
     frame.write_byte(data[:menu_id], :A)
-    write_frame(encode_frame(frame))
+    write_frame(frame)
   end
 
   # Write the region
@@ -92,41 +83,34 @@ module RuneRb::Network::FrameWriter
     frame = RuneRb::Network::MetaFrame.new(73)
     frame.write_short(data[:region_x] + 6, :A)
     frame.write_short(data[:region_y] + 6)
-    write_frame(encode_frame(frame))
-    log "Wrote x: #{data[:region_x] + 6}, y: #{data[:region_y] + 6}"
-  end
-
-  Tile = Struct.new(:x, :y) do
-    def inspect
-      "[x: #{self.x}, y: #{self.y}]"
-    end
+    write_frame(frame)
   end
 
   def write_mock_update
-    log "BASE:\t#{@base_tile.inspect}"
-    log "REGION:\t#{@region_tile.inspect}"
-    log "LOCAL:\t#{@local_tile.inspect}"
+    if @context.updates[:region?]
+      write_region(region_x: @context.location.region[:x],
+                   region_y: @context.location.region[:y])
+    end
 
-    #write_region(region_x: @region_tile[:x], region_y: @region_tile[:y]) if @context_update # Write the region.
-    write_region(region_x: @region_tile[:x], region_y: @region_tile[:y])
-    # block_frame = RuneRb::Network::MetaFrame.new(-1)
+    #block_frame = RuneRb::Network::MetaFrame.new(-1)
     sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
     sync_frame.switch_access # Enable Bit access
 
     # CONTEXT PLACEMENT
     # TODO: impl
-    if @context_update
+    if @context.updates[:placement?]
       sync_frame.write_bit(true) # Write 1 bit to indicate placement update is required
       sync_frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
       sync_frame.write_bits(2, 0) # Write the plane. 0 being ground level
       sync_frame.write_bit(true) # Teleporting?
       sync_frame.write_bit(false) # Update State/Appearance?
-      sync_frame.write_bits(7, @local_tile[:y]) # Local Y
-      sync_frame.write_bits(7, @local_tile[:x]) # Local X
-      @context_update = false # Ensure the next update frame does not require a player movement block
+      sync_frame.write_bits(7, @context.location.local[:y]) # Local Y
+      sync_frame.write_bits(7, @context.location.local[:x]) # Local X
+      @context.updates[:placement?] = false # Ensure the next update frame does not require a player movement block
     else
       sync_frame.write_bit(false) # Write 1 bit to indicate no movement update is needed at all. This is temporary
     end
+
 
     # LOCAL MOVEMENT
     # TODO: impl
@@ -136,10 +120,9 @@ module RuneRb::Network::FrameWriter
     # TODO: impl
     sync_frame.write_bits(11, 2047) # Write 11 bits holding the value of 2047 to indicate no further updates are needed to local player list. This is temporary
 
-    ## TODO: Not sure if this is completely necessary. Pad the sync_frame to the next byte
-    #sync_frame.write_padding
-
-    write_frame(encode_frame(sync_frame))
+    # ADD STATE BLOCK
+    # sync_frame.write_bytes(block_frame)
+    write_frame(sync_frame)
   end
 
   def write_update(context_player, local_players)
@@ -200,10 +183,10 @@ module RuneRb::Network::FrameWriter
   end
 
   # @param entity [RuneRb::Entity::Context] the entity for which the state update will apply to
-  # @param payload [RuneRb::Network::JOutStream] the payload which the state will be appended to
-  def write_entity_state(payload, entity)
+  def write_entity_state(entity)
     return unless entity.flags[:state][:update?]
 
+    payload = RuneRb::Network::MetaFrame.new(-1)
     # Make the mask
     mask = 0x0
     # Chat updates?
@@ -226,6 +209,7 @@ module RuneRb::Network::FrameWriter
     # Face Coordinates
     # Primary Hit
     # Secondary Hit
+    payload
   end
 
   # @param entity [RuneRb::Entity::Type] the entity for which the placement will occur

@@ -17554,3 +17554,92 @@ I, [2020-11-02T21:31:23.539332 #764279]  INFO -- RuneRb: LOCAL:	[x: 54, y: 55]
 I, [2020-11-02T21:31:23.539462 #764279]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
 I, [2020-11-02T21:31:23.539547 #764279]  INFO -- RuneRb: Wrote x: 325, y: 386
 I, [2020-11-02T21:31:23.539673 #764279]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:00:13.919725 #951085]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-02T23:00:13.919922 #951085]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-02T23:00:15.960306 #951400]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-02T23:00:15.962138 #951400]  INFO -- RuneRb: Generated seed: 742202941
+I, [2020-11-02T23:00:15.962260 #951400]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-02T23:00:15.962873 #951400]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-02T23:00:15.962982 #951400]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-02T23:00:15.968176 #951400]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-02T23:00:15.968450 #951400]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:00:15.968531 #951400]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:00:15.968605 #951400]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-02T23:00:15.968684 #951400]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-02T23:00:16.031761 #951400]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-02T23:00:36.520667 #952345]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-02T23:00:36.520852 #952345]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-02T23:00:40.267661 #952653]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-02T23:00:40.269392 #952653]  INFO -- RuneRb: Generated seed: 2779575112
+I, [2020-11-02T23:00:40.269500 #952653]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-02T23:00:40.270024 #952653]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-02T23:00:40.270172 #952653]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-02T23:00:40.275191 #952653]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-02T23:00:40.275557 #952653]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:00:40.275689 #952653]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:00:40.275760 #952653]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-02T23:00:40.275839 #952653]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-02T23:00:40.337116 #952653]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-02T23:01:18.579199 #954216]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-02T23:01:18.579429 #954216]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-02T23:01:21.184744 #954527]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-02T23:01:21.186426 #954527]  INFO -- RuneRb: Generated seed: 2430726290
+I, [2020-11-02T23:01:21.186535 #954527]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-02T23:01:21.187065 #954527]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-02T23:01:21.187204 #954527]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-02T23:01:21.192265 #954527]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-02T23:01:21.192531 #954527]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:01:21.192660 #954527]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-02T23:01:21.192730 #954527]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-02T23:01:21.192808 #954527]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-02T23:01:21.253610 #954527]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-02T23:01:21.332266 #954527]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:uid=>10901320, :banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :username=>"Pat", :password=>"nice", :name_hash=>0, :rights=>2}>
+I, [2020-11-02T23:01:21.591913 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:21.592180 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [-28, -35, -80, 7, -1]
+I, [2020-11-02T23:01:22.192806 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:22.193058 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:22.793831 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:22.794066 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:23.394827 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:23.396902 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:23.997845 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:23.998119 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:24.599303 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:24.599556 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:25.200674 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:25.200891 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:25.735166 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 210 || [Size]: 4 || [Payload]: [63, 0, -114, -35]
+I, [2020-11-02T23:01:25.801832 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:25.802043 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:26.140851 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 121 || [Size]: 0 || [Payload]: []
+I, [2020-11-02T23:01:26.403167 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:26.403439 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:27.004594 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:27.004831 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:27.605935 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:27.606181 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:27.783117 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [1, 27, 0, -127]
+E, [2020-11-02T23:01:28.194184 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [1, 27, 7, -83]
+I, [2020-11-02T23:01:28.207326 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:28.207559 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:28.706452 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -15, 6, 44]
+I, [2020-11-02T23:01:28.808735 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:28.809032 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:29.118195 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -115, 6, 44]
+I, [2020-11-02T23:01:29.409801 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:29.410042 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:29.939256 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 6, 44]
+I, [2020-11-02T23:01:30.010843 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:30.011113 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:30.351105 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -124]
+I, [2020-11-02T23:01:30.611802 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:30.612060 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:31.212877 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:31.213144 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:31.399071 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -14]
+I, [2020-11-02T23:01:31.813839 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:31.814070 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-02T23:01:32.414868 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, -59, 1, -126]
+I, [2020-11-02T23:01:32.415957 #954527]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-02T23:01:32.448623 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -14]
+E, [2020-11-02T23:01:32.653812 #954527] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -80]

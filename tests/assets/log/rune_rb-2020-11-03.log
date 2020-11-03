@@ -1,0 +1,378 @@
+# Logfile created on 2020-11-03 00:26:44 -0500 by logger.rb/v1.4.2
+I, [2020-11-03T00:26:44.029724 #1005351]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:26:44.029900 #1005351]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:26:58.125844 #1005665]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:26:58.127707 #1005665]  INFO -- RuneRb: Generated seed: 2803389453
+I, [2020-11-03T00:26:58.127816 #1005665]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:26:58.128855 #1005665]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:27:45.575393 #1007693]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:27:45.575602 #1007693]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:27:49.372251 #1008001]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:27:49.374067 #1008001]  INFO -- RuneRb: Generated seed: 3192909519
+I, [2020-11-03T00:27:49.374222 #1008001]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:27:49.374745 #1008001]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:27:49.374890 #1008001]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:27:49.380037 #1008001]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:27:49.380237 #1008001]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:27:49.380352 #1008001]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:27:49.380423 #1008001]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:27:49.380514 #1008001]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:29:05.155401 #1008876]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:29:05.155635 #1008876]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:29:08.438398 #1009190]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:29:08.440205 #1009190]  INFO -- RuneRb: Generated seed: 723202122
+I, [2020-11-03T00:29:08.440354 #1009190]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:29:08.440855 #1009190]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:29:08.440973 #1009190]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:29:08.446010 #1009190]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:29:08.446216 #1009190]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:29:08.446290 #1009190]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:29:08.446412 #1009190]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:29:08.446517 #1009190]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:30:58.955977 #1009384]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:30:58.956184 #1009384]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:31:00.247929 #1009698]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:31:00.249671 #1009698]  INFO -- RuneRb: Generated seed: 2352572829
+I, [2020-11-03T00:31:00.249775 #1009698]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:31:00.250400 #1009698]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:31:00.250536 #1009698]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:31:00.255627 #1009698]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:31:00.255853 #1009698]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:31:00.256010 #1009698]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:31:00.256081 #1009698]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:31:00.256161 #1009698]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:33:47.788723 #1010159]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:33:47.788908 #1010159]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:33:49.896789 #1010469]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:33:49.898608 #1010469]  INFO -- RuneRb: Generated seed: 3836577765
+I, [2020-11-03T00:33:49.898753 #1010469]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:33:49.899256 #1010469]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:33:49.899368 #1010469]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:33:49.904278 #1010469]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:33:49.904475 #1010469]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:33:49.904637 #1010469]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:33:49.904711 #1010469]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:33:49.904789 #1010469]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:33:49.980039 #1010469]  INFO -- RuneRb: Registered new profile for 
+I, [2020-11-03T00:34:49.990941 #1013265]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:34:49.991143 #1013265]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:34:53.448161 #1013577]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:34:53.449855 #1013577]  INFO -- RuneRb: Generated seed: 72201403
+I, [2020-11-03T00:34:53.450012 #1013577]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:34:53.450511 #1013577]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:34:53.450657 #1013577]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:34:53.455380 #1013577]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:34:53.455583 #1013577]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:34:53.455655 #1013577]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:34:53.455766 #1013577]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:34:53.455843 #1013577]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:34:53.516775 #1013577]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:35:11.032228 #1014210]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:35:11.032422 #1014210]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:35:12.863407 #1014518]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:35:12.865107 #1014518]  INFO -- RuneRb: Generated seed: 4018867442
+I, [2020-11-03T00:35:12.865212 #1014518]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:35:12.865718 #1014518]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:35:12.865827 #1014518]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:35:12.870844 #1014518]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:35:12.871051 #1014518]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:35:12.871196 #1014518]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:35:12.871268 #1014518]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:35:12.871348 #1014518]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:35:12.931852 #1014518]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:35:35.262111 #1015151]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:35:35.262303 #1015151]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:35:38.043040 #1015460]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:35:38.044751 #1015460]  INFO -- RuneRb: Generated seed: 494948306
+I, [2020-11-03T00:35:38.044859 #1015460]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:35:38.045412 #1015460]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:35:38.045562 #1015460]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:35:38.050461 #1015460]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:35:38.050722 #1015460]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:35:38.050797 #1015460]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:35:38.050865 #1015460]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:35:38.050941 #1015460]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:35:38.110903 #1015460]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:35:38.280004 #1015460]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+E, [2020-11-03T00:35:38.876021 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:38.876242 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:39.477349 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:39.477539 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:40.080960 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:40.081151 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:40.682476 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:40.682709 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:41.283845 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:41.284052 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:41.885286 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:41.885438 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:42.487035 #1015460] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:35:42.487224 #1015460] ERROR -- RuneRb: undefined method `region' for nil:NilClass
+E, [2020-11-03T00:35:42.556811 #1015460] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+I, [2020-11-03T00:36:56.757931 #1017339]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:36:56.758142 #1017339]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:36:58.558240 #1017653]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:36:58.560011 #1017653]  INFO -- RuneRb: Generated seed: 1600218383
+I, [2020-11-03T00:36:58.560160 #1017653]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:36:58.560610 #1017653]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:36:58.560778 #1017653]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:36:58.565622 #1017653]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:36:58.566131 #1017653]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:36:58.566215 #1017653]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:36:58.566348 #1017653]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:36:58.566425 #1017653]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:36:58.627576 #1017653]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:36:58.691995 #1017653]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+I, [2020-11-03T00:36:59.167455 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:36:59.167609 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:36:59.167693 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:36:59.170527 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:36:59.170687 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:36:59.772358 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:36:59.772548 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:36:59.772615 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:36:59.773435 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:36:59.773520 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:37:00.374924 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:37:00.375080 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:37:00.375145 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:37:00.375952 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:00.376054 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:37:00.977580 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:37:00.977734 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:37:00.977823 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:37:00.978672 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:00.978761 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:37:01.581434 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:37:01.581598 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:37:01.582451 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:37:01.583989 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:01.584784 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:37:02.188394 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:37:02.188559 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:37:02.188629 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:37:02.190235 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:02.191252 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+E, [2020-11-03T00:37:02.772035 #1017653] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+I, [2020-11-03T00:37:02.795334 #1017653]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:37:02.795469 #1017653]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:37:02.795549 #1017653]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:37:02.796984 #1017653] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:02.797735 #1017653] ERROR -- RuneRb: undefined method `location' for #<RuneRb::Entity::Context:0x00005560335154f8>
+I, [2020-11-03T00:37:10.819453 #1018273]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:37:10.819666 #1018273]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:37:12.660375 #1018581]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:37:12.662080 #1018581]  INFO -- RuneRb: Generated seed: 3932880055
+I, [2020-11-03T00:37:12.662181 #1018581]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:37:12.662694 #1018581]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:37:12.662805 #1018581]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:37:12.667698 #1018581]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:37:12.667878 #1018581]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:37:12.667949 #1018581]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:37:12.668159 #1018581]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:37:12.668273 #1018581]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:37:12.728771 #1018581]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:37:12.793154 #1018581]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+E, [2020-11-03T00:37:13.232199 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:13.232373 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:13.833870 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:13.834033 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:14.437524 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:14.437701 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:15.039257 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:15.039415 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:15.640896 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:15.641082 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:16.242547 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:16.242875 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:16.844348 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:16.844525 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+E, [2020-11-03T00:37:17.376735 #1018581] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+E, [2020-11-03T00:37:17.446070 #1018581] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:37:17.446228 #1018581] ERROR -- RuneRb: undefined method `>>' for #<Sequel::SQL::Identifier @value=>"x">
+Did you mean?  >
+I, [2020-11-03T00:38:38.334063 #1021985]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:38:38.334270 #1021985]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:38:41.192485 #1022299]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:38:41.194267 #1022299]  INFO -- RuneRb: Generated seed: 3559593984
+I, [2020-11-03T00:38:41.194401 #1022299]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:38:41.194913 #1022299]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:38:41.195094 #1022299]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:38:41.199968 #1022299]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:38:41.200218 #1022299]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:38:41.200290 #1022299]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:38:41.200357 #1022299]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:38:41.200473 #1022299]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:38:41.262038 #1022299]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:38:41.325885 #1022299]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+I, [2020-11-03T00:38:41.343629 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:41.343792 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:41.343862 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:41.347757 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:41.347889 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:41.948978 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:41.949156 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:41.949239 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:41.951366 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:41.951446 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:42.552460 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:42.552623 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:42.552717 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:42.554749 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:42.554846 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:43.155762 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:43.155939 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:43.156074 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:43.158381 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:43.158463 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:43.759462 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:43.759646 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:43.759732 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:43.761904 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:43.762007 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:44.362734 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:44.362947 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:44.363068 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:44.366743 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:44.366876 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:44.968722 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:44.968884 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:44.968961 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:44.972870 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:44.973027 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:45.574063 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:45.574239 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:45.574861 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:45.578562 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:45.578730 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+I, [2020-11-03T00:38:46.180735 #1022299]  INFO -- RuneRb: BASE:	nil
+I, [2020-11-03T00:38:46.180892 #1022299]  INFO -- RuneRb: REGION:	nil
+I, [2020-11-03T00:38:46.180961 #1022299]  INFO -- RuneRb: LOCAL:	nil
+E, [2020-11-03T00:38:46.185069 #1022299] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-03T00:38:46.185208 #1022299] ERROR -- RuneRb: undefined method `Sequel' for :RuneRb::Database::Location
+E, [2020-11-03T00:38:46.331149 #1022299] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+I, [2020-11-03T00:40:21.656661 #1026606]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:40:21.656879 #1026606]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:40:24.523887 #1026917]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:40:24.525694 #1026917]  INFO -- RuneRb: Generated seed: 2793059472
+I, [2020-11-03T00:40:24.525811 #1026917]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:40:24.526292 #1026917]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:40:24.526437 #1026917]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:40:24.531106 #1026917]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:40:24.531352 #1026917]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:40:24.531425 #1026917]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:40:24.531521 #1026917]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:40:24.531646 #1026917]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:40:24.590672 #1026917]  INFO -- RuneRb: Loaded profile for !
+I, [2020-11-03T00:40:24.654973 #1026917]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+I, [2020-11-03T00:40:24.669631 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:24.669870 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [-28, -55, -128, 7, -1]
+I, [2020-11-03T00:40:25.270859 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:25.271089 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:25.871845 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:25.872099 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:26.474740 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:26.475094 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:27.075835 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:27.076125 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:27.676821 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:27.677105 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:27.803484 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 210 || [Size]: 4 || [Payload]: [63, 0, -114, -35]
+E, [2020-11-03T00:40:28.210066 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 121 || [Size]: 0 || [Payload]: []
+I, [2020-11-03T00:40:28.277880 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:28.278137 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:28.878847 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:28.879094 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:29.024919 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, 118]
+E, [2020-11-03T00:40:29.434085 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 0, 74]
+I, [2020-11-03T00:40:29.479842 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:29.480069 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:29.845246 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 1, 38]
+I, [2020-11-03T00:40:30.080907 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:30.081136 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:30.682192 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:30.682475 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:30.897448 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -106, 2, -100]
+E, [2020-11-03T00:40:30.959735 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -6, 2, -100]
+I, [2020-11-03T00:40:31.283895 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:31.284142 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:31.885527 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:31.885847 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:32.009879 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [1, 62, 2, -31]
+I, [2020-11-03T00:40:32.486922 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:32.487190 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:33.050719 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [1, 62, 3, -67]
+I, [2020-11-03T00:40:33.087855 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:33.088106 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:33.688839 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:33.689062 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:40:34.091300 #1026917] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [1, 62, 3, 32]
+I, [2020-11-03T00:40:34.289834 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:34.290129 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:34.890892 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:34.891195 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:35.491861 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:35.492995 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:36.094976 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:36.095208 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:36.695805 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:36.696024 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:40:37.296807 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:40:37.297029 #1026917]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:07.504085 #1027557]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-03T00:41:07.504300 #1027557]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-03T00:41:08.896744 #1027868]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-03T00:41:08.898437 #1027868]  INFO -- RuneRb: Generated seed: 1350473047
+I, [2020-11-03T00:41:08.898602 #1027868]  INFO -- RuneRb: [Type]: Login
+I, [2020-11-03T00:41:08.899033 #1027868]  INFO -- RuneRb: Read Connection half!
+I, [2020-11-03T00:41:08.899199 #1027868]  INFO -- RuneRb: Read Credential half!
+I, [2020-11-03T00:41:08.904087 #1027868]  INFO -- RuneRb: Ready for Validation
+I, [2020-11-03T00:41:08.904280 #1027868]  INFO -- RuneRb: Connection Type Validated!
+I, [2020-11-03T00:41:08.904356 #1027868]  INFO -- RuneRb: Seed Validated!
+I, [2020-11-03T00:41:08.904505 #1027868]  INFO -- RuneRb: Magic Validated!
+I, [2020-11-03T00:41:08.904587 #1027868]  INFO -- RuneRb: Revision Validated!
+I, [2020-11-03T00:41:08.964967 #1027868]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-03T00:41:09.028910 #1027868]  INFO -- RuneRb: #<RuneRb::Database::Profile @values={:banned=>false, :members=>true, :friends_list=>nil, :ignore_list=>nil, :muted=>false, :name=>"Pat", :password=>"nice", :name_hash=>0, :rights=>0}>
+I, [2020-11-03T00:41:09.311783 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:09.312039 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [-28, -55, -128, 7, -1]
+I, [2020-11-03T00:41:09.912829 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:09.913061 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:10.513813 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:10.514072 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:11.114798 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:11.116826 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:11.717505 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:11.717774 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:12.318472 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:12.318731 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:12.919912 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:12.920137 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:13.520801 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:13.521054 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:41:14.100535 #1027868] ERROR -- RuneRb: Unhandled frame: [OpCode]: 210 || [Size]: 4 || [Payload]: [63, 0, -114, -35]
+I, [2020-11-03T00:41:14.121806 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:14.122041 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:14.723175 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:14.723402 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+E, [2020-11-03T00:41:15.140374 #1027868] ERROR -- RuneRb: Unhandled frame: [OpCode]: 121 || [Size]: 0 || [Payload]: []
+I, [2020-11-03T00:41:15.324576 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:15.324833 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:15.925848 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:15.926082 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:16.526840 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:16.527080 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:17.127848 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:17.128114 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:17.728832 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:17.729085 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:18.329870 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:18.330092 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
+I, [2020-11-03T00:41:18.930803 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 73 || [Size]:  || [Payload]: [1, 21, 1, -109]
+I, [2020-11-03T00:41:18.931044 #1027868]  INFO -- RuneRb: Encoding frame: [OpCode]: 81 || [Size]:  || [Payload]: [0, 127, -16]
