@@ -166,6 +166,7 @@ module RuneRb::Network
       @payload = ''
       @access = :BYTE
       @type = Type.new(fixed, variable_short)
+      @bit_position = 0
     end
 
     # Compiles the MetaFrame object to a binary string ready to be sent.
@@ -185,12 +186,7 @@ module RuneRb::Network
     def write_byte(value, type = :STD)
       valid_access?(:BYTE)
       valid_type?(type)
-      case type
-      when :A, :a then value += 128
-      when :C, :c then value = -value
-      when :S, :s then value = 128 - value
-      end
-      @payload << [value].pack('c')
+      @payload << [parse_type(value, type)].pack('c')
       self
     end
 
@@ -198,6 +194,15 @@ module RuneRb::Network
     def write_bytes(bytes)
       bytes.each { |byte| write_byte(byte) }
       self
+    end
+
+    def parse_type(value, type)
+      case type
+      when :A, :a then value += 128
+      when :C, :c then value = -value
+      when :S, :s then value = 128 - value
+      end
+      value
     end
 
     # Write a short to the underlying buffer.
@@ -319,25 +324,31 @@ module RuneRb::Network
       @bit_position += amount
 
       while amount > bit_offset
-        @io[byte_pos] = [0].pack('c') if @io[byte_pos].nil?
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') | (value >> (amount - bit_offset)) & RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [0].pack('c') if @payload[byte_pos].nil?
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value >> (amount - bit_offset)) & RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
         byte_pos += 1
         amount -= bit_offset
         bit_offset = 8
       end
 
-      @io[byte_pos] = [0].pack('c') if @io[byte_pos].nil?
+      @payload[byte_pos] = [0].pack('c') if @payload[byte_pos].nil?
 
       if amount == bit_offset
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') | (value & RuneRb::Network::BIT_MASK_OUT[bit_offset]))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value & RuneRb::Network::BIT_MASK_OUT[bit_offset]))].pack('c')
       else
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') & ~(RuneRb::Network::BIT_MASK_OUT[amount] << (bit_offset - amount)))].pack('c')
-        @io[byte_pos] = [(@io[byte_pos].unpack1('c') | ((value & RuneRb::Network::BIT_MASK_OUT[amount]) << (bit_offset - amount)))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~(RuneRb::Network::BIT_MASK_OUT[amount] << (bit_offset - amount)))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | ((value & RuneRb::Network::BIT_MASK_OUT[amount]) << (bit_offset - amount)))].pack('c')
       end
 
       self
+    end
+
+    # Pad the underlying buffer until the next byte.
+    def write_padding
+      valid_access? :BIT
+      write_bit(false) until (@payload.size % 2).zero?
     end
 
     # Write a single bit with a value of 1 or 0 depending on the parameter.

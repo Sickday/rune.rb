@@ -15,6 +15,11 @@ module RuneRb::Network
       @in = ''
       @out = []
       @id = Druuid.gen
+      @base_tile = Tile.new(3222, 3222) # Outside Yanile bank
+      @region_tile = Tile.new((@base_tile[:x] / 8),
+                              (@base_tile[:y] / 8))
+      @local_tile = Tile.new(@base_tile[:x] - (@region_tile[:x] - 6) * 8,
+                             @base_tile[:y] - (@region_tile[:y] - 6) * 8)
     end
 
     # Reads data into the Peer#in
@@ -57,15 +62,19 @@ module RuneRb::Network
       disconnect
     end
 
-    # @param data [String, StringIO] the the data to write.
-    def write(data = '')
-      @out[:raw] << data
+    # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
+    def write_frame(frame)
+      @out << frame
     end
 
-    alias << write
+    alias << write_frame
 
     def flush
-      @socket.write_nonblock(@out.each_with_object('') { |str, frame| str << frame.compile }) unless @out.empty?
+      write_mock_update
+      if @status[:active] && !@out.empty?
+        @socket.write_nonblock(@out.first.compile)
+        @out.delete(@out.first)
+      end
     rescue EOFError
       err 'Peer disconnected!'
       disconnect

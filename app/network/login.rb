@@ -1,3 +1,9 @@
+##
+# Login Responses:
+# 1 = Please Wait 2 Seconds
+# 2 = OK
+# 4 = Banned
+# * Thanks wL
 module RuneRb::Network::AuthenticationHelper
   using RuneRb::Patches::IntegerOverrides
   using RuneRb::Patches::StringOverrides
@@ -108,7 +114,10 @@ module RuneRb::Network::AuthenticationHelper
 
   def login(profile)
     send_data([2, profile[:rights], 0].pack('CCC')) # Successful Login!
-    write_sidebars
+    @context_update = true
+    #write_region(region_x: @region_tile[:x], region_y: @region_tile[:y])
+    #write_mock_update
+    #write_sidebars
     #write_text('Thanks for testing Rune.rb.')
     #write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
   end

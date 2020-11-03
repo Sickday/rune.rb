@@ -19,7 +19,12 @@ module RuneRb::Network
       Parallel.in_processes(count: 1) do
         Concurrent::TimerTask.execute(execution_interval: 0.600) do
           begin
-            flush
+            @peers.values.each do |peer_list|
+              peer_list.each do |peer|
+                deregister(peer) unless peer.status[:active]
+                peer.flush
+              end
+            end
           rescue StandardError => e
             err 'An error occurred during flush cycle!', e.message
           end
@@ -52,15 +57,6 @@ module RuneRb::Network
       @peers.each do |_ip, peers|
         peers.each do |peer|
           peer.status[:active] ? peer.receive_data : deregister(peer)
-        end
-      end
-    end
-
-    # Attempts to flush all peer streams.
-    def flush
-      @peers.each do |_ip, peers|
-        peers.each do |peer|
-          peer.status[:active] ? peer.flush : deregister(peer)
         end
       end
     end

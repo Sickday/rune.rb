@@ -83,24 +83,68 @@ module RuneRb::Network::FrameWriter
     frame = RuneRb::Network::MetaFrame.new(71)
     frame.write_short(data[:form])
     frame.write_byte(data[:menu_id], :A)
-    send_data(encode_frame(frame).compile)
+    write_frame(encode_frame(frame))
   end
 
   # Write the region
   # @param data [Hash] a hash containing x and y regional coordinates.
   def write_region(data)
-    out = RuneRb::Network::JOutStream.new(@cipher)
-    out.start_header(73)
-    out.write_short((data[:region_x] / 8) + 6, :A)
-    out.write_short((data[:region_y] / 8) + 6)
-    out.finish_header(false, false)
-    @channel[:out] << out.flush
+    frame = RuneRb::Network::MetaFrame.new(73)
+    frame.write_short(data[:region_x] + 6, :A)
+    frame.write_short(data[:region_y] + 6)
+    write_frame(encode_frame(frame))
+    log "Wrote x: #{data[:region_x] + 6}, y: #{data[:region_y] + 6}"
   end
 
-  def write_update(context_player, local_players, indicies)
-    block_frame = RuneRb::Network::JOutStream.new(@cipher)
-    sync_frame = RuneRb::Network::JOutStream.new(@cipher)
-    sync_frame.start_header(81) # Write the frame header
+  Tile = Struct.new(:x, :y) do
+    def inspect
+      "[x: #{self.x}, y: #{self.y}]"
+    end
+  end
+
+  def write_mock_update
+    log "BASE:\t#{@base_tile.inspect}"
+    log "REGION:\t#{@region_tile.inspect}"
+    log "LOCAL:\t#{@local_tile.inspect}"
+
+    #write_region(region_x: @region_tile[:x], region_y: @region_tile[:y]) if @context_update # Write the region.
+    write_region(region_x: @base_tile[:x], region_y: @base_tile[:y])
+    # block_frame = RuneRb::Network::MetaFrame.new(-1)
+    sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
+    sync_frame.switch_access # Enable Bit access
+
+    # CONTEXT PLACEMENT
+    # TODO: impl
+    if @context_update
+      sync_frame.write_bit(true) # Write 1 bit to indicate placement update is required
+      sync_frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
+      sync_frame.write_bits(2, 0) # Write the plane. 0 being ground level
+      sync_frame.write_bit(true) # Teleporting?
+      sync_frame.write_bit(false) # Update State/Appearance?
+      sync_frame.write_bits(7, @local_tile[:y]) # Local Y
+      sync_frame.write_bits(7, @local_tile[:x]) # Local X
+      @context_update = false # Ensure the next update frame does not require a player movement block
+    else
+      sync_frame.write_bit(false) # Write 1 bit to indicate no movement update is needed at all. This is temporary
+    end
+
+    # LOCAL MOVEMENT
+    # TODO: impl
+    sync_frame.write_bits(8, 0) # Write 8 bits holding 0 value to indicate NO LOCAL MOVEMENT from other players. This is temporary
+
+    # UPDATE LOCAL LIST
+    # TODO: impl
+    sync_frame.write_bits(11, 2047) # Write 11 bits holding the value of 2047 to indicate no further updates are needed to local player list. This is temporary
+
+    ## TODO: Not sure if this is completely necessary. Pad the sync_frame to the next byte
+    #sync_frame.write_padding
+
+    write_frame(encode_frame(sync_frame))
+  end
+
+  def write_update(context_player, local_players)
+    block_frame = RuneRb::Network::MetaFrame.new(-1)
+    sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
     sync_frame.switch_access # Enable Bit access
 
     write_context_movement(sync_frame, context_player) # Write the context player's movement
@@ -259,8 +303,6 @@ module RuneRb::Network::FrameWriter
     puts "Generated update:\t#{out}"
     out
   end
-
-
 
   def movement_update(client, out)
     if client.region_changed
