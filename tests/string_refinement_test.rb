@@ -9,7 +9,8 @@ class StringRefinementTest < Minitest::Test
   # PRE-REQ FOR TESTING.
   using RuneRb::Patches::StringOverrides # Use the refinement object we're testing.
   SIZES = { 4 => 'c', 8 => 'n', 16 => 'l', 32 => 'q' }.freeze # Pre-defined sizes for primitives we'll be working with (byte, short, integer, long) and their packing directives
-  Assets = Struct.new(:sample_pool, :to_read, :original_size)
+  STRINGS = %w[Pat Jaime Jason Sen].freeze
+  Assets = Struct.new(:sample_pool, :to_read, :original_size, :string)
 
   # Define a string-based buffer
   # Populate the buffer with a random assortment of different primitive types.
@@ -20,7 +21,7 @@ class StringRefinementTest < Minitest::Test
       inf = SIZES.to_a.sample
       @string_buffer << [rand(1 << inf.first)].pack(inf.last)
     end
-    @assets = Assets.new([], rand(1...0xFF), @string_buffer.bytesize)
+    @assets = Assets.new([], rand(1...0xFF), @string_buffer.bytesize, STRINGS.sample)
   end
 
   # Test the String#next_byte function
@@ -213,5 +214,24 @@ class StringRefinementTest < Minitest::Test
 
     assert(@assets[:sample_pool].all? { |long| long <= 0xFFFFFFFFFFFFFFFF && long >= -0xFFFFFFFFFFFFFFFF })
     assert_equal(@string_buffer.bytesize, @assets[:original_size] - (@assets[:to_read] * 8))
+  end
+
+  # Test the String#to_base37 function
+  #
+  # ASSERTIONS:
+  # * Test that a String converted to a base37 numeric is actually a base37 numeric (numeric % 37 == 0)
+  def test_to_base37
+    assert(@assets[:string].to_base37 % 37, 0)
+  end
+
+  # Test the String#from_base37 function
+  #
+  # ASSERTIONS:
+  # * Test that a String built from a base37 numeric is the same string that would generate the base37 numeric.
+  # * Test that a String with existing text will return itself instead of parsing a base37 numeric unless the String is empty
+  def test_from_base37
+    b37 = @assets[:string].to_base37
+    assert(''.from_base37(b37), @assets[:string])
+    assert_equal('string_with_text', 'string_with_text'.from_base37(b37))
   end
 end

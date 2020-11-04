@@ -7,7 +7,9 @@ require_relative '../app/rune'
 using RuneRb::Patches::StringOverrides
 
 SIZES = { 4 => 'c', 8 => 'n', 16 => 'l', 32 => 'q' }.freeze # Pre-defined sizes for primitives we'll be working with (byte, short, integer, long) and their packing directives
-Assets = Struct.new(:sample_pool, :to_read, :original_size)
+STRINGS = %w[Pat Jaime Jason Sen].freeze
+Assets = Struct.new(:sample_pool, :to_read, :original_size, :string)
+
 # Define a string-based buffer
 # Populate the buffer with a random assortment of different primitive types.
 
@@ -18,7 +20,7 @@ describe String do
       inf = SIZES.to_a.sample
       @string_buffer << [rand(1 << inf.first)].pack(inf.last)
     end
-    @assets = Assets.new([], rand(1...0xFF), @string_buffer.bytesize)
+    @assets = Assets.new([], rand(1...0xFF), @string_buffer.bytesize, STRINGS.sample)
   end
 
   describe '#next_byte' do
@@ -162,6 +164,23 @@ describe String do
 
       assert(@assets[:sample_pool].all? { |long| long <= 0xFFFFFFFFFFFFFFFF && long >= -0xFFFFFFFFFFFFFFFF })
       assert_equal(@string_buffer.bytesize, @assets[:original_size] - (@assets[:to_read] * 8))
+    end
+  end
+
+  describe '#to_base37' do
+    it 'returns a base37 numeric representation of the string' do
+      assert(@assets[:string].to_base37 % 37, 0)
+    end
+  end
+
+  describe '#from_base37' do
+    it 'returns self when self is not empty' do
+      b37 = @assets[:string].to_base37
+      assert_equal('string_with_text', 'string_with_text'.from_base37(b37))
+    end
+    it 'populates self with the resulting string from base37 conversion when self is an empty String' do
+      b37 = @assets[:string].to_base37
+      assert(''.from_base37(b37), @assets[:string])
     end
   end
 end
