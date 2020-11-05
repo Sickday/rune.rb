@@ -90,7 +90,7 @@ module RuneRb::Game
 
     def inspect
       itr = 0
-      @data.inject("") do |str, values|
+      @data.inject('') do |str, values|
         itr += 1
         str << "\tS#{values[0]}:#{values[1]&.definition&.name}x#{values[1]&.size}\t|"
         str << "\n" if itr % 4 == 0

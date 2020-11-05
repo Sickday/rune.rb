@@ -38,12 +38,6 @@ rand(256).times do
   puts 'Generated Credentials!'
   puts "UN:\t#{creds[:user]}\nPASS:\t#{creds[:pass]}\tUID:\t#{creds[:uid]}"
 
-  Test::CONNECTION[:profile].insert(uid: creds[:uid], username: creds[:user], password: creds[:pass])
-  Test::CONNECTION[:settings].insert(uid: creds[:uid])
-  Test::CONNECTION[:appearance].insert(uid: creds[:uid])
-  Test::CONNECTION[:equipment].insert(uid: creds[:uid])
-  Test::CONNECTION[:stats].insert(uid: creds[:uid])
-  Test::CONNECTION[:location].insert(uid: creds[:uid])
   user_list << creds[:uid]
   sleep(1)
 end

@@ -21,7 +21,7 @@ module RuneRb::Network
           begin
             @peers.values.each do |peer_list|
               peer_list.each do |peer|
-                deregister(peer) unless peer.status[:active]
+                deregister(peer, peer.socket) unless peer.status[:active]
                 peer.flush
               end
             end
@@ -34,10 +34,10 @@ module RuneRb::Network
     end
 
     # De-registers a socket from the selector and removes it's reference from the internal client list.
-    def deregister(peer)
-      log "De-registered socket for #{peer.ip}"
-      @selector.deregister(peer.socket)
+    def deregister(peer, socket)
+      @selector.deregister(socket)
       @peers[peer.ip].delete(peer)
+      log RuneRb::COL.green("De-registered socket for #{RuneRb::COL.cyan(peer.ip)}")
     end
 
     private
@@ -47,7 +47,7 @@ module RuneRb::Network
       socket = @server.accept_nonblock
       host = socket.peeraddr[-1]
       @peers[host] ||= []
-      @peers[host] << RuneRb::Network::Peer.new(socket)
+      @peers[host] << RuneRb::Network::Peer.new(socket, self)
       @selector.register(socket, :r).value = proc { update_peers }
       log RuneRb::COL.green("Registered new socket for #{RuneRb::COL.cyan(host)}")
     end
@@ -56,7 +56,7 @@ module RuneRb::Network
     def update_peers
       @peers.each do |_ip, peers|
         peers.each do |peer|
-          peer.status[:active] ? peer.receive_data : deregister(peer)
+          peer.status[:active] ? peer.receive_data : deregister(peer, peer.socket)
         end
       end
     end

@@ -43,7 +43,9 @@ module RuneRb
 
     # RuneRb::Game::Map
     module Map
-      autoload :Boundary,           'game/map/boundary'
+      X_DELTAS = [-1, 0, 1, -1, 1, -1, 0, 1].freeze
+      Y_DELTAS = [1, 1, 1, 0, 0, -1, -1, -1].freeze
+
       autoload :Movement,           'game/map/move'
       autoload :Position,           'game/map/position'
     end
@@ -135,4 +137,7 @@ module RuneRb
   # Initialize a new logger
   LOG = Console.logger
   COL = Pastel.new
+
+  # Debug logging
+  DEBUG = ENV['DEBUG'].to_i.positive?
 end

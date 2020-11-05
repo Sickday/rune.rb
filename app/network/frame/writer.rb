@@ -37,6 +37,7 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_inventory(data)
+    frame = RuneRb::Network::MetaFrame.new(53)
     out.start_header(53)
     out.write_short(3214) # Inventory interface ID?
     out.write_short(data[:inventory_length])
@@ -55,16 +56,14 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_text(txt)
-    out = RuneRb::Network::JOutStream.new(@cipher)
-    out.start_header(253)
-    out.write_string(txt)
-    out.finish_header(true, true)
-    @channel[:out] << out.flush
+    frame = RuneRb::Network::MetaFrame.new(253, false, true)
+    frame.write_string(txt)
+    write_frame(frame)
   end
 
   def write_sidebars
     RuneRb::Network::SIDEBAR_INTERFACES.each do |key, value|
-      write_sidebar({ menu_id: key, form: value })
+      write_sidebar(menu_id: key, form: value)
     end
   end
 
@@ -87,9 +86,10 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_mock_update
-    if @context.updates[:region?]
-      write_region(region_x: @context.location.region[:x],
-                   region_y: @context.location.region[:y])
+    if @context.flags[:region?]
+      write_region(region_x: @context.region.region_x,
+                   region_y: @context.region.region_y)
+      @context.flags[:region?] = false
     end
 
     #block_frame = RuneRb::Network::MetaFrame.new(-1)
@@ -98,19 +98,28 @@ module RuneRb::Network::FrameWriter
 
     # CONTEXT PLACEMENT
     # TODO: impl
-    if @context.updates[:placement?]
+    if @context.flags[:placement?] # Context player needs placement
       sync_frame.write_bit(true) # Write 1 bit to indicate placement update is required
       sync_frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
       sync_frame.write_bits(2, 0) # Write the plane. 0 being ground level
       sync_frame.write_bit(true) # Teleporting?
       sync_frame.write_bit(false) # Update State/Appearance?
-      sync_frame.write_bits(7, @context.location.local[:y]) # Local Y
-      sync_frame.write_bits(7, @context.location.local[:x]) # Local X
-      @context.updates[:placement?] = false # Ensure the next update frame does not require a player movement block
+      sync_frame.write_bits(7, @context.position.local_x(@context.region)) # Local Y
+      sync_frame.write_bits(7, @context.position.local_y(@context.region)) # Local X
+      @context.flags[:placement?] = false # Ensure the next update frame does not require a player movement block
+    elsif @context.movement[:moved?] # Context player moved
+      sync_frame.write_bit(true) # Write 1 bit to indicate movement update is required
+      if @context.movement[:first] != -1 && @context.movement[:second] != -1
+        write_run(sync_frame, @context.movement[:first], @context.movement[:second])
+      else
+        write_walk(sync_frame, @context.movement[:first])
+      end
+    elsif @context.flags[:state?] # Context player needs a state update
+      sync_frame.write_bit(true)
+      write_stand(sync_frame)
     else
       sync_frame.write_bit(false) # Write 1 bit to indicate no movement update is needed at all. This is temporary
     end
-
 
     # LOCAL MOVEMENT
     # TODO: impl
@@ -125,6 +134,27 @@ module RuneRb::Network::FrameWriter
     write_frame(sync_frame)
   end
 
+  # Writes a walking movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  def write_walk(frame, direction)
+    frame.write_bits(2, 1) # we write 1 because we're walking
+    frame.write_bits(3, direction)
+  end
+
+  # Writes a running movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  def write_run(frame, first_direction, second_direction)
+    frame.write_bits(2, 2) # we write 2 because we're running
+    frame.write_bits(3, first_direction)
+    frame.write_bits(3, second_direction)
+  end
+
+  # Writes a stand to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  def write_stand(frame)
+    frame.write_bits(2, 0) # we write 0 because we're standing
+  end
+
   def write_update(context_player, local_players)
     block_frame = RuneRb::Network::MetaFrame.new(-1)
     sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
@@ -135,9 +165,9 @@ module RuneRb::Network::FrameWriter
 
     sync_frame.write_bits(8, local_players.size) # Write the player list size to the sync frame
     local_players.each do |local| # Iterate through the playerlist
-      write_entity_movement(payload, local) if local.flags[:moved?]
-      write_entity_state(payload, local) if local.flags[:state][:update?]
-      write_player_removal(payload) unless context_player.near?(local)
+    write_entity_movement(payload, local) if local.flags[:moved?]
+    write_entity_state(payload, local) if local.flags[:state][:update?]
+    write_player_removal(payload) unless context_player.near?(local)
     end
 
     local_players.each do |local|
@@ -147,10 +177,9 @@ module RuneRb::Network::FrameWriter
 
   # Write a forced disconnection.
   def write_disconnect
-    out = RuneRb::Network::JOutStream.new(@cipher)
-    out.start_header(109)
-    out.finish_header(false)
-    @channel[:out] << out.flush
+    frame = RuneRb::Network::MetaFrame.new(109)
+    write_frame(frame)
+    disconnect
   end
 
   private
