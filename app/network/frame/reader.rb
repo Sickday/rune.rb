@@ -21,6 +21,10 @@ module RuneRb::Network::FrameReader
       log 'Received Heartbeat!' if RuneRb::DEBUG
     when 77, 78, 165, 189, 210, 226, 121 # Ping frame
       log "Got ping frame #{frame.header[:op_code]}" if RuneRb::DEBUG
+    when 86
+      roll = frame.read_short(false, :STD, :LITTLE)
+      yaw = frame.read_short(false, :STD, :LITTLE)
+      log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
     when 185
       data = frame.read_bytes(2, :STD)
       val = 0
@@ -100,7 +104,7 @@ module RuneRb::Network::FrameReader
 
   def parse_button(id)
     case id
-    when 9000 then write_disconnect if @status[:authenticated]
+    when 9000 then write_disconnect if @status[:authenticated] == :LOGGED_IN
     end
   end
 end

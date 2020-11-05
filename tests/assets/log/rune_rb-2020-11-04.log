@@ -21469,3 +21469,136 @@ E, [2020-11-04T20:24:20.681687 #796746] ERROR -- RuneRb: Unhandled frame: [OpCod
 E, [2020-11-04T20:24:21.090792 #796746] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -80]
 E, [2020-11-04T20:24:21.501624 #796746] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 6, -8]
 I, [2020-11-04T20:24:23.306830 #796746]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:29:31.485812 #798120]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T20:29:31.485994 #798120]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T20:29:33.114902 #798428]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:29:33.186539 #798428]  INFO -- RuneRb: Loaded profile for Pat!
+E, [2020-11-04T20:29:36.534420 #798428] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, 120]
+E, [2020-11-04T20:29:36.946230 #798428] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 7, -12]
+E, [2020-11-04T20:29:37.358156 #798428] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -128, 6, 32]
+E, [2020-11-04T20:29:37.761197 #798428] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -46, 6, -75]
+E, [2020-11-04T20:29:38.175433 #798428] ERROR -- RuneRb: Unhandled frame: [OpCode]: 86 || [Size]: 4 || [Payload]: [0, -13, 6, -75]
+I, [2020-11-04T20:29:41.033537 #798428]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:33:36.210874 #807528]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T20:33:36.212990 #807528]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T20:33:38.222433 #807839]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:33:38.292290 #807839]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T20:33:40.487436 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 62208 || [Yaw]: 31239
+I, [2020-11-04T20:33:40.891269 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 4353 || [Yaw]: 31239
+I, [2020-11-04T20:33:42.880827 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 4353 || [Yaw]: 31239
+I, [2020-11-04T20:33:43.284023 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 4353 || [Yaw]: 46343
+I, [2020-11-04T20:33:43.689501 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 47616 || [Yaw]: 46087
+I, [2020-11-04T20:33:44.099028 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 46087
+I, [2020-11-04T20:33:44.510519 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 20742
+I, [2020-11-04T20:33:46.190833 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 20742
+I, [2020-11-04T20:33:46.604579 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 35591
+I, [2020-11-04T20:33:47.011870 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:47.424920 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:47.839790 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:48.252837 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:49.468346 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:49.882141 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:50.568207 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 48903
+I, [2020-11-04T20:33:50.974637 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 32768 || [Yaw]: 19975
+I, [2020-11-04T20:33:51.384269 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 39680 || [Yaw]: 19975
+I, [2020-11-04T20:33:51.789005 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 63488 || [Yaw]: 19975
+I, [2020-11-04T20:33:52.191306 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 63488 || [Yaw]: 46343
+I, [2020-11-04T20:33:52.594921 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 10753 || [Yaw]: 52487
+I, [2020-11-04T20:33:52.997374 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 7681 || [Yaw]: 19975
+I, [2020-11-04T20:33:53.400455 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 58368 || [Yaw]: 7943
+I, [2020-11-04T20:33:53.801254 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 61440 || [Yaw]: 40455
+I, [2020-11-04T20:33:54.203049 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 9473 || [Yaw]: 22790
+I, [2020-11-04T20:33:54.614087 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 9473 || [Yaw]: 32005
+I, [2020-11-04T20:33:55.019151 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 9473 || [Yaw]: 61701
+I, [2020-11-04T20:33:55.432765 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 9473 || [Yaw]: 18693
+I, [2020-11-04T20:33:55.837059 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 9473 || [Yaw]: 4614
+I, [2020-11-04T20:33:56.254197 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 51456 || [Yaw]: 15110
+I, [2020-11-04T20:33:56.666171 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 50688 || [Yaw]: 63751
+I, [2020-11-04T20:33:57.068474 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 6145 || [Yaw]: 5895
+I, [2020-11-04T20:33:57.470890 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 12033 || [Yaw]: 39687
+I, [2020-11-04T20:33:57.872705 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 12033 || [Yaw]: 8199
+I, [2020-11-04T20:33:58.274960 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 12033 || [Yaw]: 9223
+I, [2020-11-04T20:33:58.677449 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 62976 || [Yaw]: 53767
+I, [2020-11-04T20:33:59.077583 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 54784 || [Yaw]: 33287
+I, [2020-11-04T20:33:59.493100 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 64512 || [Yaw]: 51718
+I, [2020-11-04T20:33:59.908485 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 64512 || [Yaw]: 11525
+I, [2020-11-04T20:34:00.310275 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 5377 || [Yaw]: 15877
+I, [2020-11-04T20:34:00.714509 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 5377 || [Yaw]: 54278
+I, [2020-11-04T20:34:01.128660 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 65280 || [Yaw]: 54534
+I, [2020-11-04T20:34:01.543768 #807839]  INFO -- RuneRb: Camera Rotation: [Roll]: 64512 || [Yaw]: 5894
+I, [2020-11-04T20:34:05.591334 #807839]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:34:19.081963 #808191]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T20:34:19.082134 #808191]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T20:34:22.659307 #808503]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:34:22.731991 #808503]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T20:34:31.565028 #808503]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:35:21.983163 #808503]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:35:21.989347 #808503]  INFO -- RuneRb: Loaded profile for Pat!
+E, [2020-11-04T20:35:29.326861 #808503] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+E, [2020-11-04T20:35:37.917139 #808503] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [1]
+E, [2020-11-04T20:35:55.334477 #808503] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-04T20:35:55.334757 #808503]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:36:18.714926 #808503]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:36:18.719692 #808503]  INFO -- RuneRb: Loaded profile for Pat!
+E, [2020-11-04T20:37:18.781377 #808503] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-04T20:37:18.781644 #808503]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T20:38:04.556922 #808503]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T20:38:04.577938 #808503]  INFO -- RuneRb: Registered new profile for Br0
+I, [2020-11-04T20:38:31.642232 #808503]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:03:04.004185 #862475]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:03:04.004378 #862475]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:03:06.249882 #862786]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:03:19.697677 #863415]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:03:19.697853 #863415]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:03:21.317474 #863724]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:17:29.078160 #893757]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:17:29.078359 #893757]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:17:30.588743 #894065]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:17:30.666898 #894065]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:17:30.667113 #894065]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:19:08.234050 #898133]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:19:08.236166 #898133]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:19:09.881599 #898441]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:19:09.951846 #898441]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:19:09.952048 #898441]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:19:12.735621 #898441]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-04T21:19:12.735859 #898441] ERROR -- RuneRb: Socket has no data
+E, [2020-11-04T21:19:12.736251 #898441] ERROR -- RuneRb: Socket has no data
+I, [2020-11-04T21:19:12.742535 #898441]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:19:12.742719 #898441]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:20:13.619634 #900404]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:20:13.619826 #900404]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:20:15.151425 #900715]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:20:15.224007 #900715]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:20:15.224209 #900715]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:20:18.092711 #900715]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-04T21:20:18.092994 #900715] ERROR -- RuneRb: Socket has no data
+E, [2020-11-04T21:20:18.093387 #900715] ERROR -- RuneRb: Socket has no data
+I, [2020-11-04T21:20:18.096803 #900715]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:20:18.096962 #900715]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:22:51.431137 #905689]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:22:51.431332 #905689]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:22:52.855424 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:22:52.928064 #906003]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:22:52.928287 #906003]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:23:03.905823 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:23:06.615155 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:23:06.619048 #906003]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:23:06.619217 #906003]  INFO -- RuneRb: Credentials valid for Br0!
+I, [2020-11-04T21:23:09.723586 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:23:15.598856 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:23:15.603380 #906003]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:23:15.603591 #906003]  INFO -- RuneRb: Invalid Credentials for Br0!
+I, [2020-11-04T21:23:15.603735 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:23:22.115821 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:23:22.120906 #906003]  INFO -- RuneRb: Loaded profile for Br0!
+I, [2020-11-04T21:23:22.121074 #906003]  INFO -- RuneRb: Invalid Credentials for Br0!
+I, [2020-11-04T21:23:22.121247 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:23:31.243858 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:23:31.253146 #906003]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:23:31.253324 #906003]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-04T21:23:34.349863 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:23:40.344866 #906003]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:23:40.354522 #906003]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:23:40.354708 #906003]  INFO -- RuneRb: Invalid Credentials for Pat!
+I, [2020-11-04T21:23:40.354851 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1

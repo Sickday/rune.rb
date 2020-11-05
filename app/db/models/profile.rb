@@ -9,8 +9,8 @@ module RuneRb::Database
 
     # Registers a new profile with supplied data.
     # @param data [Hash, Struct] profile data to insert.
-    def self.register(data)
-      PROFILES[:profile].insert(name: data[:Username], password: data[:Password], name_hash: data[:NameHash])
+    def self.register(data, name_hash)
+      PROFILES[:profile].insert(name: data[:Username], password: data[:Password], name_hash: name_hash)
       PROFILES[:settings].insert(name: data[:Username])
       PROFILES[:appearance].insert(name: data[:Username])
       PROFILES[:equipment].insert(name: data[:Username])

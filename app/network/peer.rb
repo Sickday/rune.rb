@@ -21,7 +21,7 @@ module RuneRb::Network
     # Reads data into the Peer#in
     def receive_data
       if @status[:active]
-        if @status[:authenticated]
+        if @status[:authenticated] == :LOGGED_IN
           @in << @socket.read_nonblock(5192)
           @context ||= RuneRb::Entity::Context.new(self, @profile)
           next_frame if @in.size >= 3
@@ -85,6 +85,7 @@ module RuneRb::Network
     alias << write_frame
 
     def flush
+      write_login if @status[:authenticated] == :PENDING_LOGIN
       write_mock_update if @context && @status[:active]
     rescue EOFError
       err 'Peer disconnected!'

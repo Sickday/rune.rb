@@ -306,6 +306,7 @@ module RuneRb::Network
     # Write a string value to the underlying buffer. This will be escaped with a 10 value.
     # @param string [String, StringIO] the byte to write to the underlying buffer.
     def write_string(string)
+      puts "Writing bytes: #{string.bytes}"
       write_bytes(string.bytes)
       write_byte(10)
       self

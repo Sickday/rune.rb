@@ -85,6 +85,25 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
+  # Write the login response
+  # @param rights [Integer] the rights for the session logging in
+  # @param flagged [Boolean] is the account flagged?
+  def write_response(rights, flagged)
+    frame = ''
+    frame << [2].pack('c')
+    frame << [rights].pack('c')
+    frame << [flagged ? 1 : 0].pack('c')
+    send_data(frame)
+  end
+
+  def write_login
+    write_response(@profile[:rights], false)
+    write_sidebars
+    # write_text('Thanks for testing Rune.rb.')
+    #write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
+    @status[:authenticated] = :LOGGED_IN
+  end
+
   def write_mock_update
     if @context.flags[:region?]
       write_region(region_x: @context.region.region_x,
