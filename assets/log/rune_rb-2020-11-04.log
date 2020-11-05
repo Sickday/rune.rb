@@ -1,7 +1,0 @@
-# Logfile created on 2020-11-04 21:37:42 -0500 by logger.rb/v1.4.2
-I, [2020-11-04T21:37:48.554730 #916104]  INFO -- RuneRb: [HOST]:	0.0.0.0
-I, [2020-11-04T21:37:48.554924 #916104]  INFO -- RuneRb: [PORT]:	43594
-I, [2020-11-04T21:37:52.632706 #916714]  INFO -- RuneRb: Registered new socket for 127.0.0.1
-I, [2020-11-04T21:37:52.699335 #916714]  INFO -- RuneRb: Loaded profile for Pat!
-I, [2020-11-04T21:37:52.699531 #916714]  INFO -- RuneRb: Credentials valid for Pat!
-I, [2020-11-04T21:37:55.750611 #916714]  INFO -- RuneRb: De-registered socket for 127.0.0.1
