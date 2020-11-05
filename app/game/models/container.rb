@@ -1,8 +1,5 @@
 module RuneRb::Game
-  MAX_ITEMS = 2**31-1
-
   # A container of ItemStacks.
-  # TODO: include serializable ;)
   class ItemContainer
 
     # Called when a new ItemContainer is created.

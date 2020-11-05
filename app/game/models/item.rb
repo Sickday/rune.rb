@@ -6,7 +6,7 @@ module RuneRb::Game
 
     # Called when a new ItemStack is created.
     def initialize(id, amount = 1)
-      @definition = RuneRb::Db::Models::ItemDefinition[id]
+      @definition = RuneRb::Database::Item[id]
       @size = amount
     end
   end

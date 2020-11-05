@@ -21602,3 +21602,25 @@ I, [2020-11-04T21:23:40.344866 #906003]  INFO -- RuneRb: Registered new socket f
 I, [2020-11-04T21:23:40.354522 #906003]  INFO -- RuneRb: Loaded profile for Pat!
 I, [2020-11-04T21:23:40.354708 #906003]  INFO -- RuneRb: Invalid Credentials for Pat!
 I, [2020-11-04T21:23:40.354851 #906003]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:25:57.837508 #906885]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:25:57.839630 #906885]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:26:09.901964 #907193]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:26:09.971174 #907193]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:26:09.971394 #907193]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-04T21:26:14.759716 #907193] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+E, [2020-11-04T21:26:20.486027 #907193] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [1]
+E, [2020-11-04T21:26:23.084352 #907193] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [0]
+E, [2020-11-04T21:26:28.005866 #907193] ERROR -- RuneRb: Unhandled frame: [OpCode]: 3 || [Size]: 1 || [Payload]: [1]
+I, [2020-11-04T21:26:28.006238 #907193]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:26:33.249203 #907193]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:26:33.265059 #907193]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:26:33.266285 #907193]  INFO -- RuneRb: Invalid Credentials for Pat!
+I, [2020-11-04T21:26:33.266463 #907193]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:33:16.415246 #907193]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:33:16.419596 #907193]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:33:16.419792 #907193]  INFO -- RuneRb: Invalid Credentials for Pat!
+I, [2020-11-04T21:33:16.419952 #907193]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T21:33:20.868979 #907193]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:33:20.873581 #907193]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:33:20.873772 #907193]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-04T21:33:43.767422 #907193]  INFO -- RuneRb: De-registered socket for 127.0.0.1

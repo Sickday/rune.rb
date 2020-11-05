@@ -26,20 +26,15 @@ module RuneRb
 
   # RuneRb::Game
   module Game
-    autoload :World,                'game/world'
-    autoload :Entity,               'game/models/entity'
-    autoload :ContextPlayer,        'game/models/player'
-    autoload :UpdateFlags,          'game/models/flags'
+    MAX_ITEMS = 2**31 - 1
+
+    autoload :World,                'game/models/world'
+
     autoload :ItemStack,            'game/models/item'
     autoload :ItemContainer,        'game/models/container'
-    autoload :Inventory,            'game/containers/inventory'
-    autoload :Mob,                  'game/models/mob'
 
-    # RuneRb::Game::Flags
-    module Flags
-      autoload :MovementFlags,      'game/flags/movement'
-      autoload :StateFlags,         'game/flags/state'
-    end
+    autoload :Inventory,            'game/models/containers/inventory'
+    autoload :Bank,                 'game/models/containers/bank'
 
     # RuneRb::Game::Map
     module Map
@@ -49,12 +44,6 @@ module RuneRb
       autoload :Movement,           'game/map/move'
       autoload :Position,           'game/map/position'
     end
-
-    # RuneRb::Game::Services
-    module Services
-      autoload :MapService,         'game/services/map'
-      autoload :UpdateService,      'game/services/update'
-    end
   end
 
   # RuneRb::Entity
@@ -62,13 +51,6 @@ module RuneRb
     autoload :Context,              'game/entity/context'
     autoload :Mob,                  'game/entity/mob'
     autoload :Type,                 'game/entity/type'
-    autoload :Inventory,            'game/entity/containers/inventory'
-
-    # RuneRb::Entity::Flags
-    module Flags
-      autoload :MovementFlags,      'game/entity/flags/movement'
-      autoload :StateFlags,         'game/entity/flags/state'
-    end
   end
 
   # RuneRb::Network
@@ -79,7 +61,6 @@ module RuneRb
     autoload :AuthenticationHelper, 'network/login'
     autoload :Peer,                 'network/peer'
     autoload :Endpoint,             'network/endpoint'
-
     autoload :Frame,                'network/frame'
     autoload :MetaFrame,            'network/frame'
     autoload :InFrame,              'network/frame'
@@ -88,30 +69,18 @@ module RuneRb
     autoload :ISAAC,                'network/isaac'
   end
 
-  ###
-  # INTERNALS
-  ###
   # RuneRb::Types
   module Types
     autoload :Loggable,             'internal/types/loggable'
     autoload :OperationChain,       'internal/types/chain'
     autoload :Routine,              'internal/types/routine'
-    autoload :Serializable,         'internal/types/serializable'
-    autoload :Service,              'internal/types/service'
   end
 
-  ###
-  # INTERNALS
-  ###
   # RuneRb::Patches
   module Patches
     autoload :SetOverride,          'internal/patches/set'
     autoload :StringOverrides,      'internal/patches/string'
     autoload :IntegerOverrides,     'internal/patches/integer'
-  end
-
-  module Errors
-    autoload :LoginError,           'internal/errors/login'
   end
 
   # RuneRb::Database

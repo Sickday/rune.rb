@@ -10,7 +10,7 @@ module RuneRb::Entity
       @session = peer
       @profile = profile
       @position = profile.location.position
-      @inventory = RuneRb::Entity::Inventory.new
+      @inventory = RuneRb::Game::Inventory.new
       @updates = {}
       @flags = {}
       @movement = { first: -1,

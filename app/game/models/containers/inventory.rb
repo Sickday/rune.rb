@@ -1,4 +1,4 @@
-module RuneRb::Entity
+module RuneRb::Game
   class Inventory < RuneRb::Game::ItemContainer
     attr :weight
 

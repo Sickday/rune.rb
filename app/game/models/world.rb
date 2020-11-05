@@ -6,11 +6,6 @@ module RuneRb::Game
 
     def initialize
       @entities = { players: [], mobs: [] }
-      @services = {
-        sync: RuneRb::Game::Services::SyncService.new,
-        update: RuneRb::Game::Services::UpdateService.new,
-        region: RuneRb::Game::Services::RegionService.new
-      }
     end
 
     # Receives and registers an entity to the world.
@@ -18,7 +13,7 @@ module RuneRb::Game
       @services[:sync].execute do
         case entity
         when RuneRb::Entity::Context
-          @entities[:players] << entity if valid_player?(entity)
+          @entities[:players] << entity
         when RuneRb::Entity::Mob
           @entities[:mobs] << entity
         else
