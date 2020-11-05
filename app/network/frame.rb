@@ -229,7 +229,7 @@ module RuneRb::Network
     # @param value [Integer, String, StringIO] the byte to write to the underlying buffer.
     # @param type [Symbol] the type of byte to write. Used to accommodate Jagex-specific byte modifiers (:STD, :A, :C, :S)
     # @param order [Symbol] the bit order in which to write the short. Endianness. (:BIG, :MIDDLE, :INVERSE_MIDDLE, :LITTLE)
-    def write_int(value, type, order = :BIG)
+    def write_int(value, type = :STD, order = :BIG)
       case order
       when :BIG
         write_byte((value >> 24).signed(:byte))

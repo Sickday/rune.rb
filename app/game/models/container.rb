@@ -1,6 +1,7 @@
 module RuneRb::Game
   # A container of ItemStacks.
   class ItemContainer
+    include RuneRb::Types::Loggable
 
     # Called when a new ItemContainer is created.
     # @param capacity [Integer] the capacity of the ItemContainer
@@ -37,7 +38,12 @@ module RuneRb::Game
     # @param from [Integer] the slot number to swap from
     # @param to [Integer] the slot number to swap to
     def swap(from, to)
-      @data[from], @data[to] = @data[to], @data[from]
+      from += 1
+      to += 1
+      old = @data[from] if @data[from]
+      new = @data[to] if @data[to]
+      @data[from] = new
+      @data[to] = old
     end
 
     # Attempts to remove a specified amount of items from the container
@@ -97,7 +103,7 @@ module RuneRb::Game
 
     private
 
-    attr :data, :stackable, :limit
+    attr :stackable, :limit
 
     # Retrieves the first slot for which an ItemStack with the specified ID matches
     # @param id [Integer] the item ID.

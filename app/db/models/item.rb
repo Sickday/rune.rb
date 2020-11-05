@@ -1,6 +1,6 @@
 module RuneRb::Database
   class Item < Sequel::Model(DEFINITIONS[:item_definitions])
-    plugins :static_cache
+    plugin :static_cache
     def highalc
       (0.6 * Sequel[:basevalue]).to_i
     end

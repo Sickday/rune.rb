@@ -15,44 +15,49 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
+  # Write all equipment data
   def write_equipment(data)
     data[:equipment_data].each do |slot, slot_data|
       write_equipment_slot({ slot: slot, item_id: slot_data[:id], item_amount: slot_data[:amount] })
     end
   end
 
+  # Write an update to equipment slot item.
+  # @param data [Hash] the data that should be included in the equipment frame
   def write_equipment_slot(data)
-    out.start_header(34)
-    out.write_short(1688) # Equipment interface ID?
-    out.write_byte(data[:slot])
-    out.write_short(data[:item_id] + 1)
+    frame = RuneRb::Network::MetaFrame.new(34, false,true)
+    frame.write_short(1688) # EquipmentForm ID
+    frame.write_byte(data[:slot])
+    frame.write_short(data[:item_id] + 1)
     if data[:item_amount] > 254
-      out.write_byte(255)
-      out.write_short(data[:item_amount])
+      frame.write_byte(255)
+      frame.write_int(data[:item_amount])
     else
-      out.write_byte(data[:item_amount])
+      frame.write_byte(data[:item_amount])
     end
-    out.finish_header(true, true)
-    @channel[:out] << out.flush
+    write_frame(frame)
   end
 
-  def write_inventory(data)
-    frame = RuneRb::Network::MetaFrame.new(53)
-    out.start_header(53)
-    out.write_short(3214) # Inventory interface ID?
-    out.write_short(data[:inventory_length])
-    out.write_short(data[:inventory_size])
-    data[:inventory_data].each do |_id, slot_stack|
-      # Write the stack amount first
-      if slot_stack[-1] > 254
-        out.write_byte(255)
-        out.write_int(slot_stack[-1], :STD, :INVERSE_MIDDLE)
+  # Write an update to inventory slot item.
+  # @param data [Hash] the data to be included in the frame.
+  def write_inventory(length, data)
+    frame = RuneRb::Network::MetaFrame.new(53, false, true)
+    frame.write_short(3214) # InventoryForm ID
+    frame.write_short(length)
+    data.each do |_slot_id, item_stack|
+      id = item_stack&.id.nil? ? -1 : item_stack.id
+      amount = item_stack&.size.nil? ? 0 : item_stack.size
+
+      if amount > 254
+        frame.write_byte(255)
+        frame.write_int(amount, :STD, :INVERSE_MIDDLE)
       else
-        out.write_byte(slot_stack[-1])
+        frame.write_byte(amount)
       end
-      # Write the stack id next
-      out.write_short(slot_stack[0] + 1, :A, :LITTLE)
+
+      frame.write_short(id + 1, :A, :LITTLE)
     end
+    write_frame(frame)
   end
 
   def write_text(txt)
@@ -196,6 +201,7 @@ module RuneRb::Network::FrameWriter
 
   # Write a forced disconnection.
   def write_disconnect
+    @context.logout if @context
     frame = RuneRb::Network::MetaFrame.new(109)
     write_frame(frame)
     disconnect

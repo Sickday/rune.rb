@@ -2,7 +2,7 @@ module RuneRb::Entity
   class Context < RuneRb::Entity::Type
     include RuneRb::Types::Loggable
 
-    attr :flags, :position, :region, :movement
+    attr :flags, :position, :region, :movement, :profile, :inventory
 
     # Called when a new Context Entity is created.
     # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
@@ -10,7 +10,9 @@ module RuneRb::Entity
       @session = peer
       @profile = profile
       @position = profile.location.position
-      @inventory = RuneRb::Game::Inventory.new
+
+      load_inventory
+
       @updates = {}
       @flags = {}
       @movement = { first: -1,
@@ -38,6 +40,23 @@ module RuneRb::Entity
     # @param direction [Integer] the direction the player is facing
     def facing(direction)
       @flags[:facing] = direction
+    end
+
+    def load_inventory
+      if !@profile[:inventory].nil?
+        @inventory = RuneRb::Game::Inventory.restore(self)
+        log(RuneRb::COL.green("Restored Inventory for #{@profile[:name]}"), @inventory.inspect) if RuneRb::DEBUG
+      else
+        @inventory = RuneRb::Game::Inventory.new
+        log(RuneRb::COL.magenta("New Inventory set for #{@profile[:name]}")) if RuneRb::DEBUG
+      end
+      @inventory.add(RuneRb::Game::ItemStack.new(4151))
+      @inventory.add(RuneRb::Game::ItemStack.new(1049))
+      @session.write_inventory(28, @inventory.data)
+    end
+
+    def logout
+      RuneRb::Game::Inventory.dump(self)
     end
 
     def update_region
