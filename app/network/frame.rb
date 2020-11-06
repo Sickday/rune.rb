@@ -193,7 +193,7 @@ module RuneRb::Network
     # Writes multiple bytes to the underlying buffer.
     def write_bytes(data)
       if data.class == RuneRb::Network::MetaFrame
-        @payload << bytes.compile
+        @payload << data.compile
       else
         data.each { |byte| write_byte(byte) }
       end
@@ -279,26 +279,26 @@ module RuneRb::Network
     # @param value [Integer, String, StringIO] the byte to write to the underlying buffer.
     # @param type [Symbol] the type of byte to write. Used to accommodate Jagex-specific byte modifiers (:STD, :A, :C, :S)
     # @param order [Symbol] the bit order in which to write the short. Endianness. (:BIG, :LITTLE)
-    def write_long(value, type, order = :BIG)
+    def write_long(value, type = :STD, order = :BIG)
       case order
       when :BIG
-        write_byte((value >> 56).signed(:int))
-        write_byte((value >> 48).signed(:int))
-        write_byte((value >> 40).signed(:int))
-        write_byte((value >> 32).signed(:int))
-        write_byte((value >> 24).signed(:int))
-        write_byte((value >> 16).signed(:int))
-        write_byte((value >> 8).signed(:int))
+        write_byte((value >> 56))
+        write_byte((value >> 48))
+        write_byte((value >> 40))
+        write_byte((value >> 32))
+        write_byte((value >> 24))
+        write_byte((value >> 16))
+        write_byte((value >> 8))
         write_byte(value.signed(:int), type)
       when :LITTLE
         write_byte(value.signed(:int), type)
-        write_byte((value >> 8).signed(:int))
-        write_byte((value >> 16).signed(:int))
-        write_byte((value >> 24).signed(:int))
-        write_byte((value >> 32).signed(:int))
-        write_byte((value >> 40).signed(:int))
-        write_byte((value >> 48).signed(:int))
-        write_byte((value >> 56).signed(:int))
+        write_byte((value >> 8))
+        write_byte((value >> 16))
+        write_byte((value >> 24))
+        write_byte((value >> 32))
+        write_byte((value >> 40))
+        write_byte((value >> 48))
+        write_byte((value >> 56))
       end
       self
     end
@@ -362,6 +362,12 @@ module RuneRb::Network
       valid_access? :BIT
       write_bits(1, flag ? 1 : 0)
       self
+    end
+
+    # The size of the frame's payload
+    # @return [Integer] the size of the frame's payload
+    def size
+      @payload.size
     end
 
     private

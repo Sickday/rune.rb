@@ -113,7 +113,6 @@ module RuneRb::Network::FrameReader
         @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(path[step][0], path[step][1]))
       end
 
-      @context.movement[:handler].complete
     else
       err "Unhandled frame: #{frame.inspect}"
     end

@@ -3,11 +3,13 @@ module RuneRb::Entity
     attr :flags, :status, :properties, :position
 
     # Called when a new Entity is created.
-    def initialize(params = {})
+    def initialize
+      @flags = OpenStruct.new
       @properties = {}
       @status = {}
       reset_status
       reset_properties
+      reset_flags
     end
 
     # Reset the status attributes to their default values.
@@ -22,6 +24,11 @@ module RuneRb::Entity
     def reset_properties
       @properties[:animations] = { current: 0x368, walk: 0x333, stand: 0x368 }
       @properties[:graphics] = nil
+    end
+
+    def reset_flags
+      @flags[:appearance] = true
+      @flags[:chat] = false
     end
   end
 end

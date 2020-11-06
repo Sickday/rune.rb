@@ -14,15 +14,16 @@ module RuneRb::Game::Map
     def initialize(entity)
       @player = entity
       @waypoints = []
+      reset
     end
 
     def process
       # Acquire the next positions to move to
-      walk_to = @waypoints&.shift
+      walk_to = @waypoints&.shift unless @waypoints.empty?
       run_to = @waypoints&.shift if @running
 
       # Move the player
-      if walk_to.direction != -1
+      if walk_to&.direction != -1
         @player.position.move(RuneRb::Game::Map::X_DELTAS[walk_to.direction], RuneRb::Game::Map::Y_DELTAS[walk_to.direction])
         @player.movement[:first] = walk_to.direction
       end
