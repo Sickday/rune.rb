@@ -1,0 +1,10 @@
+/dist/
+/resources
+/dev/
+/release/
+*.env
+Gemfile.lock
+*.gemspec
+rakefile
+Rakefile
+*.iml
