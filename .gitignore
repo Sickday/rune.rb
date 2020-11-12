@@ -8,3 +8,4 @@ Gemfile.lock
 rakefile
 Rakefile
 *.iml
+.gitignore
