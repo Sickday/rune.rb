@@ -35,7 +35,7 @@ module RuneRb::Network::AuthenticationHelper
     @connection = ParsedConnection.new(@connection_frame.read_byte,
                                        @connection_frame.read_byte,
                                        @id & 0xFFFFFFFF)
-    log "Generated seed: #{@connection[:Seed]}" if RuneRb::DEBUG
+    log "Generated seed: #{@connection[:ConnectionSeed]}" if RuneRb::DEBUG
 
     case @connection[:Type]
     when RuneRb::Network::CONNECTION_TYPES[:GAME_NEW]

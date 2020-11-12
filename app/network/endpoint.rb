@@ -10,12 +10,12 @@ module RuneRb::Network
       @selector.register(@server, :r).value = proc { accept_peer }
       @peers = {}
       @clients = {}
-      log RuneRb::COL.blue('[HOST]:' + RuneRb::COL.cyan("\t#{@server.addr[-1]}")),
+      log RuneRb::COL.blue('[HOST]:' + RuneRb::COL.cyan("\t#{@server.addr.last}")),
           RuneRb::COL.blue('[PORT]:' + RuneRb::COL.cyan("\t#{@server.addr[1]}"))
     end
 
     # Spawns a new process and executes the selection loop within that process. *
-    def deploy # *
+    def deploy
       Parallel.in_processes(count: 1) do
         Concurrent::TimerTask.execute(execution_interval: 0.600) do
           begin
@@ -27,6 +27,7 @@ module RuneRb::Network
             end
           rescue StandardError => e
             err 'An error occurred during flush cycle!', e.message
+            puts e.backtrace
           end
         end
         loop { @selector.select { |monitor| monitor.value.call } }

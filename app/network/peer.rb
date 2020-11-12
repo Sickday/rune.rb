@@ -10,7 +10,7 @@ module RuneRb::Network
     # Called when a new Peer object is created.
     # @param socket [Socket] the socket for the peer.
     def initialize(socket, endpoint)
-      @socket, @ip = socket, socket.peeraddr[-1]
+      @socket, @ip = socket, socket.peeraddr.last
       @status = { active: true, authenticated: false }
       @endpoint = endpoint
       @in = ''
@@ -53,33 +53,21 @@ module RuneRb::Network
       @socket.write_nonblock(data)
     rescue EOFError
       err 'Peer disconnected!'
-      disconnect
+      @status[:authenticated] ? write_disconnect : disconnect
     rescue Errno::ECONNRESET
       err 'Peer reset connection!'
-      disconnect
+      @status[:authenticated] ? write_disconnect : disconnect
     rescue Errno::ECONNABORTED
       err 'Peer aborted connection!'
-      disconnect
+      @status[:authenticated] ? write_disconnect : disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
-      disconnect
+      @status[:authenticated] ? write_disconnect : disconnect
     end
 
     # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
     def write_frame(frame)
-      @socket.write_nonblock(encode_frame(frame).compile)
-    rescue EOFError
-      err 'Peer disconnected!'
-      write_disconnect
-    rescue Errno::ECONNRESET
-      err 'Peer reset connection!'
-      write_disconnect
-    rescue Errno::ECONNABORTED
-      err 'Peer aborted connection!'
-      write_disconnect
-    rescue Errno::EPIPE
-      err 'PIPE MACHINE BR0kE!1'
-      write_disconnect
+      send_data(encode_frame(frame).compile)
     end
 
     alias << write_frame
@@ -87,18 +75,6 @@ module RuneRb::Network
     def flush
       write_login if @status[:authenticated] == :PENDING_LOGIN
       write_mock_update if @context && @status[:active]
-    rescue EOFError
-      err 'Peer disconnected!'
-      disconnect
-    rescue Errno::ECONNRESET
-      err 'Peer reset connection!'
-      disconnect
-    rescue Errno::ECONNABORTED
-      err 'Peer aborted connection!'
-      disconnect
-    rescue Errno::EPIPE
-      err 'PIPE MACHINE BR0kE!1'
-      disconnect
     end
 
     # Close the socket.
@@ -113,8 +89,8 @@ module RuneRb::Network
     def encode_frame(frame)
       raise 'Invalid cipher for client!' unless @cipher
 
-      frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
       log "Encoding frame: #{frame.inspect}" if RuneRb::DEBUG
+      frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
       frame
     end
 
