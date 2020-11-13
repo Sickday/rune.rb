@@ -33,8 +33,8 @@ module RuneRb::Game::Map
         @player.movement[:second] = run_to.direction
       end
 
-      delta_x = @player.position.x - @player.region.region_x * 8
-      delta_y = @player.position.y - @player.region.region_y * 8
+      delta_x = @player.position[:x] - @player.region.region_x * 8
+      delta_y = @player.position[:y] - @player.region.region_y * 8
       return unless delta_x < 16 || delta_x > 88 || delta_y < 16 || delta_y > 88
 
       @player.flags[:region?] = true

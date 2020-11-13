@@ -76,6 +76,19 @@ module RuneRb::Game::Map
       delta[:x] <= 14 && delta[:x] >= -15 && delta[:y] <= 14 && delta[:y] >= -15
     end
 
+    # Shorthand coordinate retrieval
+    # @param coordiante [Symbol] the coordinate to retrieve (:x, :y, :z)
+    def [](coordinate)
+      @data[coordinate]
+    end
+
+    # Shorthand coordinate assignment
+    # @param coordinate [Symbol] the coordinate to assign (:x, :y, :z)
+    # @param value [Integer] the value to assign the coordinate to.
+    def []=(coordinate, value)
+      @data[coordinate] = value
+    end
+
     class << self
 
       # Create a Position with delta amounts between the provided positions.

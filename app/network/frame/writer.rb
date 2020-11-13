@@ -160,18 +160,10 @@ module RuneRb::Network::FrameWriter
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
       frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
       frame.write_bits(2, @context.position[:z]) # Write the plane. 0 being ground level
-      if @context.flags[:teleport?]
-        to = @context.movement[:teleport][:to]
-        frame.write_bit(@context.flags[:teleport?]) # Teleporting?
-        frame.write_bit(@context.flags[:state?]) # Update State/Appearance?
-        frame.write_bits(7, to.local_x(@context.position)) # Local Y
-        frame.write_bits(7, to.local_y(@context.position)) # Local X
-      else
-        frame.write_bit(false)
-        frame.write_bit(@context.flags[:state?])
-        frame.write_bit(7, @context.position.local_x)
-        frame.write_bit(7, @context.position.local_y)
-      end
+      frame.write_bit(@context.flags[:teleport?]) # Teleporting?
+      frame.write_bit(@context.flags[:state?]) # Update State/Appearance?
+      frame.write_bits(7, @context.position.local_x) # Local Y
+      frame.write_bits(7, @context.position.local_y) # Local X
     elsif @context.movement[:walk] != -1 # Context player walked
       log RuneRb::COL.magenta('Player Walked')
       frame.write_bit(true) # Write 1 bit to indicate movement occurred

@@ -55,7 +55,7 @@ module RuneRb::Game
         (@data[slot].size - amt) < 1 ? @data[slot] = nil : @data[slot].size -= amt
         true
       else
-        until amt == 0
+        until amt.zero?
           @data[slot_for(id)] = nil
           amt -= 1
         end
@@ -93,13 +93,14 @@ module RuneRb::Game
 
     def inspect
       itr = 0
-      @data.inject('') do |str, values|
+      string = "\n"
+      string << @data.inject('') do |str, values|
         itr += 1
-        str << "\n"
         str << "\tS#{values[0]}:#{values[1]&.definition&.name}x#{values[1]&.size}\t|"
-        str << "\n" if itr % 4 == 0
+        str << "\n" if (itr % 4).zero?
         str
       end
+      string
     end
 
     private

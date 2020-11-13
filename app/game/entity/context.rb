@@ -19,43 +19,10 @@ module RuneRb::Entity
       @movement = { walk: -1,
                     run: -1,
                     teleport: { to: @position },
-                    handler: RuneRb::Game::Map::Movement.new(self) }
-      reset_updates
+                    handler: nil } #RuneRb::Game::Map::Movement.new(self) }
+      @flags = { state?: true, teleport?: true, region?: true }
       update_region
     end
-
-    def inspect
-      str = super
-      str << "[INVENTORY]: #{@inventory.inspect}"
-    end
-
-    # Reset the context entity's updates.
-    def reset_updates
-      @flags[:state?] = true
-      @flags[:region?] = true
-      @flags[:reset_move?] = true
-    end
-
-    # @param direction [Integer] the direction the player is facing
-    def facing(direction)
-      @flags[:facing] = direction
-    end
-
-    def load_inventory
-      if !@profile[:inventory].nil?
-        @inventory = RuneRb::Game::Inventory.restore(self)
-        log(RuneRb::COL.green("Restored Inventory for #{@profile[:name]}")) if RuneRb::DEBUG
-      else
-        @inventory = RuneRb::Game::Inventory.new
-        log(RuneRb::COL.magenta("New Inventory set for #{@profile[:name]}")) if RuneRb::DEBUG
-      end
-      @session.write_inventory(28, @inventory.data)
-    end
-
-    def logout
-      RuneRb::Game::Inventory.dump(self)
-    end
-
     # This function will update the Context according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
     # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Context#schedule(:graphic, graphic_object)). Internally, this will enable the Graphic flag causing the client to expect a Graphic to be supplied (and played) during the next pulse.
     # TODO: Raise an error to ensure assets are proper for each schedule type.
@@ -91,7 +58,7 @@ module RuneRb::Entity
 
     # This function is called after every flush. It's primary purpose is to reset update flags while observering it's supplied `exempt` list.
     # @param exempt [Hash] a hash of exempt flags that should not be reset.
-    def post_flush(exempt = {})
+    def post_pulse(exempt = {})
       @flags[:region?] = false
       @flags[:state?] = exempt[:state?] || false
       @flags[:chat?] = exempt[:chat?] || false
@@ -100,12 +67,32 @@ module RuneRb::Entity
       @flags[:animation?] = exempt[:animation?] || false
     end
 
+    def load_inventory
+      if !@profile[:inventory].nil?
+        @inventory = RuneRb::Game::Inventory.restore(self)
+        log(RuneRb::COL.green("Restored Inventory for #{@profile[:name]}")) if RuneRb::DEBUG
+      else
+        @inventory = RuneRb::Game::Inventory.new
+        log(RuneRb::COL.magenta("New Inventory set for #{@profile[:name]}")) if RuneRb::DEBUG
+      end
+      @session.write_inventory(28, @inventory.data)
+    end
+
+    def logout
+      RuneRb::Game::Inventory.dump(self)
+    end
+
     def appearance
       @profile.appearance
     end
 
     def update_region
       @region = @position
+    end
+
+    def inspect
+      str = super
+      str << "[INVENTORY]: #{@inventory.inspect}"
     end
   end
 end
