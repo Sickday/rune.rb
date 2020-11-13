@@ -34,40 +34,40 @@ module RuneRb::Network
       nil
     rescue EOFError
       err 'Reached EOF!'
-      disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue IOError
       err 'Stream has been closed!'
-      disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::ECONNRESET
       err 'Peer reset connection!'
-      disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::ECONNABORTED
       err 'Peer aborted connection!'
-      disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
-      disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     end
 
     def send_data(data)
       @socket.write_nonblock(data)
     rescue EOFError
       err 'Peer disconnected!'
-      @status[:authenticated] ? write_disconnect : disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::ECONNRESET
       err 'Peer reset connection!'
-      @status[:authenticated] ? write_disconnect : disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::ECONNABORTED
       err 'Peer aborted connection!'
-      @status[:authenticated] ? write_disconnect : disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
-      @status[:authenticated] ? write_disconnect : disconnect
+      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     end
 
     # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
     def write_frame(frame)
-      send_data(encode_frame(frame).compile)
+      send_data(encode_frame(frame).compile) if @status[:active]
     end
 
     alias << write_frame
@@ -75,7 +75,7 @@ module RuneRb::Network
     # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
     def pulse
       write_login if @status[:authenticated] == :PENDING_LOGIN
-      write_mock_update if @context && @status[:active]
+      #write_mock_update if @context && @status[:active]
       @context&.post_flush
     end
 

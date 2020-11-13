@@ -85,6 +85,7 @@ module RuneRb::Network::FrameWriter
     frame.write_short(data[:region_x] + 6, :A)
     frame.write_short(data[:region_y] + 6)
     write_frame(frame)
+    @context.flags[:region?] = false if @context
   end
 
   # Write the login response
@@ -102,8 +103,10 @@ module RuneRb::Network::FrameWriter
     write_response(@profile[:rights], false)
     write_sidebars
     write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
-    @status[:authenticated] = :LOGGED_IN
     write_text('Thanks for testing Rune.rb.')
+    write_region(region_x: @profile.location.position.region_x,
+                 region_y: @profile.location.position.region_y)
+    @status[:authenticated] = :LOGGED_IN
   end
 
   def write_text(txt)
@@ -114,7 +117,7 @@ module RuneRb::Network::FrameWriter
 
   # Write a forced disconnection.
   def write_disconnect
-    @context.logout if @context
+    @context&.logout
     frame = RuneRb::Network::MetaFrame.new(109)
     write_frame(frame)
     disconnect
@@ -124,7 +127,6 @@ module RuneRb::Network::FrameWriter
     if @context.flags[:region?]
       write_region(region_x: @context.profile.location.position.region_x,
                    region_y: @context.profile.location.position.region_y)
-      @context.flags[:region?] = false
     end
 
     block_frame = RuneRb::Network::MetaFrame.new(-1)
