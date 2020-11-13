@@ -7,10 +7,10 @@ module RuneRb::Database
     def set(x, y, z)
       update(prev_x: self[:x],
              prev_y: self[:y],
-             prev_z: self[:z])
-      update(x: x,
-             y: y,
-             z: z)
+             prev_z: self[:z],
+             x: x || ENV['DEFAULT_X'] || 3222,
+             y: y || ENV['DEFAULT_Y'] || 3222,
+             z: z || ENV['DEFAULT_Z'] || 0)
     end
   end
 end

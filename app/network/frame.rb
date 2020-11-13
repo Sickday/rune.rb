@@ -32,6 +32,15 @@ module RuneRb::Network
       @payload << data
     end
 
+    # Reads the next 24-bit integer
+    def read_int24
+      val = 0
+      val |= read_byte << 16
+      val |= read_byte << 8
+      val |= read_byte
+      val
+    end
+
     # Read a byte from the underlying buffer
     # @param signed [Boolean] Should the byte be signed?
     # @param type [Symbol] the type of byte to read. Accommodates Jagex-specific types (:STD, :A, :C, :S)
@@ -61,16 +70,16 @@ module RuneRb::Network
       end
     end
 
-    def read_short(signed, type = :STD, order = :BIG)
+    def read_short(signed = false, type = :STD, order = :BIG)
       valid_order?(order)
       val = 0
       case order
       when :BIG
-        val |= read_byte(false) << 8
-        val |= read_byte(false, type)
+        val |= read_byte(signed) << 8
+        val |= read_byte(signed, type)
       when :LITTLE
-        val |= read_byte(false, type)
-        val |= read_byte(false) << 8
+        val |= read_byte(signed, type)
+        val |= read_byte(signed) << 8
       end
       signed ? val : val & 0xffff
     end
@@ -303,11 +312,10 @@ module RuneRb::Network
       self
     end
 
-    # Write a string value to the underlying buffer. This will be escaped with a 10 value.
+    # Write a string value to the underlying buffer. This will be escaped/terminated with a 10/\n value.
     # @param string [String, StringIO] the byte to write to the underlying buffer.
     def write_string(string)
-      puts "Writing bytes: #{string.bytes}"
-      write_bytes(string.bytes)
+      @payload << string.force_encoding(Encoding::BINARY)
       write_byte(10)
       self
     end

@@ -51,7 +51,6 @@ module RuneRb::Game
       def dump(player)
         player.profile.update(inventory: Oj.dump(player.inventory.data, mode: :compat, use_as_json: true))
         log RuneRb::COL.green("Dumped Inventory for #{RuneRb::COL.cyan(player.profile[:name])}") if RuneRb::DEBUG
-        log RuneRb::COL.green("DUMP: #{player.profile[:inventory]}") if RuneRb::DEBUG
       end
 
       def restore(player)

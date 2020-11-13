@@ -5,10 +5,20 @@ module RuneRb::Network::Constants
       GAME_UPDATE: 15,
       GAME_LOGIN: 14
   }.freeze
-  SIDEBAR_INTERFACES = { 0 => 2423, 1 => 3917, 2 => 638,
-                         3 => 3213, 4 => 1644, 5 => 5608,
-                         6 => 1151, 8 => 5065, 9 => 5715,
-                         10 => 2449, 11 => 4445, 12 => 147, 13 => 6299 }.freeze
+  SIDEBAR_INTERFACES = { 0 => 2423, # ATTACK
+                         1 => 3917, # SKILL
+                         2 => 638,  # QUEST
+                         3 => 3213, # INVENT
+                         4 => 1644, # EQUIPMENT
+                         5 => 5608, # PRAYER
+                         6 => 1151, # MAGIC
+                         7 => -1,   # CLAN
+                         8 => 5065, # FRIENDS
+                         9 => 5715, # IGNORE
+                         10 => 2449, # LOGOUT
+                         11 => 904, # WRENCH
+                         12 => 147, # EMOTE
+                         13 => 962 }.freeze # MUSIC
   BYTE_ORDERS = %i[BIG MIDDLE INVERSE_MIDDLE LITTLE].freeze
   BYTE_TYPES = %i[STD A C S].freeze
   ACCESS_TYPE = %i[BYTE BIT].freeze

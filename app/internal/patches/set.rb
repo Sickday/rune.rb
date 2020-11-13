@@ -1,4 +1,4 @@
-module RuneRb::Patches::SetOverride
+module RuneRb::Patches::SetOverrides
   refine Set do
     ##
     # Consumes elements as they're passed to execution block.

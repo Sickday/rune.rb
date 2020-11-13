@@ -72,9 +72,11 @@ module RuneRb::Network
 
     alias << write_frame
 
-    def flush
+    # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
+    def pulse
       write_login if @status[:authenticated] == :PENDING_LOGIN
       write_mock_update if @context && @status[:active]
+      @context&.post_flush
     end
 
     # Close the socket.
@@ -83,6 +85,8 @@ module RuneRb::Network
       @status[:active] = false
       @endpoint.deregister(self, @socket)
     end
+
+    private
 
     # Encodes a frame using the Peer#cipher.
     # @param frame [RuneRb::Network::Frame] the frame to encode.

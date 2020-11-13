@@ -1,4 +1,5 @@
 module RuneRb::Network::FrameWriter
+  using RuneRb::Patches::ArrayOverrides
   using RuneRb::Patches::IntegerOverrides
   using RuneRb::Patches::StringOverrides
 
@@ -61,12 +62,6 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
-  def write_text(txt)
-    frame = RuneRb::Network::MetaFrame.new(253, false, true)
-    frame.write_string(txt)
-    write_frame(frame)
-  end
-
   def write_sidebars
     RuneRb::Network::SIDEBAR_INTERFACES.each do |key, value|
       write_sidebar(menu_id: key, form: value)
@@ -85,6 +80,7 @@ module RuneRb::Network::FrameWriter
   # Write the region
   # @param data [Hash] a hash containing x and y regional coordinates.
   def write_region(data)
+    log "Writing region #{data.inspect}" if RuneRb::DEBUG
     frame = RuneRb::Network::MetaFrame.new(73)
     frame.write_short(data[:region_x] + 6, :A)
     frame.write_short(data[:region_y] + 6)
@@ -105,9 +101,15 @@ module RuneRb::Network::FrameWriter
   def write_login
     write_response(@profile[:rights], false)
     write_sidebars
-    # write_text('Thanks for testing Rune.rb.')
-    #write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
+    write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
     @status[:authenticated] = :LOGGED_IN
+    write_text('Thanks for testing Rune.rb.')
+  end
+
+  def write_text(txt)
+    frame = RuneRb::Network::MetaFrame.new(253, false, false)
+    frame.write_string(txt)
+    write_frame(frame)
   end
 
   # Write a forced disconnection.
@@ -120,8 +122,8 @@ module RuneRb::Network::FrameWriter
 
   def write_mock_update
     if @context.flags[:region?]
-      write_region(region_x: @context.region.region_x,
-                   region_y: @context.region.region_y)
+      write_region(region_x: @context.profile.location.position.region_x,
+                   region_y: @context.profile.location.position.region_y)
       @context.flags[:region?] = false
     end
 
@@ -152,30 +154,29 @@ module RuneRb::Network::FrameWriter
   private
 
   def write_context_movement(frame)
-    if @context.movement[:teleport]
+    if @context.flags[:teleport?] || @context.flags[:region?]
       to = @context.movement[:teleport][:to]
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
       frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
-      frame.write_bits(2, 0) # Write the plane. 0 being ground level
-      frame.write_bit(true) # Teleporting?
+      frame.write_bits(2, @context.position[:z]) # Write the plane. 0 being ground level
+      frame.write_bit(@context.flags[:teleport?]) # Teleporting?
       frame.write_bit(@context.flags[:state?]) # Update State/Appearance?
-      frame.write_bits(7, to.local_x(@context.region)) # Local Y
-      frame.write_bits(7, to.local_y(@context.region)) # Local X
-    elsif @context.movement[:run] != -1 # Context player ran
-      frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      write_run(frame, @context.movement[:walk], @context.movement[:run]) # Write the running bits
-      frame.write_bit(@context.flags[:state?]) # 1 or 0 depending on if a state update is required
+      frame.write_bits(7, to.local_x(@context.position)) # Local Y
+      frame.write_bits(7, to.local_y(@context.position)) # Local X
     elsif @context.movement[:walk] != -1 # Context player walked
+      log RuneRb::COL.magenta('Player Walked')
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      write_walk(frame, @context.movement[:walk]) # Write walking bits
-      frame.write_bit(@context.flags[:state?]) # 1 or 0 depending on if a state update is required
-    else # No movement occurred
-      if @context.flags[:state?] # State update required
-        frame.write_bit(true) # Write 1 bit to indicate a state update is required
-        write_stand(frame) # Write standing bit
-      else # No movement or state required
-        frame.write_bit(false) # DO NOTHING?!
+      if @context.movement[:run] != -1
+        write_run(frame, @context.movement[:walk], @context.movement[:run]) # Write the running bits
+      else
+        write_walk(frame, @context.movement[:walk]) # Write walking bits
       end
+      frame.write_bit(@context.flags[:state?]) # 1 or 0 depending on if a state update is required
+    elsif @context.flags[:state?] # No movement occurred. State update required?
+      frame.write_bit(true) # Write 1 bit to indicate a state update is required
+      write_stand(frame) # Write standing bit
+    else # No movement or state required
+      frame.write_bit(false) # DO NOTHING?!
     end
   end
 
@@ -211,7 +212,7 @@ module RuneRb::Network::FrameWriter
     # Animation
     # Forced Chat
     # Chat
-    # mask |= 0x80 if entity.flags[:chat]
+    mask |= 0x80 if entity.flags[:chat]
     # Face Entity
     # Appearance
     mask |= 0x10 if entity.flags[:appearance]
@@ -227,6 +228,7 @@ module RuneRb::Network::FrameWriter
     end
 
     write_appearance(frame, entity) if entity.flags[:appearance]
+    write_chat(frame, entity) if entity.flags[:chat]
   end
 
   # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
@@ -234,7 +236,11 @@ module RuneRb::Network::FrameWriter
   def write_appearance(frame, entity)
     appearance_frame = RuneRb::Network::MetaFrame.new(-1)
     appearance_frame.write_byte(entity.appearance[:gender])
-    appearance_frame.write_byte(0)
+    if entity.appearance[:head_icon] >= 8 || entity.appearance[:head_icon] <= -1
+      appearance_frame.write_byte(entity.appearance[:head_icon])
+    else
+      appearance_frame.write_byte(0) # Head Icon
+    end
 
     if entity.appearance[:mob_id] != -1
       appearance_frame.write_byte(255)
@@ -242,7 +248,7 @@ module RuneRb::Network::FrameWriter
       appearance_frame.write_short(entity.appearance[:mob_id])
     else
       ## UNARMED TEMPORARY
-      4.times { appearance_frame.write_byte(0) } #EQ Slots 1-4
+      4.times { appearance_frame.write_byte(0) }                # EQ Slots 1-4
       appearance_frame.write_short(0x100 + entity.appearance[:chest]) # Chest
       appearance_frame.write_byte(0)                            # Shield
       appearance_frame.write_short(0x100 + entity.appearance[:arms])  # Arms
@@ -268,20 +274,28 @@ module RuneRb::Network::FrameWriter
     appearance_frame.write_short(entity.appearance[:run])             # Run Anim
 
     appearance_frame.write_long(entity.profile[:name].to_base37)      # Player's name
-    appearance_frame.write_byte(98)                      # Combat Level
-    appearance_frame.write_short(2345)                   # Skill Level
+    appearance_frame.write_byte(entity.profile.stats.combat)          # Combat Level
+    appearance_frame.write_short(entity.profile.stats.total)          # Skill Level
 
     frame.write_byte(appearance_frame.size, :C)
     frame.write_bytes(appearance_frame)
   end
 
-  def write_chat(frame, player)
+  # Writes a close of the current interface to the client.
+  def write_closed_interface
+    frame = RuneRb::Network::MetaFrame.new(130)
+    write_frame(frame)
   end
 
-  # @param payload [RuneRb::Network::JOutStream] the payload to apply the removal to
-  def write_player_removal(payload)
-    # Inform the client
-    payload.write_bit(true)
-    payload.write_bits(2, 3)
+  # Writes a chat frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Context] the player.
+  def write_chat(frame, player)
+    message = player.messages[:current]
+    frame.write_short((message[:color] << 8 | message[:effects]), :STD, :LITTLE)
+    frame.write_byte(player.profile[:rights])
+    frame.write_byte(message[:text].size, :C)
+    frame.write_reverse_bytes(message[:text].reverse)
+    player.messages[:last] = message
   end
 end

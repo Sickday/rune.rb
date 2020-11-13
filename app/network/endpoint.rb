@@ -22,11 +22,11 @@ module RuneRb::Network
             @peers.values.each do |peer_list|
               peer_list.each do |peer|
                 deregister(peer, peer.socket) unless peer.status[:active]
-                peer.flush
+                peer.pulse
               end
             end
           rescue StandardError => e
-            err 'An error occurred during flush cycle!', e.message
+            err 'An error occurred during pulse!', e.message
             puts e.backtrace
           end
         end

@@ -24,6 +24,11 @@ require 'set'
 # RuneRb scratch rewrite
 module RuneRb
 
+  # RuneRb::Commands
+  module Commands
+
+  end
+
   # RuneRb::Game
   module Game
     MAX_ITEMS = 2**31 - 1
@@ -35,6 +40,9 @@ module RuneRb
 
     autoload :Inventory,            'game/models/containers/inventory'
     autoload :Bank,                 'game/models/containers/bank'
+
+    autoload :Animation,            'game/models/animation'
+    autoload :Graphic,              'game/models/graphic'
 
     # RuneRb::Game::Map
     module Map
@@ -78,7 +86,8 @@ module RuneRb
 
   # RuneRb::Patches
   module Patches
-    autoload :SetOverride,          'internal/patches/set'
+    autoload :ArrayOverrides,       'internal/patches/array'
+    autoload :SetOverrides,         'internal/patches/set'
     autoload :StringOverrides,      'internal/patches/string'
     autoload :IntegerOverrides,     'internal/patches/integer'
   end
