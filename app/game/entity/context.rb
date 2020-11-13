@@ -61,6 +61,9 @@ module RuneRb::Entity
     # TODO: Raise an error to ensure assets are proper for each schedule type.
     def schedule(type, assets = {})
       case type
+      when :equipment
+        @session.write_equipment(@equipment.data)
+        @flags[:state?] = true
       when :inventory
         @session.write_inventory(28, @inventory.data)
       when :chat
@@ -117,10 +120,10 @@ module RuneRb::Entity
         @equipment = RuneRb::Game::Equipment.restore(self)
         log(RuneRb::COL.green("Restored Equipment for #{@profile[:name]}")) if RuneRb::DEBUG
       else
-        @equipment = RuneRb::Game::Equipment.new(self)
+        @equipment = RuneRb::Game::Equipment.new
         log(RuneRb::COL.magenta("New Equipment set for #{@profile[:name]}")) if RuneRb::DEBUG
       end
-      # TODO: Write equipment frame
+      @session.write_equipment(@equipment.data)
     end
 
     def logout

@@ -11,7 +11,7 @@ module RuneRb::Network::Constants
                          3 => 3213, # INVENT
                          4 => 1644, # EQUIPMENT
                          5 => 5608, # PRAYER
-                         6 => 1151, # MAGIC
+                         6 => 1151, # NORMAL SPELLS = 1151, ANCIENT = 12855
                          7 => -1,   # CLAN
                          8 => 5065, # FRIENDS
                          9 => 5715, # IGNORE

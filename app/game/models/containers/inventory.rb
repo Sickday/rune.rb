@@ -12,13 +12,13 @@ module RuneRb::Game
     # Patch the parent class ItemContainer#add function to ensure weight is updated after item addition.
     def add(item_stack)
       super(item_stack)
-      weight_update
+      #weight_update
     end
 
     # Patch the parent class ItemContainer#remove function to ensure weight is updated after item removal.
     def remove(id, amt = 1)
       super(id, amt)
-      weight_update
+      #weight_update
     end
 
     def stack_count

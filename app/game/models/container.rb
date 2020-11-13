@@ -111,7 +111,9 @@ module RuneRb::Game
     # @param id [Integer] the item ID.
     def slot_for(id)
       @data.detect do |_slot, stack|
-        stack&.definition&.id == id
+        next if stack.nil?
+
+        stack.definition.id == id
       end.first
     end
 

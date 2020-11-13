@@ -16,3 +16,4 @@ Rakefile
 .idea/modules.xml
 .idea/vcs.xml
 /.idea/
+/tools/

@@ -19,15 +19,17 @@ module RuneRb::Network::FrameWriter
 
   # Write all equipment data
   def write_equipment(data)
-    data[:equipment_data].each do |slot, slot_data|
-      write_equipment_slot({ slot: slot, item_id: slot_data[:id], item_amount: slot_data[:amount] })
+    data.each do |slot, slot_data|
+      write_equipment_slot({ slot: slot,
+                             item_id: slot_data == -1 ? -1 : slot_data.id,
+                             item_amount: slot_data == -1 ? -1 : slot_data.size })
     end
   end
 
   # Write an update to equipment slot item.
   # @param data [Hash] the data that should be included in the equipment frame
   def write_equipment_slot(data)
-    frame = RuneRb::Network::MetaFrame.new(34, false,true)
+    frame = RuneRb::Network::MetaFrame.new(34, false, true)
     frame.write_short(1688) # EquipmentForm ID
     frame.write_byte(data[:slot])
     frame.write_short(data[:item_id] + 1)
@@ -285,34 +287,41 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_equipment_block(frame, player)
-    4.times { frame.write_byte(0) } # first 4 slots
+    # Weapons
+    (0...4).each do |itr|
+      if player.equipment[itr] != -1
+        frame.write_short(0x200 + player.equipment[itr].id)
+      else
+        frame.write_byte(0)
+      end
+    end
+
     # TORSO SLOT
-    log player.equipment.inspect
-    if player.equipment[:torso] != -1 # Item is in slot?
-      log "Writing #{player.equipment[:torso].definition[:name]}"
-      frame.write_short(0x200 + player.equipment[:torso]) # Write mask + item id
+    if player.equipment[4] != -1 # Item is in slot?
+      log "Writing #{player.equipment[4].definition[:name]}"
+      frame.write_short(0x200 + player.equipment[4].id) # Write mask + item id
     else # Not wearing anything in slot?
       log 'Writing Chest appearance'
       frame.write_short(0x100 + player.appearance[:chest]) # Write mask + chest appearance id
     end
 
     # SHIELD SLOT
-    if player.equipment[:shield] != -1 # Item is in slot?
-      log "Writing #{player.equipment[:shield].definition[:name]}"
-      frame.write_short(0x200 + player.equipment[:shield]) # Write mask + item id
+    if player.equipment[5] != -1 # Item is in slot?
+      log "Writing #{player.equipment[5].definition[:name]}"
+      frame.write_short(0x200 + player.equipment[5].id) # Write mask + item id
     else # Not wearing anything in slot?
       log 'Writing no shield item'
       frame.write_byte(0) # Write mask + chest appearance id
     end
 
     # ARMS WITH PLATEBODY SUPPORT.
-    if player.equipment[:torso] != -1
-      if player.equipment[:plate_body?]
-        log "Writing platebody #{player.equipment[:torso].definition[:name]}"
-        frame.write_short(0x200 + player.equipment[:torso])
+    if player.equipment[4] != -1
+      if %w[platebody brassard].include?(player.equipment[4].definition[:name])
+        log "Writing platebody #{player.equipment[4].definition[:name]}"
+        frame.write_short(0x100 + player.equipment[4].id)
       else
         log 'Writing arms'
-        frame.write_short(0x100 + player.appearance[:arms])
+        frame.write_byte(0)
       end
     else
       log 'Writing arms'
@@ -320,18 +329,18 @@ module RuneRb::Network::FrameWriter
     end
 
     # LEGS
-    if player.equipment[:legs] != -1
-      log "Writing leg #{player.equipment[:legs].definition[:name]}"
-      frame.write_short(0x200 + player.equipment[:legs])
+    if player.equipment[7] != -1
+      log "Writing leg #{player.equipment[7].definition[:name]}"
+      frame.write_short(0x200 + player.equipment[7].id)
     else
       log 'Writing legs'
       frame.write_short(0x100 + player.appearance[:legs])
     end
 
     # HELM
-    if player.equipment[:hat] != -1
-      if player.equipment[:full_helm?]
-        log "Writing full helm #{player.equipment[:hat].definition[:name]}"
+    if player.equipment[0] != -1
+      if player.equipment[0].definition[:full_mask]
+        log "Writing full helm #{player.equipment[0].definition[:name]}"
         frame.write_byte(0)
       else
         log 'Writing head'
@@ -342,29 +351,29 @@ module RuneRb::Network::FrameWriter
     end
 
     # GLOVES
-    if player.equipment[:gloves] != -1
-      log "Writing gloves #{player.equipment[:gloves].definition[:name]}"
-      frame.write_short(0x200 + player.equipment[:gloves])
+    if player.equipment[9] != -1
+      log "Writing gloves #{player.equipment[9].definition[:name]}"
+      frame.write_short(0x200 + player.equipment[9].id)
     else
-      log "Writing deez hands"
+      log 'Writing deez hands'
       frame.write_short(0x100 + player.appearance[:hands])
     end
 
     # BOOTS
-    if player.equipment[:boots] != -1
-      log "Writing boots #{player.equipment[:boots].definition[:name]}"
-      frame.write_short(0x200 + player.equipment[:boots])
+    if player.equipment[10] != -1
+      log "Writing boots #{player.equipment[10].definition[:name]}"
+      frame.write_short(0x200 + player.equipment[10].id)
     else
-      log "Writing feet"
+      log 'Writing feet'
       frame.write_short(0x100 + player.appearance[:feet])
     end
 
     # BEARD
-    if player.equipment[:hat] > -1 && player.equipment[:full_helm?] || player.appearance[:gender] == 1
-      log "No beard"
+    if player.equipment[0] != -1 && !player.equipment[0].definition[:show_beard] || player.appearance[:gender] == 1
+      log 'No beard'
       frame.write_byte(0)
     else
-      log "With beard"
+      log 'With beard'
       frame.write_short(0x100 + player.appearance[:beard])
     end
   end

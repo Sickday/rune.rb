@@ -29,8 +29,14 @@ module RuneRb::Network::FrameReader
                         text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
     when 41 # TODO: Parse EquipItem frame
       item_id = frame.read_short(false)
-      slot = frame.read_short(false, :A)
-      interface_id = frame.read_short(false)
+      slot = frame.read_short(false, :A)  + 1 # This is the Slot that was clicked.
+      _interface_id = frame.read_short(false, :A)
+      log "Got equip [slot]: #{slot} || [item]: #{item_id} "
+      item = @context.inventory.at(slot)
+      @context.equipment[item.definition[:slot]] = item
+      @context.inventory.remove(item.id)
+      @context.schedule(:equipment)
+      @context.schedule(:inventory)
     when 77, 78, 165, 189, 210, 226, 121 # Ping frame
       log "Got ping frame #{frame.header[:op_code]}" if RuneRb::DEBUG
     when 86
@@ -62,6 +68,7 @@ module RuneRb::Network::FrameReader
            old_slot <= @context.inventory.capacity &&
            new_slot <= @context.inventory.capacity
           @context.inventory.swap(old_slot, new_slot)
+          @context.schedule(:inventory)
         end
       else
         err "Unrecognized Interface ID: #{interface_id} for SwitchItemFrame"
