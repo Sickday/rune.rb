@@ -45,15 +45,15 @@ module RuneRb::Game::Map
       @waypoints.clear
       @running = false
       @current = @player.position
-      @waypoints << Point.new(@current.x, @current.y, -1)
+      @waypoints << Point.new(@current[:x], @current[:y], -1)
     end
 
     def push_position(position)
       reset if @waypoints.empty?
 
       last = @waypoints.last
-      delta_x = position.x - last.x
-      delta_y = position.y - last.y
+      delta_x = position[:x] - last[:x]
+      delta_y = position[:y] - last[:y]
 
       [delta_x, delta_y].max.times do
 
@@ -63,8 +63,8 @@ module RuneRb::Game::Map
         delta_y += 1 if delta_y.negative?
         delta_y -= 1 if delta_y.positive?
 
-        push_step(position.x - delta_x,
-                  position.y - delta_y)
+        push_step(position[:x] - delta_x,
+                  position[:y] - delta_y)
       end
     end
 
@@ -76,8 +76,8 @@ module RuneRb::Game::Map
       return if @waypoints.size >= 100
 
       last = @waypoints.last
-      direction = RuneRb::Game::Map::Position.direction_for(x - last&.x,
-                                                            y - last&.y)
+      direction = RuneRb::Game::Map::Position.direction_for(x - last&[:x],
+                                                            y - last&[:y])
       @waypoints << Point.new(x, y, direction) if direction > -1
     end
   end

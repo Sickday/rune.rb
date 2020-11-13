@@ -1,67 +1,97 @@
 module RuneRb::Game::Map
   # A Position object provides a base tile as well as region and local tiles.
   class Position
-    attr :x, :y, :z
+    attr :data
 
+    # A object wrapping the Position's coordinates.
+    Data = Struct.new(:x, :y, :z) do
+
+      # Transforms the coordinates by the specified amounts.
+      # @param amount_x [Integer] the amount to transform the x coordinate.
+      # @param amount_y [Integer] the amount to transform the y coordinate.
+      # @param amount_z [Integer] the amount to transform the z coordinate.
+      def transform(amount_x, amount_y, amount_z)
+        self.x += amount_x
+        self.y += amount_y
+        self.z += amount_z
+      end
+    end
+
+    # Called when a new Position is created.
+    # @param x [Integer] the x coordinate.
+    # @param y [Integer] the y coordinate.
+    # @param z [Integer] the z coordinate.
     def initialize(x, y, z = 0)
-      @x = x
-      @y = y
-      @z = z
+      @data = Data.new(x, y, z)
     end
 
     # Compares this position to another
+    # @param other [Position] the other Position
     def eql?(other)
       return false unless other.is_a? Position
 
-      @x == other.x && @y == other.y && z == other.z
+      @data[:x] == other[:x] && @y == other[:y] && @data[:z] == other[:z]
     end
 
     # Updates the Position instance to that of other
+    # @param other [Position] the other Position
     def at(other)
-      @x = other.x
-      @y = other.y
-      @z = other.z
+      @data[:x] = other[:x]
+      @data[:y] = other[:y]
+      @data[:z] = other[:z]
     end
 
     # Moves the position by specified amounts
     def move(x_amount, y_amount, z_amount = 0)
-      @x += x_amount
-      @y += y_amount
-      @z += z_amount
+      @data.transform(x_amount, y_amount, z_amount)
     end
 
+    # @return [Integer] The regional y coordinate for the Position
     def region_x
-      (@x >> 3) - 6
+      (@data[:x] >> 3) - 6
     end
 
+    # @return [Integer] The regional x coordinate for the Position.
     def region_y
-      (@y >> 3) - 6
+      (@data[:y] >> 3) - 6
     end
 
     # @param base [Position] the base position
     # @return [Integer] the local x coordinate relative to the base parameter
-    def local_x(base)
-      @x - 8 * base.region_x
+    def local_x(base = self)
+      @data[:x] - 8 * base.region_x
     end
 
     # @param base [Position] the base position
     # @return [Integer] the local y coordinate relative to the base parameter
-    def local_y(base)
-      @y - 8 * base.region_y
+    def local_y(base = self)
+      @data[:y] - 8 * base.region_y
     end
 
+    # Checks if other is in vierw of the Position
+    # @param other [Position] the position that may or may not be in view
+    # @return [Boolean] is the distance between the Position and other greater less than 16
     def in_view?(other)
       delta = Position.delta(self, other)
-      delta.x <= 14 && delta.x >= -15 && delta.y <= 14 && delta.y >= -15
+      delta[:x] <= 14 && delta[:x] >= -15 && delta[:y] <= 14 && delta[:y] >= -15
     end
 
     class << self
+
+      # Create a Position with delta amounts between the provided positions.
+      # @param first [Position] the first position
+      # @param second [Position] the second position
+      # @return [Position] a Position containing the delta coordinates for the provided parameters.
       def delta(first, second)
-        Position.new(first.x - second.x,
-                     first.y - second.y,
-                     first.z - second.z)
+        Position.new(first[:x] - second[:x],
+                     first[:y] - second[:y],
+                     first[:z] - second[:z])
       end
 
+      # The direction for the given deltas.
+      # @param delta_y [Integer] the y delta
+      # @param delta_x [Integer] the x delta
+      # @return [Integer] the Direction for the given deltas
       def direction_for(delta_x, delta_y)
         if delta_x.negative?
           if delta_y.negative?

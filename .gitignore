@@ -9,3 +9,4 @@ rakefile
 Rakefile
 *.iml
 .gitignore
+/.yardoc
