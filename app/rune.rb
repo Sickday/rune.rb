@@ -33,6 +33,7 @@ module RuneRb
     autoload :ItemStack,            'game/models/item'
     autoload :ItemContainer,        'game/models/container'
 
+    autoload :Equipment,            'game/models/equipment'
     autoload :Inventory,            'game/models/containers/inventory'
     autoload :Bank,                 'game/models/containers/bank'
 

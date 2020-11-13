@@ -26,6 +26,9 @@ module RuneRb::Entity
     # @return [OpenStruct] the current message of the Context
     attr :message
 
+    # @return [RuneRb::Game::Equipment] the Equipment of the Context
+    attr :equipment
+
     # Called when a new Context Entity is created.
     # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
     # @param profile [RuneRb::Database::Profile] the Profile to be associated wih the entity.
@@ -41,6 +44,7 @@ module RuneRb::Entity
                     teleport: { to: @position },
                     handler: nil } #RuneRb::Game::Map::Movement.new(self) }
       load_inventory
+      load_equipment
       update_region
       init_flags
     end
@@ -108,8 +112,20 @@ module RuneRb::Entity
       @session.write_inventory(28, @inventory.data)
     end
 
+    def load_equipment
+      if !appearance[:equipment].nil? && !Oj.load(appearance[:equipment]).empty?
+        @equipment = RuneRb::Game::Equipment.restore(self)
+        log(RuneRb::COL.green("Restored Equipment for #{@profile[:name]}")) if RuneRb::DEBUG
+      else
+        @equipment = RuneRb::Game::Equipment.new(self)
+        log(RuneRb::COL.magenta("New Equipment set for #{@profile[:name]}")) if RuneRb::DEBUG
+      end
+      # TODO: Write equipment frame
+    end
+
     def logout
       RuneRb::Game::Inventory.dump(self)
+      RuneRb::Game::Equipment.dump(self)
     end
 
     def appearance

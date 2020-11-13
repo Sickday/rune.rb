@@ -251,20 +251,9 @@ module RuneRb::Network::FrameWriter
     appearance_frame.write_byte(entity.appearance[:head_icon])
 
     if entity.appearance[:mob_id] != -1
-      appearance_frame.write_byte(255)
-      appearance_frame.write_byte(255)
-      appearance_frame.write_short(entity.appearance[:mob_id])
+      write_morph(appearance_frame, entity)
     else
-      ## UNARMED TEMPORARY
-      4.times { appearance_frame.write_byte(0) }                # EQ Slots 1-4
-      appearance_frame.write_short(0x100 + entity.appearance[:chest]) # Chest
-      appearance_frame.write_byte(0)                            # Shield
-      appearance_frame.write_short(0x100 + entity.appearance[:arms])  # Arms
-      appearance_frame.write_short(0x100 + entity.appearance[:legs])  # Legs
-      appearance_frame.write_short(0x100 + entity.appearance[:head])  # Head
-      appearance_frame.write_short(0x100 + entity.appearance[:hands]) # Hands
-      appearance_frame.write_short(0x100 + entity.appearance[:feet])  # Feet
-      entity.appearance[:gender] == 0 ? appearance_frame.write_short(0x100 + entity.appearance[:beard]) : appearance_frame.write_byte(0) # Beard
+      write_equipment_block(appearance_frame, entity)
     end
 
     appearance_frame.write_byte(entity.appearance[:hair_color])       # Hair color
@@ -295,6 +284,81 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
+  def write_equipment_block(frame, player)
+    4.times { frame.write_byte(0) } # first 4 slots
+    # TORSO SLOT
+    log player.equipment.inspect
+    if player.equipment[:torso] > -1 # Item is in slot?
+      frame.write_short(0x200 + player.equipment[:torso]) # Write mask + item id
+    else # Not wearing anything in slot?
+      frame.write_short(0x100 + player.appearance[:chest]) # Write mask + chest appearance id
+    end
+
+    # SHIELD SLOT
+    if player.equipment[:shield] > -1 # Item is in slot?
+      frame.write_short(0x200 + player.equipment[:shield]) # Write mask + item id
+    else # Not wearing anything in slot?
+      frame.write_byte(0) # Write mask + chest appearance id
+    end
+
+    # ARMS WITH PLATEBODY SUPPORT.
+    if player.equipment[:torso] > -1
+      if player.equipment[:plate_body?]
+        frame.write_short(0x200 + player.equipment[:torso])
+      else
+        frame.write_short(0x100 + player.appearance[:arms])
+      end
+    else
+      frame.write_short(0x100 + player.appearance[:arms])
+    end
+
+    # LEGS
+    if player.equipment[:legs] > -1
+      frame.write_short(0x200 + player.equipment[:legs])
+    else
+      frame.write_short(0x100 + player.appearance[:legs])
+    end
+
+    # HELM
+    if player.equipment[:hat] > -1
+      if player.equipment[:full_helm?]
+        frame.write_byte(0)
+      else
+        frame.write_short(0x100 + player.appearance[:head])
+      end
+    end
+
+    # GLOVES
+    if player.equipment[:gloves] > -1
+      frame.write_short(0x200 + player.equipment[:gloves])
+    else
+      frame.write_short(0x100 + player.appearance[:hands])
+    end
+
+    # BOOTS
+    if player.equipment[:boots] > -1
+      frame.write_short(0x200 + player.equipment[:boots])
+    else
+      frame.write_short(0x100 + player.appearance[:feet])
+    end
+
+    # BEARD
+    if player.equipment[:hat] > -1 && player.equipment[:full_helm?] || player.appearance[:gender] == 1
+      frame.write_byte(0)
+    else
+      frame.write_short(0x100 + player.appearance[:beard])
+    end
+  end
+
+  # Writes a mob morph to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Type] the player.
+  def write_morph(frame, player)
+    frame.write_byte(255)
+    frame.write_byte(255)
+    frame.write_short(player.appearance[:mob_id])
+  end
+
   # Writes a chat to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param player [RuneRb::Entity::Context] the player.
@@ -309,7 +373,6 @@ module RuneRb::Network::FrameWriter
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param player [RuneRb::Entity::Context] the player.
   def write_graphic(frame, player)
-    log 'Writing Graphic'
     frame.write_short(player.graphic.id)
     frame.write_int(player.graphic.height << 16 | player.graphic.delay)
   end
@@ -318,7 +381,6 @@ module RuneRb::Network::FrameWriter
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param player [RuneRb::Entity::Context] the player.
   def write_animation(frame, player)
-    log 'Writing animation'
     frame.write_short(player.animation.id, :STD, :LITTLE)
     frame.write_byte(player.animation.delay, :C)
   end
