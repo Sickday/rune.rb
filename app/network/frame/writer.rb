@@ -134,7 +134,7 @@ module RuneRb::Network::FrameWriter
     sync_frame.switch_access # Enable Bit access
 
     # CONTEXT MOVEMENT
-    write_context_movement(sync_frame)
+    write_entity_movement(sync_frame, @context)
 
     # CONTEXT STATE
     write_entity_state(block_frame, @context)
@@ -155,25 +155,20 @@ module RuneRb::Network::FrameWriter
 
   private
 
-  def write_context_movement(frame)
-    if @context.flags[:teleport?] || @context.flags[:region?]
+  def write_entity_movement(frame, context)
+    if context.flags[:teleport?] || context.flags[:region?]
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
-      frame.write_bits(2, @context.position[:z]) # Write the plane. 0 being ground level
-      frame.write_bit(@context.flags[:teleport?]) # Teleporting?
-      frame.write_bit(@context.flags[:state?]) # Update State/Appearance?
-      frame.write_bits(7, @context.position.local_x) # Local Y
-      frame.write_bits(7, @context.position.local_y) # Local X
-    elsif @context.movement[:walk] != -1 # Context player walked
+      write_placement(frame, context)
+    elsif context.movement[:primary_dir] != -1 # Context player walked
       log RuneRb::COL.magenta('Player Walked')
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      if @context.movement[:run] != -1
-        write_run(frame, @context.movement[:walk], @context.movement[:run]) # Write the running bits
+      if context.movement[:secondary_dir] != -1
+        write_run(frame, context) # Write the running bits
       else
-        write_walk(frame, @context.movement[:walk]) # Write walking bits
+        write_walk(frame, context.movement[:walk]) # Write walking bits
       end
-      frame.write_bit(@context.flags[:state?]) # 1 or 0 depending on if a state update is required
-    elsif @context.flags[:state?] # No movement occurred. State update required?
+      frame.write_bit(context.flags[:state?]) # 1 or 0 depending on if a state update is required
+    elsif context.flags[:state?] # No movement occurred. State update required?
       frame.write_bit(true) # Write 1 bit to indicate a state update is required
       write_stand(frame) # Write standing bit
     else # No movement or state required
@@ -181,19 +176,31 @@ module RuneRb::Network::FrameWriter
     end
   end
 
+  # Write a placement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param entity [RuneRb::Entity::Type] the entity whose placement we're writing.
+  def write_placement(frame, entity)
+    frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
+    frame.write_bits(2, entity.position[:z]) # Write the plane. 0 being ground level
+    frame.write_bit(entity.flags[:teleport?]) # Teleporting?
+    frame.write_bit(entity.flags[:state?]) # Update State/Appearance?
+    frame.write_bits(7, entity.position.local_x) # Local Y
+    frame.write_bits(7, entity.position.local_y) # Local X
+  end
+
+  # Writes a running movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  def write_run(frame, entity)
+    frame.write_bits(2, 2) # we write 2 because we're running
+    frame.write_bits(3, entity.movement[:primary_dir])
+    frame.write_bits(3, entity.movement[:secondary_dir])
+  end
+
   # Writes a walking movement to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   def write_walk(frame, direction)
     frame.write_bits(2, 1) # we write 1 because we're walking
     frame.write_bits(3, direction)
-  end
-
-  # Writes a running movement to a frame
-  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  def write_run(frame, first_direction, second_direction)
-    frame.write_bits(2, 2) # we write 2 because we're running
-    frame.write_bits(3, first_direction)
-    frame.write_bits(3, second_direction)
   end
 
   # Writes a stand to a frame
@@ -216,7 +223,7 @@ module RuneRb::Network::FrameWriter
     mask |= 0x80 if entity.flags[:chat]
     # Face Entity
     # Appearance
-    mask |= 0x10 if entity.flags[:appearance]
+    mask |= 0x10 if entity.flags[:state?]
     # Face Coordinates
     # Primary Hit
     # Secondary Hit
@@ -228,8 +235,8 @@ module RuneRb::Network::FrameWriter
       frame.write_byte(mask)
     end
 
-    write_appearance(frame, entity) if entity.flags[:appearance]
     write_chat(frame, entity) if entity.flags[:chat]
+    write_appearance(frame, entity) if entity.flags[:state?]
   end
 
   # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
@@ -237,11 +244,7 @@ module RuneRb::Network::FrameWriter
   def write_appearance(frame, entity)
     appearance_frame = RuneRb::Network::MetaFrame.new(-1)
     appearance_frame.write_byte(entity.appearance[:gender])
-    if entity.appearance[:head_icon] >= 8 || entity.appearance[:head_icon] <= -1
-      appearance_frame.write_byte(entity.appearance[:head_icon])
-    else
-      appearance_frame.write_byte(0) # Head Icon
-    end
+    appearance_frame.write_byte(entity.appearance[:head_icon])
 
     if entity.appearance[:mob_id] != -1
       appearance_frame.write_byte(255)
@@ -292,11 +295,9 @@ module RuneRb::Network::FrameWriter
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param player [RuneRb::Entity::Context] the player.
   def write_chat(frame, player)
-    message = player.messages[:current]
-    frame.write_short((message[:color] << 8 | message[:effects]), :STD, :LITTLE)
+    frame.write_short((player.message[:color] << 8 | player.message[:effects]), :STD, :LITTLE)
     frame.write_byte(player.profile[:rights])
-    frame.write_byte(message[:text].size, :C)
-    frame.write_reverse_bytes(message[:text].reverse)
-    player.messages[:last] = message
+    frame.write_byte(player.message[:text].size, :C)
+    frame.write_reverse_bytes(player.message[:text].reverse)
   end
 end

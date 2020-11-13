@@ -11,18 +11,24 @@ module RuneRb::Entity
       @session = peer
       @profile = profile
       @position = profile.location.position
-
-      load_inventory
-
-      @updates = {}
       @message = OpenStruct.new
-      @movement = { walk: -1,
-                    run: -1,
+      @flags = OpenStruct.new
+      @movement = { primary_dir: -1,
+                    secondary_dir: -1,
                     teleport: { to: @position },
                     handler: nil } #RuneRb::Game::Map::Movement.new(self) }
-      @flags = { state?: true, teleport?: true, region?: true }
+      load_inventory
       update_region
+      init_flags
     end
+
+    # Sets initial update flags for the Context.
+    def init_flags
+      @flags[:state?] = true
+      @flags[:teleport?] = true
+      @flags[:region?] = true
+    end
+
     # This function will update the Context according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
     # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Context#schedule(:graphic, graphic_object)). Internally, this will enable the Graphic flag causing the client to expect a Graphic to be supplied (and played) during the next pulse.
     # TODO: Raise an error to ensure assets are proper for each schedule type.

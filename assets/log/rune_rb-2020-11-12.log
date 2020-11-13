@@ -5488,3 +5488,63 @@ I, [2020-11-12T21:14:51.565272 #540359]  INFO -- RuneRb: Registered new socket f
 I, [2020-11-12T21:14:52.722495 #540359]  INFO -- RuneRb: Loaded profile for Pat!
 I, [2020-11-12T21:14:52.722718 #540359]  INFO -- RuneRb: Credentials valid for Pat!
 I, [2020-11-12T21:14:57.022996 #540359]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T21:31:11.091067 #547417]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T21:31:11.091316 #547417]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T21:31:17.335020 #547649]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T21:31:18.477606 #547649]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T21:31:18.477831 #547649]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T21:31:23.490135 #547649]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T21:31:58.102558 #547649]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T21:31:58.189671 #547649]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T21:31:58.189858 #547649]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T21:32:05.722284 #547649]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T21:48:18.185224 #573164]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T21:48:18.185421 #573164]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T21:48:22.683437 #573396]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T21:48:24.068714 #573396]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T21:48:24.068915 #573396]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T21:48:29.097462 #573396]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T21:51:15.887434 #574138]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T21:51:15.887621 #574138]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T21:51:19.970063 #574372]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T21:51:21.405824 #574372]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T21:51:21.406024 #574372]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T21:51:26.973217 #574372]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:02:24.309161 #576883]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:02:24.309334 #576883]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:02:41.678892 #577113]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:02:43.994658 #577113]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:02:43.994893 #577113]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:02:50.754243 #577113]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:04:02.456858 #579126]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:04:02.457042 #579126]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:04:07.370175 #579352]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:04:13.985882 #579352]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:04:13.986097 #579352]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:04:14.538077 #579352]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:04:19.170998 #579352]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:04:19.302860 #579352]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:04:19.303058 #579352]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:04:24.832729 #579352]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:04:55.604340 #580353]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:04:55.604539 #580353]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:04:59.350639 #580576]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:05:01.065988 #580576]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:05:01.066213 #580576]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:05:06.102841 #580576]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:05:59.856453 #582894]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:05:59.856625 #582894]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:06:15.967910 #583829]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:06:15.968087 #583829]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:06:20.558898 #584058]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:06:21.930268 #584058]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:06:21.930511 #584058]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:06:22.626726 #584058]  INFO -- RuneRb: Writing Appearance
+I, [2020-11-12T22:07:09.022512 #584192]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:07:09.022708 #584192]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:07:26.566828 #584973]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:07:26.567027 #584973]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:07:31.618472 #585212]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:07:33.086843 #585212]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:07:33.087046 #585212]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:07:49.312382 #585212]  INFO -- RuneRb: De-registered socket for 127.0.0.1
