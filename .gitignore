@@ -10,3 +10,9 @@ Rakefile
 *.iml
 .gitignore
 /.yardoc
+/doc
+.idea/.rakeTasks
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+/.idea/
