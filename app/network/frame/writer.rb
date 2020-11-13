@@ -217,10 +217,12 @@ module RuneRb::Network::FrameWriter
     # Attributes:
     # ForcedMove
     # Graphics
+    mask |= 0x100 if entity.flags[:graphic?]
     # Animation
+    mask |= 0x8 if entity.flags[:animation?]
     # Forced Chat
     # Chat
-    mask |= 0x80 if entity.flags[:chat]
+    mask |= 0x80 if entity.flags[:chat?]
     # Face Entity
     # Appearance
     mask |= 0x10 if entity.flags[:state?]
@@ -235,7 +237,9 @@ module RuneRb::Network::FrameWriter
       frame.write_byte(mask)
     end
 
-    write_chat(frame, entity) if entity.flags[:chat]
+    write_graphic(frame, entity) if entity.flags[:graphic?]
+    write_animation(frame, entity) if entity.flags[:animation?]
+    write_chat(frame, entity) if entity.flags[:chat?]
     write_appearance(frame, entity) if entity.flags[:state?]
   end
 
@@ -291,7 +295,7 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
-  # Writes a chat frame
+  # Writes a chat to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param player [RuneRb::Entity::Context] the player.
   def write_chat(frame, player)
@@ -299,5 +303,23 @@ module RuneRb::Network::FrameWriter
     frame.write_byte(player.profile[:rights])
     frame.write_byte(player.message[:text].size, :C)
     frame.write_reverse_bytes(player.message[:text].reverse)
+  end
+
+  # Writes a graphic to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Context] the player.
+  def write_graphic(frame, player)
+    log 'Writing Graphic'
+    frame.write_short(player.graphic.id)
+    frame.write_int(player.graphic.height << 16 | player.graphic.delay)
+  end
+
+  # Writes a animation to a frame.
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Context] the player.
+  def write_animation(frame, player)
+    log 'Writing animation'
+    frame.write_short(player.animation.id, :STD, :LITTLE)
+    frame.write_byte(player.animation.delay, :C)
   end
 end

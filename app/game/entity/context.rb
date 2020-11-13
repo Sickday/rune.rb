@@ -2,10 +2,33 @@ module RuneRb::Entity
   class Context < RuneRb::Entity::Type
     include RuneRb::Types::Loggable
 
-    attr :position, :region, :movement, :profile, :inventory
+    # @return [RuneRb::Game::Map::Position] the Position of the Context
+    attr :position
+
+    # @return [RuneRb::Game::Map::Position] the regional Position of the Context
+    attr :region
+
+    # @return [Hash] the movement of the Context.
+    attr :movement
+
+    # @return [RuneRb::Database::Profile] the Profile of the Context
+    attr :profile
+
+    # @return [RuneRb::Game::ItemContainer] the inventory of the Context
+    attr :inventory
+
+    # @return [RuneRb::Game::Animation] the Animation of the Context
+    attr :animation
+
+    # @return [RuneRb::Game::Graphic] the Graphic of the Context
+    attr :graphic
+
+    # @return [OpenStruct] the current message of the Context
+    attr :message
 
     # Called when a new Context Entity is created.
     # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
+    # @param profile [RuneRb::Database::Profile] the Profile to be associated wih the entity.
     def initialize(peer, profile)
       super()
       @session = peer
@@ -32,7 +55,7 @@ module RuneRb::Entity
     # This function will update the Context according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
     # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Context#schedule(:graphic, graphic_object)). Internally, this will enable the Graphic flag causing the client to expect a Graphic to be supplied (and played) during the next pulse.
     # TODO: Raise an error to ensure assets are proper for each schedule type.
-    def schedule(type, assets)
+    def schedule(type, assets = {})
       case type
       when :inventory
         @session.write_inventory(28, @inventory.data)
@@ -42,17 +65,18 @@ module RuneRb::Entity
         @message[:text] = assets[:text]
         @flags[:chat?] = true
       when :teleport
-        @movement[:teleport][:to] = assets[:location]
-        @profile.location.set(to)
-        @position = to
+        @profile.location.set(assets[:location])
+        @position = @profile.location.position
         @flags[:region?] = true
         @flags[:teleport?] = true
       when :graphic
         @graphic = assets[:graphic]
         @flags[:graphic?] = true
+        @flags[:state?] = true
       when :animation
         @animation = assets[:animation]
         @flags[:animation?] = true
+        @flags[:state?] = true
       when :mob
         @profile.appearance.to_mob(assets[:mob_id])
         @flags[:state?] = true

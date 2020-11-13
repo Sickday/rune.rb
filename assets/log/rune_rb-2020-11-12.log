@@ -5548,3 +5548,180 @@ I, [2020-11-12T22:07:31.618472 #585212]  INFO -- RuneRb: Registered new socket f
 I, [2020-11-12T22:07:33.086843 #585212]  INFO -- RuneRb: Loaded profile for Pat!
 I, [2020-11-12T22:07:33.087046 #585212]  INFO -- RuneRb: Credentials valid for Pat!
 I, [2020-11-12T22:07:49.312382 #585212]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:12:12.219329 #585212]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:12:12.330069 #585212]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:12:12.330253 #585212]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:12:26.483646 #585212]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:12:54.704922 #585212]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:12:54.838892 #585212]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:12:54.839088 #585212]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-12T22:13:15.626120 #585212] ERROR -- RuneRb: Unhandled button! ID: 1541
+I, [2020-11-12T22:13:24.663375 #585212]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:38:34.829679 #622227]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:38:34.829850 #622227]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:38:40.114871 #622458]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:38:41.701584 #622458]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:38:41.701798 #622458]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:39:05.223480 #623388]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:39:05.223662 #623388]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:39:09.657373 #623614]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:39:10.802093 #623614]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:39:10.802314 #623614]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:39:26.587027 #623614]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:39:30.272507 #623614]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:39:30.351973 #623614]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:39:30.352175 #623614]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:41:44.538210 #626079]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:41:44.538427 #626079]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:42:02.432242 #626774]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:42:02.432487 #626774]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:42:06.976351 #627011]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:42:08.128961 #627011]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:42:08.129192 #627011]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:43:10.387602 #628893]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:43:10.387790 #628893]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:43:14.461369 #629128]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:43:15.614381 #629128]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:43:15.614630 #629128]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-12T22:43:26.193198 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:26.193345 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:26.795866 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:26.796005 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:27.398070 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:27.398203 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:28.000356 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:28.000499 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:28.603017 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:28.603191 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:29.206165 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:29.206349 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:29.815015 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:29.815174 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:30.417674 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:30.417812 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:31.020017 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:31.020157 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:31.622320 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:31.622499 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:32.224993 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:32.225137 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:32.827013 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:32.827154 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:33.429052 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:33.429191 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:34.031727 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:34.031866 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:34.634086 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:34.634229 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:35.236739 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:35.236915 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:35.839125 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:35.839310 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:36.442049 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:36.442199 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:37.044329 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:37.044476 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+E, [2020-11-12T22:43:37.647014 #629128] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:43:37.647160 #629128] ERROR -- RuneRb: undefined method `message' for #<RuneRb::Entity::Context:0x00007fd177b9d390>
+I, [2020-11-12T22:44:07.842010 #630546]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:44:07.842217 #630546]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:44:12.446313 #630999]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:44:13.578682 #630999]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:44:13.578879 #630999]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-12T22:44:29.015208 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:29.015384 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:29.617005 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:29.617164 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:30.218718 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:30.218880 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:30.820429 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:30.820596 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:31.422151 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:31.422324 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:32.024074 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:32.024242 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:32.625243 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:32.625411 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:33.226973 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:33.227152 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:33.828770 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:33.828938 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:34.430233 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:34.430445 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:35.032071 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:35.032245 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:35.633995 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:35.634167 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:36.235721 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:36.235886 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:36.837135 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:36.837301 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:37.438857 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:37.439015 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:38.040905 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:38.041108 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:38.642434 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:38.642594 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:39.243806 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:39.243966 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:39.845147 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:39.845326 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:40.452947 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:40.453115 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+E, [2020-11-12T22:44:41.054144 #630999] ERROR -- RuneRb: An error occurred during pulse!
+E, [2020-11-12T22:44:41.054309 #630999] ERROR -- RuneRb: undefined method `size' for nil:NilClass
+I, [2020-11-12T22:45:34.159027 #632709]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:45:34.159222 #632709]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:45:38.424066 #632940]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:45:39.603417 #632940]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:45:39.603642 #632940]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:46:00.323622 #632940]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:48:55.943236 #639230]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:48:55.943428 #639230]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:49:03.218381 #639700]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:49:03.218788 #639700]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:49:07.532210 #640148]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:49:08.677325 #640148]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:49:08.677538 #640148]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:49:29.302092 #641110]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:49:29.302273 #641110]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:49:34.140239 #641335]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:49:35.276535 #641335]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:49:35.276753 #641335]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:51:19.056536 #643271]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:51:19.056711 #643271]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:51:19.454940 #643510]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:51:20.607560 #643510]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:51:20.607790 #643510]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:51:20.874693 #643510]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:51:25.342466 #643510]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:51:25.423407 #643510]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:51:25.423598 #643510]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:51:33.049679 #643510]  INFO -- RuneRb: Writing Graphic
+I, [2020-11-12T22:51:38.458579 #643510]  INFO -- RuneRb: Writing animation
+I, [2020-11-12T22:51:54.230093 #643510]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:52:19.791348 #644485]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:52:19.791543 #644485]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:52:27.313318 #644716]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:52:28.502237 #644716]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:52:28.502464 #644716]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:52:34.393736 #644716]  INFO -- RuneRb: Writing Graphic
+I, [2020-11-12T22:52:40.403713 #644716]  INFO -- RuneRb: Writing animation
+I, [2020-11-12T22:52:50.760948 #644716]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-12T22:52:50.761200 #644716] ERROR -- RuneRb: Socket has no data
+I, [2020-11-12T22:53:34.974686 #645275]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-12T22:53:34.974867 #645275]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-12T22:53:36.695237 #645507]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:53:36.697112 #645507]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:53:41.805219 #645507]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:53:41.805646 #645507]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:53:46.914409 #645507]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:53:46.914730 #645507]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:53:52.022581 #645507]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:53:52.022882 #645507]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-12T22:54:05.906679 #645507]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-12T22:54:07.069481 #645507]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-12T22:54:07.069680 #645507]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-12T22:54:21.522691 #645507]  INFO -- RuneRb: Writing animation
+I, [2020-11-12T22:54:40.143609 #645507]  INFO -- RuneRb: Writing animation
+I, [2020-11-12T22:54:57.053041 #645507]  INFO -- RuneRb: De-registered socket for 127.0.0.1

@@ -44,7 +44,7 @@ module RuneRb::Network::AuthenticationHelper
       write_disconnect
     when RuneRb::Network::CONNECTION_TYPES[:GAME_UPDATE]
       log! RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Update')}") if RuneRb::DEBUG
-      send_data(Array.new(8, 0)).pack('C' * 8)
+      send_data(Array.new(8, 0).pack('C' * 8))
     when RuneRb::Network::CONNECTION_TYPES[:GAME_LOGIN]
       log! RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Login')}") if RuneRb::DEBUG
       send_data([0].pack('q')) # Ignored 8 bytes

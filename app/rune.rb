@@ -24,11 +24,6 @@ require 'set'
 # RuneRb scratch rewrite
 module RuneRb
 
-  # RuneRb::Commands
-  module Commands
-
-  end
-
   # RuneRb::Game
   module Game
     MAX_ITEMS = 2**31 - 1

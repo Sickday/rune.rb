@@ -26,7 +26,7 @@ module RuneRb::Network::FrameReader
       @context.schedule(:chat,
                         effects: frame.read_byte(false, :S),
                         color: frame.read_byte(false, :S),
-                        message: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
+                        text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
     when 41 # TODO: Parse EquipItem frame
       item_id = frame.read_short(false)
       slot = frame.read_short(false, :A)
@@ -37,8 +37,8 @@ module RuneRb::Network::FrameReader
       roll = frame.read_short(false, :STD, :LITTLE)
       yaw = frame.read_short(false, :STD, :LITTLE)
       log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
-    when 103 # TODO: Parse Command frame
-      command = frame.read_string
+    when 103
+      parse_cmd_string(frame.read_string)
     when 145 # Remove item in slot
       interface_id = frame.read_short(false, :A)
       slot = frame.read_short(false, :A)
@@ -117,5 +117,49 @@ module RuneRb::Network::FrameReader
     when 2458 then write_disconnect if @status[:authenticated] == :LOGGED_IN
     else err "Unhandled button! ID: #{id}"
     end
+  end
+
+  def parse_cmd_string(string)
+    pcs = string.split(' ')
+    case pcs[0]
+    when 'anim'
+      @context.schedule(:animation, animation: RuneRb::Game::Animation.new(pcs[0].to_i, pcs[1].to_i || 0))
+    when 'gfx'
+      @context.schedule(:graphic, graphic: RuneRb::Game::Graphic.new(pcs[0].to_i, pcs[1].to_i || 100, pcs[2].to_i || 0))
+    when 'item'
+      stack = RuneRb::Game::ItemStack.new(pcs[1].to_i)
+      if stack.definition[:stackable]
+        stack.size = pcs[2].to_i
+        @context.inventory.add(stack)
+        log RuneRb::COL.green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::DEBUG
+      else
+        pcs[2].to_i.times do
+          @context.inventory.add(stack)
+          log RuneRb::COL.green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::DEBUG
+        end
+      end
+      @context.schedule(:inventory)
+    when 'to'
+      log RuneRb::COL.green("Moving #{@context.profile[:name]} to #{pcs[1]}, #{pcs[2]}") if RuneRb::DEBUG
+      @context.schedule(:teleport, location: RuneRb::Game::Map::Position.new(pcs[1].to_i,
+                                                                             pcs[2].to_i,
+                                                                             pcs[3].to_i || 0))
+    when 'mob'
+      log RuneRb::COL.green("Morphing into mob: #{pcs[1]}") if RuneRb::DEBUG
+      @context.schedule(:mob, mob_id: pcs[1].to_i)
+    when 'overhead'
+      if pcs[1].to_i <= 7 && pcs[1].to_i >= -1
+        log RuneRb::COL.green("Changing HeadIcon to #{pcs[1]}") if RuneRb::DEBUG
+        @context.schedule(:head, head_icon: pcs[1].to_i)
+      else
+        write_text('@dre@The overhead icon ID can be no more than 7 and no less than -1.')
+      end
+    else
+      not_found(pcs[0])
+    end
+  end
+
+  def not_found(cmd)
+    write_text("Unable to parse command: #{cmd}")
   end
 end
