@@ -16,6 +16,11 @@ module RuneRb::Network
 
     # Spawns a new process and executes the selection loop within that process. *
     def deploy
+      Signal.trap('INT') do
+        puts RuneRb::COL.magenta('Shutting down gracefully...')
+        sleep(3)
+        Kernel.exit
+      end
       Parallel.in_processes(count: 1) do
         Concurrent::TimerTask.execute(execution_interval: 0.600) do
           begin
