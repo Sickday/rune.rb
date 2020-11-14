@@ -1,5 +1,5 @@
-module RuneRb::Game
-  class Inventory < RuneRb::Game::ItemContainer
+module RuneRb::Game::Containers
+  class Inventory < RuneRb::Game::Item::Container
     attr :weight, :data
 
     # Called when a new Inventory is created
@@ -9,7 +9,7 @@ module RuneRb::Game
       @weight = 0
     end
 
-    # Patch the parent class ItemContainer#add function to ensure weight is updated after item addition.
+    # Patch the parent class Container#add function to ensure weight is updated after item addition.
     def add(item_stack)
       super(item_stack)
       #weight_update
@@ -45,22 +45,23 @@ module RuneRb::Game
     end
 
     class << self
-      include RuneRb::Types::Loggable
 
-      # @param player [RuneRb::Entity::Context] the player whos inventory is being dumped
+      # Dumps the inventory of a player.
+      # @param player [RuneRb::Entity::Context] the player whose inventory is being dumped
       def dump(player)
         player.profile.update(inventory: Oj.dump(player.inventory.data, mode: :compat, use_as_json: true))
-        log RuneRb::COL.green("Dumped Inventory for #{RuneRb::COL.cyan(player.profile[:name])}") if RuneRb::DEBUG
       end
 
+      # Restores the inventory of a player
+      # @param player [RuneRb::Entity::Context] the player whose inventory is being restored.
       def restore(player)
         data = Oj.load(player.profile[:inventory])
         parsed = {}.tap do |hash|
           data.each do |slot, stack|
-            hash[slot.to_i] = RuneRb::Game::ItemStack.restore(id: stack['id'], amount: stack['amount']) unless stack.nil?
+            hash[slot.to_i] = RuneRb::Game::Item::Stack.restore(id: stack['id'], amount: stack['amount']) unless stack.nil?
           end
         end
-        Inventory.new(parsed)
+        RuneRb::Game::Containers::Inventory.new(parsed)
       end
     end
   end

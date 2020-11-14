@@ -1,6 +1,6 @@
-module RuneRb::Game
+module RuneRb::Game::Item
   # A container of ItemStacks.
-  class ItemContainer
+  class Container
     include RuneRb::Types::Loggable
 
     # Called when a new ItemContainer is created.
@@ -13,10 +13,10 @@ module RuneRb::Game
     end
 
     # Attempts to add an ItemStack to the container
-    # @param item_stack [RuneRb::Game::ItemStack] the ItemStack to add
+    # @param item_stack [RuneRb::Game::Item::Stack] the Stack to add
     def add(item_stack)
       if item_stack.definition[:stackable] || @stackable
-        if has?(item_stack.definition.id) && (item_stack.size + @data[slot_for(item_stack.definition.id)].size) < RuneRb::Game::MAX_ITEMS
+        if has?(item_stack.definition.id) && (item_stack.size + @data[slot_for(item_stack.definition.id)].size) < RuneRb::Game::Item::MAX_SIZE
           slot = slot_for(item_stack.definition.id)
           @data[slot].size += item_stack.size
         else
@@ -68,7 +68,11 @@ module RuneRb::Game
     # @param amt [Integer] the amount of the item
     # @return [Boolean] true if the container has an entry where the specified ID matches and the ItemStack size is greater than or equal to the specified amount.
     def has?(id, amt = 1)
-      @data.any? { |_slot, stack| ((stack&.definition&.id == id) && (stack.size >= amt)) }
+      @data.any? do |_slot, stack|
+        next if stack.nil?
+
+        ((stack.definition.id == id) && (stack.size >= amt))
+      end
     end
 
     # Returns a sum of the size of each ItemStack where the ID is equal to the specified id.

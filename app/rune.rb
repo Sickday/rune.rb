@@ -26,14 +26,24 @@ module RuneRb
 
   # RuneRb::Game
   module Game
-    MAX_ITEMS = 2**31 - 1
 
     autoload :World,                'game/models/world'
 
-    autoload :ItemStack,            'game/models/item'
-    autoload :ItemContainer,        'game/models/container'
+    # RuneRb::Game::Containers
+    module Containers
+      autoload :Bank,               'game/containers/bank'
+      autoload :Inventory,          'game/containers/inventory'
+    end
 
-    autoload :Equipment,            'game/models/equipment'
+    # RuneRb::Game::Item
+    module Item
+      MAX_SIZE = 2**31 - 1
+
+      autoload :Stack,              'game/item/stack'
+      autoload :Container,          'game/item/container'
+      autoload :Click,              'game/item/click'
+    end
+
     autoload :Inventory,            'game/models/containers/inventory'
     autoload :Bank,                 'game/models/containers/bank'
 
@@ -53,6 +63,7 @@ module RuneRb
   # RuneRb::Entity
   module Entity
     autoload :Context,              'game/entity/context'
+    autoload :Equipment,            'game/entity/equipment'
     autoload :Mob,                  'game/entity/mob'
     autoload :Type,                 'game/entity/type'
   end

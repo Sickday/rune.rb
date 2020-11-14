@@ -27,7 +27,7 @@ module RuneRb::Network::FrameReader
                         effects: frame.read_byte(false, :S),
                         color: frame.read_byte(false, :S),
                         text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
-    when 41 # TODO: Parse EquipItem frame
+    when 41 # FIRST CLICK ON ITEM. Parse by interface id.
       item_id = frame.read_short(false)
       slot = frame.read_short(false, :A)  + 1 # This is the Slot that was clicked.
       _interface_id = frame.read_short(false, :A)
@@ -43,13 +43,12 @@ module RuneRb::Network::FrameReader
       roll = frame.read_short(false, :STD, :LITTLE)
       yaw = frame.read_short(false, :STD, :LITTLE)
       log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
+    when 87 # 5th option. currently parsed as an inventory item drop even if it isn't...
+      RuneRb::Game::Item::Click.parse_option(:fifth_click, { context: @context, frame: frame })
     when 103
       parse_cmd_string(frame.read_string)
     when 145 # Remove item in slot
-      interface_id = frame.read_short(false, :A)
-      slot = frame.read_short(false, :A)
-      item_id = frame.read_short(false, :A)
-      # TODO: Parse RemoveItemInSlot frame
+      RuneRb::Game::Item::Click.parse_action(:first_item, { context: @context, frame: frame })
     when 185
       id = frame.read_short
       parse_button(id)
@@ -57,23 +56,7 @@ module RuneRb::Network::FrameReader
     when 202
       log 'Received Idle Frame!' if RuneRb::DEBUG
     when 214
-      interface_id = frame.read_short(false, :A, :LITTLE)
-      _inserting = frame.read_byte(false, :C) # This will matter when bank is implemented. TODO: impl bank
-      old_slot = frame.read_short(false, :A, :LITTLE)
-      new_slot = frame.read_short(false, :STD, :LITTLE)
-      case interface_id
-      when 3214
-        if old_slot >= 0 &&
-           new_slot >= 0 &&
-           old_slot <= @context.inventory.capacity &&
-           new_slot <= @context.inventory.capacity
-          @context.inventory.swap(old_slot, new_slot)
-          @context.schedule(:inventory)
-        end
-      else
-        err "Unrecognized Interface ID: #{interface_id} for SwitchItemFrame"
-        return
-      end
+      RuneRb::Game::Item::Click.parse_action(:switch_item, { context: @context, frame: frame })
     when 241 # Mouse Click
       value = frame.read_int(false)
       delay = (value >> 20) * 50
@@ -134,7 +117,7 @@ module RuneRb::Network::FrameReader
     when 'gfx'
       @context.schedule(:graphic, graphic: RuneRb::Game::Graphic.new(pcs[0].to_i, pcs[1].to_i || 100, pcs[2].to_i || 0))
     when 'item'
-      stack = RuneRb::Game::ItemStack.new(pcs[1].to_i)
+      stack = RuneRb::Game::Stack.new(pcs[1].to_i)
       if stack.definition[:stackable]
         stack.size = pcs[2].to_i
         @context.inventory.add(stack)

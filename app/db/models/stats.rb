@@ -3,27 +3,27 @@ module RuneRb::Database
     MAXIMUM_EXPERIENCE = 200_000_000
 
     SKILLS = {
-      ATTACK: %i[attack_level attack_experience],
-      DEFENCE: %i[defence_level defence_experience],
-      STRENGTH: %i[strength_level strength_experience],
-      HIT_POINTS: %i[hit_points_level hit_points_experience],
-      RANGE: %i[range_level range_experience],
-      PRAYER: %i[prayer_level prayer_experience],
-      MAGIC: %i[magic_level magic_experience],
-      COOKING: %i[cooking_level cooking_experience],
-      WOODCUTTING: %i[woodcutting_level woodcutting_experience],
-      FLETCHING: %i[fletching_level fletching_experience],
-      FISHING: %i[fishing_level fishing_experience],
-      FIREMAKING: %i[firemaking_level firemaking_experience],
-      CRAFTING: %i[crafting_level crafting_experience],
-      SMITHING: %i[smithing_level smithing_experience],
-      MINING: %i[mining_level mining_experience],
-      HERBLORE: %i[herblore_level herblore_experience],
-      AGILITY: %i[agility_level agility_experience],
-      THIEVING: %i[thieving_level thieving_experience],
-      SLAYER: %i[slayer_level slayer_experience],
-      FARMING: %i[farming_level farming_experience],
-      RUNECRAFTING: %i[runecrafting_level runecrafting_experience]
+      ATTACK: %i[attack_level attack_exp],
+      DEFENCE: %i[defence_level defence_exp],
+      STRENGTH: %i[strength_level strength_exp],
+      HIT_POINTS: %i[hit_points_level hit_points_exp],
+      RANGE: %i[range_level range_exp],
+      PRAYER: %i[prayer_level prayer_exp],
+      MAGIC: %i[magic_level magic_exp],
+      COOKING: %i[cooking_level cooking_exp],
+      WOODCUTTING: %i[woodcutting_level woodcutting_exp],
+      FLETCHING: %i[fletching_level fletching_exp],
+      FISHING: %i[fishing_level fishing_exp],
+      FIREMAKING: %i[firemaking_level firemaking_exp],
+      CRAFTING: %i[crafting_level crafting_exp],
+      SMITHING: %i[smithing_level smithing_exp],
+      MINING: %i[mining_level mining_exp],
+      HERBLORE: %i[herblore_level herblore_exp],
+      AGILITY: %i[agility_level agility_exp],
+      THIEVING: %i[thieving_level thieving_exp],
+      SLAYER: %i[slayer_level slayer_exp],
+      FARMING: %i[farming_level farming_exp],
+      RUNECRAFTING: %i[runecrafting_level runecrafting_exp]
     }.freeze
 
     def combat

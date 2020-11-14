@@ -106,10 +106,10 @@ module RuneRb::Entity
 
     def load_inventory
       if !@profile[:inventory].nil?
-        @inventory = RuneRb::Game::Inventory.restore(self)
+        @inventory = RuneRb::Game::Containers::Inventory.restore(self)
         log(RuneRb::COL.green("Restored Inventory for #{@profile[:name]}")) if RuneRb::DEBUG
       else
-        @inventory = RuneRb::Game::Inventory.new
+        @inventory = RuneRb::Game::Containers::Inventory.new
         log(RuneRb::COL.magenta("New Inventory set for #{@profile[:name]}")) if RuneRb::DEBUG
       end
       @session.write_inventory(28, @inventory.data)
@@ -117,18 +117,18 @@ module RuneRb::Entity
 
     def load_equipment
       if !profile[:equipment].nil? && !Oj.load(profile[:equipment]).empty?
-        @equipment = RuneRb::Game::Equipment.restore(self)
+        @equipment = RuneRb::Entity::Equipment.restore(self)
         log(RuneRb::COL.green("Restored Equipment for #{@profile[:name]}")) if RuneRb::DEBUG
       else
-        @equipment = RuneRb::Game::Equipment.new
+        @equipment = RuneRb::Entity::Equipment.new
         log(RuneRb::COL.magenta("New Equipment set for #{@profile[:name]}")) if RuneRb::DEBUG
       end
       @session.write_equipment(@equipment.data)
     end
 
     def logout
-      RuneRb::Game::Inventory.dump(self)
-      RuneRb::Game::Equipment.dump(self)
+      RuneRb::Game::Containers::Inventory.dump(self)
+      RuneRb::Entity::Equipment.dump(self)
     end
 
     def appearance

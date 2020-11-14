@@ -1,4 +1,4 @@
-module RuneRb::Game
+module RuneRb::Entity
   class Equipment
     attr :data
 
@@ -20,11 +20,13 @@ module RuneRb::Game
     end
 
     # Shorthand slot assignment
-    # @param value [RuneRb::Game::ItemStack] the item to assign
+    # @param value [RuneRb::Game::Stack] the item to assign
     # @param slot [Integer] the destination slot.
     def []=(slot, value)
       @data[slot] = value
     end
+
+    alias equip []=
 
     # Shorthand slot retrieval
     # @param slot [Integer] the slot to retrieve
@@ -32,14 +34,22 @@ module RuneRb::Game
       @data[slot]
     end
 
-    class << self
-      include RuneRb::Types::Loggable
+    # Unequips an slot.
+    # @param slot [Integer] unequips a slot.
+    def unequip(slot)
+      @data[slot] = -1
+    end
 
+    class << self
+
+      # Dumps the equipment of an entity
+      # @param player [RuneRb::Entity::Type] the entity whose equipment will be dumped.
       def dump(player)
         player.profile.update(equipment: Oj.dump(player.equipment.data.to_hash, mode: :compat, use_as_json: true))
-        log RuneRb::COL.green("Dumped Equipment for #{RuneRb::COL.cyan(player.profile[:name])}!") if RuneRb::DEBUG
       end
 
+      # Restores the equipment of an entity
+      # @param player [RuneRb::Entity::Type] the entity whose equipment will be restored.
       def restore(player)
         data = Oj.load(player.profile[:equipment])
         parsed = {}.tap do |hash|
@@ -47,11 +57,10 @@ module RuneRb::Game
             hash[slot.to_i] = -1
             next if stack == -1 || stack.nil?
 
-            hash[slot.to_i] = RuneRb::Game::ItemStack.restore(id: stack['id'], amount: stack['amount'])
+            hash[slot.to_i] = RuneRb::Game::Item::Stack.restore(id: stack['id'], amount: stack['amount'])
           end
         end
-        log RuneRb::COL.green("Restored Equipment: #{RuneRb::COL.cyan(parsed.inspect)}") if RuneRb::DEBUG
-        Equipment.new(parsed)
+        RuneRb::Entity::Equipment.new(parsed)
       end
     end
   end
