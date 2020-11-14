@@ -380,6 +380,8 @@ module RuneRb::Network
       @payload.size
     end
 
+    # Returns a copy of the payload for peeking.
+    # @return [String, StringIO] a copy of the payload
     def peek
       @payload.dup
     end

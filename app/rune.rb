@@ -114,6 +114,7 @@ module RuneRb
 
   # Debug logging
   DEBUG = ENV['DEBUG'].to_i.positive?
+
 end
 
 require_relative '../cache/cache'

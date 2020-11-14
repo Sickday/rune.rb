@@ -312,7 +312,7 @@ module RuneRb::Network::FrameWriter
 
     # ARMS WITH PLATEBODY SUPPORT.
     if player.equipment[4] != -1
-      if %w[platebody brassard].include?(player.equipment[4].definition[:name])
+      if %w[platebody brassard leatherbody].include?(player.equipment[4].definition[:name])
         frame.write_short(0x100 + player.equipment[4].id)
       else
         frame.write_byte(0)

@@ -96,8 +96,8 @@ module RuneRb::Network::AuthenticationHelper
       log 'Seed Validated!' if RuneRb::DEBUG
     else
       err 'Seed Mismatch!:', "Expected: #{@connection[:ConnectionSeed]}, Received: #{@login[:LoginSeed]}"
-      #send_data([10].pack('C')) # 10	"Unable to connect. Bad session-id."
-      #disconnect
+      send_data([10].pack('C')) # 10	"Unable to connect. Bad session-id."
+      disconnect
     end
 
     if @login[:Magic] == 255

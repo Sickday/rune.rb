@@ -16,5 +16,9 @@ Rakefile
 .idea/modules.xml
 .idea/vcs.xml
 /.idea/
+<<<<<<< HEAD
 /tools/
 /mock/
+=======
+/tools/
+>>>>>>> eede059c63b4ecf8f53e762f13f9f74311435a13
