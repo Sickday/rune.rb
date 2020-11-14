@@ -10,8 +10,12 @@ module RuneRb::Game::Containers
     end
 
     # Patch the parent class Container#add function to ensure weight is updated after item addition.
-    def add(item_stack)
-      super(item_stack)
+    def add(item_stack, at = nil)
+      if at
+        @data[at] = item_stack
+      else
+        super(item_stack)
+      end
       #weight_update
     end
 

@@ -52,10 +52,15 @@ module RuneRb::Game::Item
         interface = frame.read_short(false, :A)
         case interface
         when 3214
-          log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
           item = context.inventory.at(slot)
+          return unless item # This check is for instances where a context may perform a 5thoptclick followed by this 2ndoptclick. this slot may be nil, so we do nothing and sort of force a proper click.
+
+          old = context.equipment[item.definition[:slot]]
+          log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface} || [old]: #{old&.id}"
+
           context.equipment[item.definition[:slot]] = item
           context.inventory.remove_at(slot)
+          context.inventory.add(old, slot) if old
           context.schedule(:equipment)
           context.schedule(:inventory)
         when 1688
@@ -147,7 +152,6 @@ module RuneRb::Game::Item
         interface = frame.read_short(false, :A)
         slot = frame.read_short(false, :A)
         item_id = frame.read_short(false, :A)
-        log "Got interface #{interface}"
         case interface
         when 3214 # Inventory = EquipItem or Eat food, or break a teletab (not really)
           log "Got Inventory Tab 1stActionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
