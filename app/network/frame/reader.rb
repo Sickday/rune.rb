@@ -27,28 +27,30 @@ module RuneRb::Network::FrameReader
                         effects: frame.read_byte(false, :S),
                         color: frame.read_byte(false, :S),
                         text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
-    when 41 # FIRST CLICK ON ITEM. Parse by interface id.
-      item_id = frame.read_short(false)
-      slot = frame.read_short(false, :A)  + 1 # This is the Slot that was clicked.
-      _interface_id = frame.read_short(false, :A)
-      log "Got equip [slot]: #{slot} || [item]: #{item_id} "
-      item = @context.inventory.at(slot)
-      @context.equipment[item.definition[:slot]] = item
-      @context.inventory.remove(item.id)
-      @context.schedule(:equipment)
-      @context.schedule(:inventory)
+    when 122 # First Item Option.
+      RuneRb::Game::Item::Click.parse_option(:first_option, { context: @context, frame: frame })
+    when 41 # Second Item option.
+      RuneRb::Game::Item::Click.parse_option(:second_option, { context: @context, frame: frame })
+    when 16 # Third Item Option.
+      RuneRb::Game::Item::Click.parse_option(:third_option, { context: @context, frame: frame })
+    when 75 # Forth Item Option.
+      RuneRb::Game::Item::Click.parse_option(:fourth_option, { context: @context, frame: frame })
+    when 87 # Fifth Item Option.
+      RuneRb::Game::Item::Click.parse_option(:fifth_option, { context: @context, frame: frame })
+
+
+    when 145 # Remove item in slot
+      RuneRb::Game::Item::Click.parse_action(:first_action, { context: @context, frame: frame })
     when 77, 78, 165, 189, 210, 226, 121 # Ping frame
       log "Got ping frame #{frame.header[:op_code]}" if RuneRb::DEBUG
     when 86
       roll = frame.read_short(false, :STD, :LITTLE)
       yaw = frame.read_short(false, :STD, :LITTLE)
       log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
-    when 87 # 5th option. currently parsed as an inventory item drop even if it isn't...
-      RuneRb::Game::Item::Click.parse_option(:fifth_click, { context: @context, frame: frame })
+
     when 103
       parse_cmd_string(frame.read_string)
-    when 145 # Remove item in slot
-      RuneRb::Game::Item::Click.parse_action(:first_item, { context: @context, frame: frame })
+
     when 185
       id = frame.read_short
       parse_button(id)
@@ -117,7 +119,7 @@ module RuneRb::Network::FrameReader
     when 'gfx'
       @context.schedule(:graphic, graphic: RuneRb::Game::Graphic.new(pcs[0].to_i, pcs[1].to_i || 100, pcs[2].to_i || 0))
     when 'item'
-      stack = RuneRb::Game::Stack.new(pcs[1].to_i)
+      stack = RuneRb::Game::Item::Stack.new(pcs[1].to_i)
       if stack.definition[:stackable]
         stack.size = pcs[2].to_i
         @context.inventory.add(stack)

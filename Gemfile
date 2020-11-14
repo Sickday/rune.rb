@@ -21,6 +21,7 @@ group :dev do
   gem 'pry'
   gem 'rake'
   gem 'sequel'
+  gem 'sqlite3'
   gem 'tty-table'
   gem 'yard'
 end

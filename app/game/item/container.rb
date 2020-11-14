@@ -12,6 +12,12 @@ module RuneRb::Game::Item
       empty!
     end
 
+    # Removes the item at the specified slot.
+    # @param slot [Integer] the slot to remove at.
+    def remove_at(slot)
+      @data[slot] = nil
+    end
+
     # Attempts to add an ItemStack to the container
     # @param item_stack [RuneRb::Game::Item::Stack] the Stack to add
     def add(item_stack)
@@ -65,13 +71,18 @@ module RuneRb::Game::Item
 
     # Checks if the container has an entry with the specified ID and optional amount.
     # @param id [Integer] the ID of the item
+    # @param at [Integer] an optional slot specifier
     # @param amt [Integer] the amount of the item
     # @return [Boolean] true if the container has an entry where the specified ID matches and the ItemStack size is greater than or equal to the specified amount.
-    def has?(id, amt = 1)
-      @data.any? do |_slot, stack|
-        next if stack.nil?
+    def has?(id, at = nil, amt = 1)
+      if at
+        !@data[at].nil? && @data[at].id == id && @data[at].size >= amt
+      else
+        @data.any? do |_slot, stack|
+          next if stack.nil?
 
-        ((stack.definition.id == id) && (stack.size >= amt))
+          ((stack.definition.id == id) && (stack.size >= amt))
+        end
       end
     end
 
