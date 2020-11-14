@@ -1,0 +1,26 @@
+source 'https://rubygems.org'
+
+# Development Gems
+group :dev do
+  gem 'async'
+  gem 'bindata'
+  gem 'bzip2-ffi'
+  gem 'console'
+  gem 'digest-crc'
+  gem 'dotenv'
+  gem 'druuid'
+  gem 'faker'
+  gem 'get_process_mem'
+  gem 'logging'
+  gem 'minitest'
+  gem 'nio4r'
+  gem 'oj'
+  gem 'parallel'
+  gem 'pastel'
+  gem 'pg'
+  gem 'pry'
+  gem 'rake'
+  gem 'sequel'
+  gem 'tty-table'
+  gem 'yard'
+end
