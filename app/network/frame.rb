@@ -243,25 +243,25 @@ module RuneRb::Network
     def write_int(value, type = :STD, order = :BIG)
       case order
       when :BIG
-        write_byte((value >> 24).signed(:byte))
-        write_byte((value >> 16).signed(:byte))
-        write_byte((value >> 8).signed(:byte))
-        write_byte(value.signed(:byte), type)
+        write_byte((value >> 24))
+        write_byte((value >> 16))
+        write_byte((value >> 8))
+        write_byte(value, type)
       when :MIDDLE
-        write_byte((value >> 8).signed(:byte))
-        write_byte(value.signed(:byte), type)
-        write_byte((value >> 24).signed(:byte))
-        write_byte((value >> 16).signed(:byte))
+        write_byte((value >> 8))
+        write_byte(value, type)
+        write_byte((value >> 24))
+        write_byte((value >> 16))
       when :INVERSE_MIDDLE
-        write_byte((value >> 16).signed(:byte))
-        write_byte((value >> 24).signed(:byte))
-        write_byte(value.signed(:byte), type)
-        write_byte((value >> 8).signed(:byte))
+        write_byte((value >> 16))
+        write_byte((value >> 24))
+        write_byte(value, type)
+        write_byte((value >> 8))
       when :LITTLE
-        write_byte(value.signed(:byte), type)
-        write_byte((value >> 8).signed(:byte))
-        write_byte((value >> 16).signed(:byte))
-        write_byte((value >> 24).signed(:byte))
+        write_byte(value, type)
+        write_byte((value >> 8))
+        write_byte((value >> 16))
+        write_byte((value >> 24))
       end
       self
     end
@@ -272,17 +272,17 @@ module RuneRb::Network
     def write_tribyte(value, order = :BIG)
       case order
       when :BIG
-        write_byte((value >> 16).signed(:byte))
-        write_byte((value >> 8).signed(:byte))
-        write_byte(value.signed(:byte))
+        write_byte((value >> 16))
+        write_byte((value >> 8))
+        write_byte(value)
       when :MIDDLE
-        write_byte((value >> 8).signed(:byte))
-        write_byte(value.signed(:byte))
-        write_byte((value >> 16).signed(:byte))
+        write_byte((value >> 8))
+        write_byte(value)
+        write_byte((value >> 16))
       when :LITTLE
-        write_byte(value.signed(:byte))
-        write_byte((value >> 8).signed(:byte))
-        write_byte((value >> 16).signed(:byte))
+        write_byte(value)
+        write_byte((value >> 8))
+        write_byte((value >> 16))
       end
     end
 
@@ -300,9 +300,9 @@ module RuneRb::Network
         write_byte((value >> 24))
         write_byte((value >> 16))
         write_byte((value >> 8))
-        write_byte(value.signed(:int), type)
+        write_byte(value, type)
       when :LITTLE
-        write_byte(value.signed(:int), type)
+        write_byte(value, type)
         write_byte((value >> 8))
         write_byte((value >> 16))
         write_byte((value >> 24))
@@ -325,7 +325,11 @@ module RuneRb::Network
     # Write a collection of bytes in reverse. *Not sure if I did this right.
     # @param values [Array] collection of values to write to the underlying buffer.
     def write_reverse_bytes(values)
-      values.reverse.each { |v| write_byte(v) }
+      if !values.empty?
+        values.reverse.each { |v| write_byte(v) }
+      else
+        @payload << values
+      end
       self
     end
 

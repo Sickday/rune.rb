@@ -4,16 +4,34 @@ module RuneRb::Network::FrameWriter
   using RuneRb::Patches::StringOverrides
 
   def write_skills(data)
-    data[:skill_data].each do |id, skill_data|
-      write_skill({ skill_id: id, experience: skill_data[:experience], level: skill_data[:level] })
-    end
+    write_skill(skill_id: 0, level: data[:attack_level], experience: data[:attack_exp])
+    write_skill(skill_id: 1, level: data[:defence_level], experience: data[:defence_exp])
+    write_skill(skill_id: 2, level: data[:strength_level], experience: data[:strength_exp])
+    write_skill(skill_id: 3, level: data[:hit_points_level], experience: data[:hit_points_exp])
+    write_skill(skill_id: 4, level: data[:range_level], experience: data[:range_exp])
+    write_skill(skill_id: 5, level: data[:prayer_level], experience: data[:prayer_exp])
+    write_skill(skill_id: 6, level: data[:magic_level], experience: data[:magic_exp])
+    write_skill(skill_id: 7, level: data[:cooking_level], experience: data[:cooking_exp])
+    write_skill(skill_id: 8, level: data[:woodcutting_level], experience: data[:woodcutting_exp])
+    write_skill(skill_id: 9, level: data[:fletching_level], experience: data[:fletching_exp])
+    write_skill(skill_id: 10, level: data[:fishing_level], experience: data[:fishing_exp])
+    write_skill(skill_id: 11, level: data[:firemaking_level], experience: data[:firemaking_exp])
+    write_skill(skill_id: 12, level: data[:crafting_level], experience: data[:crafting_exp])
+    write_skill(skill_id: 13, level: data[:smithing_level], experience: data[:smithing_exp])
+    write_skill(skill_id: 14, level: data[:mining_level], experience: data[:mining_exp])
+    write_skill(skill_id: 15, level: data[:herblore_level], experience: data[:herblore_exp])
+    write_skill(skill_id: 16, level: data[:agility_level], experience: data[:agility_exp])
+    write_skill(skill_id: 17, level: data[:thieving_level], experience: data[:thieving_exp])
+    write_skill(skill_id: 18, level: data[:slayer_level], experience: data[:slayer_exp])
+    write_skill(skill_id: 19, level: data[:farming_level], experience: data[:farming_exp])
+    write_skill(skill_id: 20, level: data[:runecrafting_level], experience: data[:runecrafting_exp])
   end
 
   def write_skill(data)
-    frame = RuneRb::Network::Frame.new(134)
+    frame = RuneRb::Network::MetaFrame.new(134)
     frame.write_byte(data[:skill_id])
+    frame.write_int(data[:experience], :STD,:MIDDLE)
     frame.write_byte(data[:level])
-    frame.write_int(data[:experience], :MIDDLE)
     write_frame(frame)
   end
 
@@ -102,8 +120,9 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_login
-    write_response(@profile[:rights], false)
+    write_response(@profile[:rights] >= 2 ? 2 : @profile[:rights], false)
     write_sidebars
+    write_skills(@profile.stats)
     write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
     write_text('Thanks for testing Rune.rb.')
     write_region(region_x: @profile.location.position.region_x,
@@ -258,19 +277,8 @@ module RuneRb::Network::FrameWriter
       write_equipment_block(appearance_frame, entity)
     end
 
-    appearance_frame.write_byte(entity.appearance[:hair_color])       # Hair color
-    appearance_frame.write_byte(entity.appearance[:torso_color])      # Torso color
-    appearance_frame.write_byte(entity.appearance[:leg_color])        # Leg color
-    appearance_frame.write_byte(entity.appearance[:feet_color])       # Feet color
-    appearance_frame.write_byte(entity.appearance[:skin_color])       # Skin color
-
-    appearance_frame.write_short(entity.appearance[:stand])           # Stand Anim
-    appearance_frame.write_short(entity.appearance[:stand_turn])      # StandTurn Anim
-    appearance_frame.write_short(entity.appearance[:walk])            # Walk Anim
-    appearance_frame.write_short(entity.appearance[:turn_180])        # Turn 180
-    appearance_frame.write_short(entity.appearance[:turn_90_cw])      # Turn 90 Clockwise
-    appearance_frame.write_short(entity.appearance[:turn_90_ccw])     # Turn 90 Counter-Clockwise
-    appearance_frame.write_short(entity.appearance[:run])             # Run Anim
+    write_model_color(appearance_frame, entity)
+    write_model_animation(appearance_frame, entity)
 
     appearance_frame.write_long(entity.profile[:name].to_base37)      # Player's name
     appearance_frame.write_byte(entity.profile.stats.combat)          # Combat Level
@@ -286,6 +294,33 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
+  # Writes the model color block of the specified player
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to.
+  # @param player [RuneRb::Entity::Context] the player whose model color will be written
+  def write_model_color(frame, player)
+    frame.write_byte(player.appearance[:hair_color])       # Hair color
+    frame.write_byte(player.appearance[:torso_color])      # Torso color
+    frame.write_byte(player.appearance[:leg_color])        # Leg color
+    frame.write_byte(player.appearance[:feet_color])       # Feet color
+    frame.write_byte(player.appearance[:skin_color])       # Skin color
+  end
+
+  # Writes the appearance block of the provided player
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Context] the player whose appearance we're writing.
+  def write_model_animation(frame, player)
+    frame.write_short(player.appearance[:stand])           # Stand Anim
+    frame.write_short(player.appearance[:stand_turn])      # StandTurn Anim
+    frame.write_short(player.appearance[:walk])            # Walk Anim
+    frame.write_short(player.appearance[:turn_180])        # Turn 180
+    frame.write_short(player.appearance[:turn_90_cw])      # Turn 90 Clockwise
+    frame.write_short(player.appearance[:turn_90_ccw])     # Turn 90 Counter-Clockwise
+    frame.write_short(player.appearance[:run])             # Run Anim
+  end
+
+  # Writes the equipment block of the provided player
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param player [RuneRb::Entity::Context] the player whose equipment will be written.
   def write_equipment_block(frame, player)
     # Weapons
     (0...4).each do |itr|

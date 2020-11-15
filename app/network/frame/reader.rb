@@ -114,6 +114,9 @@ module RuneRb::Network::FrameReader
   def parse_cmd_string(string)
     pcs = string.split(' ')
     case pcs[0]
+    when 'maxed'
+      @context.profile.stats.max
+      @context.schedule(:skill)
     when 'anim'
       @context.schedule(:animation, animation: RuneRb::Game::Animation.new(pcs[0].to_i, pcs[1].to_i || 0))
     when 'gfx'
@@ -139,6 +142,14 @@ module RuneRb::Network::FrameReader
     when 'mob'
       log RuneRb::COL.green("Morphing into mob: #{pcs[1]}") if RuneRb::DEBUG
       @context.schedule(:mob, mob_id: pcs[1].to_i)
+    when 'promote'
+      if RuneRb::Database::Profile[pcs[1]]
+        RuneRb::Database::Profile[pcs[1]].update(rights: RuneRb::Database::Profile[pcs[1]][:rights] + 1)
+        @context.schedule(:state)
+        @context.schedule(:chat, text: '', color: 0, effects: 0)
+      else
+        write_text("Cannot locate profile with name #{pcs[1]}")
+      end
     when 'overhead'
       if pcs[1].to_i <= 7 && pcs[1].to_i >= -1
         log RuneRb::COL.green("Changing HeadIcon to #{pcs[1]}") if RuneRb::DEBUG

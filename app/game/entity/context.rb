@@ -64,6 +64,19 @@ module RuneRb::Entity
     # TODO: Raise an error to ensure assets are proper for each schedule type.
     def schedule(type, assets = {})
       case type
+      when :skill
+        if @profile.stats.level_up?
+          level_info = @profile.stats.level_up
+          if level_info[:level] == 99
+            @session.write_text("Congratulations, you've reached the highest possible #{level_info[:skill]} level of 99!")
+          else
+            @session.write_text("Congratulations, your #{level_info[:skill]} level is now #{level_info[:level]}!")
+          end
+        end
+        @session.write_skills(@profile.stats)
+        @flags[:state?] = true
+      when :state
+        @flags[:state?] = true
       when :equipment
         @session.write_equipment(@equipment.data)
         @flags[:state?] = true

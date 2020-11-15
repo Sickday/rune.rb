@@ -29,9 +29,10 @@ module RuneRb::Network
           authenticate
         end
       end
-    rescue IO::EAGAINWaitReadable
+    rescue IO::EAGAINWaitReadable => e
       err 'Socket has no data'
-      nil
+      puts e
+      puts e.backtrace
     rescue EOFError
       err 'Reached EOF!'
       @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
