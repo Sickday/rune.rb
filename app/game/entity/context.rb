@@ -29,6 +29,9 @@ module RuneRb::Entity
     # @return [RuneRb::Game::Equipment] the Equipment of the Context
     attr :equipment
 
+    # @return [RuneRb::Network::Peer] the Peer for the Context
+    attr :session
+
     # Called when a new Context Entity is created.
     # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
     # @param profile [RuneRb::Database::Profile] the Profile to be associated wih the entity.

@@ -56,13 +56,12 @@ module RuneRb::Game::Item
           return unless item # This check is for instances where a context may perform a 5thoptclick followed by this 2ndoptclick. this slot may be nil, so we do nothing and sort of force a proper click.
 
           old = context.equipment[item.definition[:slot]]
-          log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface} || [old]: #{old&.id}"
-
           context.equipment[item.definition[:slot]] = item
           context.inventory.remove_at(slot)
-          context.inventory.add(old, slot) if old
+          context.inventory.add(old, slot) if old.is_a?(RuneRb::Game::Item::Stack)
           context.schedule(:equipment)
           context.schedule(:inventory)
+          log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface} || [old]: #{old.is_a?(Integer) ? old : old.id}"
         when 1688
           log "Got Equipment Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         else

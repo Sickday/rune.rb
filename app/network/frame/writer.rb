@@ -49,8 +49,8 @@ module RuneRb::Network::FrameWriter
     frame.write_short(3214) # InventoryForm ID
     frame.write_short(length)
     data.each do |_slot_id, item_stack|
-      id = item_stack&.id.nil? ? -1 : item_stack.id
-      amount = item_stack&.size.nil? ? 0 : item_stack.size
+      id = item_stack.is_a?(Integer) || item_stack.nil? ? -1  : item_stack.id
+      amount = item_stack.is_a?(Integer) || item_stack.nil? ? 0 : item_stack.size
 
       if amount > 254
         frame.write_byte(255)

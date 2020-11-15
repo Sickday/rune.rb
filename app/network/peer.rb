@@ -46,7 +46,7 @@ module RuneRb::Network
       @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
+      disconnect
     end
 
     def send_data(data)
@@ -62,7 +62,7 @@ module RuneRb::Network
       @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
+      disconnect
     end
 
     # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
