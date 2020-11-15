@@ -7,6 +7,10 @@ module RuneRb::Game::Map
       @direction = direction
     end
 
+    def inspect
+      "[x:#{@data[:x]},y:#{@data[:y]},direction:#{@direction}]"
+    end
+
   end
   class Movement
     attr_accessor :running
@@ -19,18 +23,20 @@ module RuneRb::Game::Map
 
     def process
       # Acquire the next positions to move to
-      walk_to = @waypoints&.shift unless @waypoints.empty?
-      run_to = @waypoints&.shift if @running
+      walk_to = @waypoints.shift unless @waypoints.empty?
+      run_to = @waypoints.shift if @running
 
       # Move the player
-      if walk_to&.direction != -1
+      if !walk_to.nil? && walk_to.direction != -1
+        puts 'Got a walk_to'
         @player.position.move(RuneRb::Game::Map::X_DELTAS[walk_to.direction], RuneRb::Game::Map::Y_DELTAS[walk_to.direction])
-        @player.movement[:first] = walk_to.direction
+        @player.movement[:primary_dir] = walk_to.direction
+        @player.schedule(:move)
       end
 
-      if run_to&.direction != -1
+      if !run_to.nil? && run_to.direction != -1
         @player.position.move(RuneRb::Game::Map::X_DELTAS[run_to.direction], RuneRb::Game::Map::Y_DELTAS[run_to.direction])
-        @player.movement[:second] = run_to.direction
+        @player.movement[:secondary_dir] = run_to.direction
       end
 
       delta_x = @player.position[:x] - @player.region.region_x * 8
@@ -66,18 +72,24 @@ module RuneRb::Game::Map
         push_step(position[:x] - delta_x,
                   position[:y] - delta_y)
       end
+      puts inspect
     end
 
     def complete
       @waypoints.shift
     end
 
+    def inspect
+      @waypoints.inspect
+    end
+
     def push_step(x, y)
       return if @waypoints.size >= 100
 
       last = @waypoints.last
-      direction = RuneRb::Game::Map::Position.direction_for(x - last&[:x],
-                                                            y - last&[:y])
+      direction = RuneRb::Game::Map::Position.direction_for(x - last.data[:x],
+                                                            y - last.data[:y])
+      puts "Got direction #{direction}"
       @waypoints << Point.new(x, y, direction) if direction > -1
     end
   end

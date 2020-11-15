@@ -45,7 +45,7 @@ module RuneRb::Entity
       @movement = { primary_dir: -1,
                     secondary_dir: -1,
                     teleport: { to: @position },
-                    handler: nil } #RuneRb::Game::Map::Movement.new(self) }
+                    handler: RuneRb::Game::Map::Movement.new(self) }
       load_inventory
       load_equipment
       update_region
@@ -64,6 +64,9 @@ module RuneRb::Entity
     # TODO: Raise an error to ensure assets are proper for each schedule type.
     def schedule(type, assets = {})
       case type
+      when :move
+        @movement[:handler].process
+        @flags[:moved?] = true
       when :skill
         if @profile.stats.level_up?
           level_info = @profile.stats.level_up
@@ -75,6 +78,8 @@ module RuneRb::Entity
         end
         @session.write_skills(@profile.stats)
         @flags[:state?] = true
+      when :region
+        @flags[:region?] = true
       when :state
         @flags[:state?] = true
       when :equipment
@@ -118,6 +123,7 @@ module RuneRb::Entity
       @flags[:teleport?] = exempt[:teleport?] || false
       @flags[:graphic?] = exempt[:graphic?] || false
       @flags[:animation?] = exempt[:animation?] || false
+      @movement[:handler].process if @flags[:moved?]
     end
 
     def load_inventory

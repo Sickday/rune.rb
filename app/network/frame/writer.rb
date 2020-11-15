@@ -105,7 +105,6 @@ module RuneRb::Network::FrameWriter
     frame.write_short(data[:region_x] + 6, :A)
     frame.write_short(data[:region_y] + 6)
     write_frame(frame)
-    @context.flags[:region?] = false if @context
   end
 
   # Write the login response
@@ -119,6 +118,7 @@ module RuneRb::Network::FrameWriter
     send_data(frame)
   end
 
+  # Writes a collection of frames that make up a post-login.
   def write_login
     write_response(@profile[:rights] >= 2 ? 2 : @profile[:rights], false)
     write_sidebars
@@ -180,15 +180,14 @@ module RuneRb::Network::FrameWriter
     if context.flags[:teleport?] || context.flags[:region?]
       frame.write_bit(true) # Write 1 bit to indicate movement occurred
       write_placement(frame, context)
-    elsif context.movement[:primary_dir] != -1 # Context player walked
-      log RuneRb::COL.magenta('Player Walked')
-      frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      if context.movement[:secondary_dir] != -1
-        write_run(frame, context) # Write the running bits
-      else
+    elsif context.flags[:moved?]
+      if context.movement[:primary_dir] != -1
+        log RuneRb::COL.magenta('Player Walked')
+        frame.write_bit(true) # Write 1 bit to indicate movement occurred
         write_walk(frame, context.movement[:walk]) # Write walking bits
+        write_run(frame, context) if context.movement[:secondary_dir] != -1 # Write the running bits
+        frame.write_bit(context.flags[:state?]) # 1 or 0 depending on if a state update is required
       end
-      frame.write_bit(context.flags[:state?]) # 1 or 0 depending on if a state update is required
     elsif context.flags[:state?] # No movement occurred. State update required?
       frame.write_bit(true) # Write 1 bit to indicate a state update is required
       write_stand(frame) # Write standing bit

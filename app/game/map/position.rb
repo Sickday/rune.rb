@@ -123,7 +123,7 @@ module RuneRb::Game::Map
             4
           end
         else
-          if delta_y.negative
+          if delta_y.negative?
             6
           elsif delta_y.positive?
             1

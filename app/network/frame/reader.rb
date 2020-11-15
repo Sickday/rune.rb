@@ -77,26 +77,27 @@ module RuneRb::Network::FrameReader
       length = frame.header[:length]
       length -= 14 if frame.header[:op_code] == 248
 
+      @context.movement[:handler].reset
+
       steps = (length - 5) / 2
-      path = Array.new(steps, Array.new(2))
+      path = []
       first_x = frame.read_short(false, :A, :LITTLE)
-
-      steps.times do |step|
-        path[step][0] = frame.read_byte(false)
-        path[step][1] = frame.read_byte(false)
+      steps.times do |itr|
+        path[itr] ||= []
+        path[itr][0] = frame.read_byte(true)
+        path[itr][1] = frame.read_byte(true)
+        log "Recieved step [#{path[itr].inspect}]"
       end
-
       first_y = frame.read_short(false, :STD, :LITTLE)
 
-      @context.movement[:handler].reset
       @context.movement[:handler].running = frame.read_byte(false, :C) == 1
       @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(first_x, first_y))
-
-      steps.times do |step|
-        path[step][0] += first_x
-        path[step][1] += first_y
-        @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(path[step][0], path[step][1]))
+      steps.times do |itr|
+        @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y))
       end
+
+      @context.movement[:handler].complete
+      @context.schedule(:move)
     else
       err "Unhandled frame: #{frame.inspect}"
     end
