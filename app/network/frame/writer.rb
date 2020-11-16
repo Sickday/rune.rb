@@ -97,13 +97,13 @@ module RuneRb::Network::FrameWriter
     write_frame(frame)
   end
 
-  # Write the region
-  # @param data [Hash] a hash containing x and y regional coordinates.
-  def write_region(data)
-    log "Writing region #{data.inspect}" if RuneRb::DEBUG
+  # Write the region of a mob
+  # @param mob [RuneRb::Entity::Mob] a hash containing x and y regional coordinates.
+  def write_region(mob)
     frame = RuneRb::Network::MetaFrame.new(73)
-    frame.write_short(data[:region_x] + 6, :A)
-    frame.write_short(data[:region_y] + 6)
+    log "Writing [x: #{mob.position.central_region_x}, y: #{mob.position.central_region_y}]"
+    frame.write_short(mob.position.central_region_x, :A)
+    frame.write_short(mob.position.central_region_y)
     write_frame(frame)
   end
 
@@ -125,8 +125,6 @@ module RuneRb::Network::FrameWriter
     write_skills(@profile.stats)
     write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
     write_text('Thanks for testing Rune.rb.')
-    write_region(region_x: @profile.location.position.region_x,
-                 region_y: @profile.location.position.region_y)
     @status[:authenticated] = :LOGGED_IN
   end
 
@@ -145,19 +143,17 @@ module RuneRb::Network::FrameWriter
   end
 
   def write_mock_update
-    if @context.flags[:region?]
-      write_region(region_x: @context.profile.location.position.region_x,
-                   region_y: @context.profile.location.position.region_y)
-    end
+    write_region(@context) if @context.flags[:region?]
 
     block_frame = RuneRb::Network::MetaFrame.new(-1)
     sync_frame = RuneRb::Network::MetaFrame.new(81, false, true)
     sync_frame.switch_access # Enable Bit access
 
     # CONTEXT MOVEMENT
-    write_entity_movement(sync_frame, @context)
+    write_mob_movement(sync_frame, @context)
 
     # CONTEXT STATE
+    # write_mob_state(block_frame, @context)
     write_entity_state(block_frame, @context)
 
     # UPDATE LOCAL LIST
@@ -176,57 +172,98 @@ module RuneRb::Network::FrameWriter
 
   private
 
-  def write_entity_movement(frame, context)
-    if context.flags[:teleport?] || context.flags[:region?]
-      frame.write_bit(true) # Write 1 bit to indicate movement occurred
-      write_placement(frame, context)
-    elsif context.flags[:moved?]
-      if context.movement[:primary_dir] != -1
-        log RuneRb::COL.magenta('Player Walked')
-        frame.write_bit(true) # Write 1 bit to indicate movement occurred
-        write_walk(frame, context.movement[:walk]) # Write walking bits
-        write_run(frame, context) if context.movement[:secondary_dir] != -1 # Write the running bits
-        frame.write_bit(context.flags[:state?]) # 1 or 0 depending on if a state update is required
+  # Writes a Mob's movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param mob [RuneRb::Entity::Mob] the mob whose movement to write.
+  def write_mob_movement(frame, mob)
+    case mob.movement_type
+    when :TELEPORT
+      frame.write_bit(true)
+      write_placement(frame, mob)
+    when :RUN
+      frame.write_bit(true)
+      write_run(frame, mob)
+    when :WALK
+      frame.write_bit(true)
+      write_walk(frame, mob)
+    else
+      if mob.flags[:state?]
+        frame.write_bit(true)
+        write_stand(frame)
+      else
+        frame.write_bit(false)
       end
-    elsif context.flags[:state?] # No movement occurred. State update required?
-      frame.write_bit(true) # Write 1 bit to indicate a state update is required
-      write_stand(frame) # Write standing bit
-    else # No movement or state required
-      frame.write_bit(false) # DO NOTHING?!
     end
   end
 
   # Write a placement to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param entity [RuneRb::Entity::Type] the entity whose placement we're writing.
-  def write_placement(frame, entity)
+  # @param mob [RuneRb::Entity::Mob] the mob whose placement will be written.
+  def write_placement(frame, mob)
     frame.write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
-    frame.write_bits(2, entity.position[:z]) # Write the plane. 0 being ground level
-    frame.write_bit(entity.flags[:teleport?]) # Teleporting?
-    frame.write_bit(entity.flags[:state?]) # Update State/Appearance?
-    frame.write_bits(7, entity.position.local_x) # Local Y
-    frame.write_bits(7, entity.position.local_y) # Local X
-  end
-
-  # Writes a running movement to a frame
-  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  def write_run(frame, entity)
-    frame.write_bits(2, 2) # we write 2 because we're running
-    frame.write_bits(3, entity.movement[:primary_dir])
-    frame.write_bits(3, entity.movement[:secondary_dir])
-  end
-
-  # Writes a walking movement to a frame
-  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  def write_walk(frame, direction)
-    frame.write_bits(2, 1) # we write 1 because we're walking
-    frame.write_bits(3, direction)
+    frame.write_bits(2, mob.position[:z]) # Write the plane. 0 being ground level
+    frame.write_bit(mob.flags[:region?]) # Region change?
+    frame.write_bit(mob.flags[:state?]) # Update State/Appearance?
+    log "Writing [x: #{mob.position.local_x}, y: #{mob.position.local_y}]"
+    frame.write_bits(7, mob.position.local_x) # Local Y
+    frame.write_bits(7, mob.position.local_y) # Local X
   end
 
   # Writes a stand to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   def write_stand(frame)
     frame.write_bits(2, 0) # we write 0 because we're standing
+  end
+
+  # Writes a walking movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param mob [RuneRb::Entity::Mob] the mob whose movement will be written
+  def write_walk(frame, mob)
+    frame.write_bits(2, 1) # we write 1 because we're walking
+    frame.write_bits(3, mob.directions[:primary])
+    frame.write_bit(mob.flags[:state?])
+  end
+
+  # Writes a running movement to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param mob [RuneRb::Entity::Mob] the mob whose movement will be written
+  def write_run(frame, mob)
+    frame.write_bits(2, 2) # we write 2 because we're running
+    frame.write_bits(3, mob.directions[:primary_dir])
+    frame.write_bits(3, mob.directions[:secondary_dir])
+    frame.write_bit(mob.flags[:state?])
+  end
+
+  def write_mob_state(frame, mob)
+    # Make the mask
+    mask = 0x0
+    # Attributes:
+    # ForcedMove
+    # Graphics
+    mask |= 0x100 if mob.flags[:graphic?]
+    # Animation
+    mask |= 0x8 if mob.flags[:animation?]
+    # Forced Chat
+    # Chat
+    mask |= 0x80 if mob.flags[:chat?]
+    # Face Entity
+    # Appearance
+    mask |= 0x10 if mob.flags[:state?]
+    # Face Coordinates
+    # Primary Hit
+    # Secondary Hit
+    # Append the mask
+    if mask >= 0x100
+      mask |= 0x40
+      frame.write_short(mask, :STD, :LITTLE)
+    else
+      frame.write_byte(mask)
+    end
+
+    write_graphic(frame, mob) if mob.flags[:graphic?]
+    write_animation(frame, mob) if mob.flags[:animation?]
+    write_chat(frame, mob) if mob.flags[:chat?]
+    write_appearance(frame, mob) if mob.flags[:state?]
   end
 
   # @param frame [RuneRb::Network::MetaFrame] the frame to write the state to.
@@ -263,25 +300,26 @@ module RuneRb::Network::FrameWriter
     write_appearance(frame, entity) if entity.flags[:state?]
   end
 
-  # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
-  # @param entity [RuneRb::Entity::Type] the the entity providing the appearance.
-  def write_appearance(frame, entity)
-    appearance_frame = RuneRb::Network::MetaFrame.new(-1)
-    appearance_frame.write_byte(entity.appearance[:gender])
-    appearance_frame.write_byte(entity.appearance[:head_icon])
 
-    if entity.appearance[:mob_id] != -1
-      write_morph(appearance_frame, entity)
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
+  # @param mob [RuneRb::Entity::Mob] the the entity providing the appearance.
+  def write_appearance(frame, mob)
+    appearance_frame = RuneRb::Network::MetaFrame.new(-1)
+    appearance_frame.write_byte(mob.appearance[:gender])
+    appearance_frame.write_byte(mob.appearance[:head_icon])
+
+    if mob.appearance[:mob_id] != -1
+      write_morph(appearance_frame, mob)
     else
-      write_equipment_block(appearance_frame, entity)
+      write_equipment_block(appearance_frame, mob)
     end
 
-    write_model_color(appearance_frame, entity)
-    write_model_animation(appearance_frame, entity)
+    write_model_color(appearance_frame, mob)
+    write_model_animation(appearance_frame, mob)
 
-    appearance_frame.write_long(entity.profile[:name].to_base37)      # Player's name
-    appearance_frame.write_byte(entity.profile.stats.combat)          # Combat Level
-    appearance_frame.write_short(entity.profile.stats.total)          # Skill Level
+    appearance_frame.write_long(mob.profile[:name].to_base37)      # Player's name
+    appearance_frame.write_byte(mob.profile.stats.combat)          # Combat Level
+    appearance_frame.write_short(mob.profile.stats.total)          # Skill Level
 
     frame.write_byte(appearance_frame.size, :C)
     frame.write_bytes(appearance_frame)
@@ -295,26 +333,26 @@ module RuneRb::Network::FrameWriter
 
   # Writes the model color block of the specified player
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to.
-  # @param player [RuneRb::Entity::Context] the player whose model color will be written
-  def write_model_color(frame, player)
-    frame.write_byte(player.appearance[:hair_color])       # Hair color
-    frame.write_byte(player.appearance[:torso_color])      # Torso color
-    frame.write_byte(player.appearance[:leg_color])        # Leg color
-    frame.write_byte(player.appearance[:feet_color])       # Feet color
-    frame.write_byte(player.appearance[:skin_color])       # Skin color
+  # @param mob [RuneRb::Entity::Mob] the Mob whose model color will be written
+  def write_model_color(frame, mob)
+    frame.write_byte(mob.appearance[:hair_color])       # Hair color
+    frame.write_byte(mob.appearance[:torso_color])      # Torso color
+    frame.write_byte(mob.appearance[:leg_color])        # Leg color
+    frame.write_byte(mob.appearance[:feet_color])       # Feet color
+    frame.write_byte(mob.appearance[:skin_color])       # Skin color
   end
 
   # Writes the appearance block of the provided player
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param player [RuneRb::Entity::Context] the player whose appearance we're writing.
-  def write_model_animation(frame, player)
-    frame.write_short(player.appearance[:stand])           # Stand Anim
-    frame.write_short(player.appearance[:stand_turn])      # StandTurn Anim
-    frame.write_short(player.appearance[:walk])            # Walk Anim
-    frame.write_short(player.appearance[:turn_180])        # Turn 180
-    frame.write_short(player.appearance[:turn_90_cw])      # Turn 90 Clockwise
-    frame.write_short(player.appearance[:turn_90_ccw])     # Turn 90 Counter-Clockwise
-    frame.write_short(player.appearance[:run])             # Run Anim
+  # @param mob [RuneRb::Entity::Mob] the player whose appearance we're writing.
+  def write_model_animation(frame, mob)
+    frame.write_short(mob.appearance[:stand])           # Stand Anim
+    frame.write_short(mob.appearance[:stand_turn])      # StandTurn Anim
+    frame.write_short(mob.appearance[:walk])            # Walk Anim
+    frame.write_short(mob.appearance[:turn_180])        # Turn 180
+    frame.write_short(mob.appearance[:turn_90_cw])      # Turn 90 Clockwise
+    frame.write_short(mob.appearance[:turn_90_ccw])     # Turn 90 Counter-Clockwise
+    frame.write_short(mob.appearance[:run])             # Run Anim
   end
 
   # Writes the equipment block of the provided player
@@ -397,35 +435,35 @@ module RuneRb::Network::FrameWriter
 
   # Writes a mob morph to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param player [RuneRb::Entity::Type] the player.
-  def write_morph(frame, player)
+  # @param mob [RuneRb::Entity::Mob] the Mob.
+  def write_morph(frame, mob)
     frame.write_short(-1)
-    frame.write_short(player.appearance[:mob_id])
+    frame.write_short(mob.appearance[:mob_id])
   end
 
   # Writes a chat to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param player [RuneRb::Entity::Context] the player.
-  def write_chat(frame, player)
-    frame.write_short((player.message[:color] << 8 | player.message[:effects]), :STD, :LITTLE)
-    frame.write_byte(player.profile[:rights])
-    frame.write_byte(player.message[:text].size, :C)
-    frame.write_reverse_bytes(player.message[:text].reverse)
+  # @param mob [RuneRb::Entity::Mob] the Mob.
+  def write_chat(frame, mob)
+    frame.write_short((mob.message[:color] << 8 | mob.message[:effects]), :STD, :LITTLE)
+    frame.write_byte(mob.profile[:rights])
+    frame.write_byte(mob.message[:text].size, :C)
+    frame.write_reverse_bytes(mob.message[:text].reverse)
   end
 
   # Writes a graphic to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param player [RuneRb::Entity::Context] the player.
-  def write_graphic(frame, player)
-    frame.write_short(player.graphic.id)
-    frame.write_int(player.graphic.height << 16 | player.graphic.delay)
+  # @param mob [RuneRb::Entity::Mob] the Mob.
+  def write_graphic(frame, mob)
+    frame.write_short(mob.graphic.id)
+    frame.write_int(mob.graphic.height << 16 | mob.graphic.delay)
   end
 
-  # Writes a animation to a frame.
+  # Writes a mob animation to a frame.
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
-  # @param player [RuneRb::Entity::Context] the player.
-  def write_animation(frame, player)
-    frame.write_short(player.animation.id, :STD, :LITTLE)
-    frame.write_byte(player.animation.delay, :C)
+  # @param mob [RuneRb::Entity::Mob] the Mob.
+  def write_animation(frame, mob)
+    frame.write_short(mob.animation.id, :STD, :LITTLE)
+    frame.write_byte(mbo.animation.delay, :C)
   end
 end

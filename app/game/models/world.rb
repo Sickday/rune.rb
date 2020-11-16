@@ -23,7 +23,7 @@ module RuneRb::Game
     end
 
     # Releases and unregisters entity from the World
-    # @param entity [RuneRb::Entity::Type] the entity to release.
+    # @param entity [RuneRb::Entity::Mob] the entity to release.
     def release(entity)
       @services[:sync].execute do
         case entity

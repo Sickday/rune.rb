@@ -1,7 +1,7 @@
 module RuneRb::Database
   class Location < Sequel::Model(PROFILES[:location])
-    def position
-      RuneRb::Game::Map::Position.new(self[:x], self[:y], self[:z])
+    def to_position
+      RuneRb::Map::Position.new(self[:x], self[:y], self[:z])
     end
 
     def set(position)

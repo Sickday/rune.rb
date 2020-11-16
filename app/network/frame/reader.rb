@@ -22,11 +22,11 @@ module RuneRb::Network::FrameReader
     when 3 # Window Focus
       focused = frame.read_byte(false)
       log RuneRb::COL.blue("Client Focus: #{RuneRb::COL.cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::DEBUG
-    when 4
-      @context.schedule(:chat,
-                        effects: frame.read_byte(false, :S),
-                        color: frame.read_byte(false, :S),
-                        text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
+    when 4 # Chat.
+      @context.update(:chat,
+                      effects: frame.read_byte(false, :S),
+                      color: frame.read_byte(false, :S),
+                      text: frame.read_bytes_reverse(frame.header[:length] - 2, :A))
     when 122 # First Item Option.
       RuneRb::Game::Item::Click.parse_option(:first_option, { context: @context, frame: frame })
     when 41 # Second Item option.
@@ -77,27 +77,34 @@ module RuneRb::Network::FrameReader
       length = frame.header[:length]
       length -= 14 if frame.header[:op_code] == 248
 
-      @context.movement[:handler].reset
-
       steps = (length - 5) / 2
+      return unless steps.positive?
+
       path = []
       first_x = frame.read_short(false, :A, :LITTLE)
       steps.times do |itr|
         path[itr] ||= []
         path[itr][0] = frame.read_byte(true)
         path[itr][1] = frame.read_byte(true)
-        log "Recieved step [#{path[itr].inspect}]"
       end
+
       first_y = frame.read_short(false, :STD, :LITTLE)
+      @context.toggle_run if frame.read_byte(false, :C) == 1
 
-      @context.movement[:handler].running = frame.read_byte(false, :C) == 1
-      @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(first_x, first_y))
+      positions = []
       steps.times do |itr|
-        @context.movement[:handler].push_position(RuneRb::Game::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y))
+        log "Received step [#{path[itr].inspect}]"
+        positions[itr + 1] = RuneRb::Map::Position.new(path[itr][0] + first_x,
+                                                       path[itr][1] + first_y)
       end
 
-      @context.movement[:handler].complete
-      @context.schedule(:move)
+      positions.compact.each do |position|
+        if positions.first == position
+          @context.push_primary_step(position)
+        else
+          @context.push_step(position)
+        end
+      end
     else
       err "Unhandled frame: #{frame.inspect}"
     end
@@ -117,11 +124,11 @@ module RuneRb::Network::FrameReader
     case pcs[0]
     when 'maxed'
       @context.profile.stats.max
-      @context.schedule(:skill)
+      @context.update(:skill)
     when 'anim'
-      @context.schedule(:animation, animation: RuneRb::Game::Animation.new(pcs[0].to_i, pcs[1].to_i || 0))
+      @context.update(:animation, animation: RuneRb::Game::Animation.new(pcs[0].to_i, pcs[1].to_i || 0))
     when 'gfx'
-      @context.schedule(:graphic, graphic: RuneRb::Game::Graphic.new(pcs[0].to_i, pcs[1].to_i || 100, pcs[2].to_i || 0))
+      @context.update(:graphic, graphic: RuneRb::Game::Graphic.new(pcs[0].to_i, pcs[1].to_i || 100, pcs[2].to_i || 0))
     when 'item'
       stack = RuneRb::Game::Item::Stack.new(pcs[1].to_i)
       if stack.definition[:stackable]
@@ -134,27 +141,25 @@ module RuneRb::Network::FrameReader
           log RuneRb::COL.green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::DEBUG
         end
       end
-      @context.schedule(:inventory)
+      @context.update(:inventory)
     when 'to'
       log RuneRb::COL.green("Moving #{@context.profile[:name]} to #{pcs[1]}, #{pcs[2]}") if RuneRb::DEBUG
-      @context.schedule(:teleport, location: RuneRb::Game::Map::Position.new(pcs[1].to_i,
-                                                                             pcs[2].to_i,
-                                                                             pcs[3].to_i || 0))
+      @context.teleport(RuneRb::Map::Position.new(pcs[1].to_i, pcs[2].to_i, pcs[3].to_i || 0))
     when 'mob'
       log RuneRb::COL.green("Morphing into mob: #{pcs[1]}") if RuneRb::DEBUG
-      @context.schedule(:mob, mob_id: pcs[1].to_i)
+      @context.update(:mob, mob_id: pcs[1].to_i)
     when 'promote'
       if RuneRb::Database::Profile[pcs[1]]
         RuneRb::Database::Profile[pcs[1]].update(rights: RuneRb::Database::Profile[pcs[1]][:rights] + 1)
-        @context.schedule(:state)
-        @context.schedule(:chat, text: '', color: 0, effects: 0)
+        @context.update(:state)
+        @context.update(:chat, text: '', color: 0, effects: 0)
       else
         write_text("Cannot locate profile with name #{pcs[1]}")
       end
     when 'overhead'
       if pcs[1].to_i <= 7 && pcs[1].to_i >= -1
         log RuneRb::COL.green("Changing HeadIcon to #{pcs[1]}") if RuneRb::DEBUG
-        @context.schedule(:head, head_icon: pcs[1].to_i)
+        @context.update(:head, head_icon: pcs[1].to_i)
       else
         write_text('@dre@The overhead icon ID can be no more than 7 and no less than -1.')
       end

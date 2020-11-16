@@ -76,8 +76,8 @@ module RuneRb::Network
     # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
     def pulse
       write_login if @status[:authenticated] == :PENDING_LOGIN
-      write_mock_update if @context && @status[:active]
-      @context&.post_pulse
+      write_mock_update if @context && @status[:active] && @status[:authenticated] == :LOGGED_IN
+      @context&.reset_flags
     end
 
     # Close the socket.

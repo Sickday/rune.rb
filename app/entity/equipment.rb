@@ -2,6 +2,8 @@ module RuneRb::Entity
   class Equipment
     attr :data
 
+    # Called when an Equipment is created
+    # @param data [Hash] data that should be contained in this Equipment.
     def initialize(data = nil)
       @data = data || { 0 => -1, # Hat
                         1 => -1, # Cape
@@ -34,8 +36,8 @@ module RuneRb::Entity
       @data[slot]
     end
 
-    # Unequips an slot.
-    # @param slot [Integer] unequips a slot.
+    # Un-equips an slot.
+    # @param slot [Integer] un-equips a slot.
     def unequip(slot)
       @data[slot] = -1
     end
@@ -43,13 +45,13 @@ module RuneRb::Entity
     class << self
 
       # Dumps the equipment of an entity
-      # @param player [RuneRb::Entity::Type] the entity whose equipment will be dumped.
+      # @param player [RuneRb::Entity::Mob] the entity whose equipment will be dumped.
       def dump(player)
         player.profile.update(equipment: Oj.dump(player.equipment.data.to_hash, mode: :compat, use_as_json: true))
       end
 
       # Restores the equipment of an entity
-      # @param player [RuneRb::Entity::Type] the entity whose equipment will be restored.
+      # @param player [RuneRb::Entity::Mob] the entity whose equipment will be restored.
       def restore(player)
         data = Oj.load(player.profile[:equipment])
         parsed = {}.tap do |hash|

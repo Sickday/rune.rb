@@ -59,8 +59,8 @@ module RuneRb::Game::Item
           context.equipment[item.definition[:slot]] = item
           context.inventory.remove_at(slot)
           context.inventory.add(old, slot) if old.is_a?(RuneRb::Game::Item::Stack)
-          context.schedule(:equipment)
-          context.schedule(:inventory)
+          context.update(:equipment)
+          context.update(:inventory)
           log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface} || [old]: #{old.is_a?(Integer) ? old : old.id}"
         when 1688
           log "Got Equipment Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
@@ -116,7 +116,7 @@ module RuneRb::Game::Item
 
           ## TODO: Implement and call create ground item
           context.inventory.remove_at(slot)
-          context.schedule(:inventory)
+          context.update(:inventory)
           log "Got Inventory 5thOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         when 1688
           log "Got Equipment 5thOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
@@ -137,7 +137,7 @@ module RuneRb::Game::Item
               old_slot <= context.inventory.capacity &&
               new_slot <= context.inventory.capacity
             context.inventory.swap(old_slot, new_slot)
-            context.schedule(:inventory)
+            context.update(:inventory)
           end
           log "Got Inventory SwitchItemClick: [old_slot]: #{old_slot} || [new_slot]: #{new_slot} || [inserting]: #{inserting} || [interface]: #{interface}"
         when 1688
@@ -157,8 +157,8 @@ module RuneRb::Game::Item
         when 1688 # EquipmentTab
           if context.inventory.add(RuneRb::Game::Item::Stack.new(item_id))
             context.equipment.unequip(slot)
-            context.schedule(:equipment)
-            context.schedule(:inventory)
+            context.update(:equipment)
+            context.update(:inventory)
           else
             context.session.write_text("You don't have enough space in your inventory to do this.")
           end

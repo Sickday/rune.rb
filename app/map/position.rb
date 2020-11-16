@@ -1,6 +1,7 @@
-module RuneRb::Game::Map
+module RuneRb::Map
   # A Position object provides a base tile as well as region and local tiles.
   class Position
+    # @return [Struct] a Data object wrapping the positions coordinates.
     attr :data
 
     # A object wrapping the Position's coordinates.
@@ -35,7 +36,7 @@ module RuneRb::Game::Map
 
     # Updates the Position instance to that of other
     # @param other [Position] the other Position
-    def at(other)
+    def to(other)
       @data[:x] = other[:x]
       @data[:y] = other[:y]
       @data[:z] = other[:z]
@@ -46,38 +47,61 @@ module RuneRb::Game::Map
       @data.transform(x_amount, y_amount, z_amount)
     end
 
-    # @return [Integer] The regional y coordinate for the Position
-    def region_x
-      (@data[:x] >> 3) - 6
+    # Gets regional coordinates for a Position
+    # @param position [Position] the Position to get regional coordinates for.
+    def regional_for(position = self)
+      Regional.from_position(position)
     end
 
-    # @return [Integer] The regional x coordinate for the Position.
-    def region_y
-      (@data[:y] >> 3) - 6
+    # The X coordinate of the central region for the Position.
+    # @return [Integer] The x coordinate for the central region for the Position
+    def central_region_x
+      @data[:x] >> 3
     end
 
+    # The Y coordinate of the central region for the Position.
+    # @return [Integer] The y coordinate of the central region for the position.
+    def central_region_y
+      @data[:y] >> 3
+    end
+
+    # The X coordinate of the region this position is in.
+    # @return [Integer] The X coordinate of the region this position is in.
+    def top_left_region_x
+      central_region_x - 6
+    end
+
+    # The Y coordinate the region this position is in.
+    # @return [Integer] The Y coordinate of the region this position is in.
+    def top_left_region_y
+      central_region_y - 6
+    end
+
+    # The local x coordinate inside the region of base
     # @param base [Position] the base position
     # @return [Integer] the local x coordinate relative to the base parameter
     def local_x(base = self)
-      @data[:x] - 8 * base.region_x
+      @data[:x] - base.top_left_region_x * 8
     end
 
+    # The local y coordinate inside the region of base
     # @param base [Position] the base position
     # @return [Integer] the local y coordinate relative to the base parameter
     def local_y(base = self)
-      @data[:y] - 8 * base.region_y
+      @data[:y] - base.top_left_region_y * 8
     end
 
-    # Checks if other is in vierw of the Position
+    # Checks if other is in view of the Position
     # @param other [Position] the position that may or may not be in view
     # @return [Boolean] is the distance between the Position and other greater less than 16
     def in_view?(other)
-      delta = Position.delta(self, other)
-      delta[:x] <= 14 && delta[:x] >= -15 && delta[:y] <= 14 && delta[:y] >= -15
+      delta_x = @data[:x] - other[:x]
+      delta_y = @data[:y] - other[:y]
+      delta_x <= 14 && delta_x >= -15 && delta_y <= 14 && delta_y >= -15
     end
 
     # Shorthand coordinate retrieval
-    # @param coordiante [Symbol] the coordinate to retrieve (:x, :y, :z)
+    # @param coordinate [Symbol] the coordinate to retrieve (:x, :y, :z)
     def [](coordinate)
       @data[coordinate]
     end
@@ -89,7 +113,32 @@ module RuneRb::Game::Map
       @data[coordinate] = value
     end
 
+    # The longest horizontal or vertical delta between the positions.
+    # @return [Integer] the longest horizontal or vertical delta between the position.
+    # @param other [Position] the other position
+    def longest_delta(other)
+      delta_x = @data[:x] - other[:x]
+      delta_y = @data[:y] - other[:y]
+      [delta_x, delta_y].max || delta_x || 0
+    end
+
+    # The distance between the position and another
+    # @param other [Position] the other position
+    def distance_to(other)
+      delta_x = @data[:x] - other[:x]
+      delta_y = @data[:y] - other[:y]
+      Math.sqrt(delta_x * delta_x + delta_y * delta_y).ceil
+    end
+
     class << self
+
+      # A position at the given coordinates.
+      # @param x [Integer] the x coordinate.
+      # @param y [Integer] the y coordinate.
+      # @param z [Integer] the z coordinate.
+      def at(x, y, z = 0)
+        Position.new(x, y, z)
+      end
 
       # Create a Position with delta amounts between the provided positions.
       # @param first [Position] the first position

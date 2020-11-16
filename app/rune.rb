@@ -50,22 +50,23 @@ module RuneRb
     autoload :Animation,            'game/models/animation'
     autoload :Graphic,              'game/models/graphic'
 
-    # RuneRb::Game::Map
-    module Map
-      X_DELTAS = [-1, 0, 1, -1, 1, -1, 0, 1].freeze
-      Y_DELTAS = [1, 1, 1, 0, 0, -1, -1, -1].freeze
+  end
 
-      autoload :Movement,           'game/map/move'
-      autoload :Position,           'game/map/position'
-    end
+  # RuneRb::Map
+  module Map
+    autoload :Direction,          'map/direction'
+    autoload :Position,           'map/position'
+    autoload :Regional,           'map/regional'
+    require_relative              'map/constants'
+    include Constants
   end
 
   # RuneRb::Entity
   module Entity
-    autoload :Context,              'game/entity/context'
-    autoload :Equipment,            'game/entity/equipment'
-    autoload :Mob,                  'game/entity/mob'
-    autoload :Type,                 'game/entity/type'
+    autoload :Equipment,            'entity/equipment'
+    autoload :Context,              'entity/context'
+    autoload :Mob,                  'entity/mob'
+    autoload :Movement,             'entity/move'
   end
 
   # RuneRb::Network
