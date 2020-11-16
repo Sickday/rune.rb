@@ -207,7 +207,7 @@ module RuneRb::Network::FrameWriter
       frame.write_bit(true)
       write_run(frame, mob)
     when :WALK
-      log "Got WALK type"
+      log 'Got WALK type'
       frame.write_bit(true)
       write_walk(frame, mob)
     else
@@ -408,12 +408,13 @@ module RuneRb::Network::FrameWriter
 
     # ARMS WITH PLATEBODY SUPPORT.
     if player.equipment[4] != -1
-      if %w[platebody brassard leatherbody].include?(player.equipment[4].definition[:name])
-        frame.write_short(0x100 + player.equipment[4].id)
-      else
+      if %w[platebody brassard leatherbody].any? { |type| player.equipment[4].definition[:name].include?(type) }
         frame.write_byte(0)
+      else
+        frame.write_short(0x100 + player.appearance[:arms])
       end
     else
+      log 'Writing player arms'
       frame.write_short(0x100 + player.appearance[:arms])
     end
 
@@ -461,7 +462,8 @@ module RuneRb::Network::FrameWriter
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param mob [RuneRb::Entity::Mob] the Mob.
   def write_morph(frame, mob)
-    frame.write_short(-1)
+    frame.write_byte(0xff)
+    frame.write_byte(0xff)
     frame.write_short(mob.appearance[:mob_id])
   end
 

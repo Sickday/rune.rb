@@ -114,6 +114,13 @@ module RuneRb::Network::FrameReader
   def parse_cmd_string(string)
     pcs = string.split(' ')
     case pcs[0]
+    when 'setup'
+      plate_bodies = RuneRb::Database::DEFINITIONS[:items].where(Sequel.like(:name, '%platebody%')).limit(5)
+      plate_bodies.each do |pb|
+        log "Adding #{pb[:name]} x 1"
+        @context.inventory.add(RuneRb::Game::Item::Stack.new(pb[:id]))
+      end
+      @context.update(:inventory)
     when 'model', 'char', 'design'
       write_interface(3559)
     when 'pos'

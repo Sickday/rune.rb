@@ -17,12 +17,12 @@ module RuneRb::Database
     def from_frame(frame)
       update(gender: frame.read_byte(false),
              head: frame.read_byte(false),
+             beard: frame.read_byte(false),
              chest: frame.read_byte(false),
              arms: frame.read_byte(false),
              hands: frame.read_byte(false),
              legs: frame.read_byte(false),
              feet: frame.read_byte(false),
-             beard: frame.read_byte(false),
              hair_color: frame.read_byte(false),
              torso_color: frame.read_byte(false),
              leg_color: frame.read_byte(false),
