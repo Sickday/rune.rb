@@ -2,42 +2,42 @@ module RuneRb::Map
   # An object providing Directional functions to Map positions and coordinates.
   class Direction
     class << self
+      include RuneRb::Types::Loggable
+      include RuneRb::Map::Constants
       # The Direction between two Positions
       # @param first [Position] the first Position
       # @param second [Position] the second Position
       def between(first, second)
-        delta_x = first[:x] - second[:x]
-        delta_y = first[:y] - second[:y]
-        Direction.from_delta(delta_x <=> 0, delta_y <=> 0)
+        delta_x = second[:x] - first[:x]
+        delta_y = second[:y] - first[:y]
+        sig_num_x = delta_x <=> 0
+        sig_num_y = delta_y <=> 0
+        log "Originals: x: #{delta_x}, y: #{delta_y}", "SigNums: x: #{sig_num_x}, y: #{sig_num_y}"
+        Direction.from_delta((delta_x <=> 0), (delta_y <=> 0))
       end
 
       # Returns a direction from deltas between x and y coordinates
       # @param delta_x [Integer] the delta between 2 x coordinates
       # @param delta_y [Integer] the delta between 2 y coordinates
       def from_delta(delta_x, delta_y)
-        if delta_y == 1
-          if delta_x == 1
-            NORTH_EAST
-          elsif delta_x == 0
-            NORTH
-          elsif delta_x == -1
-            NORTH_WEST
+        case delta_y
+        when 1
+          case delta_x
+          when 1 then NORTH_EAST
+          when 0 then NORTH
+          when -1 then NORTH_WEST
           end
-        elsif delta_y == -1
-          if delta_x == 1
-            SOUTH_EAST
-          elsif delta_x == 0
-            SOUTH
-          elsif delta_x == -1
-            SOUTH_WEST
+        when -1
+          case delta_x
+          when 1 then SOUTH_EAST
+          when 0 then SOUTH
+          when -1 then SOUTH_WEST
           end
-        elsif delta_y == 0
-          if delta_x == 1
-            EAST
-          elsif delta_x == 0
-            SOUTH
-          elsif  delta_x == -1
-            WEST
+        when 0
+          case delta_x
+          when 1 then EAST
+          when 0 then NONE
+          when -1 then WEST
           end
         end
       end

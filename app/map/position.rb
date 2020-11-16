@@ -16,6 +16,11 @@ module RuneRb::Map
         self.y += amount_y
         self.z += amount_z
       end
+
+      def inspect
+        "[X: #{self.x}, Y: #{self.y}, Z: #{self.z}]"
+      end
+
     end
 
     # Called when a new Position is created.
@@ -130,57 +135,8 @@ module RuneRb::Map
       Math.sqrt(delta_x * delta_x + delta_y * delta_y).ceil
     end
 
-    class << self
-
-      # A position at the given coordinates.
-      # @param x [Integer] the x coordinate.
-      # @param y [Integer] the y coordinate.
-      # @param z [Integer] the z coordinate.
-      def at(x, y, z = 0)
-        Position.new(x, y, z)
-      end
-
-      # Create a Position with delta amounts between the provided positions.
-      # @param first [Position] the first position
-      # @param second [Position] the second position
-      # @return [Position] a Position containing the delta coordinates for the provided parameters.
-      def delta(first, second)
-        Position.new(first[:x] - second[:x],
-                     first[:y] - second[:y],
-                     first[:z] - second[:z])
-      end
-
-      # The direction for the given deltas.
-      # @param delta_y [Integer] the y delta
-      # @param delta_x [Integer] the x delta
-      # @return [Integer] the Direction for the given deltas
-      def direction_for(delta_x, delta_y)
-        if delta_x.negative?
-          if delta_y.negative?
-            5
-          elsif delta_y.positive?
-            0
-          else
-            3
-          end
-        elsif delta_x.positive?
-          if delta_y.negative?
-            7
-          elsif delta_y.positive?
-            2
-          else
-            4
-          end
-        else
-          if delta_y.negative?
-            6
-          elsif delta_y.positive?
-            1
-          else
-            -1
-          end
-        end
-      end
+    def inspect
+      @data.inspect
     end
   end
 end

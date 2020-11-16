@@ -70,7 +70,6 @@ module RuneRb::Entity
       @flags[:region?] = exempt[:region?] || false
       @flags[:forced_chat?] = exempt[:forced_chat?] || false
       @flags[:moved?] = false
-      @movement_type = :NONE
     end
 
     # Reset the status attributes to their default values.

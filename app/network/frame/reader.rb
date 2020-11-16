@@ -94,17 +94,11 @@ module RuneRb::Network::FrameReader
       positions = []
       steps.times do |itr|
         log "Received step [#{path[itr].inspect}]"
-        positions[itr + 1] = RuneRb::Map::Position.new(path[itr][0] + first_x,
-                                                       path[itr][1] + first_y)
+        positions[itr] = RuneRb::Map::Position.new(path[itr][0] + first_x,
+                                                   path[itr][1] + first_y)
       end
 
-      positions.compact.each do |position|
-        if positions.first == position
-          @context.push_primary_step(position)
-        else
-          @context.push_step(position)
-        end
-      end
+      @context.push_path(positions) unless positions.empty?
     else
       err "Unhandled frame: #{frame.inspect}"
     end
@@ -122,6 +116,8 @@ module RuneRb::Network::FrameReader
   def parse_cmd_string(string)
     pcs = string.split(' ')
     case pcs[0]
+    when 'pos'
+      write_text("Your current position: #{@context.position.inspect}")
     when 'maxed'
       @context.profile.stats.max
       @context.update(:skill)

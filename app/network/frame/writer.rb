@@ -168,6 +168,7 @@ module RuneRb::Network::FrameWriter
     sync_frame.write_bytes(block_frame) if @context.flags[:state?]
 
     write_frame(sync_frame)
+    @context.pulse
   end
 
   private
@@ -184,6 +185,7 @@ module RuneRb::Network::FrameWriter
       frame.write_bit(true)
       write_run(frame, mob)
     when :WALK
+      log "Got WALK type"
       frame.write_bit(true)
       write_walk(frame, mob)
     else

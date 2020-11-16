@@ -106,6 +106,11 @@ module RuneRb::Entity
       str << "[POSITION]: #{@position.inspect}"
     end
 
+    # Certain logic that should occur per pulse or on pulse intervals are observed here. (Movement)
+    def pulse
+      move
+    end
+
     private
 
     # Initialize Inventory for the Context. Attempts to load inventory from serialized dump or create a new empty Inventory for the context

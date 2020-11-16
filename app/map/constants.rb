@@ -20,8 +20,8 @@ module RuneRb::Map::Constants
                  WEST: WEST,
                  EAST: EAST,
                  SOUTH_WEST: SOUTH_WEST,
-                 SOUTH_EAST: SOUTH_EAST,
-                 SOUTH: SOUTH }.freeze
+                 SOUTH: SOUTH,
+                 SOUTH_EAST: SOUTH_EAST }.freeze
 
   NESW = [NORTH, EAST, SOUTH, WEST].freeze
   WNES = [WEST, NORTH, EAST, SOUTH].freeze

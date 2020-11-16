@@ -50,17 +50,19 @@ module RuneRb::Network
       disconnect
     end
 
+    # Send data through the underlying socket
+    # @param data [String, StringIO] the payload to send.
     def send_data(data)
       @socket.write_nonblock(data)
     rescue EOFError
       err 'Peer disconnected!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
+      disconnect
     rescue Errno::ECONNRESET
       err 'Peer reset connection!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
+      disconnect
     rescue Errno::ECONNABORTED
       err 'Peer aborted connection!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
+      disconnect
     rescue Errno::EPIPE
       err 'PIPE MACHINE BR0kE!1'
       disconnect
@@ -76,14 +78,17 @@ module RuneRb::Network
     # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
     def pulse
       write_login if @status[:authenticated] == :PENDING_LOGIN
-      write_mock_update if @context && @status[:active] && @status[:authenticated] == :LOGGED_IN
-      @context&.reset_flags
+      return unless @context
+
+      write_mock_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
+      @context.reset_flags
     end
 
     # Close the socket.
     def disconnect
       @socket.close
       @status[:active] = false
+      @status[:authenticated] = false
       @endpoint.deregister(self, @socket)
     end
 
