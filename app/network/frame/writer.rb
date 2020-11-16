@@ -176,7 +176,7 @@ module RuneRb::Network::FrameWriter
 
     # CONTEXT STATE
     # write_mob_state(block_frame, @context)
-    write_entity_state(block_frame, @context)
+    write_mob_state(block_frame, @context)
 
     # UPDATE LOCAL LIST
     # TODO: impl
@@ -289,41 +289,6 @@ module RuneRb::Network::FrameWriter
     write_chat(frame, mob) if mob.flags[:chat?]
     write_appearance(frame, mob) if mob.flags[:state?]
   end
-
-  # @param frame [RuneRb::Network::MetaFrame] the frame to write the state to.
-  # @param entity [RuneRb::Entity::Context] the entity for which the state update will apply to
-  def write_entity_state(frame, entity)
-    # Make the mask
-    mask = 0x0
-    # Attributes:
-    # ForcedMove
-    # Graphics
-    mask |= 0x100 if entity.flags[:graphic?]
-    # Animation
-    mask |= 0x8 if entity.flags[:animation?]
-    # Forced Chat
-    # Chat
-    mask |= 0x80 if entity.flags[:chat?]
-    # Face Entity
-    # Appearance
-    mask |= 0x10 if entity.flags[:state?]
-    # Face Coordinates
-    # Primary Hit
-    # Secondary Hit
-    # Append the mask
-    if mask >= 0x100
-      mask |= 0x40
-      frame.write_short(mask, :STD, :LITTLE)
-    else
-      frame.write_byte(mask)
-    end
-
-    write_graphic(frame, entity) if entity.flags[:graphic?]
-    write_animation(frame, entity) if entity.flags[:animation?]
-    write_chat(frame, entity) if entity.flags[:chat?]
-    write_appearance(frame, entity) if entity.flags[:state?]
-  end
-
 
   # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
   # @param mob [RuneRb::Entity::Mob] the the entity providing the appearance.

@@ -2,7 +2,7 @@
 module RuneRb::Map
   # An object holding the top left X and Y coordinates of a region
   class Regional
-
+    include RuneRb::Types::Loggable
     # The x and y coordinates for the regional. (comparable to Position#top_left_region_x, or Position#top_left_region_y)
     attr :x, :y
 
@@ -26,6 +26,20 @@ module RuneRb::Map
 
     def inspect
       "[x:#{@x}, y:#{@y}]"
+    end
+
+    # Checks if the Regional holds the same value as another
+    def eql?(other)
+      false unless other.is_a? Regional
+      log "OtherX: #{other.x}, OtherY: #{other.y}", "ContextX: #{@x}, ContextY: #{@y}"
+      @x == other.x && @y == other.y
+    end
+
+    # Checks if the Regional would include the given Position
+    # @param position [RuneRb::Map::Position] the Position.
+    def includes?(position)
+      other = Regional.from_position(position)
+      true if other.eql?(self)
     end
 
     class << self

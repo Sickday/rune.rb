@@ -89,10 +89,9 @@ module RuneRb::Network::FrameReader
       @context.toggle_run if frame.read_byte(false, :C) == 1
 
       positions = []
-      positions[0] = RuneRb::Map::Position.new(first_x, first_y)
+      positions << RuneRb::Map::Position.new(first_x, first_y)
       steps.times do |itr|
-        log "Received step [#{path[itr].inspect}]"
-        positions[itr + 1] = RuneRb::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y)
+        positions << RuneRb::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y)
       end
 
       @context.push_path(positions.flatten.compact) unless positions.empty?
@@ -115,12 +114,16 @@ module RuneRb::Network::FrameReader
     pcs = string.split(' ')
     case pcs[0]
     when 'setup'
-      plate_bodies = RuneRb::Database::DEFINITIONS[:items].where(Sequel.like(:name, '%platebody%')).limit(5)
+      plate_bodies = RuneRb::Database::DEFINITIONS[:items].where(Sequel.like(:name, '%platebody%')).limit(15)
       plate_bodies.each do |pb|
+        next if pb[:stackable]
+
         log "Adding #{pb[:name]} x 1"
         @context.inventory.add(RuneRb::Game::Item::Stack.new(pb[:id]))
       end
       @context.update(:inventory)
+    when 'region'
+      @context.teleport(@context.position)
     when 'model', 'char', 'design'
       write_interface(3559)
     when 'pos'

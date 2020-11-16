@@ -44,7 +44,7 @@ module RuneRb::Entity::Movement
   # @param default_position [RuneRb::Map::Position] the default position to setup movement with.
   def setup_movement(default_position = RuneRb::Map::DEFAULT_POSITION)
     teleport(default_position)
-    @regional = RuneRb::Map::Regional.from_position(@position)
+    #@regional = RuneRb::Map::Regional.from_position(@position)
     @next_waypoints = []
     @previous_waypoints = []
     @directions = { primary: RuneRb::Map::DIRECTIONS[:NONE],
@@ -55,7 +55,7 @@ module RuneRb::Entity::Movement
 
   # Pulse through the queue
   def move
-    pos = @position
+    #pos = @position
     height = @position[:z]
 
     first_direction = RuneRb::Map::DIRECTIONS[:NONE]
@@ -68,11 +68,10 @@ module RuneRb::Entity::Movement
     log "Got 1st point #{next_point.inspect}" unless next_point.nil?
 
     unless next_point.nil?
-      first_direction = RuneRb::Map::Direction.between(pos, next_point)
+      first_direction = RuneRb::Map::Direction.between(@position, next_point)
       log "Worked out 1st direction to be #{RuneRb::Map::DIRECTIONS.key(first_direction)}"
       # Handle collision here
       @previous_waypoints << next_point
-      pos = RuneRb::Map::Position.new(next_point[:x], next_point[:y], height)
       @directions[:primary] = first_direction
       log 'Updated Pos.'
       @directions[:previous] = first_direction
@@ -94,7 +93,7 @@ module RuneRb::Entity::Movement
 =end
     end
 
-    @position = next_point || pos
+    @position = next_point unless next_point.nil?
     @movement_type = :NONE if next_point.nil?
   end
 
@@ -120,6 +119,7 @@ module RuneRb::Entity::Movement
 
     @previous_waypoints.clear
     push_step(next_position)
+    @movement_type = :WALK
   end
 
   # Push a step into the queue
@@ -139,7 +139,6 @@ module RuneRb::Entity::Movement
     height = next_step[:z]
     delta_x = next_x - current_step[:x]
     delta_y = next_y - current_step[:y]
-    log "Deltas: [x: #{delta_x}, y: #{delta_y}]"
 
     # region_manager = @player.world[:region_manager]
     # region = region_manager.region_for_position(current_step)
@@ -148,12 +147,12 @@ module RuneRb::Entity::Movement
       delta_x += 0 <=> delta_x
       delta_y += 0 <=> delta_y
 
-      step = RuneRb::Map::Position.new(next_x - delta_x, next_y - delta_y, height)
-      log "Calculated step #{step.inspect}"
+      step = RuneRb::Map::Position.new((next_x - delta_x), (next_y - delta_y), height)
+      log "Added step #{step.inspect}"
+
       # region = region_manager.region_for_position(step) unless region.has?(step)
       @next_waypoints << step
     end
-    @movement_type = :WALK if max.positive?
   end
 
   # The size of the queue
