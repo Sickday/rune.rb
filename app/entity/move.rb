@@ -2,7 +2,7 @@
 module RuneRb::Entity::Movement
   # @return [Boolean] will this be running movement
   attr_accessor :running
-  
+
   # @return [Hash] the directions of the movement module
   attr :directions
 
@@ -23,7 +23,7 @@ module RuneRb::Entity::Movement
   # @param path [Array] an array of positions that make up the path
   def push_path(path)
     log "Adding path: #{path.inspect}"
-    path.compact.each do |position|
+    path.each do |position|
       if path.first == position && waypoint_size.zero?
         push_primary_step(position)
       else
@@ -69,10 +69,11 @@ module RuneRb::Entity::Movement
 
     unless next_point.nil?
       first_direction = RuneRb::Map::Direction.between(pos, next_point)
-      log "Worked out 1st direction to be #{first_direction.inspect}"
+      log "Worked out 1st direction to be #{RuneRb::Map::DIRECTIONS.key(first_direction)}"
       # Handle collision here
       @previous_waypoints << next_point
       pos = RuneRb::Map::Position.new(next_point[:x], next_point[:y], height)
+      @directions[:primary] = first_direction
       log 'Updated Pos.'
       @directions[:previous] = first_direction
 
@@ -86,6 +87,7 @@ module RuneRb::Entity::Movement
           # Handle collision here
           @previous_waypoints << next_point
           pos = RuneRb::Map::Position.new(next_point[:x], next_point[:y], height)
+          @directions[:secondary] = second_direction
           @directions[:previous] = second_direction
           @movement_type = :RUN
         end
@@ -93,8 +95,6 @@ module RuneRb::Entity::Movement
 =end
     end
 
-    @directions[:primary] = first_direction
-    @directions[:secondary] = second_direction
     @position = next_point || pos
     @movement_type = :NONE if next_point.nil?
   end
@@ -142,23 +142,12 @@ module RuneRb::Entity::Movement
     delta_y = next_y - current_step[:y]
     log "Deltas: [x: #{delta_x}, y: #{delta_y}]"
 
-    max = [delta_x.abs, delta_y.abs].max || delta_x || 0
-    log "Calculated max to be: #{max}."
     # region_manager = @player.world[:region_manager]
     # region = region_manager.region_for_position(current_step)
-
+    max = [delta_x.abs, delta_y.abs].max || delta_x.abs || 0
     max.times do
-      if delta_x.negative?
-        delta_x += 1
-      elsif delta_x.positive?
-        delta_x -= 1
-      end
-
-      if delta_y.negative?
-        delta_y += 1
-      elsif delta_y.positive?
-        delta_y -= 1
-      end
+      delta_x += 0 <=> delta_x
+      delta_y += 0 <=> delta_y
 
       step = RuneRb::Map::Position.new(next_x - delta_x, next_y - delta_y, height)
       log "Calculated step #{step.inspect}"

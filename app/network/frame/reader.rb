@@ -98,7 +98,7 @@ module RuneRb::Network::FrameReader
                                                    path[itr][1] + first_y)
       end
 
-      @context.push_path(positions) unless positions.empty?
+      @context.push_path(positions.flatten.compact) unless positions.empty?
     else
       err "Unhandled frame: #{frame.inspect}"
     end
