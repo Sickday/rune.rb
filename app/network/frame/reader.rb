@@ -47,13 +47,13 @@ module RuneRb::Network::FrameReader
       roll = frame.read_short(false, :STD, :LITTLE)
       yaw = frame.read_short(false, :STD, :LITTLE)
       log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
-
+    when 101 # Character Design
+      @context.appearance.from_frame(frame)
+      @context.update(:state)
     when 103
       parse_cmd_string(frame.read_string)
-
     when 185
-      id = frame.read_short
-      parse_button(id)
+      parse_button(frame.read_short)
       log "Got button ID #{id}" if RuneRb::DEBUG
     when 202
       log 'Received Idle Frame!' if RuneRb::DEBUG
@@ -62,13 +62,10 @@ module RuneRb::Network::FrameReader
     when 241 # Mouse Click
       value = frame.read_int(false)
       delay = (value >> 20) * 50
-
       right = (value >> 19 & 0x1) == 1
-
       coords = value & 0x3FFFF
       x = coords % 765
       y = coords / 765
-
       if RuneRb::DEBUG
         log RuneRb::COL.blue((right ? 'Right' : 'Left') + "Mouse Click at #{RuneRb::COL.cyan("Position: x: #{x}, y: #{y}, delay: #{delay}")}")
       end
@@ -92,10 +89,10 @@ module RuneRb::Network::FrameReader
       @context.toggle_run if frame.read_byte(false, :C) == 1
 
       positions = []
+      positions[0] = RuneRb::Map::Position.new(first_x, first_y)
       steps.times do |itr|
         log "Received step [#{path[itr].inspect}]"
-        positions[itr] = RuneRb::Map::Position.new(path[itr][0] + first_x,
-                                                   path[itr][1] + first_y)
+        positions[itr + 1] = RuneRb::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y)
       end
 
       @context.push_path(positions.flatten.compact) unless positions.empty?
@@ -109,6 +106,7 @@ module RuneRb::Network::FrameReader
   def parse_button(id)
     case id
     when 2458 then write_disconnect if @status[:authenticated] == :LOGGED_IN
+    when 3651 then write_close_interface
     else err "Unhandled button! ID: #{id}"
     end
   end
@@ -116,6 +114,8 @@ module RuneRb::Network::FrameReader
   def parse_cmd_string(string)
     pcs = string.split(' ')
     case pcs[0]
+    when 'model', 'char', 'design'
+      write_interface(3559)
     when 'pos'
       write_text("Your current position: #{@context.position.inspect}")
     when 'maxed'

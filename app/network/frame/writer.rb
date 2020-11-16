@@ -118,6 +118,28 @@ module RuneRb::Network::FrameWriter
     send_data(frame)
   end
 
+  # Writes an overlay interface (on that closes when moving)
+  # @param id [Integer] the ID for the interface
+  def write_overlay_interface(id)
+    frame = RuneRb::Network::MetaFrame.new(208)
+    frame.write_short(id, :STD, :LITTLE)
+    write_frame(frame)
+  end
+
+  # Writes an interface
+  # @param id [Integer] the ID for the interface
+  def write_interface(id)
+    frame = RuneRb::Network::MetaFrame.new(97)
+    frame.write_short(id)
+    write_frame(frame)
+  end
+
+  # Closes open interfaces
+  def write_close_interface
+    frame = RuneRb::Network::MetaFrame.new(219)
+    write_frame(frame)
+  end
+
   # Writes a collection of frames that make up a post-login.
   def write_login
     write_response(@profile[:rights] >= 2 ? 2 : @profile[:rights], false)

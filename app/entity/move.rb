@@ -76,7 +76,6 @@ module RuneRb::Entity::Movement
       @directions[:primary] = first_direction
       log 'Updated Pos.'
       @directions[:previous] = first_direction
-
       update(:move)
 =begin
       if @running
