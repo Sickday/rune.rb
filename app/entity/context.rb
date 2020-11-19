@@ -3,18 +3,12 @@ module RuneRb::Entity
   class Context < RuneRb::Entity::Mob
     include RuneRb::Types::Loggable
 
-    # @return [RuneRb::Database::Profile] the Profile of the Context
-    attr :profile
-
     # @return [RuneRb::Database::Appearance] the appearance of the Context
     attr :appearance
 
     # @return [RuneRb::Game::ItemContainer] the inventory of the Context
     attr :inventory
 
-    # @return [Hash] the list of mobs and players local to the Context
-    attr :local
-    
     # @return [RuneRb::Game::Animation] the Animation of the Context
     attr :animation
 
@@ -33,15 +27,14 @@ module RuneRb::Entity
     # Called when a new Context Entity is created.
     # @param peer [RuneRb::Network::Peer] the peer to be associated with the entity.
     def initialize(peer, world)
-      @session = peer
-      @profile = peer.profile
-      @message = OpenStruct.new
-      @appearance = @profile.appearance
+      super(world, peer.profile)
 
+      @profile = @definition
+      @session = peer
+      @local[:players] = []
+      @appearance = @profile.appearance
       setup_inventory
       setup_equipment
-      super(world, @profile.location.to_position)
-      @local[:players] = []
     end
 
     # This function will update the Context according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
@@ -139,5 +132,7 @@ module RuneRb::Entity
       end
       @session.write_equipment(@equipment.data)
     end
+
+    alias profile definition
   end
 end

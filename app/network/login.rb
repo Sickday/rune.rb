@@ -19,9 +19,11 @@ module RuneRb::Network::AuthenticationHelper
 
   private
 
-  def read_connection
-    @connection = ParsedConnection.new(@connection_frame.read_byte,
-                                       @connection_frame.read_byte,
+  # Reads a connection heading from a frame
+  # @param frame [RuneRb::Network::InFrame] the frame to read from.
+  def read_connection(frame)
+    @connection = ParsedConnection.new(frame.read_byte,
+                                       frame.read_byte,
                                        @id & 0xFFFFFFFF)
     log "Generated seed: #{@connection[:ConnectionSeed]}" if RuneRb::DEBUG
 
@@ -45,20 +47,22 @@ module RuneRb::Network::AuthenticationHelper
     end
   end
 
-  def read_block
-    @login = ParsedLogin.new(@login_frame.read_byte, # Type
-                             @login_frame.read_byte - 40, # Size
-                             @login_frame.read_byte, # Magic (255)
-                             @login_frame.read_short(false), # Version
-                             @login_frame.read_byte.positive? ? :LOW : :HIGH, # Low memory?
-                             [].tap { |arr| 9.times { arr << @login_frame.read_int } },
-                             @login_frame.read_byte, # RSA_Block Length
-                             @login_frame.read_byte, # RSA_Block OpCode (10)
-                             @login_frame.read_long, # Client Part
-                             @login_frame.read_long, # Server Part
-                             @login_frame.read_int, # UID
-                             @login_frame.read_string, # Username
-                             @login_frame.read_string) # Password
+  # Reads a login block from the provided frame
+  # @param frame [RuneRb::Network::InFrame] the incoming frame to read from.
+  def read_block(frame)
+    @login = ParsedLogin.new(frame.read_byte, # Type
+                             frame.read_byte - 40, # Size
+                             frame.read_byte, # Magic (255)
+                             frame.read_short(false), # Version
+                             frame.read_byte.positive? ? :LOW : :HIGH, # Low memory?
+                             [].tap { |arr| 9.times { arr << frame.read_int } },
+                             frame.read_byte, # RSA_Block Length
+                             frame.read_byte, # RSA_Block OpCode (10)
+                             frame.read_long, # Client Part
+                             frame.read_long, # Server Part
+                             frame.read_int, # UID
+                             frame.read_string, # Username
+                             frame.read_string) # Password
 
     @login[:LoginSeed] = [@login[:ServerPart] >> 32, @login[:ServerPart]].pack('NN').unpack1('L')
 

@@ -54,7 +54,6 @@ module RuneRb::Network::FrameReader
       parse_cmd_string(frame.read_string)
     when 185
       parse_button(frame.read_short)
-      log "Got button ID #{id}" if RuneRb::DEBUG
     when 202
       log 'Received Idle Frame!' if RuneRb::DEBUG
     when 214
@@ -105,7 +104,7 @@ module RuneRb::Network::FrameReader
   def parse_button(id)
     case id
     when 2458 then write_disconnect if @status[:authenticated] == :LOGGED_IN
-    when 3651 then write_close_interface
+    when 3651 then write_clear_interfaces
     else err "Unhandled button! ID: #{id}"
     end
   end

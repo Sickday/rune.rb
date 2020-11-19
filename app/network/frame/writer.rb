@@ -135,8 +135,14 @@ module RuneRb::Network::FrameWriter
   end
 
   # Closes open interfaces
-  def write_close_interface
+  def write_clear_interfaces
     frame = RuneRb::Network::MetaFrame.new(219)
+    write_frame(frame)
+  end
+
+  # Writes a close of the current interface to the client.
+  def write_closed_interface
+    frame = RuneRb::Network::MetaFrame.new(130)
     write_frame(frame)
   end
 
@@ -219,6 +225,7 @@ module RuneRb::Network::FrameWriter
     # Write the size of the local mob list
     sync.write_bits(8, player.local[:mobs].size)
 
+    log "Wrote local mob size", player.local[:mobs].size
     # Check the local mob list and adjust it if necessary
     player.local[:mobs].delete_if do |mob|
 
@@ -419,11 +426,6 @@ module RuneRb::Network::FrameWriter
     frame.write_bytes(appearance_frame)
   end
 
-  # Writes a close of the current interface to the client.
-  def write_closed_interface
-    frame = RuneRb::Network::MetaFrame.new(130)
-    write_frame(frame)
-  end
 
   # Writes the model color block of the specified player
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to.

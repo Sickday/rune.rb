@@ -13,8 +13,12 @@ module RuneRb::Entity::Movement
   # @param to [RuneRb::Map::Position] the position to teleport to.
   def teleport(to)
     clear_waypoints
-    @profile.location.set(to)
-    @position = @profile.location.to_position
+    if @definition.is_a?(RuneRb::Database::Profile)
+      @definition.location.set(to)
+    else
+      @definition[:location] = to
+    end
+    @position = to
     @movement_type = :TELEPORT
     update(:teleport)
   end
@@ -42,7 +46,7 @@ module RuneRb::Entity::Movement
 
   # Initializes default parameters for the movement module
   # @param default_position [RuneRb::Map::Position] the default position to setup movement with.
-  def setup_movement(default_position = RuneRb::Map::DEFAULT_POSITION)
+  def setup_movement(default_position)
     teleport(default_position)
     #@regional = RuneRb::Map::Regional.from_position(@position)
     @next_waypoints = []

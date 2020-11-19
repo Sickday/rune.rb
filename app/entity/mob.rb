@@ -2,6 +2,15 @@ module RuneRb::Entity
   class Mob
     include RuneRb::Entity::Movement
 
+    # @return [Integer] the index of this Mob in the game World
+    attr :index
+
+    # @return [Hash] the list of mobs and players local to the Context
+    attr :local
+
+    # @return [Object] the definition for the Mob
+    attr :definition
+
     # @return [OpenStruct] update flags for the Mob
     attr :flags
 
@@ -24,26 +33,37 @@ module RuneRb::Entity
     attr :world
 
     # Called when a new Mob is created.
-    # @param position [RuneRb::Map::Position] the position the Mob will placed.
-    def initialize(world, position)
+    # @param definition [RuneRb::Database::Profile, Hash] a definition object containing information about the Mob
+    # @param world [RuneRb::Game::World] the world in which the mob will exist.
+    def initialize(world, definition)
+      @definition = definition
       @flags = {}
       @cool_downs = OpenStruct.new
       @status = {}
       @local = {}
       @local[:mobs] = []
       @world = world
-
-      setup_movement(position)
+      @message = OpenStruct.new
+      if @definition.is_a? RuneRb::Database::Profile
+        setup_movement(@definition.location.to_position)
+      else
+        setup_movement(@definition[:location])
+      end
       init_flags
+      update(:local)
     end
 
     # This function will update the Mob's update flags according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
     # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Mob#update(:graphic, gfx: RuneRb::Game::Graphic). Internally, this will enable the Graphic flag causing a flag mask to be added to the sync frame and the client to expect a Graphic block to be supplied in the next pulse.
     # TODO: Raise an error to ensure assets are proper for each schedule type.
     # @param type [Symbol] the type of update to schedule
-    # @param assets [Hash] the assets for the update TODO: deprecate this. use this function purely for update scheduling/flag toggling.
+    # @param assets [Hash] the assets for the update
     def update(type, assets = {})
       case type
+      when :local
+        @local[:mobs] = @world.local_entities(:mobs, @position)
+      when :index
+        @index = assets[:index]
       when :movement
         @flags[:moved?] = true
       when :region

@@ -23,7 +23,6 @@ module RuneRb::Network
     def register_context(context)
       @context = context
       @status[:authenticated] = :LOGGED_IN
-      log 'Registered context'
     end
 
     # Reads data into the Peer#in
@@ -31,41 +30,54 @@ module RuneRb::Network
       if @status[:active]
         case @status[:authenticated]
         when :PENDING_CONNECTION
-          @connection_frame = RuneRb::Network::InFrame.new(-1)
-          @connection_frame.push(@socket.read_nonblock(2))
+          connection_frame = RuneRb::Network::InFrame.new(-1)
+          connection_frame.push(@socket.read_nonblock(2))
 
-          read_connection
+          read_connection(connection_frame)
         when :PENDING_BLOCK
-          @login_frame = RuneRb::Network::InFrame.new(-1)
-          @login_frame.push(@socket.read_nonblock(96))
+          login_frame = RuneRb::Network::InFrame.new(-1)
+          login_frame.push(@socket.read_nonblock(96))
 
-          read_block
+          read_block(login_frame)
         when :LOGGED_IN
           @in << @socket.read_nonblock(5192) if @status[:active]
           next_frame if @in.size >= 3
-        else read_connection
+        else
+          connection_frame = RuneRb::Network::InFrame.new(-1)
+          connection_frame.push(@socket.read_nonblock(2))
+
+          read_connection(connection_frame)
         end
       else
         disconnect
       end
-    rescue IO::EAGAINWaitReadable => e
-      err 'Socket has no data', e, e.backtrace
-      disconnect
+    rescue IO::EAGAINWaitReadable
+      err 'Socket has no data' if RuneRb::DEBUG
     rescue EOFError => e
-      err 'Reached EOF!', e, e.backtrace
       disconnect
+      err 'Reached EOF!'
+      puts e
+      puts e.backtrace
     rescue IOError => e
-      err 'Stream has been closed!', e, e.backtrace
       disconnect
+      err 'Stream has been closed!'
+      puts e
+      puts e.backtrace
     rescue Errno::ECONNRESET => e
-      err 'Peer reset connection!', e, e.backtrace
       disconnect
+      err 'Peer reset connection!'
+      puts e
+      puts e.backtrace
     rescue Errno::ECONNABORTED => e
-      err 'Peer aborted connection!', e.backtrace
       disconnect
+      err 'Peer aborted connection!'
+      puts e
+      puts e.backtrace
     rescue Errno::EPIPE => e
-      err 'PIPE MACHINE BR0kE!1', e.backtrace
       disconnect
+      err 'PIPE MACHINE BR0kE!1'
+      puts e
+      puts e.backtrace
     end
 
     # Send data through the underlying socket
@@ -97,6 +109,7 @@ module RuneRb::Network
     def pulse
       if @context
         write_mock_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
+        # write_mock_mob_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
         @context.reset_flags
       elsif @status[:authenticated] == :PENDING_LOGIN
         @endpoint.request_context(self)

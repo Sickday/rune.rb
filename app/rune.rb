@@ -102,9 +102,8 @@ module RuneRb
 
   # RuneRb::Database
   module Database
-    autoload :SYSTEMS,              'db/connection'
-    autoload :DEFINITIONS,          'db/connection'
-    autoload :PROFILES,             'db/connection'
+    require_relative                'db/connection'
+
     autoload :Appearance,           'db/models/appearance'
     autoload :Equipment,            'db/models/equipment'
     autoload :Item,                 'db/models/item'

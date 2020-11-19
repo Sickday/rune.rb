@@ -3,6 +3,10 @@ module RuneRb::Database
                              user: ENV['DATABASE_USER'],
                              password: ENV['DATABASE_PASS'],
                              host: ENV['DATABASE_HOST'])
+  LEGACY = Sequel.postgres(ENV['LEGACY_DATABASE'],
+                           user: ENV['DATABASE_USER'],
+                           pass: ENV['DATABASE_PASS'],
+                           host: ENV['DATABASE_HOST'])
   #SYSTEMS = Sequel.postgres(ENV['SYSTEM_DATABASE'],
   #user: ENV['DATABASE_USER'],
   #                          password: ENV['DATABASE_pass'],
