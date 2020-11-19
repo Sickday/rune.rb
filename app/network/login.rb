@@ -17,18 +17,6 @@ module RuneRb::Network::AuthenticationHelper
                            :ClientPart, :ServerPart, :UID, :Username,
                            :Password, :LoginSeed)
 
-  def authenticate
-    if @status[:authenticated] == :PENDING_BLOCK
-      @login_frame = RuneRb::Network::InFrame.new(-1)
-      @login_frame.push(@socket.read_nonblock(96))
-      read_block
-    else
-      @connection_frame = RuneRb::Network::InFrame.new(-1)
-      @connection_frame.push(@socket.read_nonblock(2))
-      read_connection
-    end
-  end
-
   private
 
   def read_connection
@@ -74,7 +62,7 @@ module RuneRb::Network::AuthenticationHelper
 
     @login[:LoginSeed] = [@login[:ServerPart] >> 32, @login[:ServerPart]].pack('NN').unpack1('L')
 
-    log RuneRb::COL.green("Parsed Login Block: #{RuneRb::COL.cyan(@block.inspect)}") if RuneRb::DEBUG
+    log RuneRb::COL.green("Parsed Login Block: #{RuneRb::COL.cyan(@login.inspect)}") if RuneRb::DEBUG
 
 
     isaac = [@login[:ClientPart] >> 32, @login[:ClientPart], @login[:ServerPart] >> 32, @login[:ServerPart]]
@@ -136,5 +124,6 @@ module RuneRb::Network::AuthenticationHelper
     # TODO: Validate username.
     @profile = profile
     @status[:authenticated] = :PENDING_LOGIN
+    write_response(@profile[:rights] >= 2 ? 2 : @profile[:rights], false)
   end
 end

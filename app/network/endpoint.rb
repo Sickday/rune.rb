@@ -4,7 +4,11 @@ module RuneRb::Network
     include RuneRb::Types::Loggable
 
     # Called when a new Endpoint is created.
-    def initialize(host = ENV['HOST'], port = ENV['PORT'])
+    # @param host [String] the host for the Endpoint.
+    # @param port [Integer, String] the port for the Endpoint.
+    # @param world [RuneRb::Game::World] a World instance this endpoint can send authenticated Peers to.
+    def initialize(world, host = ENV['HOST'], port = ENV['PORT'])
+      @world = world
       @selector = NIO::Selector.new
       @server = TCPServer.new(host || 'localhost', port || 43_594)
       @selector.register(@server, :r).value = proc { accept_peer }
@@ -16,6 +20,8 @@ module RuneRb::Network
 
     # Spawns a new process and executes the selection loop within that process. *
     def deploy
+      raise 'No world registered to this endpoint!' unless @world
+
       Signal.trap('INT') do
         puts RuneRb::COL.magenta('Shutting down gracefully...')
         sleep(3)
@@ -40,10 +46,21 @@ module RuneRb::Network
     end
 
     # De-registers a socket from the selector and removes it's reference from the internal client list.
+    # @param peer [RuneRb::Network::Peer] the peer to deregister
+    # @param socket [Socket] the socket object to deregister from selector.
     def deregister(peer, socket)
       @selector.deregister(socket)
       @peers[peer.ip].delete(peer)
+      @world.release(peer.context) if peer.context
       log RuneRb::COL.green("De-registered socket for #{RuneRb::COL.cyan(peer.ip)}")
+    end
+
+    # Requests a context from the endpoint's world
+    # @param peer [RuneRb::Network::Peer] the peer to request a context for
+    def request_context(peer)
+      raise 'No world registered to this endpoint!' unless @world
+
+      @world.receive(peer)
     end
 
     private

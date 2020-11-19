@@ -80,9 +80,8 @@ module RuneRb::Network::FrameReader
       path = []
       first_x = frame.read_short(false, :A, :LITTLE)
       steps.times do |itr|
-        path[itr] ||= []
-        path[itr][0] = frame.read_byte(true)
-        path[itr][1] = frame.read_byte(true)
+        path[itr] ||= [frame.read_byte(true),
+                       frame.read_byte(true)]
       end
 
       first_y = frame.read_short(false, :STD, :LITTLE)
@@ -91,7 +90,8 @@ module RuneRb::Network::FrameReader
       positions = []
       positions << RuneRb::Map::Position.new(first_x, first_y)
       steps.times do |itr|
-        positions << RuneRb::Map::Position.new(path[itr][0] + first_x, path[itr][1] + first_y)
+        positions << RuneRb::Map::Position.new(path[itr][0] + first_x,
+                                               path[itr][1] + first_y)
       end
 
       @context.push_path(positions.flatten.compact) unless positions.empty?
@@ -151,9 +151,9 @@ module RuneRb::Network::FrameReader
     when 'to'
       log RuneRb::COL.green("Moving #{@context.profile[:name]} to #{pcs[1]}, #{pcs[2]}") if RuneRb::DEBUG
       @context.teleport(RuneRb::Map::Position.new(pcs[1].to_i, pcs[2].to_i, pcs[3].to_i || 0))
-    when 'mob'
+    when 'morph'
       log RuneRb::COL.green("Morphing into mob: #{pcs[1]}") if RuneRb::DEBUG
-      @context.update(:mob, mob_id: pcs[1].to_i)
+      @context.update(:morph, mob_id: pcs[1].to_i)
     when 'promote'
       if RuneRb::Database::Profile[pcs[1]]
         RuneRb::Database::Profile[pcs[1]].update(rights: RuneRb::Database::Profile[pcs[1]][:rights] + 1)

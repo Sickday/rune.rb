@@ -5,55 +5,73 @@ module RuneRb::Network
     include RuneRb::Network::FrameReader
     include RuneRb::Network::FrameWriter
 
-    attr :ip, :id, :status, :socket
+    attr :ip, :id, :status, :socket, :profile, :context
 
     # Called when a new Peer object is created.
     # @param socket [Socket] the socket for the peer.
     def initialize(socket, endpoint)
       @socket, @ip = socket, socket.peeraddr.last
-      @status = { active: true, authenticated: false }
+      @status = { active: true, authenticated: :PENDING_CONNECTION }
       @endpoint = endpoint
       @in = ''
       @out = []
       @id = Druuid.gen
     end
 
+    # Registers a context to the peer and confirms the status to be logged in
+    # @param context [RuneRb::Entity::Context] the Context to register
+    def register_context(context)
+      @context = context
+      @status[:authenticated] = :LOGGED_IN
+      log 'Registered context'
+    end
+
     # Reads data into the Peer#in
     def receive_data
       if @status[:active]
-        if @status[:authenticated] == :LOGGED_IN
-          @in << @socket.read_nonblock(5192)
-          @context ||= RuneRb::Entity::Context.new(self, @profile)
+        case @status[:authenticated]
+        when :PENDING_CONNECTION
+          @connection_frame = RuneRb::Network::InFrame.new(-1)
+          @connection_frame.push(@socket.read_nonblock(2))
+
+          read_connection
+        when :PENDING_BLOCK
+          @login_frame = RuneRb::Network::InFrame.new(-1)
+          @login_frame.push(@socket.read_nonblock(96))
+
+          read_block
+        when :LOGGED_IN
+          @in << @socket.read_nonblock(5192) if @status[:active]
           next_frame if @in.size >= 3
-        else
-          authenticate
+        else read_connection
         end
+      else
+        disconnect
       end
     rescue IO::EAGAINWaitReadable => e
-      err 'Socket has no data'
-      puts e
-      puts e.backtrace
-    rescue EOFError
-      err 'Reached EOF!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
-    rescue IOError
-      err 'Stream has been closed!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
-    rescue Errno::ECONNRESET
-      err 'Peer reset connection!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
-    rescue Errno::ECONNABORTED
-      err 'Peer aborted connection!'
-      @status[:authenticated] == :LOGGED_IN ? write_disconnect : disconnect
-    rescue Errno::EPIPE
-      err 'PIPE MACHINE BR0kE!1'
+      err 'Socket has no data', e, e.backtrace
+      disconnect
+    rescue EOFError => e
+      err 'Reached EOF!', e, e.backtrace
+      disconnect
+    rescue IOError => e
+      err 'Stream has been closed!', e, e.backtrace
+      disconnect
+    rescue Errno::ECONNRESET => e
+      err 'Peer reset connection!', e, e.backtrace
+      disconnect
+    rescue Errno::ECONNABORTED => e
+      err 'Peer aborted connection!', e.backtrace
+      disconnect
+    rescue Errno::EPIPE => e
+      err 'PIPE MACHINE BR0kE!1', e.backtrace
       disconnect
     end
 
     # Send data through the underlying socket
     # @param data [String, StringIO] the payload to send.
     def send_data(data)
-      @socket.write_nonblock(data)
+      @socket.write_nonblock(data) if @status[:active]
     rescue EOFError
       err 'Peer disconnected!'
       disconnect
@@ -77,11 +95,12 @@ module RuneRb::Network
 
     # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
     def pulse
-      write_login if @status[:authenticated] == :PENDING_LOGIN
-      return unless @context
-
-      write_mock_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
-      @context.reset_flags
+      if @context
+        write_mock_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
+        @context.reset_flags
+      elsif @status[:authenticated] == :PENDING_LOGIN
+        @endpoint.request_context(self)
+      end
     end
 
     # Close the socket.

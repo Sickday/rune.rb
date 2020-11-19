@@ -142,12 +142,10 @@ module RuneRb::Network::FrameWriter
 
   # Writes a collection of frames that make up a post-login.
   def write_login
-    write_response(@profile[:rights] >= 2 ? 2 : @profile[:rights], false)
     write_sidebars
     write_skills(@profile.stats)
     write_text('Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
     write_text('Thanks for testing Rune.rb.')
-    @status[:authenticated] = :LOGGED_IN
   end
 
   def write_text(txt)
@@ -175,8 +173,7 @@ module RuneRb::Network::FrameWriter
     write_mob_movement(sync_frame, @context)
 
     # CONTEXT STATE
-    # write_mob_state(block_frame, @context)
-    write_mob_state(block_frame, @context)
+    write_context_state(block_frame, @context)
 
     # UPDATE LOCAL LIST
     # TODO: impl
@@ -193,7 +190,90 @@ module RuneRb::Network::FrameWriter
     @context.pulse
   end
 
+
+  def write_mock_mob_update
+    block_frame = RuneRb::Network::MetaFrame.new(-1)
+    sync_frame = RuneRb::Network::MetaFrame.new(65, false, true)
+    sync_frame.switch_access
+
+    write_mob_list_removals(sync_frame, block_frame, @context)
+    write_mob_list_additions(sync_frame, block_frame, @context)
+
+    # Write the block frame into the Sync frame unless it's empty
+    unless block_frame.empty?
+      sync_frame.write_bits(14, 16_383)
+      sync_frame.switch_access
+      sync_frame.write_bytes(block_frame)
+    end
+
+    write_frame(sync_frame)
+  end
+
   private
+
+  # Writes an update to a context player's mob list via removals
+  # @param sync [RuneRb::Network::MetaFrame] the synchronization frame to write to
+  # @param state [RuneRb::Network::MetaFrame] the state frame to write to
+  # @param player [RuneRb::Entity::Context] the player to write the update for
+  def write_mob_list_removals(sync, state, player)
+    # Write the size of the local mob list
+    sync.write_bits(8, player.local[:mobs].size)
+
+    # Check the local mob list and adjust it if necessary
+    player.local[:mobs].delete_if do |mob|
+
+      # Remove this mob if the World no longer has a reference to the mob.
+      removal = true unless player.world.entities[:mobs].include?(mob)
+
+      # Remove this mob if it's teleporting.
+      removal = true if mob.flags[:teleport?]
+
+      # Remove this mob if it's no longer in view of the context
+      removal = true unless mob.position.in_view?(mob.position)
+
+      if removal
+        sync.write_bits(1, 1)
+        sync.write_bits(2, 3)
+      else
+        # Write the movement and state for mobs that should be updated.
+        write_mob_movement(sync, mob)
+        write_mob_state(state, mob) if mob.flags[:state?]
+      end
+    end
+  end
+
+  # Writes mob list additions to a synchronization and state frame
+  # @param sync [RuneRb::Network::MetaFrame] the synchronization frame
+  # @param state [RuneRb::Network::MetaFrame] the state frame
+  # @param player [RuneRb::Entity::Context] the context player whose list is getting updated.
+  def write_mob_list_additions(sync, state, player)
+    # Loop through all mobs in the World attached to the player to check if it should add Mobs to the context player's list.
+    player.world.entities[:mobs].each do |mob|
+      # Break if the list has reached it's max capacity for the client
+      break if player.local[:mobs].size >= 255
+      # Skip this mob if it's already on in the player's list.
+      next if player.local[:mobs].include?(mob)
+
+      # Add the mob to the player's local mob list
+      player.local[:mobs] << mob
+
+      # Write the mob's index in the world
+      sync.write_bits(14, mob.index)
+
+      # Write deltas for the mob
+      sync.write_bits(5, mob.position[:y] - player.position[:y])
+      sync.write_bits(5, mob.position[:x] - player.position[:y])
+
+      sync.write_bits(1, 0) # Tax evasion freestyle
+
+      # The mob identity and state bit
+      sync.write_bits(12, mob.id)
+      sync.write_bit(mob.flags[:state?])
+
+      # Write the mob's state
+      write_mob_state(state, mob) if mob.flags[:state?]
+    end
+  end
 
   # Writes a Mob's movement to a frame
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
@@ -258,21 +338,46 @@ module RuneRb::Network::FrameWriter
     frame.write_bit(mob.flags[:state?])
   end
 
+  # Writes the state of a Mob to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param mob [RuneRb::Entity::Mob] the Mob whose state will be written.
   def write_mob_state(frame, mob)
+    # Create the mask
+    mask = 0x0
+    # Calculate bitmask:
+    mask |= 0x10 if mob.flags[:animation?]
+    # Primary Hit mask |= 0x8 if mob.flags[:damaged?]
+    mask |= 0x80 if mob.flags[:graphic?]
+    # Facing Entity mask |= 0x20 if mob.flags[:face_mob?]
+    mask |= 0x1 if mob.flags[:chat?]
+    # Secondary Hit mask |= 0x40 if mob.flags[:damaged2?]
+    # Morph/Transform mask |= 0x2 if mob.flags[:morph?]
+    # Face Position mask |= 0x4 if mob.flags[:face_position?]
+    frame.write_byte(mask)
+
+    write_mob_animation(frame, mob) if mob.flags[:animation?]
+    write_graphic(frame, mob) if mob.flags[:graphic?]
+    write_chat(frame, mob) if mob.flags[:chat?]
+  end
+
+  # Writes the state of a context to a frame
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param context [RuneRb::Entity::Context] the context whose state to write.
+  def write_context_state(frame, context)
     # Make the mask
     mask = 0x0
     # Attributes:
     # ForcedMove
     # Graphics
-    mask |= 0x100 if mob.flags[:graphic?]
+    mask |= 0x100 if context.flags[:graphic?]
     # Animation
-    mask |= 0x8 if mob.flags[:animation?]
+    mask |= 0x8 if context.flags[:animation?]
     # Forced Chat
     # Chat
-    mask |= 0x80 if mob.flags[:chat?]
+    mask |= 0x80 if context.flags[:chat?]
     # Face Entity
     # Appearance
-    mask |= 0x10 if mob.flags[:state?]
+    mask |= 0x10 if context.flags[:state?]
     # Face Coordinates
     # Primary Hit
     # Secondary Hit
@@ -284,10 +389,10 @@ module RuneRb::Network::FrameWriter
       frame.write_byte(mask)
     end
 
-    write_graphic(frame, mob) if mob.flags[:graphic?]
-    write_animation(frame, mob) if mob.flags[:animation?]
-    write_chat(frame, mob) if mob.flags[:chat?]
-    write_appearance(frame, mob) if mob.flags[:state?]
+    write_graphic(frame, context) if context.flags[:graphic?]
+    write_context_animation(frame, context) if context.flags[:animation?]
+    write_chat(frame, context) if context.flags[:chat?]
+    write_appearance(frame, context) if context.flags[:state?]
   end
 
   # @param frame [RuneRb::Network::MetaFrame] the frame to write the appearance to.
@@ -450,11 +555,20 @@ module RuneRb::Network::FrameWriter
     frame.write_int(mob.graphic.height << 16 | mob.graphic.delay)
   end
 
+  # Writes a context animation to a frame.
+  # @param frame [RuneRb::Network::MetaFrame] the frame to write to
+  # @param mob [RuneRb::Entity::Context] the Context.
+  def write_context_animation(frame, mob)
+    log "Writing animation #{mob.animation}"
+    frame.write_short(mob.animation.id, :STD, :LITTLE)
+    frame.write_byte(mob.animation.delay, :C)
+  end
+
   # Writes a mob animation to a frame.
   # @param frame [RuneRb::Network::MetaFrame] the frame to write to
   # @param mob [RuneRb::Entity::Mob] the Mob.
-  def write_animation(frame, mob)
+  def write_mob_animation(frame, mob)
     frame.write_short(mob.animation.id, :STD, :LITTLE)
-    frame.write_byte(mbo.animation.delay, :C)
+    frame.write_byte(mob.animation.delay)
   end
 end

@@ -20,12 +20,18 @@ module RuneRb::Entity
     # @return [Hash] the Movement of the Context.
     attr :movement
 
+    # @return [RuneRb::Game::World] the World the Mob is attached to.
+    attr :world
+
     # Called when a new Mob is created.
     # @param position [RuneRb::Map::Position] the position the Mob will placed.
-    def initialize(position)
+    def initialize(world, position)
       @flags = {}
       @cool_downs = OpenStruct.new
       @status = {}
+      @local = {}
+      @local[:mobs] = []
+      @world = world
 
       setup_movement(position)
       init_flags
