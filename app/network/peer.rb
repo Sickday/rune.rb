@@ -1,151 +1,67 @@
-module RuneRb::Network
-  class Peer
-    include RuneRb::Types::Loggable
-    include RuneRb::Network::AuthenticationHelper
-    include RuneRb::Network::FrameReader
-    include RuneRb::Network::FrameWriter
+module RuneRb::Net
+  class Peer < EM::Connection
+    include RuneRb::Internal::Log
 
-    attr :ip, :id, :status, :socket, :profile, :context
+    include RuneRb::Net::LoginHelper
+    include RuneRb::Net::FrameWriter
+    include RuneRb::Net::FrameReader
 
-    # Called when a new Peer object is created.
-    # @param socket [Socket] the socket for the peer.
-    def initialize(socket, endpoint)
-      @socket, @ip = socket, socket.peeraddr.last
-      @status = { active: true, authenticated: :PENDING_CONNECTION }
-      @endpoint = endpoint
+    attr :ip, :id, :status, :socket, :context
+
+    # Called after a new Peer object is initialized.
+    def post_init
+      @status = { auth: :PENDING_CONNECTION, active: true }
+      _port, @ip = Socket.unpack_sockaddr_in(get_peername)
       @in = ''
       @out = []
       @id = Druuid.gen
     end
 
-    # Registers a context to the peer and confirms the status to be logged in
+    # Registers a context to the peer
     # @param context [RuneRb::Entity::Context] the Context to register
-    def register_context(context)
+    def register(context)
       @context = context
-      @status[:authenticated] = :LOGGED_IN
+    end
+
+    # Attaches the peer to an Endpoint object
+    # @param endpoint [RuneRb::Net::Endpoint]
+    def attach_to(endpoint)
+      @endpoint = endpoint
+      log 'Attached to Endpoint!' if RuneRb::DEBUG
+    rescue StandardError => e
+      err! 'An error occurred while attaching peer to Endpoint!'
+      puts e
+      puts e.backtrace
     end
 
     # Reads data into the Peer#in
-    def receive_data
-      if @status[:active]
-        case @status[:authenticated]
-        when :PENDING_CONNECTION
-          connection_frame = RuneRb::Network::InFrame.new(-1)
-          connection_frame.push(@socket.read_nonblock(2))
-
-          read_connection(connection_frame)
-        when :PENDING_BLOCK
-          login_frame = RuneRb::Network::InFrame.new(-1)
-          login_frame.push(@socket.read_nonblock(96))
-
-          read_block(login_frame)
-        when :LOGGED_IN
-          @in << @socket.read_nonblock(5192) if @status[:active]
-          next_frame if @in.size >= 3
-        else
-          connection_frame = RuneRb::Network::InFrame.new(-1)
-          connection_frame.push(@socket.read_nonblock(2))
-
-          read_connection(connection_frame)
-        end
+    def receive_data(data)
+      @in << data
+      case @status[:auth]
+      when :PENDING_CONNECTION
+        read_connection
+      when :PENDING_BLOCK
+        read_block
+      when :LOGGED_IN
+        next_frame if @in.size >= 3
       else
-        disconnect
+        read_connection
       end
-    rescue IO::EAGAINWaitReadable
-      err 'Socket has no data' if RuneRb::DEBUG
-    rescue EOFError => e
-      disconnect
-      err 'Reached EOF!'
-      puts e
-      puts e.backtrace
-    rescue IOError => e
-      disconnect
-      err 'Stream has been closed!'
-      puts e
-      puts e.backtrace
-    rescue Errno::ECONNRESET => e
-      disconnect
-      err 'Peer reset connection!'
-      puts e
-      puts e.backtrace
-    rescue Errno::ECONNABORTED => e
-      disconnect
-      err 'Peer aborted connection!'
-      puts e
-      puts e.backtrace
-    rescue Errno::EPIPE => e
-      disconnect
-      err 'PIPE MACHINE BR0kE!1'
-      puts e
-      puts e.backtrace
     end
 
-    # Send data through the underlying socket
-    # @param data [String, StringIO] the payload to send.
-    def send_data(data)
-      @socket.write_nonblock(data) if @status[:active]
-    rescue EOFError
-      err 'Peer disconnected!'
-      disconnect
-    rescue Errno::ECONNRESET
-      err 'Peer reset connection!'
-      disconnect
-    rescue Errno::ECONNABORTED
-      err 'Peer aborted connection!'
-      disconnect
-    rescue Errno::EPIPE
-      err 'PIPE MACHINE BR0kE!1'
-      disconnect
-    end
-
-    # @param frame [RuneRb::Network::MetaFrame] the frame to queue for flush
-    def write_frame(frame)
-      send_data(encode_frame(frame).compile) if @status[:active]
-    end
-
-    alias << write_frame
-
-    # Should perhaps rename this to #pulse. The original idea was to flush all pending data, but seeing as all data is immediately written.... well.
+    # This function is called every 600 ms. The client expects the player synchronization frame to be written every 600ms with any updated information included in the frame.
     def pulse
-      if @context
-        write_mock_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
-        # write_mock_mob_update if @status[:authenticated] == :LOGGED_IN && @status[:active]
-        @context.reset_flags
-      elsif @status[:authenticated] == :PENDING_LOGIN
-        @endpoint.request_context(self)
-      end
+      @context.pre_pulse
+      write(:sync, context: @context) if @status[:auth] == :LOGGED_IN && @status[:active] && @context.world
+      @context.post_pulse
+    rescue StandardError => e
+      err! 'An error occurred during Peer pulse!', e, e.backtrace
     end
 
-    # Close the socket.
-    def disconnect
-      @socket.close
+    def unbind
       @status[:active] = false
-      @status[:authenticated] = false
-      @endpoint.deregister(self, @socket)
-    end
-
-    private
-
-    # Encodes a frame using the Peer#cipher.
-    # @param frame [RuneRb::Network::Frame] the frame to encode.
-    def encode_frame(frame)
-      raise 'Invalid cipher for client!' unless @cipher
-
-      log "Encoding frame: #{frame.inspect}" if RuneRb::DEBUG
-      frame.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
-      frame
-    end
-
-    # Decodes a frame using the Peer#cipher.
-    # @param frame [RuneRb::Network::Frame] the frame to decode.
-    def decode_frame(frame)
-      raise 'Invalid cipher for Peer!' unless @cipher
-
-      frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
-      frame.header[:op_code] = frame.header[:op_code] & 0xFF
-      frame.header[:length] = RuneRb::Network::Constants::PACKET_MAP[frame.header[:op_code]]
-      log "Decoding frame: #{frame.inspect}" if RuneRb::DEBUG
-      frame
+      @status[:auth] = :LOGGED_OUT
+      @context&.world&.release(@context)
     end
   end
 end

@@ -1,0 +1,1 @@
+module RuneRb::Entity::Helpers::Bank; end

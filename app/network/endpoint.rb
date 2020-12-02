@@ -1,90 +1,73 @@
-module RuneRb::Network
+module RuneRb::Net
   # Represents a host endpoint which accepts sockets and alerts them to populate their buffers via an internal nio selector
   class Endpoint
-    include RuneRb::Types::Loggable
+    include RuneRb::Internal::Log
+
+    # @return [Hash] the information for this endpoint. Includes the Host and Port
+    attr :info
+
+    # @return [RuneRb::World::Instance] the World associated with the Endpoint
+    attr :world
 
     # Called when a new Endpoint is created.
     # @param host [String] the host for the Endpoint.
     # @param port [Integer, String] the port for the Endpoint.
-    # @param world [RuneRb::Game::World] a World instance this endpoint can send authenticated Peers to.
-    def initialize(world, host = ENV['HOST'], port = ENV['PORT'])
+    # @param world [RuneRb::World::Instance] the world Instance paired with the Endpoint.
+    def initialize(world, host = ENV['HOST'] || '0.0.0.0', port = ENV['PORT'] || 43_594)
+      raise 'No RuneRb::World::Instance provided to the Endpoint!' unless world
+
       @world = world
-      @selector = NIO::Selector.new
-      @server = TCPServer.new(host || 'localhost', port || 43_594)
-      @selector.register(@server, :r).value = proc { accept_peer }
-      @peers = {}
-      @clients = {}
-      log RuneRb::COL.blue('[HOST]:' + RuneRb::COL.cyan("\t#{@server.addr.last}")),
-          RuneRb::COL.blue('[PORT]:' + RuneRb::COL.cyan("\t#{@server.addr[1]}"))
+      @info = { host: host, port: port }
+      @peers = []
+      @pulse = init_pulse
+      @start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
-    # Spawns a new process and executes the selection loop within that process. *
-    def deploy
-      raise 'No world registered to this endpoint!' unless @world
+    # Initializes the pulse task
+    def init_pulse
+      Concurrent::TimerTask.new(execution_interval: 0.600) do
+        return if @peers.empty?
 
-      Signal.trap('INT') do
-        puts RuneRb::COL.magenta('Shutting down gracefully...')
-        sleep(3)
-        Kernel.exit
-      end
-      Parallel.in_processes(count: 1) do
-        Concurrent::TimerTask.execute(execution_interval: 0.600) do
-          begin
-            @peers.values.each do |peer_list|
-              peer_list.each do |peer|
-                deregister(peer, peer.socket) unless peer.status[:active]
-                peer.pulse
-              end
-            end
-          rescue StandardError => e
-            err 'An error occurred during pulse!', e.message
-            puts e.backtrace
+        start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        begin
+          @peers.each do |peer|
+            peer.pulse if peer.status[:auth] == :LOGGED_IN
+            @peers.delete(peer) unless peer.status[:active]
           end
+          log "Pulse completed in #{(Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3)} seconds" if RuneRb::DEBUG
+        rescue StandardError => e
+          err 'An error occurred during a pulse!'
+          puts e
+          puts e.backtrace
         end
-        loop { @selector.select { |monitor| monitor.value.call } }
       end
+    rescue StandardError => e
+      err! 'An error occurred while initializing pulse task!'
+      puts e
+      puts e.backtrace
     end
 
-    # De-registers a socket from the selector and removes it's reference from the internal client list.
-    # @param peer [RuneRb::Network::Peer] the peer to deregister
-    # @param socket [Socket] the socket object to deregister from selector.
-    def deregister(peer, socket)
-      @selector.deregister(socket)
-      @peers[peer.ip].delete(peer)
-      @world.release(peer.context) if peer.context
-      log RuneRb::COL.green("De-registered socket for #{RuneRb::COL.cyan(peer.ip)}")
-    end
+    # Spawns a new process and launches a TCPServer object to listen on Endpoint#info[:host] : Endpoint#info[:port]  *
+    def deploy
+      # I'm unsure the limits of what can be called in Trap Context but we track uptime here and call exit.
+      Signal.trap('INT') do
+        puts RuneRb::COL.green("Up-time: #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - @start_time).round(3))} Sec")
+        exit
+      end
 
-    # Requests a context from the endpoint's world
-    # @param peer [RuneRb::Network::Peer] the peer to request a context for
-    def request_context(peer)
-      raise 'No world registered to this endpoint!' unless @world
-
-      @world.receive(peer)
-    end
-
-    private
-
-    # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
-    def accept_peer
-      socket = @server.accept_nonblock
-      host = socket.peeraddr[-1]
-      @peers[host] ||= []
-      @peers[host] << RuneRb::Network::Peer.new(socket, self)
-      @selector.register(socket, :r).value = proc { update_peers }
-      log RuneRb::COL.green("Registered new socket for #{RuneRb::COL.cyan(host)}")
-    end
-
-    # Attempts to update peer streams via Peer#receive_data
-    def update_peers
-      @peers.each do |_ip, peers|
-        peers.each do |peer|
-          peer.status[:active] ? peer.receive_data : deregister(peer, peer.socket)
+      # Launch the actual server in a separate process as to [hopefully] mitigate any load that might fall on threads it would use in this process.
+      Parallel.in_processes(count: 1) do
+        # Run EventMachine reactor here
+        EventMachine.run do
+          # Launch the EventMachine server.
+          EventMachine.start_server(@info[:host], @info[:port], RuneRb::Net::Peer) do |peer|
+            peer.attach_to(self)
+            @peers << peer
+          end
+          log RuneRb::COL.green("Endpoint deployed: #{RuneRb::COL.yellow.bold("#{@info[:host]}:#{@info[:port]}")}")
+          @pulse.execute
         end
       end
     end
   end
 end
-
-# * TODO: This is an insane idea. And probably won't go well. But if this is the route to go, the function should only contain the loop. The parallel process spawning should be done with a controller object or something to manage the processes.
-# ** TODO: This could probably done in a better way, but it works fine for now.

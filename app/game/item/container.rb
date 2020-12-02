@@ -1,7 +1,9 @@
-module RuneRb::Game::Item
+module RuneRb::Item
   # A container of ItemStacks.
   class Container
-    include RuneRb::Types::Loggable
+    include RuneRb::Internal::Log
+
+    attr :data, :limit
 
     # Called when a new ItemContainer is created.
     # @param capacity [Integer] the capacity of the ItemContainer
@@ -19,10 +21,10 @@ module RuneRb::Game::Item
     end
 
     # Attempts to add an ItemStack to the container
-    # @param item_stack [RuneRb::Game::Item::Stack] the Stack to add
+    # @param item_stack [RuneRb::Item::Stack] the Stack to add
     def add(item_stack)
       if item_stack.definition[:stackable] || @stackable
-        if has?(item_stack.definition.id) && (item_stack.size + @data[slot_for(item_stack.definition.id)].size) < RuneRb::Game::Item::MAX_SIZE
+        if has?(item_stack.definition.id) && (item_stack.size + @data[slot_for(item_stack.definition.id)].size) < RuneRb::Item::MAX_SIZE
           slot = slot_for(item_stack.definition.id)
           @data[slot].size += item_stack.size
         else
@@ -120,7 +122,7 @@ module RuneRb::Game::Item
 
     private
 
-    attr :stackable, :limit
+    attr :stackable
 
     # Retrieves the first slot for which an ItemStack with the specified ID matches
     # @param id [Integer] the item ID.

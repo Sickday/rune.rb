@@ -2,7 +2,7 @@ module RuneRb::Map
   # An object providing Directional functions to Map positions and coordinates.
   class Direction
     class << self
-      include RuneRb::Types::Loggable
+      include RuneRb::Internal::Log
       include RuneRb::Map::Constants
 
       # The Direction between two Positions

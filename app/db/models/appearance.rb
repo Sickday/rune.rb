@@ -8,7 +8,7 @@ module RuneRb::Database
       update(mob_id: -1)
     end
 
-    def head_to(id)
+    def to_head(id)
       update(head_icon: id)
     end
 

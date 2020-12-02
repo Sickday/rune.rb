@@ -1,6 +1,5 @@
 require_relative 'app/rune'
 
-
-TEST_WORLD = RuneRb::Game::World.new
-ENDPOINT = RuneRb::Network::Endpoint.new(TEST_WORLD)
+TEST_WORLD = RuneRb::World::Instance.new
+ENDPOINT = RuneRb::Net::Endpoint.new(TEST_WORLD)
 ENDPOINT.deploy

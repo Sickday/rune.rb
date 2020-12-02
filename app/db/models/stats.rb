@@ -1,35 +1,37 @@
 module RuneRb::Database
+  # The Stats object models the public.stats table rows which relate to a player's stats.
   class Stats < Sequel::Model(PROFILES[:stats])
     attr :level_up
 
     MAXIMUM_EXPERIENCE = 200_000_000
 
     SKILLS = {
-        ATTACK: %i[attack_level attack_exp],
-        DEFENCE: %i[defence_level defence_exp],
-        STRENGTH: %i[strength_level strength_exp],
-        HIT_POINTS: %i[hit_points_level hit_points_exp],
-        RANGE: %i[range_level range_exp],
-        PRAYER: %i[prayer_level prayer_exp],
-        MAGIC: %i[magic_level magic_exp],
-        COOKING: %i[cooking_level cooking_exp],
-        WOODCUTTING: %i[woodcutting_level woodcutting_exp],
-        FLETCHING: %i[fletching_level fletching_exp],
-        FISHING: %i[fishing_level fishing_exp],
-        FIREMAKING: %i[firemaking_level firemaking_exp],
-        CRAFTING: %i[crafting_level crafting_exp],
-        SMITHING: %i[smithing_level smithing_exp],
-        MINING: %i[mining_level mining_exp],
-        HERBLORE: %i[herblore_level herblore_exp],
-        AGILITY: %i[agility_level agility_exp],
-        THIEVING: %i[thieving_level thieving_exp],
-        SLAYER: %i[slayer_level slayer_exp],
-        FARMING: %i[farming_level farming_exp],
-        RUNECRAFTING: %i[runecrafting_level runecrafting_exp]
+      ATTACK: %i[attack_level attack_exp],
+      DEFENCE: %i[defence_level defence_exp],
+      STRENGTH: %i[strength_level strength_exp],
+      HIT_POINTS: %i[hit_points_level hit_points_exp],
+      RANGE: %i[range_level range_exp],
+      PRAYER: %i[prayer_level prayer_exp],
+      MAGIC: %i[magic_level magic_exp],
+      COOKING: %i[cooking_level cooking_exp],
+      WOODCUTTING: %i[woodcutting_level woodcutting_exp],
+      FLETCHING: %i[fletching_level fletching_exp],
+      FISHING: %i[fishing_level fishing_exp],
+      FIREMAKING: %i[firemaking_level firemaking_exp],
+      CRAFTING: %i[crafting_level crafting_exp],
+      SMITHING: %i[smithing_level smithing_exp],
+      MINING: %i[mining_level mining_exp],
+      HERBLORE: %i[herblore_level herblore_exp],
+      AGILITY: %i[agility_level agility_exp],
+      THIEVING: %i[thieving_level thieving_exp],
+      SLAYER: %i[slayer_level slayer_exp],
+      FARMING: %i[farming_level farming_exp],
+      RUNECRAFTING: %i[runecrafting_level runecrafting_exp]
     }.freeze
 
     LevelUpInfo = Struct.new(:skill, :level)
 
+    # Calculates the combat level
     def combat
       combat = ((self[:defence_level] + self[:hit_points_level] + (self[:prayer_level] / 2).floor) * 0.2535).to_i + 1
       melee = (self[:attack_level] + self[:strength_level]) * 0.325
@@ -42,12 +44,13 @@ module RuneRb::Database
       combat <= 126 ? combat : 126
     end
 
+    # Calculates the total level of all stat levels added.
     def total
       self[:attack_level] + self[:defence_level] + self[:strength_level] + self[:hit_points_level] +
-          self[:range_level] + self[:prayer_level] + self[:magic_level] + self[:cooking_level] +
-          self[:woodcutting_level] + self[:fletching_level] + self[:fishing_level] + self[:firemaking_level] +
-          self[:crafting_level] + self[:smithing_level] + self[:mining_level] + self[:herblore_level] +
-          self[:agility_level] + self[:thieving_level] + self[:slayer_level] + self[:farming_level] + self[:runecrafting_level]
+        self[:range_level] + self[:prayer_level] + self[:magic_level] + self[:cooking_level] +
+        self[:woodcutting_level] + self[:fletching_level] + self[:fishing_level] + self[:firemaking_level] +
+        self[:crafting_level] + self[:smithing_level] + self[:mining_level] + self[:herblore_level] +
+        self[:agility_level] + self[:thieving_level] + self[:slayer_level] + self[:farming_level] + self[:runecrafting_level]
     end
 
     # Updates a skill's level to that of the passed parameter
@@ -89,8 +92,9 @@ module RuneRb::Database
       end
     end
 
+    # @return [Boolean] is a level up required?
     def level_up?
-      !@level_up.nil?
+      true unless @level_up.nil?
     end
 
     class << self

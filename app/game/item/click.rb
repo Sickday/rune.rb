@@ -39,7 +39,7 @@ module RuneRb::Game::Item
         when 1688
           log "Got Equipment Tab 1stOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         else
-          err"Unhandled 1stOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
+          err "Unhandled 1stOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         end
       end
 
@@ -65,7 +65,7 @@ module RuneRb::Game::Item
         when 1688
           log "Got Equipment Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         else
-          err"Unhandled 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
+          err "Unhandled 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         end
       end
 
@@ -82,7 +82,7 @@ module RuneRb::Game::Item
         when 1688
           log "Got Equipment Tab 3rdOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         else
-          err"Unhandled 3rdOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
+          err "Unhandled 3rdOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         end
       end
 
@@ -99,7 +99,7 @@ module RuneRb::Game::Item
         when 1688
           log "Got Equipment Tab 4thOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         else
-          err"Unhandled 4thOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
+          err "Unhandled 4thOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
         end
       end
 

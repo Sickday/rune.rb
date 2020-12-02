@@ -1,8 +1,9 @@
-module RuneRb::Network
+module RuneRb::Net
+  # An implementation of an ISAAC cipher used to generate random numbers for frame interchange.
   class ISAAC
     using RuneRb::Patches::IntegerOverrides
-    # An implementation of an ISAAC cipher used to generate random numbers for frame interchange.
-    # Initializes the ISAAC cipher with the given seed.
+
+    # Called when a new ISAAC Cipher is created.
     def initialize(seed)
       @aa = 0
       @bb = 0
@@ -20,7 +21,7 @@ module RuneRb::Network
     # Gets the next random value.
     # If 256 cycles have occured, the results array is regenerated.
     def next_value
-      if @randcnt == 0
+      if @randcnt.zero?
         isaac
         @randcnt = 256
       end

@@ -8,12 +8,23 @@ module RuneRb::Database
 
     # Registers a new profile with supplied data.
     # @param data [Hash, Struct] profile data to insert.
-    def self.register(data, name_hash)
-      PROFILES[:profile].insert(name: data[:Username], password: data[:Password], name_hash: name_hash)
+    # @return [RuneRb::Database::Profile] the created profile.
+    def self.register(data)
+      # Create the profile and associations
+      PROFILES[:profile].insert(name: data[:Username], password: data[:Password], name_hash: data[:NameHash])
       PROFILES[:settings].insert(name: data[:Username])
       PROFILES[:appearance].insert(name: data[:Username])
       PROFILES[:stats].insert(name: data[:Username])
       PROFILES[:location].insert(name: data[:Username])
+
+      # Return the created profile
+      RuneRb::Database::Profile[data[:Username]]
+    end
+
+    # Get the Position for the Location associated with the Profile.
+    # @return [RuneRb::Map::Position] the Position object for the Location associated with the Profile.
+    def position
+      location.to_position
     end
   end
 end

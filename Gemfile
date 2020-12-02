@@ -1,27 +1,36 @@
 source 'https://rubygems.org'
 
 # Development Gems
-group :dev do
+group :development do
   gem 'async'
-  gem 'bindata'
-  gem 'bzip2-ffi'
-  gem 'console'
-  gem 'digest-crc'
-  gem 'dotenv'
-  gem 'druuid'
+  gem 'async-container'
+
   gem 'faker'
   gem 'get_process_mem'
-  gem 'logging'
   gem 'minitest'
-  gem 'nio4r'
-  gem 'oj'
-  gem 'parallel'
-  gem 'pastel'
+
+
   gem 'pg'
   gem 'pry'
   gem 'rake'
   gem 'sequel'
   gem 'sqlite3'
-  gem 'tty-table'
+  gem 'tty'
+  gem 'tty-logger'
+  gem 'tty-spinner'
   gem 'yard'
+end
+
+# Production Gems
+group :production do
+  gem 'console'
+  gem 'dotenv'
+  gem 'druuid'
+  gem 'eventmachine'
+  gem 'logging'
+  gem 'oj'
+  gem 'pastel'
+  gem 'parallel'
+  gem 'pg'
+  gem 'sequel'
 end

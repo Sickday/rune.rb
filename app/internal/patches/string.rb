@@ -102,6 +102,17 @@ module RuneRb::Patches::StringOverrides
       amount.times.inject('') { |str| str << slice!(position..(position + 7)) }.unpack('q*')
     end
 
+    # Returns the next terminated string.
+    def next_tstring
+      val = ''
+      while (res = next_byte)
+        break if res == 10
+
+        val << res
+      end
+      val
+    end
+
     # Returns a base37 numeric representation of the String.
     # @return [Integer] a base37 number representing the String
     def to_base37

@@ -1,10 +1,11 @@
-module RuneRb::Network::Constants
+module RuneRb::Net::Constants
   CONNECTION_TYPES = {
-      GAME_RECONNECT: 18,
-      GAME_NEW: 16,
-      GAME_UPDATE: 15,
-      GAME_LOGIN: 14
+    GAME_RECONNECT: 18,
+    GAME_NEW: 16,
+    GAME_UPDATE: 15,
+    GAME_LOGIN: 14
   }.freeze
+
   SIDEBAR_INTERFACES = { 0 => 2423, # ATTACK
                          1 => 3917, # SKILL
                          2 => 638,  # QUEST
