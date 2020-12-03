@@ -12,3 +12,5 @@
 
 See [Credits](docs/Credits.md).
 
+<sub><sub><sub><sub>If you're viewing this repo on github, you're looking at a mirror. The main repo is hosted on gitlab [here](https://gitlab.com/sickday/rune.rb)
+
