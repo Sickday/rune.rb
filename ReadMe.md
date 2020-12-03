@@ -6,7 +6,7 @@
 
 | Name | Role | Contact |
 | ----------- | ---- | ------- |
-| Patrick W. | Maintainer | Sickday@pm.me or Sickday#0001 |
+| Patrick W. | Maintainer | Sickday@pm.me |
 
 ## Credits
 

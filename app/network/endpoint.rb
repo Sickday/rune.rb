@@ -1,5 +1,5 @@
 module RuneRb::Net
-  # Represents a host endpoint which accepts sockets and alerts them to populate their buffers via an internal nio selector
+  # Represents a host endpoint which accepts sockets and alerts their sessions to populate their buffers via an nio selector.
   class Endpoint
     include RuneRb::Internal::Log
 
