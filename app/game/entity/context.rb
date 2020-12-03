@@ -1,5 +1,5 @@
 module RuneRb::Entity
-  # A Context object is a Mob that is representing the context of a connected Peer session.
+  # A Context object is a Mob that is representing the context of a connected Session.
   class Context < RuneRb::Entity::Mob
     include RuneRb::Internal::Log
     include RuneRb::Entity::Helpers::Equipment
@@ -17,7 +17,7 @@ module RuneRb::Entity
     # @return [Hash] the Inventory data for the Context
     attr :inventory
 
-    # @return [RuneRb::Net::Peer] the Peer session for the Context
+    # @return [RuneRb::Net::Session] the Session for the Context
     attr :session
 
     # @return [RuneRb::Database::Profile] the Profile of the Context which acts as it's definition.
@@ -27,10 +27,10 @@ module RuneRb::Entity
     attr :world
 
     # Called when a new Context Entity is created.
-    # @param peer [RuneRb::Net::Peer] the peer to be associated with the entity.
+    # @param session [RuneRb::Net::Session] the session to be associated with the entity.
     # @param profile [RuneRb::Database::Profile] the profile that will act as the definition for the context mob.
-    def initialize(peer, profile)
-      @session = peer
+    def initialize(session, profile)
+      @session = session
       @profile = profile
       super(profile)
     end
@@ -40,7 +40,7 @@ module RuneRb::Entity
     # * dumps the Context#inventory[:container]
     # * dumps the Context#equipment
     # * updates the Context#profile#location to the current Context#position
-    # * closes the peer session via Context#session#close_connection
+    # * closes the session via Context#session#close_connection
     def logout
       dump_inventory
       dump_equipment
@@ -67,7 +67,7 @@ module RuneRb::Entity
       @world = world
       log 'Attached to World instance!' if RuneRb::DEBUG
     rescue StandardError => e
-      err! 'An error occurred while attaching peer to Endpoint!'
+      err! 'An error occurred while attaching session to Endpoint!'
       puts e
       puts e.backtrace
     end

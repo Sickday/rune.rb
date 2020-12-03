@@ -18,19 +18,19 @@ module RuneRb::World
     end
 
     # Creates a context mob, adds the mob to the Instance#entities hash, assigns the mob's index, then calls Context#login providing the Instance as the parameter
-    # @param peer [RuneRb::Net::Peer] the peer session for the context
+    # @param session [RuneRb::Net::Session] the session session for the context
     # @param profile [RuneRb::Database::Profile] the profile for the context
-    def receive(peer, profile)
-      ctx = RuneRb::Entity::Context.new(peer, profile)
+    def receive(session, profile)
+      ctx = RuneRb::Entity::Context.new(session, profile)
       @entities[:players].tap do |hash|
         ctx.index = hash.empty? ? 1 : hash.keys.last + 1
         @entities[:players][ctx.index] = ctx
       end
       ctx.login(self)
-      peer.register(ctx)
+      session.register(ctx)
       log RuneRb::COL.green("Registered new Context for #{RuneRb::COL.yellow(profile.name)}") if RuneRb::DEBUG
       log RuneRb::COL.green("Welcome, #{RuneRb::COL.yellow(profile.name)}!")
-      peer.status[:auth] = :LOGGED_IN
+      session.status[:auth] = :LOGGED_IN
     rescue StandardError => e
       err 'An error occurred while receiving context!', e
       puts e.backtrace

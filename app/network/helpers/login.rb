@@ -18,7 +18,7 @@ module RuneRb::Net::LoginHelper
     when RuneRb::Net::CONNECTION_TYPES[:GAME_NEW]
       log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Online')}") if RuneRb::DEBUG
       send_data([0].pack('n'))
-      close_connection(true)
+      disconnect
     when RuneRb::Net::CONNECTION_TYPES[:GAME_UPDATE]
       log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Update')}") if RuneRb::DEBUG
       send_data(Array.new(8, 0).pack('C' * 8))
@@ -30,7 +30,7 @@ module RuneRb::Net::LoginHelper
       @status[:auth] = :PENDING_BLOCK
     else # Unrecognized Connection type
     send_data([11].pack('C')) # 11	"Login server rejected session. Please try again."
-    close_connection(true)
+    disconnect
     end
   end
 

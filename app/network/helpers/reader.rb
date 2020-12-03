@@ -4,10 +4,10 @@ module RuneRb::Net::FrameReader
 
   private
 
-  # Decodes a frame using the Peer#cipher.
+  # Decodes a frame using the Session#cipher.
   # @param frame [RuneRb::Network::Frame] the frame to decode.
   def decode_frame(frame)
-    raise 'Invalid cipher for Peer!' unless @cipher
+    raise 'Invalid cipher for Session!' unless @cipher
 
     frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
     frame.header[:op_code] = frame.header[:op_code] & 0xFF
@@ -16,7 +16,7 @@ module RuneRb::Net::FrameReader
     frame
   end
 
-  # Reads the next parseable frame from Peer#in, then attempts to handle the frame accordingly.
+  # Reads the next parseable frame from Session#in, then attempts to handle the frame accordingly.
   def next_frame
     @current = RuneRb::Net::Frame.new(@in.next_byte)
     @current = decode_frame(@current)

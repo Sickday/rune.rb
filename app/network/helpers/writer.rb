@@ -3,7 +3,7 @@ module RuneRb::Net::FrameWriter
   using RuneRb::Patches::IntegerOverrides
   using RuneRb::Patches::StringOverrides
 
-  # Encodes a frame using the Peer#cipher.
+  # Encodes a frame using the Session#cipher.
   # @param frame [RuneRb::Network::Frame] the frame to encode.
   def encode_frame(frame)
     raise 'Invalid cipher for client!' unless @cipher
@@ -23,7 +23,7 @@ module RuneRb::Net::FrameWriter
 
   alias << write_frame
 
-  # Writes a frame to the peer's socket
+  # Writes a frame to the session's socket
   # @param frame_type [Symbol] the type of frame to write
   # @param data [Hash] the data that will be included in the frame.
   def write(frame_type, data = {})
@@ -46,7 +46,6 @@ module RuneRb::Net::FrameWriter
       write(:sys_message, message: "VERSION: #{ENV['VERSION']}")
     when :logout, :disconnect
       write_frame(RuneRb::Net::Meta::CloseConnectionFrame.new)
-      close_connection(true)
     when :equipment
       data.each { |slot, slot_data| write_frame(RuneRb::Net::Meta::EquipmentSlotFrame.new(slot: slot, slot_data: slot_data)) }
     when :skill

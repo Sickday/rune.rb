@@ -14,7 +14,6 @@ group :development do
   gem 'pry'
   gem 'rake'
   gem 'sequel'
-  gem 'sqlite3'
   gem 'tty'
   gem 'tty-logger'
   gem 'tty-spinner'

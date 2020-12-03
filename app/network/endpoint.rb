@@ -18,55 +18,68 @@ module RuneRb::Net
 
       @world = world
       @info = { host: host, port: port }
-      @peers = []
-      @pulse = init_pulse
+      @sessions = []
+      @selector = NIO::Selector.new
+      @server = TCPServer.new(host, port)
+      @selector.register(@server, :r).value = proc { accept_session }
       @start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     end
 
-    # Initializes the pulse task
-    def init_pulse
-      Concurrent::TimerTask.new(execution_interval: 0.600) do
-        return if @peers.empty?
-
-        start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-        begin
-          @peers.each do |peer|
-            peer.pulse if peer.status[:auth] == :LOGGED_IN
-            @peers.delete(peer) unless peer.status[:active]
-          end
-          log "Pulse completed in #{(Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3)} seconds" if RuneRb::DEBUG
-        rescue StandardError => e
-          err 'An error occurred during a pulse!'
-          puts e
-          puts e.backtrace
-        end
-      end
-    rescue StandardError => e
-      err! 'An error occurred while initializing pulse task!'
-      puts e
-      puts e.backtrace
-    end
-
-    # Spawns a new process and launches a TCPServer object to listen on Endpoint#info[:host] : Endpoint#info[:port]  *
+    # Spawns a new process and executes the selection loop within that process. *
     def deploy
       # I'm unsure the limits of what can be called in Trap Context but we track uptime here and call exit.
       Signal.trap('INT') do
-        puts RuneRb::COL.green("Up-time: #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - @start_time).round(3))} Sec")
+        puts RuneRb::COL.green("Up-time: #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - @start_time).round(3))} Secs")
         exit
       end
 
-      # Launch the actual server in a separate process as to [hopefully] mitigate any load that might fall on threads it would use in this process.
       Parallel.in_processes(count: 1) do
-        # Run EventMachine reactor here
-        EventMachine.run do
-          # Launch the EventMachine server.
-          EventMachine.start_server(@info[:host], @info[:port], RuneRb::Net::Peer) do |peer|
-            peer.attach_to(self)
-            @peers << peer
+        Concurrent::TimerTask.execute(execution_interval: 0.600) do
+          return if @sessions.empty?
+
+          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          begin
+            @sessions.each do |session|
+              session.pulse if session.status[:auth] == :LOGGED_IN
+              @sessions.delete(session) unless session.status[:active]
+            end
+            log "Pulse completed in #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3))} seconds" if RuneRb::DEBUG
+          rescue StandardError => e
+            err 'An error occurred during a pulse!', e
+            puts e.backtrace
           end
-          log RuneRb::COL.green("Endpoint deployed: #{RuneRb::COL.yellow.bold("#{@info[:host]}:#{@info[:port]}")}")
-          @pulse.execute
         end
+
+        log RuneRb::COL.green("Endpoint deployed: #{RuneRb::COL.yellow.bold("#{@info[:host]}:#{@info[:port]}")}")
+        loop { @selector.select { |monitor| monitor.value.call } }
+      end
+    end
+
+    # De-registers a socket from the selector and removes it's reference from the internal client list.
+    def deregister(session, socket)
+      @selector.deregister(socket)
+      @sessions.delete(session)
+      log RuneRb::COL.green("De-registered socket for #{RuneRb::COL.cyan(session.ip)}")
+    rescue StandardError => e
+      err 'An error occurred while deregistering session!', e
+      puts e.backtrace
+    end
+
+    private
+
+    # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
+    def accept_session
+      socket = @server.accept_nonblock
+      host = socket.peeraddr[-1]
+      @sessions << RuneRb::Net::Session.new(socket, self)
+      @selector.register(socket, :r).value = proc { update_sessions }
+      log RuneRb::COL.green("Registered new socket for #{RuneRb::COL.cyan(host)}")
+    end
+
+    # Attempts to update peer streams via Peer#receive_data
+    def update_sessions
+      @sessions.each do |session|
+        session.status[:active] ? session.receive_data : deregister(session, session.socket)
       end
     end
   end

@@ -67,7 +67,7 @@ module RuneRb
     include Constants
 
     autoload :Endpoint,             'network/endpoint'
-    autoload :Peer,                 'network/peer'
+    autoload :Session,              'network/session'
 
     autoload :ISAAC,                'network/isaac'
 
