@@ -16,15 +16,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE rune_rb_profiles;
 --
--- Name: rune_rb_profiles; Type: DATABASE; Schema: -; Owner: pat
+-- Name: rune_rb_profiles; Type: DATABASE;
 --
 
-CREATE DATABASE rune_rb_profiles WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.UTF-8';
+CREATE DATABASE rune_rb_profiles ENCODING = 'UTF8';
 
-
-ALTER DATABASE rune_rb_profiles OWNER TO pat;
 
 \connect rune_rb_profiles
 

@@ -1,0 +1,470 @@
+# Logfile created on 2020-11-06 00:00:48 -0500 by logger.rb/v1.4.2
+I, [2020-11-06T00:00:48.581713 #49617]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:00:48.581893 #49617]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:00:51.771185 #50258]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:00:51.843927 #50258]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:00:51.844129 #50258]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:00:52.249960 #50258] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:00:52.250288 #50258]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:01:11.066786 #57912]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:01:11.066981 #57912]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:01:12.837280 #58590]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:01:12.909539 #58590]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:01:12.909741 #58590]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:01:13.530702 #58590] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:01:13.531042 #58590]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:01:46.628011 #63327]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:01:46.628208 #63327]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:01:48.154937 #63579]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:01:48.223563 #63579]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:01:48.223775 #63579]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:01:48.432889 #63579] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:01:48.433073 #63579] ERROR -- RuneRb: no implicit conversion of String into Integer
+E, [2020-11-06T00:01:49.033893 #63579] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:01:49.034106 #63579] ERROR -- RuneRb: no implicit conversion of String into Integer
+E, [2020-11-06T00:01:49.040904 #63579] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:01:49.041169 #63579]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:02:18.449852 #63610]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:02:18.450035 #63610]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:02:20.275436 #63864]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:02:20.344707 #63864]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:02:20.344911 #63864]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:02:20.855722 #63864] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:02:20.855929 #63864] ERROR -- RuneRb: no implicit conversion of String into Integer
+I, [2020-11-06T00:02:39.394410 #63892]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:02:39.394597 #63892]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:02:41.795317 #64146]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:02:41.863915 #64146]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:02:41.864095 #64146]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:02:42.404252 #64146] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:02:42.404458 #64146] ERROR -- RuneRb: no implicit conversion of String into Integer
+I, [2020-11-06T00:02:42.462788 #64146]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:02:45.021106 #64146]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:02:45.026996 #64146]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:02:45.027164 #64146]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:02:45.408547 #64146] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:02:45.408710 #64146] ERROR -- RuneRb: no implicit conversion of String into Integer
+I, [2020-11-06T00:02:45.409829 #64146]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:02:59.914091 #64170]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:02:59.914259 #64170]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:03:02.878262 #64421]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:03:02.946827 #64421]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:03:02.947014 #64421]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:03:03.521204 #64421] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:03:03.521404 #64421] ERROR -- RuneRb: no implicit conversion of String into Integer
+I, [2020-11-06T00:03:03.867392 #64421]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:03:18.940213 #64442]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:03:18.940387 #64442]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:03:20.343536 #64699]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:03:20.412637 #64699]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:03:20.412820 #64699]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:03:20.802942 #64699] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:03:20.803229 #64699]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:06:11.398134 #64699]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:06:11.410642 #64699]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:06:11.411339 #64699]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:06:11.918006 #64699] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:06:11.920340 #64699]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:07:17.631318 #64699]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:07:17.637400 #64699]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:07:17.637600 #64699]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:07:17.964503 #64699] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:07:17.964735 #64699]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:08:06.105012 #64989]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:08:06.105215 #64989]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:08:09.180795 #65244]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:08:09.248964 #65244]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:08:09.249146 #65244]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:08:09.713218 #65244] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:08:09.713408 #65244] ERROR -- RuneRb: no implicit conversion of String into Integer
+I, [2020-11-06T00:08:10.160298 #65244]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:10:18.559483 #65318]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:10:18.559672 #65318]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:10:20.743153 #65578]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:10:20.811286 #65578]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:10:20.811474 #65578]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:10:20.966530 #65578] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:10:20.966692 #65578] ERROR -- RuneRb: undefined method `pack' for "no.\n":String
+Did you mean?  unpack
+E, [2020-11-06T00:10:21.568363 #65578] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:10:21.568515 #65578] ERROR -- RuneRb: undefined method `pack' for "no.\n":String
+Did you mean?  unpack
+E, [2020-11-06T00:10:21.575889 #65578] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:10:21.576174 #65578]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:10:51.593886 #65610]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:10:51.594073 #65610]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:10:54.036536 #65862]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:10:54.105403 #65862]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:10:54.105583 #65862]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:10:54.601421 #65862] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:10:54.601595 #65862] ERROR -- RuneRb: undefined method `pack' for "no.\n":String
+Did you mean?  unpack
+I, [2020-11-06T00:10:54.660985 #65862]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:10:57.319386 #65862]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:10:57.325282 #65862]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:10:57.325460 #65862]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:10:57.607328 #65862] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:10:57.607526 #65862] ERROR -- RuneRb: undefined method `pack' for "no.\n":String
+Did you mean?  unpack
+I, [2020-11-06T00:10:57.607813 #65862]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:11:19.546883 #65894]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:11:19.547077 #65894]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:11:21.400104 #66148]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:11:21.469996 #66148]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:11:21.470197 #66148]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:11:22.010874 #66148] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:11:22.011184 #66148]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:11:35.424510 #66175]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:11:35.424705 #66175]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:11:37.333754 #66426]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:11:37.402255 #66426]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:11:37.402437 #66426]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:11:37.885570 #66426] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:11:37.885865 #66426]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:16:41.463840 #66608]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:16:41.464020 #66608]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:16:43.292904 #66869]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:16:43.361908 #66869]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:16:43.362096 #66869]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:16:43.871566 #66869] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:16:43.871752 #66869] ERROR -- RuneRb: undefined method `write_string' for #<RuneRb::Network::Peer:0x000056046bd27c18>
+Did you mean?  write_stand
+I, [2020-11-06T00:16:44.193856 #66869]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:17:34.419413 #66911]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:17:34.419594 #66911]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:17:36.365644 #67162]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:17:36.435369 #67162]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:17:36.435556 #67162]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:17:36.882580 #67162] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:17:36.882912 #67162]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:00.909619 #67730]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:20:00.909847 #67730]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:20:03.725549 #67981]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:03.795395 #67981]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:03.795583 #67981]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:03.973538 #67981] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:03.973826 #67981]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:28.478344 #68005]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:20:28.478524 #68005]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:20:31.294031 #68256]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:31.362706 #68256]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:31.362936 #68256]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:31.542844 #68256] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:31.543158 #68256]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:34.661915 #68256]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:34.667785 #68256]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:34.667954 #68256]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:35.147669 #68256] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:35.147952 #68256]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:36.261757 #68256]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:36.265976 #68256]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:36.266148 #68256]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:36.380716 #68256] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:36.381087 #68256]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:38.278516 #68256]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:38.283561 #68256]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:38.283725 #68256]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:38.750707 #68256] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:38.750990 #68256]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:20:46.219607 #68256]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:20:46.223522 #68256]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:20:46.223707 #68256]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:20:46.563736 #68256] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:20:46.563997 #68256]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:21:09.062999 #68317]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:21:09.063175 #68317]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:21:11.083282 #68570]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:21:11.152700 #68570]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:21:11.152906 #68570]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:21:11.526641 #68570] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:21:11.527958 #68570]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:22:29.610882 #68636]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:22:29.611064 #68636]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:22:31.218855 #68896]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:22:31.287781 #68896]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:22:31.287984 #68896]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:22:31.417986 #68896] ERROR -- RuneRb: An error occurred during flush cycle!
+E, [2020-11-06T00:22:31.418168 #68896] ERROR -- RuneRb: undefined method `to_java_bytes' for "Thanks for testing Rune.rb.":String
+I, [2020-11-06T00:22:31.882347 #68896]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:23:07.547986 #68944]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:23:07.548191 #68944]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:23:09.556281 #69195]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:23:09.625629 #69195]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:23:09.625847 #69195]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:23:10.011072 #69195] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:23:10.011382 #69195]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:23:12.760461 #69195]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:23:12.766524 #69195]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:23:12.766697 #69195]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:23:13.015230 #69195] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:23:13.015497 #69195]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:23:18.660198 #69195]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:23:18.664563 #69195]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:23:18.664751 #69195]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:23:19.023500 #69195] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:23:19.023750 #69195]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:23:21.978597 #69195]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:23:21.983411 #69195]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:23:21.983582 #69195]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:23:22.627145 #69195] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:23:22.627417 #69195]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:23:24.105566 #69195]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:23:24.109481 #69195]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:23:24.109659 #69195]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:23:24.430847 #69195] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:23:24.431129 #69195]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:28:43.723846 #69932]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T00:28:43.724047 #69932]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T00:28:45.457821 #70183]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:28:45.526973 #70183]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:28:45.527179 #70183]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:28:45.606035 #70183] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:28:45.606341 #70183]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T00:28:53.879223 #70183]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T00:28:53.885289 #70183]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T00:28:53.885477 #70183]  INFO -- RuneRb: Credentials valid for Pat!
+E, [2020-11-06T00:28:54.020793 #70183] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T00:28:54.021218 #70183]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T09:42:28.983285 #98229]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-06T09:42:28.983471 #98229]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-06T09:43:17.455474 #98486]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T09:43:17.526489 #98486]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T09:43:17.526682 #98486]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-06T09:44:27.775093 #98486]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+E, [2020-11-06T09:44:27.775622 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:27.777015 #98486] ERROR -- RuneRb: Socket has no data
+I, [2020-11-06T09:44:27.794765 #98486]  INFO -- RuneRb: Registered new profile for Don
+I, [2020-11-06T09:44:27.794933 #98486]  INFO -- RuneRb: Credentials valid for don!
+E, [2020-11-06T09:44:28.476450 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:28.780868 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:29.476605 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:29.534082 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:30.300381 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:30.445165 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:30.561790 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:30.862590 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:31.263444 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:31.590093 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:32.314853 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:32.461315 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:32.622609 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:33.506816 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:33.663423 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:34.557261 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:34.716919 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:34.742275 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:34.759383 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:35.789494 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:35.805596 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:36.096773 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:36.514339 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:36.835653 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:36.926106 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:37.882889 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:37.953845 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:38.928512 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:38.983562 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:39.975004 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:40.014383 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:41.022339 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:41.043629 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:41.507453 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:42.068869 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:42.537309 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:43.116046 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:43.567028 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:44.130729 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:44.163175 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:44.546100 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:44.961771 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:45.210450 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:45.362964 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:45.769855 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:46.175059 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:46.259171 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:46.852745 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:47.198817 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:47.306219 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:48.241037 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:48.353851 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:48.861105 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:48.861360 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:49.401395 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:49.474783 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:49.474999 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:49.889905 #98486] ERROR -- RuneRb: Unhandled button! ID: 21000
+E, [2020-11-06T09:44:49.890117 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:50.447776 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:50.607018 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:50.607215 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:51.182024 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:51.182231 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:51.494314 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:51.776695 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:51.776925 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:52.032210 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:52.208369 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:52.208585 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:52.540206 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:52.723412 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:52.723628 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:53.190162 #98486] ERROR -- RuneRb: Unhandled button! ID: 21000
+E, [2020-11-06T09:44:53.190396 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:53.585516 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:53.788695 #98486] ERROR -- RuneRb: Unhandled button! ID: 24000
+E, [2020-11-06T09:44:53.788929 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:54.155399 #98486] ERROR -- RuneRb: Unhandled button! ID: 21000
+E, [2020-11-06T09:44:54.155612 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:54.631029 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:55.204564 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:55.305540 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:55.677070 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:55.721109 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:56.255096 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:56.671614 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:56.722784 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:57.730226 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:57.769807 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:58.168931 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:58.822649 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:59.202294 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:44:59.869707 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:00.257783 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:00.301050 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:01.315694 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:01.350085 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:02.376079 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:02.398541 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:03.438960 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:03.441895 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:04.485395 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:04.499455 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:05.529846 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:05.559773 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:06.578039 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:06.619100 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:07.624895 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:07.678568 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:08.053298 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:08.676284 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:09.107292 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:09.726261 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:10.169023 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:10.377273 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:10.387933 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:10.895641 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:10.917401 #98486] ERROR -- RuneRb: Socket has no data
+I, [2020-11-06T09:45:10.917810 #98486]  INFO -- RuneRb: Got path: [[2861, 3349]]
+E, [2020-11-06T09:45:11.438564 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:11.970159 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:12.498347 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:12.757447 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:13.170074 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:13.561186 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:13.577406 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:13.992020 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:14.540631 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:14.620553 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:14.947381 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:15.356700 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:15.665462 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:15.768299 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:16.180980 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:16.588046 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:16.725252 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:16.994292 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:17.406045 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:17.785126 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:17.810058 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:18.220818 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:18.635495 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:18.847276 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:19.051352 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:19.456534 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:19.870721 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:19.906229 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:20.283149 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:20.698186 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:20.967308 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:21.109408 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:21.521622 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:21.930874 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:22.029014 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:22.342240 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:23.010119 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:23.088808 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:23.401167 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:23.418892 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:24.454027 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:24.459463 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:24.754837 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:25.158150 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:25.518883 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:26.206391 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:26.226990 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:26.577941 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:26.636767 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:27.041999 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:27.441929 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:27.637403 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:27.842242 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:28.243594 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:28.646412 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:28.696957 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:29.669460 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:29.755433 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:30.729570 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:30.815326 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:31.291404 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:31.875904 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:32.145126 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:32.561999 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:32.937307 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:32.975290 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:33.391072 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:33.807651 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:33.997695 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:34.224460 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:34.641674 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:35.055012 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:35.058804 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:35.465945 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:36.118602 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:36.515410 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:36.927847 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:37.178896 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:37.338951 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:37.811043 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:38.218973 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:38.235945 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:39.250965 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:39.271104 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:39.294788 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:40.351044 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:41.407280 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:42.463858 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:42.485594 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:42.505627 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:42.685905 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:43.092468 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:43.504716 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:43.910061 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:44.321356 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:45.359049 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:46.395965 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:47.306092 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:48.339204 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:49.375318 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:50.411840 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:51.448635 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:52.479729 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:53.232102 #98486] ERROR -- RuneRb: Socket has no data
+E, [2020-11-06T09:45:53.232439 #98486] ERROR -- RuneRb: Peer reset connection!
+I, [2020-11-06T09:45:53.232590 #98486]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+E, [2020-11-06T10:02:19.799900 #98486] ERROR -- RuneRb: Unhandled frame: [OpCode]: 87 || [Size]: 6 || [Payload]: [16, -73, 12, -114, 0, -124]
+I, [2020-11-06T10:02:22.811715 #98486]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-06T10:02:24.840627 #98486]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-06T10:02:24.843996 #98486]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-06T10:02:24.844160 #98486]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-06T10:04:35.397408 #98486]  INFO -- RuneRb: Got path: [[2605, 3342]]
+I, [2020-11-06T10:04:44.221545 #98486]  INFO -- RuneRb: De-registered socket for 127.0.0.1

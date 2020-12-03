@@ -25,7 +25,6 @@ group :production do
   gem 'console'
   gem 'dotenv'
   gem 'druuid'
-  gem 'eventmachine'
   gem 'logging'
   gem 'oj'
   gem 'pastel'

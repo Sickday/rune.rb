@@ -1,12 +1,11 @@
 Dir[File.dirname(__FILE__)].each { |file| $LOAD_PATH.unshift(file) if File.directory? file }
 
 require 'async'
-require 'concurrent'
 require 'console'
 require 'dotenv/load'
 require 'druuid'
-require 'eventmachine'
 require 'fileutils'
+require 'nio'
 require 'oj'
 require 'parallel'
 require 'pastel'

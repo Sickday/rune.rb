@@ -18,13 +18,10 @@ SET row_security = off;
 
 DROP DATABASE rune_rb_defs;
 --
--- Name: rune_rb_defs; Type: DATABASE; Schema: -; Owner: pat
+-- Name: rune_rb_defs; Type: DATABASE;
 --
 
-CREATE DATABASE rune_rb_defs WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.UTF-8';
-
-
-ALTER DATABASE rune_rb_defs OWNER TO pat;
+CREATE DATABASE rune_rb_defs ENCODING = 'UTF8';
 
 \connect rune_rb_defs
 
