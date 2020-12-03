@@ -33,7 +33,7 @@ For the time being, I'd highly recommend this project be setup in a linux enviro
 **1**. Clone the repo and install dependencies via `bundler`
 * Clone the Repo:
 ```shell script
-git clone --branch --single-branch scratch https://gitlab.com/sickday/rune.rb.git`
+git clone --branch --single-branch master https://gitlab.com/sickday/rune.rb.git`
 cd rune.rb
 bundle install
 ```
