@@ -10,6 +10,9 @@ module RuneRb::World::LoginHelper
                 WORLD_TRANSFER: 21 }.freeze
 
   # Receives a session and attempts to register it to the World Instance.
+  # @param session [RuneRb::Net::Session] the session that is attempting to login
+  # @param login_block [Hash] a structured login block
+  # @param connection_block [Hash] a structured connection block
   def login(session, login_block, connection_block)
     return unless validate_type(session, login_block)
     return unless validate_seed(session, login_block, connection_block)
@@ -22,11 +25,17 @@ module RuneRb::World::LoginHelper
 
   private
 
+  # Retrieves the profile of the player attempting the login
+  # @param block [Hash] the login block for the session attempting the login.
+  # @api private
   def fetch_profile(block)
     RuneRb::Database::Profile[block[:Username]] || RuneRb::Database::Profile.register(block)
   end
 
   # Attempts to validate the credentials of the login block
+  # @param session [RuneRb::Net::Session] the session attempting to login
+  # @param block [Hash] the login block for the session attempting the login
+  # @api private
   def validate_credentials(session, block)
     log "Validating Credentials for #{session.ip}"if RuneRb::DEBUG
     unless block[:Username].length >= 1 && RuneRb::Database::SYSTEMS[:banned_names].all.none? { |row| row[:names].include?(block[:Username]) }
@@ -61,6 +70,9 @@ module RuneRb::World::LoginHelper
   end
 
   # Attempts to validate the connection type
+  # @param session [RuneRb::Net::Session] the session attempting the login
+  # @param block [Hash] the login block for the session attempting the login
+  # @api private
   def validate_type(session, block)
     log "Validating Login type for #{session.ip}" if RuneRb::DEBUG
     unless [16, 18].include?(block[:Type])
@@ -74,6 +86,10 @@ module RuneRb::World::LoginHelper
   end
 
   # Attempts to validate the seed received in the login block.
+  # @param session [RuneRb::Net::Session] the session that is attempting to login
+  # @param login_block [Hash] a structured login block
+  # @param connection_block [Hash] a structured connection block
+  # @api private
   def validate_seed(session, login_block, connection_block)
     log "Validating Seed pair for #{session.ip}" if RuneRb::DEBUG
     unless login_block[:LoginSeed] == connection_block[:ConnectionSeed]
@@ -87,6 +103,9 @@ module RuneRb::World::LoginHelper
   end
 
   # Attempts to validate the magic in the login block.
+  # @param session [RuneRb::Net::Session] the session attempting the login
+  # @param block [Hash] the login block for the session attempting the login
+  # @api private
   def validate_magic(session, block)
     log "Validating Magic for #{session.ip}" if RuneRb::DEBUG
     unless block[:Magic] == 0xff
@@ -100,6 +119,9 @@ module RuneRb::World::LoginHelper
   end
 
   # Attempts to validate the revision in the login block.
+  # @param session [RuneRb::Net::Session] the session attempting the login
+  # @param block [Hash] the login block for the session attempting the login
+  # @api private
   def validate_revision(session, block)
     log "Validating Revision for #{session.ip}" if RuneRb::DEBUG
     unless [317, 377, ENV['TARGET_PROTOCOL']].include?(block[:Revision])

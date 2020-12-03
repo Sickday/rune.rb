@@ -3,7 +3,6 @@ module RuneRb::World
   class Instance
     include RuneRb::Internal::Log
     include LoginHelper
-    include CommandHelper
 
     # @return [Hash] a map of entities the Instance has spawned
     attr :entities
@@ -13,7 +12,6 @@ module RuneRb::World
     def initialize(config = {})
       init_config(config)
       init_entities
-      init_commands
       log RuneRb::COL.green('New World Instance initialized!')
     end
 

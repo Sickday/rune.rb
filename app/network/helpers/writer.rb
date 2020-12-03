@@ -48,6 +48,28 @@ module RuneRb::Net::FrameWriter
       write_frame(RuneRb::Net::Meta::CloseConnectionFrame.new)
     when :equipment
       data.each { |slot, slot_data| write_frame(RuneRb::Net::Meta::EquipmentSlotFrame.new(slot: slot, slot_data: slot_data)) }
+    when :stats
+      write(:skill, skill_id: 0, level: data[:attack_level], experience: data[:attack_exp])
+      write(:skill, skill_id: 1, level: data[:defence_level], experience: data[:defence_exp])
+      write(:skill, skill_id: 2, level: data[:strength_level], experience: data[:strength_exp])
+      write(:skill, skill_id: 3, level: data[:hit_points_level], experience: data[:hit_points_exp])
+      write(:skill, skill_id: 4, level: data[:range_level], experience: data[:range_exp])
+      write(:skill, skill_id: 5, level: data[:prayer_level], experience: data[:prayer_exp])
+      write(:skill, skill_id: 6, level: data[:magic_level], experience: data[:magic_exp])
+      write(:skill, skill_id: 7, level: data[:cooking_level], experience: data[:cooking_exp])
+      write(:skill, skill_id: 8, level: data[:woodcutting_level], experience: data[:woodcutting_exp])
+      write(:skill, skill_id: 9, level: data[:fletching_level], experience: data[:fletching_exp])
+      write(:skill, skill_id: 10, level: data[:fishing_level], experience: data[:fishing_exp])
+      write(:skill, skill_id: 11, level: data[:firemaking_level], experience: data[:firemaking_exp])
+      write(:skill, skill_id: 12, level: data[:crafting_level], experience: data[:crafting_exp])
+      write(:skill, skill_id: 13, level: data[:smithing_level], experience: data[:smithing_exp])
+      write(:skill, skill_id: 14, level: data[:mining_level], experience: data[:mining_exp])
+      write(:skill, skill_id: 15, level: data[:herblore_level], experience: data[:herblore_exp])
+      write(:skill, skill_id: 16, level: data[:agility_level], experience: data[:agility_exp])
+      write(:skill, skill_id: 17, level: data[:thieving_level], experience: data[:thieving_exp])
+      write(:skill, skill_id: 18, level: data[:slayer_level], experience: data[:slayer_exp])
+      write(:skill, skill_id: 19, level: data[:farming_level], experience: data[:farming_exp])
+      write(:skill, skill_id: 20, level: data[:runecrafting_level], experience: data[:runecrafting_exp])
     when :skill
       write_frame(RuneRb::Net::Meta::SkillSlotFrame.new(data))
     when :inventory

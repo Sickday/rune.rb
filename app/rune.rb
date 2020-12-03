@@ -33,8 +33,24 @@ module RuneRb
     autoload :Context,              'game/entity/context'
     autoload :Mob,                  'game/entity/mob'
     autoload :Animation,            'game/entity/models/animation'
+    autoload :Command,              'game/entity/models/command'
     autoload :Graphic,              'game/entity/models/graphic'
     autoload :Message,              'game/entity/models/message'
+
+    # This module contains commands executable by an entity.
+    module Commands
+      autoload :Ascend,             'game/entity/commands/ascend'
+      autoload :Animation,          'game/entity/commands/animation'
+      autoload :Ban,                'game/entity/commands/ban'
+      autoload :Descend,            'game/entity/commands/descend'
+      autoload :Design,             'game/entity/commands/design'
+      autoload :Graphic,            'game/entity/commands/graphic'
+      autoload :Item,               'game/entity/commands/item'
+      autoload :Morph,              'game/entity/commands/morph'
+      autoload :Position,           'game/entity/commands/position'
+      autoload :To,                 'game/entity/commands/to'
+      autoload :Show,               'game/entity/commands/show'
+    end
 
     # This module provides helper functions and objects to an entity
     module Helpers
@@ -59,6 +75,7 @@ module RuneRb
   module Internal
     autoload :Log,                  'internal/log'
     autoload :Routine,              'internal/routine'
+    autoload :Utils,                'internal/utils'
   end
 
   # This module contains objects, models, and helpers related to network activity.
@@ -118,24 +135,7 @@ module RuneRb
   # This module contains objects, models, and helpers to simulate and handle a virtual game world.
   module World
     autoload :Instance,             'game/world/instance'
-    autoload :Command,              'game/world/models/command'
-    autoload :CommandHelper,        'game/world/helpers/command'
     autoload :LoginHelper,          'game/world/helpers/login'
-
-    # This module contains world commands.
-    module Commands
-      autoload :Ascend,             'game/world/commands/ascend'
-      autoload :Animation,          'game/world/commands/animation'
-      autoload :Ban,                'game/world/commands/ban'
-      autoload :Descend,            'game/world/commands/descend'
-      autoload :Design,             'game/world/commands/design'
-      autoload :Graphic,            'game/world/commands/graphic'
-      autoload :Item,               'game/world/commands/item'
-      autoload :Morph,              'game/world/commands/morph'
-      autoload :Position,           'game/world/commands/position'
-      autoload :To,                 'game/world/commands/to'
-      autoload :Show,               'game/world/commands/show'
-    end
   end
 
   # Set the logfile path.

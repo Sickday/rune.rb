@@ -28,6 +28,8 @@ module RuneRb::Net
       @context = context
     end
 
+    # Writes data to the Session#socket object via Socket#write_nonblock
+    # @param data [String, StringIO] the raw data to write to the socket.
     def send_data(data)
       @socket.write_nonblock(data)
     rescue EOFError
@@ -58,7 +60,7 @@ module RuneRb::Net
         read_connection
       end
     rescue IO::EAGAINWaitReadable
-      err 'Socket has no data'
+      err 'Socket has no data' if RuneRb::DEBUG
       nil
     rescue EOFError
       err 'Reached EOF!' if RuneRb::DEBUG
@@ -87,7 +89,7 @@ module RuneRb::Net
       err! 'An error occurred during Session pulse!', e, e.backtrace
     end
 
-    # Attempts to gracefully disconnect the session
+    # Gracefully disconnects the session by release it's context, updating the Session#status, and calling Session#close to ensure the endpoint releases the session's socket.
     def disconnect
       @status[:active] = false
       @status[:auth] = :LOGGED_OUT

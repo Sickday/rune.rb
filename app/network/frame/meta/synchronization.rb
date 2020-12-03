@@ -47,7 +47,6 @@ module RuneRb::Net::Meta
           # Remove the contexts from each other's local list
           context.locals[:players].delete(ctx)
         else
-          puts "Updating #{ctx.profile.name}"
           # Write the movement and state for the context.
           write_movement(ctx)
           state.write_state(ctx)
