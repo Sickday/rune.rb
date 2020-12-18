@@ -1,11 +1,12 @@
 module RuneRb::Network::Constants
+  # A map of valid connection types
   CONNECTION_TYPES = {
     GAME_RECONNECT: 18,
     GAME_NEW: 16,
     GAME_UPDATE: 15,
     GAME_LOGIN: 14
   }.freeze
-
+  # A map of sidebar interface menu_ids -> form ids
   SIDEBAR_INTERFACES = { 0 => 2423, # ATTACK
                          1 => 3917, # SKILL
                          2 => 638,  # QUEST
@@ -13,19 +14,20 @@ module RuneRb::Network::Constants
                          4 => 1644, # EQUIPMENT
                          5 => 5608, # PRAYER
                          6 => 1151, # NORMAL SPELLS = 1151, ANCIENT = 12855
-                         7 => -1,   # CLAN
                          8 => 5065, # FRIENDS
                          9 => 5715, # IGNORE
                          10 => 2449, # LOGOUT
                          11 => 904, # WRENCH
                          12 => 147, # EMOTE
                          13 => 962 }.freeze # MUSIC
+  # Acceptable byte orders in which multi-byte values can be read.
   BYTE_ORDERS = %i[BIG MIDDLE INVERSE_MIDDLE LITTLE].freeze
-  BYTE_TYPES = %i[STD A C S].freeze
-  ACCESS_TYPE = %i[BYTE BIT].freeze
+  # Acceptable types of bytes to be read
+  BYTE_TYPES = [:A, :a, :C, :c, :S, :s, :STD, :std].freeze
   # Bit masks for bit packing
   BIT_MASK_OUT = (0...32).collect { |i| (1 << i) - 1 }
-  PACKET_MAP = { 0 => 0, 1 => 0, 2 => 0, 3 => 1, 4 => -1, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0,
+  # A map of frame operation codes -> frame size
+  FRAME_SIZES = { 0 => 0, 1 => 0, 2 => 0, 3 => 1, 4 => -1, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0,
                  11 => 0, 12 => 0, 13 => 0, 14 => 8, 15 => 0, 16 => 6, 17 => 2, 18 => 2, 19 => 0, 20 => 0,
                  21 => 2, 22 => 0, 23 => 6, 24 => 0, 25 => 12, 26 => 0, 27 => 0, 28 => 0, 29 => 0, 30 => 0,
                  31 => 0, 32 => 0, 33 => 0, 34 => 0, 35 => 8, 36 => 4, 37 => 0, 38 => 0, 39 => 2, 40 => 2,

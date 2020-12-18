@@ -31,7 +31,7 @@ module Client
 
       frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
       frame.header[:op_code] = frame.header[:op_code] & 0xFF
-      frame.header[:length] = RuneRb::Net::Constants::PACKET_MAP[frame.header[:op_code]]
+      frame.header[:length] = RuneRb::Net::Constants::FRAME_SIZES[frame.header[:op_code]]
       puts "Decoding frame: #{frame.inspect}"
       frame
     end

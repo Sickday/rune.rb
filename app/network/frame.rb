@@ -29,6 +29,7 @@ module RuneRb::Network
     # @param value [Integer, String, StringIO] the value to parse
     # @param type [Symbol] the type to parse
     def parse_type(value, type)
+      return unless valid_type?(type)
       case type
       when :A, :a then value += 128
       when :C, :c then value = -value
@@ -41,7 +42,7 @@ module RuneRb::Network
     # @param signed [Boolean] Should the byte be signed?
     # @param type [Symbol] the type of byte to read. Accommodates Jagex-specific types (:STD, :A, :C, :S)
     def read_byte(signed = false, type = :STD)
-      return unless valid_type?(type)
+
 
       if signed
         parse_type(@payload.get(1).unpack1('c'), type)
@@ -212,6 +213,8 @@ module RuneRb::Network
     end
 
     def valid_type?(type)
+      raise 'Invalid type!' unless RuneRb::Network::BYTE_TYPES.include?(type)
+
       true
     end
   end

@@ -11,7 +11,7 @@ module RuneRb::Network::FrameReader
 
     frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
     frame.header[:op_code] = frame.header[:op_code] & 0xFF
-    frame.header[:length] = RuneRb::Network::PACKET_MAP[frame.header[:op_code]]
+    frame.header[:length] = RuneRb::Network::FRAME_SIZES[frame.header[:op_code]]
     log "Decoding frame: #{frame.inspect}" if RuneRb::GLOBAL[:RRB_DEBUG]
     frame
   end

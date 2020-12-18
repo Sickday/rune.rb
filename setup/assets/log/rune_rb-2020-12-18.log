@@ -1,4 +1,0 @@
-# Logfile created on 2020-12-18 01:05:15 -0500 by logger.rb/v1.4.2
-I, [2020-12-18T01:05:15.911984 #66520]  INFO -- RuneRb: [[01:05] New World Instance initialized!
-I, [2020-12-18T01:05:15.912274 #66520]  INFO -- RuneRb: [[01:05] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 01:05:15 -0500
-W, [2020-12-18T01:06:14.858479 #66520]  WARN -- RuneRb: [[01:06] Up-time: 0 days, 0 hours, 0 minutes, and 58 seconds
