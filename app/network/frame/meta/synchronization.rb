@@ -1,8 +1,8 @@
-module RuneRb::Net::Meta
-  class SynchronizationFrame < RuneRb::Net::MetaFrame
+module RuneRb::Network::Meta
+  class SynchronizationFrame < RuneRb::Network::MetaFrame
 
     # Called when a new SynchronizationFrame is created
-    # @param context [RuneRb::Entity::Context] the context for which the frame will be made.
+    # @param context [RuneRb::Game::Entity::Context] the context for which the frame will be made.
     def initialize(context)
       super(81, false, true)
       parse(context)
@@ -19,7 +19,7 @@ module RuneRb::Net::Meta
       # Write Context entity movement
       write_movement(context)
       # Create a state block which to write the appearance of the context mob and surrounding mobs to.
-      state_block = RuneRb::Net::Meta::StateBlock.new(context)
+      state_block = RuneRb::Network::Meta::StateBlock.new(context)
       # Write the number of existing local players other than the context
       write_bits(8, context.locals[:players].size)
       # Update and write the local list for the context.
@@ -31,8 +31,8 @@ module RuneRb::Net::Meta
     end
 
     # Write an update to a context player's local list
-    # @param state [RuneRb::Network::MetaFrame] the state frame to write to state blocks to
-    # @param context [RuneRb::Entity::Context] the context to write the update for
+    # @param state [RuneRb::Networkwork::MetaFrame] the state frame to write to state blocks to
+    # @param context [RuneRb::Game::Entity::Context] the context to write the update for
     def write_locals(state, context, world)
       # Update the existing list of local players
       context.locals[:players].each do |ctx|
@@ -53,7 +53,7 @@ module RuneRb::Net::Meta
         end
       end
       # TODO: this is an expensive operation to run as it will loop through all context mobs within the attached world instance. This could possibly be less expensive if we used a region list instead of the world's entity list.
-      world.request(:local_contexts, context: context).difference(context.locals[:players]).each do |ctx|
+      world.request(:local_contexts, context: context).each do |ctx|
         # Break if the list has reached it's max capacity.
         break if context.locals[:players].size >= 255
         # Skip this iteration if the context is the same context being synchronized, teleporting, or logged out
@@ -74,7 +74,7 @@ module RuneRb::Net::Meta
     end
 
     # Writes a new context to the frame
-    # @param context [RuneRb::Entity::Context] the context to write.
+    # @param context [RuneRb::Game::Entity::Context] the context to write.
     def write_new_context(context, initial)
       # Write the context's index in the world
       write_bits(11, context.index)
@@ -88,7 +88,7 @@ module RuneRb::Net::Meta
     end
 
     # Writes the movement of a context to the frame
-    # @param context [RuneRb::Entity::Context] the context whose movement to write.
+    # @param context [RuneRb::Game::Entity::Context] the context whose movement to write.
     def write_movement(context)
       case context.movement[:type]
       when :TELEPORT
@@ -111,7 +111,7 @@ module RuneRb::Net::Meta
     end
 
     # Write the placement of a context placement bits to the frame
-    # @param context [RuneRb::Entity::Context] the context whose placement will be written.
+    # @param context [RuneRb::Game::Entity::Context] the context whose placement will be written.
     def write_placement(context)
       write_bits(2, 3) # Write 3 to indicate the player needs placement on a new tile.
       write_bits(2, context.position[:current][:z]) # Write the plane. 0 being ground level
@@ -119,7 +119,7 @@ module RuneRb::Net::Meta
       write_bit(context.flags[:state?]) # Update State/Appearance?
       write_bits(7, context.position[:current].local_x) # Local Y
       write_bits(7, context.position[:current].local_y) # Local X
-      log "Wrote [x: #{context.position[:current].local_x}, y: #{context.position[:current].local_y}]" if RuneRb::DEBUG
+      log "Wrote [x: #{context.position[:current].local_x}, y: #{context.position[:current].local_y}]" if RuneRb::GLOBAL[:RRB_DEBUG]
     end
 
     # Write the standing movement bits of a context to the frame
@@ -128,7 +128,7 @@ module RuneRb::Net::Meta
     end
 
     # Write the walking movement bits of a context to the frame
-    # @param context [RuneRb::Entity::Context] the mob whose movement will be written
+    # @param context [RuneRb::Game::Entity::Context] the mob whose movement will be written
     def write_walk(context)
       write_bits(2, 1) # we write 1 because we're walking
       write_bits(3, context.movement[:directions][:primary])
@@ -136,7 +136,7 @@ module RuneRb::Net::Meta
     end
 
     # Write running movement bits of a context to the frame
-    # @param context [RuneRb::Entity::Context] the mob whose movement will be written
+    # @param context [RuneRb::Game::Entity::Context] the mob whose movement will be written
     def write_run(context)
       write_bits(2, 2) # we write 2 because we're running
       write_bits(3, context.movement[:directions][:primary])

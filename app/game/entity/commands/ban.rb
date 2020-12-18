@@ -1,14 +1,12 @@
-module RuneRb::Entity::Commands
+module RuneRb::Game::Entity::Commands
   # Bans a profile from the network.
-  class Ban < RuneRb::Entity::Command
+  class Ban < RuneRb::Game::Entity::Command
     def execute
       return unless @assets[:command][0].size > 0
 
       begin
         # First we update the banned status for the user
-        RuneRb::Database::PROFILES[:profile]
-            .where(name: @assets[:command][0])
-            .update(banned: true)
+        RuneRb::System::Database::Profile[@assets[:command][0].downcase].update(banned: true)
         @assets[:context].session.write(:sys_message, message: "The player, #{@assets[:command][0]}, has been banned.")
       rescue StandardError => e
         err "An error occurred retrieving profile for: #{@assets[:command][0]}!", e

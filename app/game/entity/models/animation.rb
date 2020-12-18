@@ -1,4 +1,4 @@
-module RuneRb::Entity
+module RuneRb::Game::Entity
   # A Animation that is performed by an Entity
   class Animation
     # The ID for the animation

@@ -1,16 +1,16 @@
-module RuneRb::Net::Meta
-  class StateBlock < RuneRb::Net::MetaFrame
-    using RuneRb::Patches::StringOverrides
+module RuneRb::Network::Meta
+  class StateBlock < RuneRb::Network::MetaFrame
+    using RuneRb::System::Patches::StringOverrides
 
     # Writes the appearance of a Context entity
-    # @param context [RuneRb::Entity::Context] the context whose appearance will be written
+    # @param context [RuneRb::Game::Entity::Context] the context whose appearance will be written
     def initialize(context)
       super(-1)
       write_state(context)
     end
 
     # Writes the state of a context to a frame
-    # @param context [RuneRb::Entity::Context] the context whose state to write.
+    # @param context [RuneRb::Game::Entity::Context] the context whose state to write.
     def write_state(context)
       # Make the mask
       mask = 0
@@ -45,16 +45,16 @@ module RuneRb::Net::Meta
 
       write_graphic(context.graphic) if context.flags[:graphic?]
       write_animation(context.animation) if context.flags[:animation?]
-      write_chat(context.message) if context.flags[:chat?]
+      write_chat(context.message, context.profile.rights) if context.flags[:chat?]
       write_appearance(context) if context.flags[:state?]
     end
 
     private
 
     # Writes the appearance of a Context Mob to the frame.
-    # @param context [RuneRb::Entity::Context] the the context whose appearance will be written.
+    # @param context [RuneRb::Game::Entity::Context] the the context whose appearance will be written.
     def write_appearance(context)
-      appearance_frame = RuneRb::Net::MetaFrame.new(-1)
+      appearance_frame = RuneRb::Network::MetaFrame.new(-1)
       # Gender
       appearance_frame.write_byte(context.appearance[:gender])
       # HeadIcon
@@ -80,7 +80,7 @@ module RuneRb::Net::Meta
     end
 
     # Writes the mob morphing bytes of a context to the frame
-    # @param appearance [RuneRb::Database::Appearance] the context entity whose mob morphing bytes will be written to the frame.
+    # @param appearance [RuneRb::System::Database::Appearance] the context entity whose mob morphing bytes will be written to the frame.
     def write_morph(frame, appearance)
       frame.write_byte(0xff)
       frame.write_byte(0xff)
@@ -89,7 +89,7 @@ module RuneRb::Net::Meta
 
     # Writes the equipment of a context to the frame.
     # @param equipment [Hash] the context's equipment data
-    # @param appearance [RuneRb::Database::Appearance] the context's appearance model
+    # @param appearance [RuneRb::System::Database::Appearance] the context's appearance model
     def write_equipment(frame, equipment, appearance)
       # HAT SLOT
       if equipment[0] != -1
@@ -185,7 +185,7 @@ module RuneRb::Net::Meta
     end
 
     # Writes the model color of a context to the frame.
-    # @param appearance [RuneRb::Database::Appearance] the appearance of the context whose model color will be written to the frame
+    # @param appearance [RuneRb::System::Database::Appearance] the appearance of the context whose model color will be written to the frame
     def write_model_color(frame, appearance)
       frame.write_byte(appearance[:hair_color])       # Hair color
       frame.write_byte(appearance[:torso_color])      # Torso color
@@ -195,7 +195,7 @@ module RuneRb::Net::Meta
     end
 
     # Writes the model animation of a context to the frame.
-    # @param appearance [RuneRb::Database::Appearance] the appearance of the context whose model animation will be written to the frame.
+    # @param appearance [RuneRb::System::Database::Appearance] the appearance of the context whose model animation will be written to the frame.
     def write_model_animation(frame, appearance)
       frame.write_short(appearance[:stand])           # Stand Anim
       frame.write_short(appearance[:stand_turn])      # StandTurn Anim
@@ -207,23 +207,24 @@ module RuneRb::Net::Meta
     end
 
     # Writes a chat to the frame
-    # @param message [RuneRb::Entity::Message] the message to write.
-    def write_chat(message)
+    # @param message [RuneRb::Game::Entity::Message] the message to write.
+    # @param rights [Integer] the rights of the context whose message is being written
+    def write_chat(message, rights)
       write_short((message.colors << 8 | message.effects), :STD, :LITTLE)
-      write_byte(message.rights)
+      write_byte(rights)
       write_byte(message.text.size, :C)
       write_reverse_bytes(message.text.reverse)
     end
 
     # Writes a graphic to the frame
-    # @param graphic [RuneRb::Entity::Graphic] the graphic to write.
+    # @param graphic [RuneRb::Game::Entity::Graphic] the graphic to write.
     def write_graphic(graphic)
       write_short(graphic.id)
       write_int(graphic.height << 16 | graphic.delay)
     end
 
     # Writes a context animation to a frame.
-    # @param animation [RuneRb::Entity::Animation] the animation to write.
+    # @param animation [RuneRb::Game::Entity::Animation] the animation to write.
     def write_animation(animation)
       write_short(animation.id, :STD, :LITTLE)
       write_byte(animation.delay, :C)

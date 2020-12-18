@@ -1,10 +1,10 @@
-module RuneRb::Net
+module RuneRb::Network
   # A Frame created by the application.
   class MetaFrame < Frame
-    include RuneRb::Internal::Log
+    include RuneRb::System::Log
 
-    using RuneRb::Patches::StringOverrides
-    using RuneRb::Patches::IntegerOverrides
+    using RuneRb::System::Patches::StringOverrides
+    using RuneRb::System::Patches::IntegerOverrides
 
     # Called when a new MetaFrame is created
     def initialize(op_code, fixed = true, variable_short = false)
@@ -40,7 +40,7 @@ module RuneRb::Net
 
     # Writes multiple bytes to the underlying buffer.
     def write_bytes(data)
-      if data.is_a?(RuneRb::Net::MetaFrame)
+      if data.is_a?(RuneRb::Network::MetaFrame)
         @payload << data.peek
       elsif data.instance_of?(String)
         @payload << data
@@ -186,8 +186,8 @@ module RuneRb::Net
 
       while amount > bit_offset
         @payload[byte_pos] = [0].pack('c') if @payload[byte_pos].nil?
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Net::BIT_MASK_OUT[bit_offset])].pack('c')
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value >> (amount - bit_offset)) & RuneRb::Net::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value >> (amount - bit_offset)) & RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
         byte_pos += 1
         amount -= bit_offset
         bit_offset = 8
@@ -196,11 +196,11 @@ module RuneRb::Net
       @payload[byte_pos] = [0].pack('c') if @payload[byte_pos].nil?
 
       if amount == bit_offset
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Net::BIT_MASK_OUT[bit_offset])].pack('c')
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value & RuneRb::Net::BIT_MASK_OUT[bit_offset]))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | (value & RuneRb::Network::BIT_MASK_OUT[bit_offset]))].pack('c')
       else
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~(RuneRb::Net::BIT_MASK_OUT[amount] << (bit_offset - amount)))].pack('c')
-        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | ((value & RuneRb::Net::BIT_MASK_OUT[amount]) << (bit_offset - amount)))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') & ~(RuneRb::Network::BIT_MASK_OUT[amount] << (bit_offset - amount)))].pack('c')
+        @payload[byte_pos] = [(@payload[byte_pos].unpack1('c') | ((value & RuneRb::Network::BIT_MASK_OUT[amount]) << (bit_offset - amount)))].pack('c')
       end
 
       self

@@ -1,8 +1,8 @@
-module RuneRb::Entity::Helpers::Click
+module RuneRb::Game::Entity::Helpers::Click
 
   # Attempts to parse an action click
   # @param type [Symbol] the type of action click to parse
-  # @param frame [RuneRb::Net::Frame] the frame to parse
+  # @param frame [RuneRb::Network::Frame] the frame to parse
   def parse_action(type, frame)
     case type
     when :first_action then parse_first_action(frame)
@@ -16,7 +16,7 @@ module RuneRb::Entity::Helpers::Click
 
   # Parses an option click
   # @param type [Symbol] the type of option click to parse
-  # @param frame [RuneRb::Net::Frame] the frame to parse
+  # @param frame [RuneRb::Network::Frame] the frame to parse
   def parse_option(type, frame)
     case type
     when :first_option then parse_first_option(frame)
@@ -32,7 +32,7 @@ module RuneRb::Entity::Helpers::Click
   private
 
   # Parses a left or right click of the mouse
-  # @param frame [RuneRb::Net::Frame] the frame payload to parse
+  # @param frame [RuneRb::Network::Frame] the frame payload to parse
   def parse_mouse_click(frame)
     value = frame.read_int(false)
     delay = (value >> 20) * 50
@@ -40,13 +40,13 @@ module RuneRb::Entity::Helpers::Click
     coords = value & 0x3FFFF
     x = coords % 765
     y = coords / 765
-    return unless RuneRb::DEBUG
+    return unless RuneRb::GLOBAL[:RRB_DEBUG]
 
     log RuneRb::COL.blue((right ? 'Right' : 'Left') + "Mouse Click at #{RuneRb::COL.cyan("Position: x: #{x}, y: #{y}, delay: #{delay}")}")
   end
 
   # Parse a 1stItemOptionClick
-  # @param frame [RuneRb::Net::Frame] the incoming frame
+  # @param frame [RuneRb::Network::Frame] the incoming frame
   def parse_first_option(frame)
     interface = frame.read_short(false, :A, :LITTLE)
     slot = frame.read_short(false, :A)
@@ -62,7 +62,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parse a 2ndItemOptionClick
-  # @param frame [RuneRb::Net::Frame] the frame to read from
+  # @param frame [RuneRb::Network::Frame] the frame to read from
   def parse_second_option(frame)
     item_id = frame.read_short(false)
     slot = frame.read_short(false, :A) + 1
@@ -75,7 +75,7 @@ module RuneRb::Entity::Helpers::Click
       old = @equipment[item.definition[:slot]]
       @equipment[item.definition[:slot]] = item
       @inventory[:container].remove_at(slot)
-      add_item(old, slot) if old.is_a?(RuneRb::Item::Stack)
+      add_item(old, slot) if old.is_a?(RuneRb::Game::Item::Stack)
       update(:equipment)
       update(:inventory)
       log "Got Inventory Tab 2ndOptionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface} || [old]: #{old.is_a?(Integer) ? old : old.id}"
@@ -87,7 +87,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parse a 3rdItemOptionClick
-  # @param frame [RuneRb::Net::Frame] the frame to read from.
+  # @param frame [RuneRb::Network::Frame] the frame to read from.
   def parse_third_option(frame)
     item_id = frame.read_short(false, :A)
     slot = frame.read_short(false, :A, :LITTLE)
@@ -103,7 +103,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parse a 4thItemOptionClick
-  # @param frame [RuneRb::Net::Frame]
+  # @param frame [RuneRb::Network::Frame]
   def parse_fourth_option(frame)
     interface = frame.read_short(false, :A, :LITTLE)
     slot = frame.read_short(false, :STD, :LITTLE)
@@ -119,7 +119,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parse a 5thItemOptionClick
-  # @param frame [RuneRb::Net::Frame] the frame to read from
+  # @param frame [RuneRb::Network::Frame] the frame to read from
   def parse_fifth_option(frame)
     item_id = frame.read_short(false, :A)
     interface = frame.read_short(false)
@@ -140,7 +140,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parses a switch item click
-  # @param frame [RuneRb::Net::Frame] the frame to parse from.
+  # @param frame [RuneRb::Network::Frame] the frame to parse from.
   def parse_switch_item(frame)
     interface = frame.read_short(false, :A, :LITTLE)
     inserting = frame.read_byte(false, :C) # This will matter when bank is implemented. TODO: impl bank
@@ -164,7 +164,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parses a first action click
-  # @param frame [RuneRb::Net::Frame] the frame to read from.
+  # @param frame [RuneRb::Network::Frame] the frame to read from.
   def parse_first_action(frame)
     interface = frame.read_short(false, :A)
     slot = frame.read_short(false, :A)
@@ -173,7 +173,7 @@ module RuneRb::Entity::Helpers::Click
     when 3214 # Inventory = EquipItem or Eat food, or break a teletab (not really)
       log "Got Inventory Tab 1stActionClick: [slot]: #{slot} || [item]: #{item_id} || [interface]: #{interface}"
     when 1688 # EquipmentTab
-      if add_item(RuneRb::Item::Stack.new(item_id))
+      if add_item(RuneRb::Game::Item::Stack.new(item_id))
         unequip(slot)
         update(:equipment)
         update(:inventory)
@@ -187,7 +187,7 @@ module RuneRb::Entity::Helpers::Click
   end
 
   # Parses a second action click
-  # @param frame [RuneRb::Net::Frame] the frame to read from
+  # @param frame [RuneRb::Network::Frame] the frame to read from
   def parse_second_action(frame)
     item_id = frame.read_short(false)
     slot = frame.read_short(false, :A)  + 1 # This is the Slot that was clicked.

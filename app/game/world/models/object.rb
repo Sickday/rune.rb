@@ -1,4 +1,4 @@
-module RuneRb::World::Models
+module RuneRb::Game::World::Models
   # A GameObject represents an Object with a Position on the game map.
   class GameObject
 
@@ -7,7 +7,7 @@ module RuneRb::World::Models
 
     attr :type
 
-    # @return [RuneRb::Map::Position] the position of the GameObject
+    # @return [RuneRb::Game::Map::Position] the position of the GameObject
     attr :position
 
     # @return [Integer] the direction the GameObject is facing

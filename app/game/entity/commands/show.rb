@@ -1,5 +1,5 @@
-module RuneRb::Entity::Commands
-  class Show < RuneRb::Entity::Command
+module RuneRb::Game::Entity::Commands
+  class Show < RuneRb::Game::Entity::Command
 
     def execute
       unless @command.size >= 1

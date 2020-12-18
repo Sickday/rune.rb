@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # A single Skill Slot
-  class SkillSlotFrame < RuneRb::Net::MetaFrame
+  class SkillSlotFrame < RuneRb::Network::MetaFrame
 
     # Called when a new SkillSlotFrame is created.
     def initialize(data)

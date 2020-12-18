@@ -1,23 +1,23 @@
-module RuneRb::Entity
+module RuneRb::Game::Entity
   # A Mob object models a mobile model.
   class Mob
-    include RuneRb::Internal::Log
-    include RuneRb::Entity::Helpers::Movement
-    include RuneRb::Entity::Helpers::Flags
+    include RuneRb::System::Log
+    include RuneRb::Game::Entity::Helpers::Movement
+    include RuneRb::Game::Entity::Helpers::Flags
 
     # @return [Object] a definition object contains details about the Mobs properties. TODO: impl mob definitions.
     attr :definition
 
-    # @return [RuneRb::Entity::Animation] the current Animation of the Mob
+    # @return [RuneRb::Game::Entity::Animation] the current Animation of the Mob
     attr :animation
 
-    # @return [RuneRb::Entity::Graphic] the current Graphic of the Mob
+    # @return [RuneRb::Game::Entity::Graphic] the current Graphic of the Mob
     attr :graphic
 
-    # @return [RuneRb::Entity::Message] the current Message of the Mob
+    # @return [RuneRb::Game::Entity::Message] the current Message of the Mob
     attr :message
 
-    # @return [RuneRb::Map::Regional] the regional position for the mob
+    # @return [RuneRb::Game::Map::Regional] the regional position for the mob
     attr :regional
 
     # @return [Integer] the index of the Mob within it's world Instance's mob list.
@@ -35,6 +35,8 @@ module RuneRb::Entity
     def pre_pulse
       move
     end
+
+    def pulse; end
 
     # Called after a pulse call
     def post_pulse
@@ -55,7 +57,7 @@ module RuneRb::Entity
       @position = { current: definition.position, previous: definition.position }
       @regional = @position[:current].regional
       @definition = definition
-      log RuneRb::COL.green('Loaded Mob definition!') if RuneRb::DEBUG
+      log RuneRb::COL.green('Loaded Mob definition!') if RuneRb::GLOBAL[:RRB_DEBUG]
     end
   end
 end

@@ -1,0 +1,152 @@
+# Logfile created on 2020-12-18 00:26:21 -0500 by logger.rb/v1.4.2
+I, [2020-12-18T00:26:21.192506 #54755]  INFO -- RuneRb: [[00:26] New World Instance initialized!
+I, [2020-12-18T00:26:21.192775 #54755]  INFO -- RuneRb: [[00:26] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 00:26:21 -0500
+W, [2020-12-18T00:29:45.292257 #54755]  WARN -- RuneRb: [[00:29] Up-time: 204.099 Secs
+I, [2020-12-18T00:43:12.417944 #56735]  INFO -- RuneRb: [[00:43] New World Instance initialized!
+I, [2020-12-18T00:43:12.418214 #56735]  INFO -- RuneRb: [[00:43] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 00:43:12 -0500
+I, [2020-12-18T00:43:29.085373 #56990]  INFO -- RuneRb: [[00:43] New World Instance initialized!
+I, [2020-12-18T00:43:29.085652 #56990]  INFO -- RuneRb: [[00:43] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 00:43:29 -0500
+W, [2020-12-18T00:43:30.724950 #56990]  WARN -- RuneRb: [[00:43] Up-time: 0 days, 0 hours, 0 minutes, and 1 seconds Secs
+I, [2020-12-18T00:43:42.221370 #57226]  INFO -- RuneRb: [[00:43] New World Instance initialized!
+I, [2020-12-18T00:43:42.221626 #57226]  INFO -- RuneRb: [[00:43] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 00:43:42 -0500
+W, [2020-12-18T00:46:57.951081 #57226]  WARN -- RuneRb: [[00:46] Up-time: 0 days, 0 hours, 3 minutes, and 15 seconds
+I, [2020-12-18T01:00:29.370655 #63478]  INFO -- RuneRb: [[01:00] New World Instance initialized!
+I, [2020-12-18T01:00:29.371044 #63478]  INFO -- RuneRb: [[01:00] Endpoint deployed: 0.0.0.0:43594 @ 2020-12-18 01:00:29 -0500
+I, [2020-12-18T01:01:06.718406 #63478]  INFO -- RuneRb: [[01:01] Registered new socket for 127.0.0.1
+I, [2020-12-18T01:01:06.719007 #63478]  INFO -- RuneRb: [[01:01] Generated seed: 3477564186
+I, [2020-12-18T01:01:06.719078 #63478]  INFO -- RuneRb: [[01:01] [ConnectionType]:	Login
+I, [2020-12-18T01:01:06.722590 #63478]  INFO -- RuneRb: [[01:01] Validating Login type for 127.0.0.1
+I, [2020-12-18T01:01:06.722671 #63478]  INFO -- RuneRb: [[01:01] Validated!
+I, [2020-12-18T01:01:06.722713 #63478]  INFO -- RuneRb: [[01:01] Validating Seed pair for 127.0.0.1
+I, [2020-12-18T01:01:06.722753 #63478]  INFO -- RuneRb: [[01:01] Seed Validated!
+I, [2020-12-18T01:01:06.722799 #63478]  INFO -- RuneRb: [[01:01] Validating Magic for 127.0.0.1
+I, [2020-12-18T01:01:06.722837 #63478]  INFO -- RuneRb: [[01:01] Magic Validated!
+I, [2020-12-18T01:01:06.722872 #63478]  INFO -- RuneRb: [[01:01] Validating Revision for 127.0.0.1
+I, [2020-12-18T01:01:06.722911 #63478]  INFO -- RuneRb: [[01:01] Revision Validated!
+I, [2020-12-18T01:01:06.722956 #63478]  INFO -- RuneRb: [[01:01] Validating Credentials for 127.0.0.1
+I, [2020-12-18T01:01:06.729846 #63478]  INFO -- RuneRb: [[01:01] Loaded profile data for Pat
+I, [2020-12-18T01:01:06.729920 #63478]  INFO -- RuneRb: [[01:01] Credentials validated!
+I, [2020-12-18T01:01:06.729961 #63478]  INFO -- RuneRb: [[01:01] Status validated!
+I, [2020-12-18T01:01:06.730657 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [9, 119, -128]
+I, [2020-12-18T01:01:06.730754 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [15, 77, -127]
+I, [2020-12-18T01:01:06.730833 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [2, 126, -126]
+I, [2020-12-18T01:01:06.730897 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [12, -115, -125]
+I, [2020-12-18T01:01:06.730970 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [6, 108, -124]
+I, [2020-12-18T01:01:06.731035 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [21, -24, -123]
+I, [2020-12-18T01:01:06.731102 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [4, 127, -122]
+I, [2020-12-18T01:01:06.731179 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [-1, -1, -121]
+I, [2020-12-18T01:01:06.731250 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [19, -55, -120]
+I, [2020-12-18T01:01:06.731327 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [22, 83, -119]
+I, [2020-12-18T01:01:06.731391 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [9, -111, -118]
+I, [2020-12-18T01:01:06.731452 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [3, -120, -117]
+I, [2020-12-18T01:01:06.731520 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [0, -109, -116]
+I, [2020-12-18T01:01:06.731572 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 71 || [Size]: 3 || [Payload]: [3, -62, -115]
+I, [2020-12-18T01:01:06.731732 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 253 || [Size]: 69 || [Payload]: [67, 104, 101, 99, 107, 32, 116, 104, 101, 32, 114, 101, 112, 111, 115, 105, 116, 111, 114, 121, 32, 102, 111, 114, 32, 117, 112, 100, 97, 116, 101, 115, 33, 32, 104, 116, 116, 112, 115, 58, 47, 47, 103, 105, 116, 108, 97, 98, 46, 99, 111, 109, 47, 83, 105, 99, 107, 100, 97, 121, 47, 114, 117, 110, 101, 46, 114, 98, 10]
+I, [2020-12-18T01:01:06.731800 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 253 || [Size]: 10 || [Payload]: [86, 69, 82, 83, 73, 79, 78, 58, 32, 10]
+I, [2020-12-18T01:01:06.737352 #63478]  INFO -- RuneRb: [[01:01] Loaded Mob definition!
+I, [2020-12-18T01:01:07.137532 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 53 || [Size]: 92 || [Payload]: [12, -114, 0, 28, 1, -72, 16, 1, -72, 16, 1, -72, 16, -1, 0, 0, -112, 1, 100, 3, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0, 0, -128, 0]
+I, [2020-12-18T01:01:07.137767 #63478]  INFO -- RuneRb: [[01:01] Loaded Inventory for pat
+I, [2020-12-18T01:01:07.150480 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 0, 0, 0, 0]
+I, [2020-12-18T01:01:07.150631 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 1, 0, 0, 0]
+I, [2020-12-18T01:01:07.150705 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 2, 0, 0, 0]
+I, [2020-12-18T01:01:07.150777 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 3, 0, 0, 0]
+I, [2020-12-18T01:01:07.150845 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 4, 0, 0, 0]
+I, [2020-12-18T01:01:07.150916 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 5, 0, 0, 0]
+I, [2020-12-18T01:01:07.150984 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 6, 0, 0, 0]
+I, [2020-12-18T01:01:07.151057 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 7, 0, 0, 0]
+I, [2020-12-18T01:01:07.151129 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 8, 0, 0, 0]
+I, [2020-12-18T01:01:07.151203 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 9, 0, 0, 0]
+I, [2020-12-18T01:01:07.151272 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 10, 0, 0, 0]
+I, [2020-12-18T01:01:07.151346 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 11, 0, 0, 0]
+I, [2020-12-18T01:01:07.151417 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 12, 0, 0, 0]
+I, [2020-12-18T01:01:07.151486 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 34 || [Size]: 6 || [Payload]: [6, -104, 13, 0, 0, 0]
+I, [2020-12-18T01:01:07.151549 #63478]  INFO -- RuneRb: [[01:01] Loaded Equipment for pat
+I, [2020-12-18T01:01:07.152999 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [0, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153100 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [1, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153169 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [2, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153235 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [3, 4, -96, 0, 0, 10]
+I, [2020-12-18T01:01:07.153296 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [4, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153355 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [5, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153415 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [6, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153476 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [7, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153534 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [8, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153590 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [9, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153648 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [10, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153706 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [11, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153762 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [12, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153820 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [13, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153876 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [14, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153934 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [15, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.153987 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [16, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.154046 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [17, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.154104 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [18, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.154162 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [19, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.154225 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 134 || [Size]: 6 || [Payload]: [20, 0, 0, 0, 0, 1]
+I, [2020-12-18T01:01:07.154443 #63478]  INFO -- RuneRb: [[01:01] Attached to World instance!
+I, [2020-12-18T01:01:07.154500 #63478]  INFO -- RuneRb: [[01:01] Registered new Context for Pat
+I, [2020-12-18T01:01:07.154548 #63478]  INFO -- RuneRb: [[01:01] Welcome, Pat!
+I, [2020-12-18T01:01:07.219118 #63478]  INFO -- RuneRb: [[01:01] Writing [x: 404, y: 402]
+I, [2020-12-18T01:01:07.219296 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 73 || [Size]: 4 || [Payload]: [1, 20, 1, -110]
+I, [2020-12-18T01:01:07.219460 #63478]  INFO -- RuneRb: [[01:01] Wrote [x: 52, y: 48]
+I, [2020-12-18T01:01:07.221004 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 58 || [Payload]: [-26, -47, -128, 7, -1, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:07.221177 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.003 seconds
+I, [2020-12-18T01:01:07.668817 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.668990 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:07.669076 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.669138 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:07.669205 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.669261 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:07.669320 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.669369 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:07.669428 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.669484 #63478]  INFO -- RuneRb: [[01:01] Got ping frame 210
+I, [2020-12-18T01:01:07.669542 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:07.669606 #63478]  INFO -- RuneRb: [[01:01] Got ping frame 121
+I, [2020-12-18T01:01:07.822081 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:07.822362 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:08.423230 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:08.423522 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:08.462036 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:08.462222 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:08.764187 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:08.764422 #63478]  INFO -- RuneRb: [[01:01] Received Mouse Movement
+I, [2020-12-18T01:01:09.024352 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:09.024642 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:09.625492 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:09.625751 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:09.793383 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:09.793576 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:10.226552 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:10.226812 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:10.776474 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:10.776699 #63478]  INFO -- RuneRb: [[01:01] Received Mouse Movement
+I, [2020-12-18T01:01:10.827602 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:10.827854 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:11.428644 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:11.428932 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:11.806665 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:11.806915 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:11.984009 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:11.984227 #63478]  INFO -- RuneRb: [[01:01] Received Mouse Movement
+I, [2020-12-18T01:01:11.984325 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:11.984445 #63478]  INFO -- RuneRb: [[01:01] LeftMouse Click at Position: x: 242, y: 3, delay: 0
+I, [2020-12-18T01:01:12.029777 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:12.030032 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:12.630888 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:12.631143 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:12.999594 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:12.999812 #63478]  INFO -- RuneRb: [[01:01] Received Heartbeat!
+I, [2020-12-18T01:01:13.231970 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 81 || [Size]: 56 || [Payload]: [-128, 31, -4, 16, -51, 0, 0, 0, 0, 0, 0, 1, 18, 0, 1, 26, 1, 36, 1, 0, 1, 33, 1, 42, 1, 10, 7, 8, 9, 5, 0, 3, 40, 3, 55, 3, 51, 3, 52, 3, 53, 3, 54, 3, 56, 0, 0, 0, 0, 0, 0, 85, -55, 3, 0, 30]
+I, [2020-12-18T01:01:13.232253 #63478]  INFO -- RuneRb: [[01:01] Pulse completed in 0.001 seconds
+I, [2020-12-18T01:01:13.342110 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:13.342331 #63478]  INFO -- RuneRb: [[01:01] Received Mouse Movement
+I, [2020-12-18T01:01:13.342441 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:13.342565 #63478]  INFO -- RuneRb: [[01:01] LeftMouse Click at Position: x: 13, y: 1, delay: 0
+I, [2020-12-18T01:01:13.342658 #63478]  INFO -- RuneRb: [[01:01] Decoding frame: 
+I, [2020-12-18T01:01:13.343683 #63478]  INFO -- RuneRb: [[01:01] Encoding frame: [OpCode]: 109 || [Size]: 0 || [Payload]: []
+I, [2020-12-18T01:01:13.343867 #63478]  INFO -- RuneRb: [[01:01] Detached from World instance!
+I, [2020-12-18T01:01:13.343994 #63478]  INFO -- RuneRb: [[01:01] De-registered Context for Pat
+I, [2020-12-18T01:01:13.344100 #63478]  INFO -- RuneRb: [[01:01] See ya, Pat!
+E, [2020-12-18T01:01:13.363291 #63478] ERROR -- RuneRb: [[01:01] Reached EOF!
+I, [2020-12-18T01:01:13.363538 #63478]  INFO -- RuneRb: [[01:01] De-registered socket for 127.0.0.1
+W, [2020-12-18T01:01:15.694914 #63478]  WARN -- RuneRb: [[01:01] Up-time: 0 days, 0 hours, 0 minutes, and 46 seconds

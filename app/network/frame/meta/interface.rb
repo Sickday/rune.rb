@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # A frame sent to display the interface with the given id to a client
-  class InterfaceFrame < RuneRb::Net::MetaFrame
+  class InterfaceFrame < RuneRb::Network::MetaFrame
 
     # Called when a new InterfaceFrame is created.
     def initialize(data)

@@ -1,7 +1,7 @@
-module RuneRb::Entity::Helpers::Inventory
+module RuneRb::Game::Entity::Helpers::Inventory
 
   # Adds an item stack to the inventory at a specific slot if provided
-  # @param item_stack [RuneRb::Item::Stack] the item stack to add
+  # @param item_stack [RuneRb::Game::Item::Stack] the item stack to add
   # @param at [Integer] the slot at which to add the item (else, the next available slot is used.)
   def add_item(item_stack, at = nil)
     if at
@@ -24,7 +24,7 @@ module RuneRb::Entity::Helpers::Inventory
   # @param data [Hash] data to initialize the inventory with.
   def setup_inventory(data = nil)
     @inventory = {
-        container: RuneRb::Item::Container.new(28, false),
+        container: RuneRb::Game::Item::Container.new(28, false),
         weight: 0
     }
     data&.each { |slot, stack| @inventory[:container].data[slot] = stack }
@@ -38,7 +38,7 @@ module RuneRb::Entity::Helpers::Inventory
       setup_inventory
     end
     update(:inventory)
-    log(RuneRb::COL.green("Loaded Inventory for #{RuneRb::COL.yellow(@profile.name)}")) if RuneRb::DEBUG
+    log(RuneRb::COL.green("Loaded Inventory for #{RuneRb::COL.yellow(@profile.name)}")) if RuneRb::GLOBAL[:RRB_DEBUG]
   end
 
   # Dumps the inventory of a player.
@@ -51,7 +51,7 @@ module RuneRb::Entity::Helpers::Inventory
     data = Oj.load(@profile[:inventory])
     parsed = {}.tap do |hash|
       data.each do |slot, stack|
-        hash[slot.to_i] = RuneRb::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i) unless stack.nil?
+        hash[slot.to_i] = RuneRb::Game::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i) unless stack.nil?
       end
     end
     setup_inventory(parsed)

@@ -1,1 +1,1 @@
-module RuneRb::Entity::Helpers::Bank; end
+module RuneRb::Game::Entity::Helpers::Bank; end

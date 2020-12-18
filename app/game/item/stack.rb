@@ -1,4 +1,4 @@
-module RuneRb::Item
+module RuneRb::Game::Item
   # Represents a stack of items.
   class Stack
     attr :definition, :id
@@ -9,14 +9,14 @@ module RuneRb::Item
     # @param amount [Integer] the initial amount of the stack.
     def initialize(id, amount = 1)
       @id = id
-      @definition = RuneRb::Database::Item[id]
+      @definition = RuneRb::System::Database::Item[id]
       @size = amount
     end
 
     # Returns serialized dump of this Stack.
     # @return [String] A dump of this Stack
     def to_json(*_args)
-      RuneRb::Item::Stack.dump(self)
+      RuneRb::Game::Item::Stack.dump(self)
     end
 
     # An inspection of the Stack's definition.
@@ -26,7 +26,7 @@ module RuneRb::Item
 
     class << self
       # Returns a serialized dump of the passed Stack object.
-      # @param stack [RuneRb::Item::Stack] the Stack to dump
+      # @param stack [RuneRb::Game::Item::Stack] the Stack to dump
       def dump(stack)
         Oj.dump({ id: stack.id, amount: stack.size }, mode: :compat, use_as_json: true)
       end
@@ -34,7 +34,7 @@ module RuneRb::Item
       # Restores a serialized dump of a Stack object.
       # @param data [Hash] a serialized dump
       def restore(data)
-        RuneRb::Item::Stack.new(data[:id], data[:amount])
+        RuneRb::Game::Item::Stack.new(data[:id], data[:amount])
       end
     end
   end

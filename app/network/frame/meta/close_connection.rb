@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # Writes a close connection frame to a client.
-  class CloseConnectionFrame < RuneRb::Net::MetaFrame
+  class CloseConnectionFrame < RuneRb::Network::MetaFrame
     # Called when a new CloseConnectionFrame is created.
     def initialize
       super(109)

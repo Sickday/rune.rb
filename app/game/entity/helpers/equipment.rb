@@ -1,7 +1,7 @@
-module RuneRb::Entity::Helpers::Equipment
+module RuneRb::Game::Entity::Helpers::Equipment
 
   # Shorthand slot assignment
-  # @param value [RuneRb::Item::Stack] the item to assign
+  # @param value [RuneRb::Game::Item::Stack] the item to assign
   # @param slot [Integer] the destination slot.
   def []=(slot, value)
     @equipment[slot] = value
@@ -50,7 +50,7 @@ module RuneRb::Entity::Helpers::Equipment
       setup_equipment
     end
     update(:equipment)
-    log(RuneRb::COL.green("Loaded Equipment for #{RuneRb::COL.yellow(@profile.name)}")) if RuneRb::DEBUG
+    log(RuneRb::COL.green("Loaded Equipment for #{RuneRb::COL.yellow(@profile.name)}")) if RuneRb::GLOBAL[:RRB_DEBUG]
   end
 
   # Dumps the equipment of a context entity
@@ -66,7 +66,7 @@ module RuneRb::Entity::Helpers::Equipment
         hash[slot.to_i] = -1
         next if stack == -1 || stack.nil?
 
-        hash[slot.to_i] = RuneRb::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i)
+        hash[slot.to_i] = RuneRb::Game::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i)
       end
     end
     setup_equipment(parsed)

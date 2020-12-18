@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # An OverlayInterfaceFrame sends an interface that will close on actions (like walking).
-  class OverlayInterfaceFrame < RuneRb::Net::MetaFrame
+  class OverlayInterfaceFrame < RuneRb::Network::MetaFrame
 
     # Called when a new OverlayInterface is created.
     # @param data [Hash] the data containing the ID of the interface to display

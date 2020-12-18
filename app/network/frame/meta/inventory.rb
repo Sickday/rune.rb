@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # A Context Mob's Inventory
-  class ContextInventoryFrame < RuneRb::Net::MetaFrame
+  class ContextInventoryFrame < RuneRb::Network::MetaFrame
     # Called when a new ContextInventoryFrame is created
     # @param data [Hash] the data for the ContextInventoryFrame
     # @param length [Integer] the length of the inventory in slots.

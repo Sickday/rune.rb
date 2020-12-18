@@ -1,46 +1,48 @@
-module RuneRb::Net::FrameReader
-  using RuneRb::Patches::IntegerOverrides
-  using RuneRb::Patches::StringOverrides
+module RuneRb::Network::FrameReader
+  using RuneRb::System::Patches::IntegerOverrides
+  using RuneRb::System::Patches::StringOverrides
 
   private
 
   # Decodes a frame using the Session#cipher.
-  # @param frame [RuneRb::Network::Frame] the frame to decode.
+  # @param frame [RuneRb::Networkwork::Frame] the frame to decode.
   def decode_frame(frame)
     raise 'Invalid cipher for Session!' unless @cipher
 
     frame.header[:op_code] -= @cipher[:decryptor].next_value & 0xFF
     frame.header[:op_code] = frame.header[:op_code] & 0xFF
-    frame.header[:length] = RuneRb::Net::PACKET_MAP[frame.header[:op_code]]
-    log "Decoding frame: #{frame.inspect}" if RuneRb::DEBUG
+    frame.header[:length] = RuneRb::Network::PACKET_MAP[frame.header[:op_code]]
+    log "Decoding frame: #{frame.inspect}" if RuneRb::GLOBAL[:RRB_DEBUG]
     frame
   end
 
   # Reads the next parseable frame from Session#in, then attempts to handle the frame accordingly.
   def next_frame
-    @current = RuneRb::Net::Frame.new(@in.next_byte)
-    @current = decode_frame(@current)
-    @current.header[:length] = @in.next_byte if @current.header[:length] == -1
-    @current.header[:length].times { @current.push(@in.slice!(0)) }
-    parse_frame(@current)
+      @current = RuneRb::Network::Frame.new(@socket.read_nonblock(1).next_byte)
+      @current = decode_frame(@current)
+      @current.header[:length] = @socket.read_nonblock(1).next_byte if @current.header[:length] == -1
+      @current.read(@socket, @current.header[:length])
+      parse_frame(@current)
+  rescue IO::EAGAINWaitReadable
+    nil
+  rescue EOFError
+    err 'Reached EOF!' if RuneRb::GLOBAL[:RRB_DEBUG]
+    disconnect
   end
 
   # Processes the frame parameter
-  # @param frame [RuneRb::Network::StaticFrame] the frame to handle
+  # @param frame [RuneRb::Networkwork::StaticFrame] the frame to handle
   def parse_frame(frame)
     case frame.header[:op_code]
     when 0
-      log 'Received Heartbeat!' if RuneRb::DEBUG
+      log 'Received Heartbeat!' if RuneRb::GLOBAL[:RRB_DEBUG]
     when 45 # MouseMovement
-      log 'Received Mouse Movement' if RuneRb::DEBUG
+      log 'Received Mouse Movement' if RuneRb::GLOBAL[:RRB_DEBUG]
     when 3 # Window Focus
       focused = frame.read_byte(false)
-      log RuneRb::COL.blue("Client Focus: #{RuneRb::COL.cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::DEBUG
+      log RuneRb::COL.blue("Client Focus: #{RuneRb::COL.cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::GLOBAL[:RRB_DEBUG]
     when 4 # Chat.
-      @context.update(:message, message: RuneRb::Entity::Message.new(frame.read_byte(false, :S),
-                                                                     frame.read_byte(false, :S),
-                                                                     frame.read_bytes_reverse(frame.header[:length] - 2, :A),
-                                                                     @context.profile.rights))
+      @context.update(:message, message: RuneRb::Game::Entity::Message.from_frame(frame))
     when 122 # First Item Option.
       @context.parse_option(:first_option, frame)
     when 41 # Second Item option.
@@ -58,11 +60,11 @@ module RuneRb::Net::FrameReader
     when 241 # Mouse Click
       @context.parse_action(:mouse_click, frame)
     when 77, 78, 165, 189, 210, 226, 121 # Ping frame
-      log "Got ping frame #{frame.header[:op_code]}" if RuneRb::DEBUG
+      log "Got ping frame #{frame.header[:op_code]}" if RuneRb::GLOBAL[:RRB_DEBUG]
     when 86
       roll = frame.read_short(false, :STD, :LITTLE)
       yaw = frame.read_short(false, :STD, :LITTLE)
-      log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::DEBUG
+      log "Camera Rotation: [Roll]: #{roll} || [Yaw]: #{yaw}" if RuneRb::GLOBAL[:RRB_DEBUG]
     when 101 # Character Design
       @context.appearance.from_frame(frame)
       @context.update(:state)
@@ -71,18 +73,16 @@ module RuneRb::Net::FrameReader
     when 185 # Button Click
       @context.parse_button(frame)
     when 202
-      log 'Received Idle Frame!' if RuneRb::DEBUG
+      log 'Received Idle Frame!' if RuneRb::GLOBAL[:RRB_DEBUG]
     when 248, 164, 98 # Movement
       @context.parse_movement(frame)
-    else
-      err "Unhandled frame: #{frame.inspect}"
+    else err "Unhandled frame: #{frame.inspect}"
     end
-    # Parse the next frame if there's still data in the buffer.
-    next_frame if @in.size >= 3
+    # Parse the next frame
+    next_frame
   rescue StandardError => e
-    err 'An error occurred while parsing frame!'
+    err 'An error occurred while parsing frame!', e
     err frame.inspect
-    puts e
     puts e.backtrace
   end
 end

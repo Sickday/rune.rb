@@ -1,49 +1,52 @@
-module RuneRb::Net::LoginHelper
-  using RuneRb::Patches::IntegerOverrides
-  using RuneRb::Patches::StringOverrides
+module RuneRb::Network::LoginHelper
+  using RuneRb::System::Patches::IntegerOverrides
+  using RuneRb::System::Patches::StringOverrides
 
-  ParsedConnection = Struct.new(:Type, :NameHash, :ConnectionSeed)
+  # @return [Hash] a structured map of login block data.
+  attr :login
 
   private
 
   # Reads a connection heading from a frame
   def read_connection
-    frame = RuneRb::Net::Frame.new(-1)
-    frame.push(@in.slice!(0..1))
+    frame = RuneRb::Network::Frame.new(-1)
+    frame.read(@socket, 2)
 
-    @connection = ParsedConnection.new(frame.read_byte, frame.read_byte, @id & 0xFFFFFFFF)
-    log "Generated seed: #{@connection[:ConnectionSeed]}" if RuneRb::DEBUG
+    @login ||= {}
+    @login[:header] = { Type: frame.read_byte, NameHash: frame.read_byte, ConnectionSeed: @id & 0xFFFFFFFF }
+    log "Generated seed: #{@login[:header][:ConnectionSeed]}" if RuneRb::GLOBAL[:RRB_DEBUG]
 
-    case @connection[:Type]
-    when RuneRb::Net::CONNECTION_TYPES[:GAME_NEW]
-      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Online')}") if RuneRb::DEBUG
+    case @login[:header][:Type]
+    when RuneRb::Network::CONNECTION_TYPES[:GAME_NEW]
+      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Online')}") if RuneRb::GLOBAL[:RRB_DEBUG]
       send_data([0].pack('n'))
       disconnect
-    when RuneRb::Net::CONNECTION_TYPES[:GAME_UPDATE]
-      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Update')}") if RuneRb::DEBUG
+    when RuneRb::Network::CONNECTION_TYPES[:GAME_UPDATE]
+      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Update')}") if RuneRb::GLOBAL[:RRB_DEBUG]
       send_data(Array.new(8, 0).pack('C' * 8))
-    when RuneRb::Net::CONNECTION_TYPES[:GAME_LOGIN]
-      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Login')}") if RuneRb::DEBUG
+    when RuneRb::Network::CONNECTION_TYPES[:GAME_LOGIN]
+      log RuneRb::COL.blue("[ConnectionType]:\t#{RuneRb::COL.cyan('Login')}") if RuneRb::GLOBAL[:RRB_DEBUG]
       send_data([0].pack('q')) # Ignored 8 bytes
       send_data([0].pack('C')) # Response
-      send_data([@connection[:ConnectionSeed]].pack('q')) # Server key
+      send_data([@login[:header][:ConnectionSeed]].pack('q')) # Server key
       @status[:auth] = :PENDING_BLOCK
     else # Unrecognized Connection type
-    send_data([11].pack('C')) # 11	"Login server rejected session. Please try again."
-    disconnect
+    err RuneRb::COL.magenta("Unrecognized ConnectionType: #{@login[:header][:Type]}")
+      send_data([11].pack('C')) # 11	"Login server rejected session. Please try again."
+      disconnect
     end
   end
 
   # Reads a login block from the provided frame
   def read_block
-    frame = RuneRb::Net::Frame.new(-1)
-    frame.push(@in.slice!(0..96))
+    frame = RuneRb::Network::Frame.new(-1)
+    frame.read(@socket, 97)
 
-    @login = {}.tap do |hash|
+    @login[:block] = {}.tap do |hash|
       hash[:Type] = frame.read_byte                             # Type
       hash[:PayloadSize] = frame.read_byte - 40                 # Size
       hash[:Magic] = frame.read_byte                            # Magic (255)
-      hash[:Revision] = frame.read_short(false)          # Version
+      hash[:Revision] = frame.read_short                        # Version
       hash[:LowMem?] = frame.read_byte.positive? ? :LOW : :HIGH # Low memory?
       hash[:CRC] = [].tap { |arr| 9.times { arr << frame.read_int } }
       hash[:RSA_Length] = frame.read_byte                       # RSA_Block Length
@@ -51,18 +54,15 @@ module RuneRb::Net::LoginHelper
       hash[:ClientPart] = frame.read_long                       # Client Part
       hash[:ServerPart] = frame.read_long                       # Server Part
       hash[:UID] = frame.read_int                               # UID
-      hash[:Username] = frame.read_string.downcase.capitalize  # Username
+      hash[:Username] = frame.read_string.downcase              # Username
       hash[:Password] = frame.read_string                       # Password
       hash[:LoginSeed] = [hash[:ServerPart] >> 32, hash[:ServerPart]].pack('NN').unpack1('L')
+      hash[:SessionSeed] = [hash[:ClientPart] >> 32, hash[:ClientPart], hash[:ServerPart] >> 32, hash[:ServerPart]]
       hash[:NameHash] = hash[:Username].to_base37
-      hash[:SessionSeed] = [hash[:ClientPart] >> 32,
-                            hash[:ClientPart],
-                            hash[:ServerPart] >> 32,
-                            hash[:ServerPart]]
     end
 
-    @cipher = { decryptor: RuneRb::Net::ISAAC.new(@login[:SessionSeed]),
-                encryptor: RuneRb::Net::ISAAC.new(@login[:SessionSeed].map { |seed_idx| seed_idx + 50 }) }
-    @endpoint.world.login(self, @login, @connection)
+    @cipher = { decryptor: RuneRb::Network::ISAAC.new(@login[:block][:SessionSeed]),
+                encryptor: RuneRb::Network::ISAAC.new(@login[:block][:SessionSeed].map { |seed_idx| seed_idx + 50 }) }
+    @status[:auth] = :PENDING_WORLD
   end
 end

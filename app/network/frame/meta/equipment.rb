@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # A single EquipmentSlot
-  class EquipmentSlotFrame < RuneRb::Net::MetaFrame
+  class EquipmentSlotFrame < RuneRb::Network::MetaFrame
 
     # Called when a new EquipmentSlotFrame is created.
     def initialize(data)

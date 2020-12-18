@@ -1,6 +1,6 @@
-module RuneRb::Entity::Helpers::Button
+module RuneRb::Game::Entity::Helpers::Button
   # Parses a button press
-  # @param frame [RuneRb::Net::Frame] the frame payload to parse
+  # @param frame [RuneRb::Network::Frame] the frame payload to parse
   def parse_button(frame)
     id = frame.read_short
     case id

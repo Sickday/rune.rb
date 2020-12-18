@@ -1,0 +1,19 @@
+{
+  "RRB_TITLE" : "RuneRb",
+  "RRB_HOST" : "0.0.0.0",
+  "RRB_PORT" : 43594,
+  "RRB_DEBUG" : false,
+  "RRB_STORAGE" : "sqlite",
+  "SQLITE_DATABASE" : "assets/sample.db3",
+  "PROFILE_DATABASE" : "rune_rb_profiles",
+  "DEFINITIONS_DATABASE" : "rune_rb_defs",
+  "SYSTEM_DATABASE" : "rune_rb_system",
+  "DATABASE_USER" : "postgres",
+  "DATABASE_PASS" : "1234",
+  "DATABASE_HOST" : "localhost",
+  "DATABASE_PORT" : 5432,
+  "DEFAULT_MOB_X" : 3222,
+  "DEFAULT_MOB_Y" : 3222,
+  "DEFAULT_MOB_Z" : 0,
+  "TARGET_PROTOCOL" : 317
+}

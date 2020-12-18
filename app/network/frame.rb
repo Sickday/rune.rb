@@ -1,8 +1,8 @@
-module RuneRb::Net
+module RuneRb::Network
   # A basic network frame
   class Frame
-    using RuneRb::Patches::StringOverrides
-    using RuneRb::Patches::IntegerOverrides
+    using RuneRb::System::Patches::StringOverrides
+    using RuneRb::System::Patches::IntegerOverrides
 
     # @return [Hash] the header for the frame
     attr :header
@@ -12,15 +12,17 @@ module RuneRb::Net
 
     # Called when a new Frame is created
     # @param op_code [Integer] the  operation code that will be used in the Frame's header.
-    def initialize(op_code = -1)
-      @header = { op_code: op_code & 0xFF, length: -1 }
-      @payload = ''
+    def initialize(op_code = -1, length = -1)
+      @header = { op_code: op_code & 0xFF, length: length & 0xFF }
     end
 
-    # Pushes data directly to the payload.
-    # @param data [Integer, String, StringIO, Array] the data to push into the payload
-    def push(data)
-      @payload << data
+    # Reads data from a socket into the frame's buffer
+    # @param socket [TCPSocket] the socket to read from
+    # @param size [Integer] the amount of bytes to read from the socket.
+    def read(socket, size = @header[:length])
+      @payload = NIO::ByteBuffer.new(size)
+      @payload.read_from(socket) unless size.zero?
+      @payload.flip
     end
 
     # Parses the value based on the type passed.
@@ -41,8 +43,11 @@ module RuneRb::Net
     def read_byte(signed = false, type = :STD)
       return unless valid_type?(type)
 
-      val = parse_type(@payload.next_byte, type)
-      signed ? val : val & 0xff
+      if signed
+        parse_type(@payload.get(1).unpack1('c'), type)
+      else
+        parse_type(@payload.get(1).unpack1('C'), type)
+      end
     end
 
     # Read multiple bytes from the buffer
@@ -54,9 +59,10 @@ module RuneRb::Net
 
     # Probably did this wrong
     def read_bytes_reverse(amount, type)
-      itrs = amount
-      amount.times.each_with_object([]) do |_itr, arr|
-        arr << @payload.byte_from(itrs -= 1)
+      amount.times.inject([]) do |arr|
+        @payload.flip
+        arr << read_byte
+        arr
       end
     end
 
@@ -189,20 +195,23 @@ module RuneRb::Net
     end
 
     def inspect
-      RuneRb::COL.cyan("[OpCode]: #{@header[:op_code]} || [Size]: #{@payload.bytesize} || #{RuneRb::COL.blue("[Payload]: #{@payload&.unpack('c*')}")}")
+      case @payload
+      when NIO::ByteBuffer
+        RuneRb::COL.cyan("[OpCode]: #{@header[:op_code]} || [Size]: #{@payload.limit}")
+      when String
+        RuneRb::COL.cyan("[OpCode]: #{@header[:op_code]} || [Size]: #{@payload&.length} || #{RuneRb::COL.blue("[Payload]: #{@payload&.unpack('c*')}")}")
+      end
     end
 
     private
 
     def valid_order?(order)
-      raise 'Unrecognized byte order!' unless RuneRb::Net::BYTE_ORDERS.include?(order)
+      raise 'Unrecognized byte order!' unless RuneRb::Network::BYTE_ORDERS.include?(order)
 
       true
     end
 
     def valid_type?(type)
-      raise 'Unrecognized type!' unless RuneRb::Net::BYTE_TYPES.include?(type)
-
       true
     end
   end

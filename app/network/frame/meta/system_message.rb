@@ -1,5 +1,5 @@
-module RuneRb::Net::Meta
-  class SystemMessageFrame < RuneRb::Net::MetaFrame
+module RuneRb::Network::Meta
+  class SystemMessageFrame < RuneRb::Network::MetaFrame
     # Called when a new SystemMessageFrame is created
     # @param data [Hash] the data for the frame.
     def initialize(data)

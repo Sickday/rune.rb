@@ -1,6 +1,6 @@
-module RuneRb::Net::Meta
+module RuneRb::Network::Meta
   # A single SidebarFrame
-  class SwitchSidebarFrame < RuneRb::Net::MetaFrame
+  class SwitchSidebarFrame < RuneRb::Network::MetaFrame
 
     # Called when a new SidebarFrame is created.
     def initialize(data)

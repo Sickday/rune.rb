@@ -1,4 +1,4 @@
-module RuneRb::Entity::Helpers::Flags
+module RuneRb::Game::Entity::Helpers::Flags
   # @return [Hash] a collection of flags to observe when constructing a SynchronizationFrame
   attr :flags
 
@@ -23,7 +23,7 @@ module RuneRb::Entity::Helpers::Flags
   end
 
   # This function will update the Mob's update flags according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
-  # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Mob#update(:graphic, gfx: RuneRb::Entity::Graphic). Internally, this will enable the Mob#flags[:graphic?] which will cause a graphic update flag mask and the Graphic object's data to be added to the context's state block in the next pulse.
+  # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Mob#update(:graphic, gfx: RuneRb::Game::Entity::Graphic). Internally, this will enable the Mob#flags[:graphic?] which will cause a graphic update flag mask and the Graphic object's data to be added to the context's state block in the next pulse.
   # TODO: Raise an error to ensure assets are proper for each update type.
   # @param type [Symbol] the type of update to schedule
   # @param assets [Hash] the assets for the update

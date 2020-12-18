@@ -1,4 +1,4 @@
-module RuneRb::Entity
+module RuneRb::Game::Entity
   # A Graphic that is produced by and displayed to an entity
   class Graphic
     # The ID for the Graphic

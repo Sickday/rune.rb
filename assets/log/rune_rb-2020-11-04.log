@@ -1,0 +1,17 @@
+# Logfile created on 2020-11-04 21:37:42 -0500 by logger.rb/v1.4.2
+I, [2020-11-04T21:37:48.554730 #916104]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T21:37:48.554924 #916104]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T21:37:52.632706 #916714]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T21:37:52.699335 #916714]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T21:37:52.699531 #916714]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-04T21:37:55.750611 #916714]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T22:11:04.200269 #957099]  INFO -- RuneRb: [HOST]:	0.0.0.0
+I, [2020-11-04T22:11:04.200472 #957099]  INFO -- RuneRb: [PORT]:	43594
+I, [2020-11-04T22:11:47.886758 #957408]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T22:11:47.955700 #957408]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T22:11:47.955895 #957408]  INFO -- RuneRb: Credentials valid for Pat!
+I, [2020-11-04T22:11:54.471053 #957408]  INFO -- RuneRb: De-registered socket for 127.0.0.1
+I, [2020-11-04T22:11:57.880243 #957408]  INFO -- RuneRb: Registered new socket for 127.0.0.1
+I, [2020-11-04T22:11:57.885971 #957408]  INFO -- RuneRb: Loaded profile for Pat!
+I, [2020-11-04T22:11:57.886175 #957408]  INFO -- RuneRb: Invalid Credentials for Pat!
+I, [2020-11-04T22:11:57.886347 #957408]  INFO -- RuneRb: De-registered socket for 127.0.0.1

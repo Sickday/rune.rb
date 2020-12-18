@@ -1,14 +1,14 @@
-module RuneRb::Entity
+module RuneRb::Game::Entity
   # A Context object is a Mob that is representing the context of a connected Session.
-  class Context < RuneRb::Entity::Mob
-    include RuneRb::Internal::Log
-    include RuneRb::Entity::Helpers::Equipment
-    include RuneRb::Entity::Helpers::Inventory
-    include RuneRb::Entity::Helpers::Button
-    include RuneRb::Entity::Helpers::Click
-    include RuneRb::Entity::Helpers::Command
+  class Context < RuneRb::Game::Entity::Mob
+    include RuneRb::System::Log
+    include RuneRb::Game::Entity::Helpers::Equipment
+    include RuneRb::Game::Entity::Helpers::Inventory
+    include RuneRb::Game::Entity::Helpers::Button
+    include RuneRb::Game::Entity::Helpers::Click
+    include RuneRb::Game::Entity::Helpers::Command
 
-    # @return [RuneRb::Database::Appearance] the appearance of the Context
+    # @return [RuneRb::System::Database::Appearance] the appearance of the Context
     attr :appearance
 
     # @return [Hash] the Equipment data for a context.
@@ -17,18 +17,18 @@ module RuneRb::Entity
     # @return [Hash] the Inventory data for the Context
     attr :inventory
 
-    # @return [RuneRb::Net::Session] the Session for the Context
+    # @return [RuneRb::Network::Session] the Session for the Context
     attr :session
 
-    # @return [RuneRb::Database::Profile] the Profile of the Context which acts as it's definition.
+    # @return [RuneRb::System::Database::Profile] the Profile of the Context which acts as it's definition.
     attr :profile
 
-    # @return [RuneRb::World::Instance] the world Instance the Context is registered to.
+    # @return [RuneRb::Game::World::Instance] the world Instance the Context is registered to.
     attr :world
 
     # Called when a new Context Entity is created.
-    # @param session [RuneRb::Net::Session] the session to be associated with the entity.
-    # @param profile [RuneRb::Database::Profile] the profile that will act as the definition for the context mob.
+    # @param session [RuneRb::Network::Session] the session to be associated with the entity.
+    # @param profile [RuneRb::System::Database::Profile] the profile that will act as the definition for the context mob.
     def initialize(session, profile)
       @session = session
       @profile = profile
@@ -47,7 +47,7 @@ module RuneRb::Entity
       @profile.location.set(@position[:current])
       @session.write(:logout)
       @world = nil
-      log 'Detached from World instance!' if RuneRb::DEBUG
+      log 'Detached from World instance!' if RuneRb::GLOBAL[:RRB_DEBUG]
     end
 
     # Logs the context in and attaches the context to a world Instance.
@@ -57,7 +57,7 @@ module RuneRb::Entity
     # * loads the Context#stats
     # * teleports the Context to Context#position
     # * assigns the Context#world
-    # @param world [RuneRb::World::Instance] the world to attach to.
+    # @param world [RuneRb::Game::World::Instance] the world to attach to.
     def login(world)
       load_appearance
       load_inventory
@@ -66,7 +66,7 @@ module RuneRb::Entity
       load_stats
       teleport(@position[:current])
       @world = world
-      log 'Attached to World instance!' if RuneRb::DEBUG
+      log 'Attached to World instance!' if RuneRb::GLOBAL[:RRB_DEBUG]
     rescue StandardError => e
       err! 'An error occurred while attaching session to Endpoint!'
       puts e
@@ -78,6 +78,10 @@ module RuneRb::Entity
       str = super
       str << "[INVENTORY]: #{@inventory.inspect}"
       str << "[POSITION]: #{@position.inspect}"
+    end
+
+    def pulse
+      @session.write(:sync, context: self) if @session.status[:auth] == :LOGGED_IN && @session.status[:active] && @world
     end
 
     # Initializes Appearance for the Context.

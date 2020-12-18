@@ -1,4 +1,4 @@
-module RuneRb::Net::Constants
+module RuneRb::Network::Constants
   CONNECTION_TYPES = {
     GAME_RECONNECT: 18,
     GAME_NEW: 16,

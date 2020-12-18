@@ -1,86 +1,89 @@
-module RuneRb::Net
+module RuneRb::Network
   # Represents a host endpoint which accepts sockets and alerts their sessions to populate their buffers via an nio selector.
   class Endpoint
-    include RuneRb::Internal::Log
+    using RuneRb::System::Patches::IntegerOverrides
+    include RuneRb::System::Log
 
-    # @return [Hash] the information for this endpoint. Includes the Host and Port
-    attr :info
-
-    # @return [RuneRb::World::Instance] the World associated with the Endpoint
+    # @return [RuneRb::Game::World::Instance] the World associated with the Endpoint
     attr :world
 
     # Called when a new Endpoint is created.
-    # @param host [String] the host for the Endpoint.
-    # @param port [Integer, String] the port for the Endpoint.
-    # @param world [RuneRb::World::Instance] the world Instance paired with the Endpoint.
-    def initialize(world, host = ENV['HOST'] || '0.0.0.0', port = ENV['PORT'] || 43_594)
-      raise 'No RuneRb::World::Instance provided to the Endpoint!' unless world
+    # @param config [Hash] the configuration for the controller.
+    def initialize(config = {})
+      raise 'No RuneRb::Game::World::Instance provided to the Endpoint!' unless config[:world]
 
-      @world = world
-      @info = { host: host, port: port }
-      @sessions = []
+      @world = config[:world]
+      @host = config[:host] || RuneRb::GLOBAL[:RRB_HOST]
+      @port = config[:port] || RuneRb::GLOBAL[:RRB_PORT]
+      @server = TCPServer.new(@host || '0.0.0.0', @port || 43_594)
       @selector = NIO::Selector.new
-      @server = TCPServer.new(host, port)
-      @selector.register(@server, :r).value = proc { accept_session }
-      @start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      @selector.register(@server, :r).value = -> { register_sessions }
+      @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
+      @sessions = {}
     end
 
-    # Spawns a new process and executes the selection loop within that process. *
-    def deploy
-      # I'm unsure the limits of what can be called in Trap Context but we track uptime here and call exit.
-      Signal.trap('INT') do
-        puts RuneRb::COL.green("Up-time: #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - @start_time).round(3))} Secs")
-        exit
-      end
-
-      Parallel.in_processes(count: 1) do
-        Concurrent::TimerTask.execute(execution_interval: 0.600) do
-          return if @sessions.empty?
-
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-          begin
-            @sessions.each do |session|
-              session.pulse if session.status[:auth] == :LOGGED_IN
-              @sessions.delete(session) unless session.status[:active]
-            end
-            log "Pulse completed in #{RuneRb::COL.yellow.bold((Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3))} seconds" if RuneRb::DEBUG
-          rescue StandardError => e
-            err 'An error occurred during a pulse!', e
-            puts e.backtrace
-          end
-        end
-
-        log RuneRb::COL.green("Endpoint deployed: #{RuneRb::COL.yellow.bold("#{@info[:host]}:#{@info[:port]}")}")
-        loop { @selector.select { |monitor| monitor.value.call } }
-      end
-    end
-
-    # De-registers a socket from the selector and removes it's reference from the internal client list.
-    def deregister(session, socket)
-      @selector.deregister(socket)
-      @sessions.delete(session)
-      log RuneRb::COL.green("De-registered socket for #{RuneRb::COL.cyan(session.ip)}")
+    def run
+      log "Endpoint deployed: #{@host}:#{@port} @ #{@start[:stamp]}"
+      loop { @selector.select { |monitor| monitor.value.call } }
     rescue StandardError => e
-      err 'An error occurred while deregistering session!', e
+      shutdown(graceful: false)
+      err 'An error occurred while deploying Endpoint!', e
       puts e.backtrace
+    rescue Interrupt
+      shutdown(graceful: true)
+      log! "Up-time: #{up_time.to_i.to_ftime}"
+    end
+
+    # Shuts the endpoint down.
+    # @param graceful [Boolean] gracefully shut down?
+    def shutdown(graceful: true)
+      # Release all session contexts from the world.
+      @sessions.each_value { |session| @world.release(session.context) } if graceful
+    ensure
+      # Ensure the server is closed.
+      @server&.close
+      # Ensure all sessions are disconnected.
+      @sessions.each_value(&:disconnect)
+    end
+
+    # The current up-time for the server.
+    def up_time
+      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@start[:time] || Time.now)).round(3)
     end
 
     private
 
     # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
-    def accept_session
+    def register_sessions
       socket = @server.accept_nonblock
-      host = socket.peeraddr[-1]
-      @sessions << RuneRb::Net::Session.new(socket, self)
-      @selector.register(socket, :r).value = proc { update_sessions }
-      log RuneRb::COL.green("Registered new socket for #{RuneRb::COL.cyan(host)}")
+      @selector.register(socket, :r).value = -> { process_session(socket) }
+      @sessions[socket] = RuneRb::Network::Session.new(socket)
+      log "Registered new socket for #{@sessions[socket].ip}"
+    rescue StandardError => e
+      err 'An error occurred while registering sessions!', e
+      puts e.backtrace
     end
 
-    # Attempts to update peer streams via Peer#receive_data
-    def update_sessions
-      @sessions.each do |session|
-        session.status[:active] ? session.receive_data : deregister(session, session.socket)
-      end
+    # Unregisters a socket from the selector and removes it's reference from the system client list.
+    def unregister(session)
+      @sessions.delete(session.socket)
+      log RuneRb::COL.green("De-registered socket for #{session.ip}")
+    rescue StandardError => e
+      err 'An error occurred while unregistering session!',e
+      puts e.backtrace
+    end
+
+    # Processes active sessions and removes inactive sessions.
+    def process_session(socket)
+      return unless @sessions[socket]
+
+      log! "Up-time: #{up_time}" if up_time % 600 == 0 && RuneRb::GLOBAL[:RRB_DEBUG]
+      @sessions[socket].update
+      @world.login(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
+      unregister(@sessions[socket]) unless @sessions[socket].status[:active]
+    rescue StandardError => e
+      err 'An error occurred while processing session!', e
+      puts e.backtrace
     end
   end
 end

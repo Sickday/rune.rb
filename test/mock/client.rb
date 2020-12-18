@@ -53,7 +53,7 @@ module Client
       @current = RuneRb::Net::Frame.new(@in.next_byte)
       @current = decode_frame(@current)
       @current.header[:length] = @in.next_byte if @current.header[:length] == -1
-      @current.header[:length].times { @current.push(@in.slice!(0)) }
+      @current.read(@socket, @in.slice!(0))
       handle_frame(@current)
     end
 
