@@ -1,5 +1,5 @@
 require 'rspec'
-
+require 'simplecov'
 
 require_relative 'staging/constants'
 require_relative 'staging/message/writeable'
@@ -7,6 +7,7 @@ require_relative 'staging/message/readable'
 require_relative 'staging/message/message'
 
 
+SimpleCov.start
 RSpec.describe Message do
 
   context 'when unrecognized mode is passed on initialization' do

@@ -1,6 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'simplecov'
 require_relative '../app/rune'
+
+
+SimpleCov.start
 
 # Test for String refinements (RuneRb::Patches::StringOverrides).
 # Ensures a String-based buffer/stream/io object behaves as expected while using my refinements.
