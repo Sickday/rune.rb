@@ -2,13 +2,18 @@ source 'https://rubygems.org'
 
 # Development Gems
 group :development do
-  gem 'concurrent-ruby-ext'
+  gem 'async'
+  gem 'async-container'
+  gem 'async-io'
   gem 'rbzip2'
   gem 'faker'
   gem 'get_process_mem'
   gem 'minitest'
+  gem 'parallel'
   gem 'pry'
   gem 'rake'
+  gem 'rspec'
+  gem 'simplecov'
   gem 'yard'
 end
 

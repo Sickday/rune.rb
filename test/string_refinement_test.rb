@@ -7,7 +7,7 @@ require_relative '../app/rune'
 class StringRefinementTest < Minitest::Test
   ##
   # PRE-REQ FOR TESTING.
-  using RuneRb::Patches::StringOverrides # Use the refinement object we're testing.
+  using RuneRb::System::Patches::StringOverrides # Use the refinement object we're testing.
   SIZES = { 4 => 'c', 8 => 'n', 16 => 'l', 32 => 'q' }.freeze # Pre-defined sizes for primitives we'll be working with (byte, short, integer, long) and their packing directives
   STRINGS = %w[Pat Jaime Jason Sen].freeze
   Assets = Struct.new(:sample_pool, :to_read, :original_size, :string)

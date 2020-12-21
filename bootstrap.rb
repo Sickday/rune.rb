@@ -1,3 +1,8 @@
 require_relative 'app/rune.rb'
 
-RuneRb::Network::Endpoint.new(world: RuneRb::Game::World::Instance.new).run
+controller = RuneRb::System::Controller.new
+
+
+home_world = controller.deploy(:world, { world_id: rand(0xff) })
+home_point = controller.deploy(:endpoint, { world: home_world })
+controller.run

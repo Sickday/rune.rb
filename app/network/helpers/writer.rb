@@ -46,6 +46,8 @@ module RuneRb::Network::FrameWriter
       write(:sys_message, message: "VERSION: #{RuneRb::GLOBAL[:VERSION]}")
     when :logout, :disconnect
       write_frame(RuneRb::Network::Meta::CloseConnectionFrame.new)
+    when :status
+      write_frame(RuneRb::Network::Meta::MembersAndIndex.new(data))
     when :equipment
       data.each { |slot, slot_data| write_frame(RuneRb::Network::Meta::EquipmentSlotFrame.new(slot: slot, slot_data: slot_data)) }
     when :stats

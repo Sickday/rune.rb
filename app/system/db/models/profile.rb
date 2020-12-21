@@ -5,6 +5,7 @@ module RuneRb::System::Database
     one_to_one :settings, class: RuneRb::System::Database::Settings, key: :name
     one_to_one :stats, class: RuneRb::System::Database::Stats, key: :name
     one_to_one :location, class: RuneRb::System::Database::Location, key: :name
+    one_to_one :status,   class: RuneRb::System::Database::Status,  key: :name
 
     # Registers a new profile with supplied data.
     # @param data [Hash, Struct] profile data to insert.
@@ -12,10 +13,11 @@ module RuneRb::System::Database
     def self.register(data)
       # Create the profile and associations
       RuneRb::PLAYER_PROFILES.insert(name: data[:Username], password: data[:Password], name_hash: data[:NameHash])
-      RuneRb::PLAYER_SETTINGS.insert(name: data[:Username])
       RuneRb::PLAYER_APPEARANCES.insert(name: data[:Username])
+      RuneRb::PLAYER_SETTINGS.insert(name: data[:Username])
       RuneRb::PLAYER_STATS.insert(name: data[:Username])
       RuneRb::PLAYER_LOCATIONS.insert(name: data[:Username])
+      RuneRb::PLAYER_STATUS.insert(name: data[:Username])
       # Return the created profile
       RuneRb::System::Database::Profile[data[:Username]]
     end

@@ -3,7 +3,7 @@ module RuneRb::Network::Meta
   class CloseConnectionFrame < RuneRb::Network::MetaFrame
     # Called when a new CloseConnectionFrame is created.
     def initialize
-      super(109)
+      super(5)
     end
   end
 end

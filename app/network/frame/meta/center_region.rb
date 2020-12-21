@@ -4,7 +4,7 @@ module RuneRb::Network::Meta
     # Called when a new CenterRegionFrame is created.
     # @param regional [RuneRb::Game::Map::Regional] the regional object whose coordinates will be sent.
     def initialize(regional)
-      super(73)
+      super(53)
       parse(regional)
     end
 

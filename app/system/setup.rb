@@ -51,12 +51,14 @@ module Setup
       PLAYER_APPEARANCES = CONNECTION[:appearance]
       # A dataset containing player profiles.
       PLAYER_PROFILES = CONNECTION[:profile]
-      # A dataset containing player locations.
+      # A dataset containing player location information.
       PLAYER_LOCATIONS = CONNECTION[:location]
-      # A dataset containing player settings.
+      # A dataset containing player setting information.
       PLAYER_SETTINGS = CONNECTION[:settings]
       # A dataset containing player stats.
       PLAYER_STATS = CONNECTION[:stats]
+      # A dataset containing player status information.
+      PLAYER_STATUS = CONNECTION[:status]
       # A dataset containing Item definitions.
       ITEM_DEFINITIONS = CONNECTION[:items]
       # A dataset containing banned names.
@@ -80,6 +82,8 @@ module Setup
       PLAYER_SETTINGS = PROFILES[:settings]
       # A dataset containing player stats.
       PLAYER_STATS = PROFILES[:stats]
+      # A dataset containing player status information.
+      PLAYER_STATUS = PROFILES[:status]
       # A dataset containing Item Definitions
       ITEM_DEFINITIONS = DEFINITIONS[:items]
       # A dataset containing banned names.

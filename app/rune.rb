@@ -1,6 +1,8 @@
 Dir[File.dirname(__FILE__)].each { |file| $LOAD_PATH.unshift(file) if File.directory? file }
 
-require 'concurrent'
+require 'async'
+require 'async/io/tcp_socket'
+require 'async/container'
 require 'console'
 require 'druuid'
 require 'fileutils'
@@ -10,6 +12,7 @@ require 'oj'
 require 'pastel'
 require 'pry'
 require 'sequel'
+require 'timers'
 
 require_relative 'system/setup'
 
@@ -112,6 +115,7 @@ module RuneRb
   end
 
   module System
+    autoload :Controller,           'system/controller'
     autoload :Log,                  'system/log'
     autoload :Routine,              'system/routine'
     autoload :Utils,                'system/utils'

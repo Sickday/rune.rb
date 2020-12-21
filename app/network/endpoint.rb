@@ -7,24 +7,31 @@ module RuneRb::Network
     # @return [RuneRb::Game::World::Instance] the World associated with the Endpoint
     attr :world
 
+    # @return [Integer] the id for the endpoint.
+    attr :id
+
     # Called when a new Endpoint is created.
     # @param config [Hash] the configuration for the controller.
     def initialize(config = {})
-      raise 'No RuneRb::Game::World::Instance provided to the Endpoint!' unless config[:world]
-
-      @world = config[:world]
-      @host = config[:host] || RuneRb::GLOBAL[:RRB_HOST]
-      @port = config[:port] || RuneRb::GLOBAL[:RRB_PORT]
-      @server = TCPServer.new(@host || '0.0.0.0', @port || 43_594)
+      parse_config(config)
+      @server = Async::IO::TCPServer.new(@host, @port)
       @selector = NIO::Selector.new
-      @selector.register(@server, :r).value = -> { register_sessions }
       @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
       @sessions = {}
     end
 
-    def run
-      log "Endpoint deployed: #{@host}:#{@port} @ #{@start[:stamp]}"
-      loop { @selector.select { |monitor| monitor.value.call } }
+    def deploy(task: Async::Task.current)
+      task.async do |sub|
+        log RuneRb::COL.blue("Endpoint listening: #{RuneRb::COL.cyan(@host)}:#{RuneRb::COL.cyan(@port)} @ #{RuneRb::COL.cyan(@start[:stamp])}")
+        @selector.register(@server, :r).value = -> { register_sessions(task: sub) }
+
+        loop do
+          # Make a select call
+          @selector.select { |monitor| monitor.value.call }
+          # Yield to the original task to allow execution to continue
+          sub.yield
+        end
+      end
     rescue StandardError => e
       shutdown(graceful: false)
       err 'An error occurred while deploying Endpoint!', e
@@ -54,19 +61,28 @@ module RuneRb::Network
     private
 
     # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
-    def register_sessions
-      socket = @server.accept_nonblock
-      @selector.register(socket, :r).value = -> { process_session(socket) }
-      @sessions[socket] = RuneRb::Network::Session.new(socket)
-      log "Registered new socket for #{@sessions[socket].ip}"
+    def register_sessions(task: Async::Task.current)
+      task.async do |sub|
+        peers = @server.accept_nonblock
+        task.yield if peers.empty?
+        peers.compact!
+        peers.each do |socket|
+          @selector.register(socket, :r).value = ->{ process_session(sub, socket) }
+          @sessions[socket] = RuneRb::Network::Session.new(socket)
+          log "Registered new socket for #{@sessions[socket].ip}"
+        end
+      end
     rescue StandardError => e
       err 'An error occurred while registering sessions!', e
       puts e.backtrace
+    rescue IO::EAGAINWaitReadable
+      err 'No sockets to register!' if RuneRb::GLOBAL[:RRB_DEBUG]
     end
 
     # Unregisters a socket from the selector and removes it's reference from the system client list.
     def unregister(session)
       @sessions.delete(session.socket)
+      @selector.deregister(session.socket)
       log RuneRb::COL.green("De-registered socket for #{session.ip}")
     rescue StandardError => e
       err 'An error occurred while unregistering session!',e
@@ -74,16 +90,24 @@ module RuneRb::Network
     end
 
     # Processes active sessions and removes inactive sessions.
-    def process_session(socket)
-      return unless @sessions[socket]
-
-      log! "Up-time: #{up_time}" if up_time % 600 == 0 && RuneRb::GLOBAL[:RRB_DEBUG]
-      @sessions[socket].update
-      @world.login(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
-      unregister(@sessions[socket]) unless @sessions[socket].status[:active]
+    def process_session(task = Async::Task.current, socket)
+      task.async do |sub|
+        @sessions[socket].update(task: sub)
+        @world.login(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
+        unregister(@sessions[socket]) unless @sessions[socket].status[:active]
+      end
     rescue StandardError => e
       err 'An error occurred while processing session!', e
       puts e.backtrace
+    end
+
+    def parse_config(config)
+      raise 'No RuneRb::Game::World::Instance provided to the Endpoint!' unless config[:world]
+
+      @id = config[:id] || config[:endpoint_id] || Druuid.gen
+      @world = config[:world]
+      @host = config[:host] || RuneRb::GLOBAL[:RRB_HOST]
+      @port = config[:port] || RuneRb::GLOBAL[:RRB_PORT]
     end
   end
 end

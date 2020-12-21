@@ -1,18 +1,20 @@
 module RuneRb::Network
   class Session
+    using RuneRb::System::Patches::IntegerOverrides
+
     include RuneRb::System::Log
     include RuneRb::Network::LoginHelper
     include RuneRb::Network::FrameWriter
     include RuneRb::Network::FrameReader
 
-    attr :ip, :id, :status, :socket, :context
+    attr :ip, :id, :status, :socket, :context, :start
 
     # Called after a new Session object is initialized.
     def initialize(socket)
       @socket = socket
       @status = { auth: :PENDING_CONNECTION, active: true }
-      @ip = @socket.peeraddr.last
-      @in = ''
+      @ip = @socket.addr.last
+      @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
       @id = Druuid.gen
     rescue StandardError => e
       err! 'An error occurred while attaching session to Endpoint!'
@@ -45,16 +47,18 @@ module RuneRb::Network
     end
 
     # Reads data into the Session#in
-    def update
-      case @status[:auth]
-      when :PENDING_CONNECTION
-        read_connection
-      when :PENDING_BLOCK
-        read_block
-      when :LOGGED_IN
-        next_frame
-      else
-        read_connection
+    def update(task: Async::Task.current)
+      task.async do |sub|
+        case @status[:auth]
+        when :PENDING_CONNECTION
+          read_connection(task: sub)
+        when :PENDING_BLOCK
+          read_block(task: sub)
+        when :LOGGED_IN
+          next_frame
+        else
+          read_connection(task: sub)
+        end
       end
     rescue IO::EAGAINWaitReadable
       err 'Socket has no data' if RuneRb::GLOBAL[:RRB_DEBUG]
@@ -87,11 +91,17 @@ module RuneRb::Network
       close
     end
 
+    # The current up-time for the session.
+    def up_time
+      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@start[:time] || Time.now)).round(3)
+    end
+
     private
 
-    # Closes the underlying socket and deregisters the session from the endpoint.
+    # Closes the underlying socket.
     def close
       @socket.close unless @socket.closed?
+      log! "Session duration: #{up_time.to_i.to_ftime}"
     end
   end
 end

@@ -3,7 +3,7 @@ module RuneRb::Network::Meta
   class ClearInterfacesFrame < RuneRb::Network::MetaFrame
     # Called when a ClearInterfaceFrame object is created
     def initialize
-      super(219)
+      super(29)
     end
   end
 end

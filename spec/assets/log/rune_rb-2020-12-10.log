@@ -1,0 +1,83 @@
+# Logfile created on 2020-12-10 08:54:53 -0500 by logger.rb/v1.4.2
+I, [2020-12-10T08:54:53.735865 #13962]  INFO -- RuneRb: [[08:54] New World Instance initialized!
+I, [2020-12-10T08:54:53.738653 #14198]  INFO -- RuneRb: [[08:54] Endpoint deployed: 0.0.0.0:43594
+I, [2020-12-10T08:55:29.035399 #14198]  INFO -- RuneRb: [[08:55] Registered new socket for 127.0.0.1
+I, [2020-12-10T09:40:08.107358 #19577]  INFO -- RuneRb: [[09:40] New World Instance initialized!
+I, [2020-12-10T09:40:08.109794 #19805]  INFO -- RuneRb: [[09:40] Endpoint deployed: 0.0.0.0:43594
+I, [2020-12-10T09:40:10.364386 #19805]  INFO -- RuneRb: [[09:40] Registered new socket for 127.0.0.1
+I, [2020-12-10T10:27:16.015318 #24341]  INFO -- RuneRb: [[10:27] New World Instance initialized!
+I, [2020-12-10T10:27:16.017670 #24570]  INFO -- RuneRb: [[10:27] Endpoint deployed: 0.0.0.0:43594
+I, [2020-12-10T10:27:48.086215 #25786]  INFO -- RuneRb: [[10:27] New World Instance initialized!
+I, [2020-12-10T10:27:48.088686 #26238]  INFO -- RuneRb: [[10:27] Endpoint deployed: 0.0.0.0:43594
+I, [2020-12-10T10:27:50.324206 #26238]  INFO -- RuneRb: [[10:27] Registered new socket for 127.0.0.1
+I, [2020-12-10T10:28:59.944294 #27586]  INFO -- RuneRb: [[10:28] New World Instance initialized!
+I, [2020-12-10T10:28:59.946679 #27986]  INFO -- RuneRb: [[10:28] Endpoint deployed: 0.0.0.0:43594
+I, [2020-12-10T10:29:03.191535 #27986]  INFO -- RuneRb: [[10:29] Registered new socket for 127.0.0.1
+I, [2020-12-10T10:29:03.227731 #27986]  INFO -- RuneRb: [[10:29] Loaded profile data for Pat
+I, [2020-12-10T10:29:03.239656 #27986]  INFO -- RuneRb: [[10:29] Welcome, Pat!
+I, [2020-12-10T10:29:09.087653 #27986]  INFO -- RuneRb: [[10:29] See ya, Pat!
+I, [2020-12-10T10:29:09.096048 #27986]  INFO -- RuneRb: [[10:29] De-registered socket for 127.0.0.1
+I, [2020-12-10T10:29:13.158629 #27986]  INFO -- RuneRb: [[10:29] Registered new socket for 127.0.0.1
+I, [2020-12-10T10:29:13.161983 #27986]  INFO -- RuneRb: [[10:29] Loaded profile data for Pat
+I, [2020-12-10T10:29:13.164669 #27986]  INFO -- RuneRb: [[10:29] Welcome, Pat!
+I, [2020-12-10T10:29:15.974524 #27986]  INFO -- RuneRb: [[10:29] Adding path: [[AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402], [AbsX: 3226, AbsY: 3220, AbsZ: 0] || [LocX: 50, LocY: 52] || [RegX: 403, RegY: 402], [AbsX: 3228, AbsY: 3220, AbsZ: 0] || [LocX: 52, LocY: 52] || [RegX: 403, RegY: 402], [AbsX: 3229, AbsY: 3219, AbsZ: 0] || [LocX: 53, LocY: 51] || [RegX: 403, RegY: 402], [AbsX: 3231, AbsY: 3219, AbsZ: 0] || [LocX: 55, LocY: 51] || [RegX: 403, RegY: 402], [AbsX: 3232, AbsY: 3218, AbsZ: 0] || [LocX: 48, LocY: 50] || [RegX: 404, RegY: 402]]
+I, [2020-12-10T10:29:15.974714 #27986]  INFO -- RuneRb: [[10:29] Adding primary position [AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.974795 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3222, AbsY: 3222, AbsZ: 0] || [LocX: 54, LocY: 54] || [RegX: 402, RegY: 402]
+I, [2020-12-10T10:29:15.974883 #27986]  INFO -- RuneRb: [[10:29] Calculating 2 steps
+I, [2020-12-10T10:29:15.974967 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3223, AbsY: 3222, AbsZ: 0] || [LocX: 55, LocY: 54] || [RegX: 402, RegY: 402]
+I, [2020-12-10T10:29:15.975069 #27986]  INFO -- RuneRb: [[10:29] Added step 2 [AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975133 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975183 #27986]  INFO -- RuneRb: [[10:29] Calculating 2 steps
+I, [2020-12-10T10:29:15.975263 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3225, AbsY: 3221, AbsZ: 0] || [LocX: 49, LocY: 53] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975340 #27986]  INFO -- RuneRb: [[10:29] Added step 2 [AbsX: 3226, AbsY: 3220, AbsZ: 0] || [LocX: 50, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975412 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3226, AbsY: 3220, AbsZ: 0] || [LocX: 50, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975494 #27986]  INFO -- RuneRb: [[10:29] Calculating 2 steps
+I, [2020-12-10T10:29:15.975578 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3227, AbsY: 3220, AbsZ: 0] || [LocX: 51, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975651 #27986]  INFO -- RuneRb: [[10:29] Added step 2 [AbsX: 3228, AbsY: 3220, AbsZ: 0] || [LocX: 52, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975717 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3228, AbsY: 3220, AbsZ: 0] || [LocX: 52, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975783 #27986]  INFO -- RuneRb: [[10:29] Calculating 1 steps
+I, [2020-12-10T10:29:15.975868 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3229, AbsY: 3219, AbsZ: 0] || [LocX: 53, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.975940 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3229, AbsY: 3219, AbsZ: 0] || [LocX: 53, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.976000 #27986]  INFO -- RuneRb: [[10:29] Calculating 2 steps
+I, [2020-12-10T10:29:15.976072 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3230, AbsY: 3219, AbsZ: 0] || [LocX: 54, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.976165 #27986]  INFO -- RuneRb: [[10:29] Added step 2 [AbsX: 3231, AbsY: 3219, AbsZ: 0] || [LocX: 55, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.976222 #27986]  INFO -- RuneRb: [[10:29] Current step: [AbsX: 3231, AbsY: 3219, AbsZ: 0] || [LocX: 55, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:15.976299 #27986]  INFO -- RuneRb: [[10:29] Calculating 1 steps
+I, [2020-12-10T10:29:15.976391 #27986]  INFO -- RuneRb: [[10:29] Added step 1 [AbsX: 3232, AbsY: 3218, AbsZ: 0] || [LocX: 48, LocY: 50] || [RegX: 404, RegY: 402]
+I, [2020-12-10T10:29:16.170750 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3223, AbsY: 3222, AbsZ: 0] || [LocX: 55, LocY: 54] || [RegX: 402, RegY: 402]
+I, [2020-12-10T10:29:16.171250 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:16.171354 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3223, AbsY: 3222, AbsZ: 0] || [LocX: 55, LocY: 54] || [RegX: 402, RegY: 402]
+I, [2020-12-10T10:29:16.773164 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:16.773997 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:16.774059 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3224, AbsY: 3222, AbsZ: 0] || [LocX: 48, LocY: 54] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:17.375828 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3225, AbsY: 3221, AbsZ: 0] || [LocX: 49, LocY: 53] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:17.376539 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be SOUTH_EAST
+I, [2020-12-10T10:29:17.376618 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3225, AbsY: 3221, AbsZ: 0] || [LocX: 49, LocY: 53] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:17.978744 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3226, AbsY: 3220, AbsZ: 0] || [LocX: 50, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:17.978906 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be SOUTH_EAST
+I, [2020-12-10T10:29:17.978965 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3226, AbsY: 3220, AbsZ: 0] || [LocX: 50, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:18.581081 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3227, AbsY: 3220, AbsZ: 0] || [LocX: 51, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:18.581249 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:18.581309 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3227, AbsY: 3220, AbsZ: 0] || [LocX: 51, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:19.183121 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3228, AbsY: 3220, AbsZ: 0] || [LocX: 52, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:19.184076 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:19.184141 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3228, AbsY: 3220, AbsZ: 0] || [LocX: 52, LocY: 52] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:19.785748 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3229, AbsY: 3219, AbsZ: 0] || [LocX: 53, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:19.785920 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be SOUTH_EAST
+I, [2020-12-10T10:29:19.786705 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3229, AbsY: 3219, AbsZ: 0] || [LocX: 53, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:20.388291 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3230, AbsY: 3219, AbsZ: 0] || [LocX: 54, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:20.388452 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:20.388510 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3230, AbsY: 3219, AbsZ: 0] || [LocX: 54, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:20.989737 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3231, AbsY: 3219, AbsZ: 0] || [LocX: 55, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:20.990417 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be EAST
+I, [2020-12-10T10:29:20.990479 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3231, AbsY: 3219, AbsZ: 0] || [LocX: 55, LocY: 51] || [RegX: 403, RegY: 402]
+I, [2020-12-10T10:29:21.591751 #27986]  INFO -- RuneRb: [[10:29] Got point [AbsX: 3232, AbsY: 3218, AbsZ: 0] || [LocX: 48, LocY: 50] || [RegX: 404, RegY: 402]
+I, [2020-12-10T10:29:21.591919 #27986]  INFO -- RuneRb: [[10:29] Worked out 1st direction to be SOUTH_EAST
+I, [2020-12-10T10:29:21.591984 #27986]  INFO -- RuneRb: [[10:29] Updated Pos to [AbsX: 3232, AbsY: 3218, AbsZ: 0] || [LocX: 48, LocY: 50] || [RegX: 404, RegY: 402]
+I, [2020-12-10T10:29:25.631327 #27986]  INFO -- RuneRb: [[10:29] See ya, Pat!
+I, [2020-12-10T10:29:25.644906 #27986]  INFO -- RuneRb: [[10:29] De-registered socket for 127.0.0.1
+I, [2020-12-10T10:29:28.594444 #27986]  INFO -- RuneRb: [[10:29] Registered new socket for 127.0.0.1
+I, [2020-12-10T10:29:28.597459 #27986]  INFO -- RuneRb: [[10:29] Loaded profile data for Pat
+I, [2020-12-10T10:29:28.605054 #27986]  INFO -- RuneRb: [[10:29] Welcome, Pat!
+I, [2020-12-10T10:29:31.358960 #27986]  INFO -- RuneRb: [[10:29] See ya, Pat!
+I, [2020-12-10T10:29:31.379352 #27986]  INFO -- RuneRb: [[10:29] De-registered socket for 127.0.0.1

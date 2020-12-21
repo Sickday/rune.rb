@@ -42,8 +42,6 @@ module RuneRb::Network
     # @param signed [Boolean] Should the byte be signed?
     # @param type [Symbol] the type of byte to read. Accommodates Jagex-specific types (:STD, :A, :C, :S)
     def read_byte(signed = false, type = :STD)
-
-
       if signed
         parse_type(@payload.get(1).unpack1('c'), type)
       else

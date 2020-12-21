@@ -22,7 +22,9 @@ module RuneRb::Network::Constants
                          13 => 962 }.freeze # MUSIC
   # Acceptable byte orders in which multi-byte values can be read.
   BYTE_ORDERS = %i[BIG MIDDLE INVERSE_MIDDLE LITTLE].freeze
-  # Acceptable types of bytes to be read
+  # Acceptable read types for data.
+  READ_TYPES = [:OFFSET, :NEGATIVE_OFFSET, :POST_NEGATIVE_OFFSET, :PRE_NEGATIVE_OFFSET,
+                :INVERTED, :NEGATIVE]
   BYTE_TYPES = [:A, :a, :C, :c, :S, :s, :STD, :std].freeze
   # Bit masks for bit packing
   BIT_MASK_OUT = (0...32).collect { |i| (1 << i) - 1 }

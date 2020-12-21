@@ -1,0 +1,17 @@
+image: ruby
+
+stages:
+  - test_specs
+  - test_units
+
+primary:
+  stage: .pre
+  script: bundle install
+
+spec_task:
+  stage: test_specs
+  script: bundle exec rspec spec/*.rb
+
+unit_task:
+  stage: test_units
+  script: bundle exec ruby test/*.rb

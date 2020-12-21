@@ -42,10 +42,22 @@ module RuneRb::Game::Entity
     # * updates the Context#profile#location to the current Context#position
     # * closes the session via Context#session#close_connection
     def logout
+      # Dump the inventory data
       dump_inventory
+
+      # Dump the equipment data
       dump_equipment
+
+      # Set the position.
       @profile.location.set(@position[:current])
+
+      # Post the session
+      @profile.status.post_session(session)
+
+      # Write the actual logout.
       @session.write(:logout)
+
+      # Detach from the world.
       @world = nil
       log 'Detached from World instance!' if RuneRb::GLOBAL[:RRB_DEBUG]
     end
@@ -64,6 +76,7 @@ module RuneRb::Game::Entity
       load_equipment
       load_commands
       load_stats
+      load_status
       teleport(@position[:current])
       @world = world
       log 'Attached to World instance!' if RuneRb::GLOBAL[:RRB_DEBUG]
@@ -94,6 +107,12 @@ module RuneRb::Game::Entity
     def load_stats
       @stats = @profile.stats
       @session.write(:stats, @stats)
+    end
+
+    # Initializes Status for the Context.
+    def load_status
+      @status = @profile.status
+      @session.write(:status, { members: @stats.members, player_idx: @index })
     end
   end
 end

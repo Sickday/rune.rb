@@ -1,4 +1,4 @@
-module RuneRb::Internal
+module RuneRb::System
   # A ordered set of asynchronous execution blocks make up most of the functionality of this object. It also features #successful and #unsuccessful optional callback functions.
   class Routine
     using RuneRb::System::Patches::SetOverrides
@@ -19,9 +19,7 @@ module RuneRb::Internal
 
     # Attempts to execute all operations in the Routine in sequential order.
     def start
-      @operations.each_consume do |operation|
-        spin { operation&.call(@assets) }
-      end
+      @operations.each_consume { |operation| operation&.call(@assets) }
       @callback&.call || successful
     rescue StandardError => e
       err 'An error occurred during routine execution.'
