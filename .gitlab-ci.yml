@@ -6,10 +6,14 @@ stages:
 
 spec_task:
   stage: test_specs
-  before_script: bundle install
-  script: bundle exec rspec spec/*.rb
+  before_script:
+  - bundle install
+  script:
+  - bundle exec rspec spec/*.rb
 
 unit_task:
   stage: test_units
-  before_script: bundle install
-  script: bundle exec ruby test/*.rb
+  before_script:
+  - bundle install
+  script:
+  - bundle exec ruby test/*.rb
