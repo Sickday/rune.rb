@@ -4,11 +4,6 @@ stages:
   - test_specs
   - test_units
 
-primary:
-  services:
-    - postgres
-  stage: .pre
-
 spec_task:
   stage: test_specs
   before_script: bundle install
