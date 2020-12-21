@@ -1,8 +1,9 @@
 image: ruby
 
 stages:
-  - test_specs
   - test_units
+  - test_specs
+
 
 unit_task:
   stage: test_units
