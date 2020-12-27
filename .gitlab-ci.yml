@@ -104,7 +104,6 @@ test_staging:
 
 on_merge:
   stage: post_merge_test
-  coverage: ''
   before_script:
     - bundle install
   script:
