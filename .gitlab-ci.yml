@@ -72,6 +72,7 @@ test_app:
 
 test_staging_units:
   stage: test_staging_units
+  allow_failure: true
   before_script:
     - bundle install
   script:
