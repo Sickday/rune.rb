@@ -1,20 +1,106 @@
 image: ruby
 
 stages:
-  - test_units
-  - test_specs
+  - setup_deps
+  - test_staging_units
+  - test_staging_specs
+  - test_staging
 
+setup_dependencies:
+  stage: setup_deps
+  script:
+    - bundle install
 
-unit_task:
+test_units:
   stage: test_units
+  coverage: '\(\d+.\d+\%\) covered'
   before_script:
     - bundle install
   script:
-    - bundle exec ruby test/*.rb
+    - bundle exec ruby test/integer_refinements_test.rb --name test_unsigned_bytes
+    - bundle exec ruby test/integer_refinements_test.rb --name test_unsigned_shorts
+    - bundle exec ruby test/integer_refinements_test.rb --name test_unsigned_ints
+    - bundle exec ruby test/integer_refinements_test.rb --name test_unsigned_longs
+    - bundle exec ruby test/integer_refinements_test.rb --name test_signed_bytes
+    - bundle exec ruby test/integer_refinements_test.rb --name test_signed_shorts
+    - bundle exec ruby test/integer_refinements_test.rb --name test_signed_ints
+    - bundle exec ruby test/integer_refinements_test.rb --name test_signed_longs
+    - bundle exec ruby test/integer_refinements_test.rb --name test_overflowed_bytes
+    - bundle exec ruby test/integer_refinements_test.rb --name test_overflowed_shorts
+    - bundle exec ruby test/integer_refinements_test.rb --name test_overflowed_ints
+    - bundle exec ruby test/integer_refinements_test.rb --name test_overflowed_longs
+    - bundle exec ruby test/set_refinements_test.rb --name test_each_consume
+    - bundle exec ruby test/set_refinements_test.rb --name test_repopulation_consume
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_byte
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_bytes
+    - bundle exec ruby test/string_refinements_test.rb --name test_byte_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_bytes_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_short
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_shorts
+    - bundle exec ruby test/string_refinements_test.rb --name test_short_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_shorts_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_int
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_ints
+    - bundle exec ruby test/string_refinements_test.rb --name test_int_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_ints_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_long
+    - bundle exec ruby test/string_refinements_test.rb --name test_next_longs
+    - bundle exec ruby test/string_refinements_test.rb --name test_long_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_longs_from
+    - bundle exec ruby test/string_refinements_test.rb --name test_to_base37
+    - bundle exec ruby test/string_refinements_test.rb --name test_from_base37
 
-spec_task:
+test_specs:
   stage: test_specs
   before_script:
-  - bundle install
+    - bundle install
   script:
-  - bundle exec rspec spec/*.rb
+    - bundle exec rspec spec/chain_spec[1:1]
+    - bundle exec rspec spec/chain_spec[1:2]
+    - bundle exec rspec spec/routine_spec[1:1]
+    - bundle exec rspec spec/routine_spec[1:2]
+
+test_staging_units:
+  stage: test_staging_units
+  before_script:
+    - bundle install
+  script:
+    - bundle exec ruby staging/test/readable_message_test.rb --name test_read_from
+
+test_staging_specs:
+  stage: spec_tests
+  coverage: '\(\d+.\d+\%\) covered'
+  before_script:
+    - bundle install
+  script:
+    - bundle exec rspec staging/spec/channel_spec.rb[1:1]
+    - bundle exec rspec staging/spec/channel_spec.rb[1:2]
+    - bundle exec rspec staging/spec/channel_spec.rb[1:3]
+    - bundle exec rspec staging/spec/channel_spec.rb[1:4]
+    - bundle exec rspec staging/spec/channel_spec.rb[1:5]
+    - bundle exec rspec staging/spec/message_spec.rb[1:1]
+    - bundle exec rspec staging/spec/message_spec.rb[1:2]
+    - bundle exec rspec staging/spec/message_spec.rb[1:3]
+    - bundle exec rspec staging/spec/message_spec.rb[1:4]
+
+test_staging:
+  stage: test_staging
+  coverage: '\(\d+.\d+\%\) covered'
+  allow_failure: true
+  before_script:
+    - bundle install
+  script:
+    - bundle exec rspec staging/spec/*.rb
+    - bundle exec ruby staging/test/*.rb
+
+on_merge:
+  stage: post_merge_test
+  coverage: ''
+  before_script:
+    - bundle install
+  script:
+    - bundle exec rspec spec/*.rb
+    - bundle exec ruby test/*.rb
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success

@@ -3,7 +3,7 @@ module RuneRb::System
     include Log
 
     def initialize(config = {})
-      #parse_config(config)
+      # parse_config(config)
       @endpoints = {}
       @worlds = {}
       @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
@@ -15,13 +15,13 @@ module RuneRb::System
     def deploy(type, configuration)
       case type
       when :endpoint
-        #return unless validate_config(configuration, :endpoint)
+        # return unless validate_config(configuration, :endpoint)
 
         ep = RuneRb::Network::Endpoint.new(configuration)
         @endpoints[ep.id] = ep
         ep
       when :world
-        #return unless validate_config(configuration, :world)
+        # return unless validate_config(configuration, :world)
 
         world = RuneRb::Game::World::Instance.new(configuration)
         @worlds[world.id] = world

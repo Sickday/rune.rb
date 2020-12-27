@@ -1,6 +1,6 @@
 module RuneRb::Network
   class Session
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::IntegerRefinements
 
     include RuneRb::System::Log
     include RuneRb::Network::LoginHelper

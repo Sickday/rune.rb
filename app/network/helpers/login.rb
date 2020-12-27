@@ -1,6 +1,6 @@
 module RuneRb::Network::LoginHelper
-  using RuneRb::System::Patches::IntegerOverrides
-  using RuneRb::System::Patches::StringOverrides
+  using RuneRb::System::Patches::IntegerRefinements
+  using RuneRb::System::Patches::StringRefinements
 
   # @return [Hash] a structured map of login block data.
   attr :login

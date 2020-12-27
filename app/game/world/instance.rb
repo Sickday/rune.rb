@@ -1,8 +1,8 @@
 module RuneRb::Game::World
   # A World Instance object models a virtual game world. The Instance object manages mobs, events, and most of all the game logic processing.
   class Instance
-    using RuneRb::System::Patches::SetOverrides
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::SetRefinements
+    using RuneRb::System::Patches::IntegerRefinements
 
     include RuneRb::System::Log
     include LoginHelper

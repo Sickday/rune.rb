@@ -2,9 +2,9 @@
 # MDate: 10/05/2020
 
 # A module adding new functions to the String class in the form of a refinement. The functions assist when a string is used as a Stream container/buffer.
-module RuneRb::System::Patches::StringOverrides
+module RuneRb::System::Patches::StringRefinements
   refine String do
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::IntegerRefinements
     %w{_ a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * ( ) - + = : ; . > < , " [ ] | ? / `}.freeze
 
     # returns the next byte.

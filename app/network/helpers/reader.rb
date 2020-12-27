@@ -1,11 +1,11 @@
 module RuneRb::Network::FrameReader
-  using RuneRb::System::Patches::IntegerOverrides
-  using RuneRb::System::Patches::StringOverrides
+  using RuneRb::System::Patches::IntegerRefinements
+  using RuneRb::System::Patches::StringRefinements
 
   private
 
   # Decodes a frame using the Session#cipher.
-  # @param frame [RuneRb::Networkwork::Frame] the frame to decode.
+  # @param frame [RuneRb::Network::Frame] the frame to decode.
   def decode_frame(frame)
     raise 'Invalid cipher for Session!' unless @cipher
 

@@ -1,7 +1,7 @@
 module RuneRb::Network::FrameWriter
   using RuneRb::System::Patches::ArrayOverrides
-  using RuneRb::System::Patches::IntegerOverrides
-  using RuneRb::System::Patches::StringOverrides
+  using RuneRb::System::Patches::IntegerRefinements
+  using RuneRb::System::Patches::StringRefinements
 
   # Encodes a frame using the Session#cipher.
   # @param frame [RuneRb::Networkwork::Frame] the frame to encode.

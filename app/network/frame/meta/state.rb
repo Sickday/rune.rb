@@ -1,6 +1,6 @@
 module RuneRb::Network::Meta
   class StateBlock < RuneRb::Network::MetaFrame
-    using RuneRb::System::Patches::StringOverrides
+    using RuneRb::System::Patches::StringRefinements
 
     # Writes the appearance of a Context entity
     # @param context [RuneRb::Game::Entity::Context] the context whose appearance will be written

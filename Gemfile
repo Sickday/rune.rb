@@ -5,15 +5,14 @@ group :development do
   gem 'async'
   gem 'async-container'
   gem 'async-io'
-  gem 'rbzip2'
+  gem 'coveralls', require: false
   gem 'faker'
   gem 'get_process_mem'
   gem 'minitest'
-  gem 'parallel'
   gem 'pry'
   gem 'rake'
   gem 'rspec'
-  gem 'simplecov'
+  gem 'simplecov', require: false, group: :test
   gem 'yard'
 end
 

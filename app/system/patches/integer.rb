@@ -2,7 +2,7 @@
 # MDate: 10/05/2020
 #
 # A module adding overflow functions to integers to mimic the behavior of Java primitive overflow behavior.
-module RuneRb::System::Patches::IntegerOverrides
+module RuneRb::System::Patches::IntegerRefinements
 
   refine Integer do
 
@@ -12,7 +12,7 @@ module RuneRb::System::Patches::IntegerOverrides
       to_s(2).chars.map(&:to_i)
     end
 
-    alias brep binary_representation
+    alias_method :brep, :binary_representation
 
     # Returns a base 10 numeric from the passed array representation
     # @param representation [Array] the representation used to generate the numeric
@@ -25,13 +25,14 @@ module RuneRb::System::Patches::IntegerOverrides
       res
     end
 
-    alias from_brep from_binary_rep
+    alias_method :from_brep, :from_binary_rep
 
+    # Returns a string with a formatted representation of the Integer as a timestamp.
     def to_ftime
       mm, ss = divmod(60)
       hh, mm = mm.divmod(60)
       dd, hh = hh.divmod(24)
-      "%d days, %d hours, %d minutes, and %d seconds" % [dd, hh, mm, ss]
+      format('%<days>d days, %<hours>d hours, %<mins>d minutes, and %<secs>d seconds', dd, hh, mm, ss)
     end
 
     # Returned unsigned
@@ -73,7 +74,7 @@ module RuneRb::System::Patches::IntegerOverrides
     end
 
     # Shorthand
-    alias u unsigned
+    alias_method :u, :unsigned
 
     # Return signed
     # @param type [Symbol] the type of primitive this value will be returned as
@@ -93,7 +94,7 @@ module RuneRb::System::Patches::IntegerOverrides
     end
 
     # Shorthand
-    alias s signed
+    alias_method :s, :signed
 
     def nibble
       adjust(:nibble)
@@ -101,7 +102,8 @@ module RuneRb::System::Patches::IntegerOverrides
 
     private
 
-    # adjusts the Integer
+    # Emulates the overflow behavior of java
+    # @param type [Symbol] the type to adjust the Integer for [:byte, :short, :int, :long]
     def adjust(type)
       case type
       when :Byte, :byte, :b, :B

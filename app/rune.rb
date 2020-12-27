@@ -17,7 +17,6 @@ require 'timers'
 require_relative 'system/setup'
 
 module RuneRb
-  # Including this file will define it's constants in the RuneRb namespace, making them available to it's children.
   include Setup
 
   module Game
@@ -84,7 +83,7 @@ module RuneRb
 
   # This module contains objects, models, and helpers related to network activity.
   module Network
-    require_relative                'network/constants'
+    require_relative 'network/constants'
     include Constants
 
     autoload :Endpoint,             'network/endpoint'
@@ -115,10 +114,10 @@ module RuneRb
   end
 
   module System
+    autoload :Chain,                'system/chain'
     autoload :Controller,           'system/controller'
     autoload :Log,                  'system/log'
     autoload :Routine,              'system/routine'
-    autoload :Utils,                'system/utils'
 
     # RuneRb::System::Database
     module Database
@@ -133,12 +132,11 @@ module RuneRb
       autoload :Snapshots,            'system/db/models/system'
     end
 
-    # This module contains various refinements made to objects already defined int he stdlib. These are done in the form of refinements which are used in the objects who require the functions defined in the refinement. Doing this prevents pollution of the global definitions of the objects.
+    # This module contains various refinements made to objects already defined int he stdlib. The refinements are used in the objects who require the functions defined in the refinement. Doing this prevents pollution of the global definitions of the stdlib objects.
     module Patches
-      autoload :ArrayOverrides,       'system/patches/array'
-      autoload :IntegerOverrides,     'system/patches/integer'
-      autoload :SetOverrides,         'system/patches/set'
-      autoload :StringOverrides,      'system/patches/string'
+      autoload :IntegerRefinements,     'system/patches/integer'
+      autoload :SetRefinements,         'system/patches/set'
+      autoload :StringRefinements,      'system/patches/string'
     end
   end
 

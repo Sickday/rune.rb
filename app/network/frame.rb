@@ -1,8 +1,8 @@
 module RuneRb::Network
   # A basic network frame
   class Frame
-    using RuneRb::System::Patches::StringOverrides
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::StringRefinements
+    using RuneRb::System::Patches::IntegerRefinements
 
     # @return [Hash] the header for the frame
     attr :header

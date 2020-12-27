@@ -1,7 +1,7 @@
 module RuneRb::Network
   # Represents a host endpoint which accepts sockets and alerts their sessions to populate their buffers via an nio selector.
   class Endpoint
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::IntegerRefinements
     include RuneRb::System::Log
 
     # @return [RuneRb::Game::World::Instance] the World associated with the Endpoint
@@ -60,6 +60,7 @@ module RuneRb::Network
 
     private
 
+    # TODO: update documentation.
     # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
     def register_sessions(task: Async::Task.current)
       task.async do |sub|

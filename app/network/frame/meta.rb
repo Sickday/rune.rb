@@ -3,8 +3,8 @@ module RuneRb::Network
   class MetaFrame < Frame
     include RuneRb::System::Log
 
-    using RuneRb::System::Patches::StringOverrides
-    using RuneRb::System::Patches::IntegerOverrides
+    using RuneRb::System::Patches::StringRefinements
+    using RuneRb::System::Patches::IntegerRefinements
 
     # Called when a new MetaFrame is created
     def initialize(op_code, fixed = true, variable_short = false)

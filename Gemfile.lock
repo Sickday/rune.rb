@@ -14,6 +14,12 @@ GEM
     concurrent-ruby (1.1.7)
     console (1.10.1)
       fiber-local
+    coveralls (0.7.2)
+      multi_json (~> 1.3)
+      rest-client (= 1.6.7)
+      simplecov (>= 0.7)
+      term-ansicolor (= 1.2.2)
+      thor (= 0.18.1)
     diff-lcs (1.4.4)
     docile (1.3.3)
     druuid (1.0.2)
@@ -30,11 +36,13 @@ GEM
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
     method_source (1.0.0)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2020.1104)
     minitest (5.14.2)
     multi_json (1.15.0)
     nio4r (2.5.4)
     oj (3.10.16)
-    parallel (1.20.1)
     pastel (0.8.0)
       tty-color (~> 0.5)
     pg (1.2.3)
@@ -42,7 +50,8 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     rake (13.0.1)
-    rbzip2 (0.3.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -64,7 +73,11 @@ GEM
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.2)
     sqlite3 (1.4.2)
+    term-ansicolor (1.2.2)
+      tins (~> 0.8)
+    thor (0.18.1)
     timers (4.3.2)
+    tins (0.13.2)
     tty-color (0.6.0)
     yard (0.9.25)
 
@@ -77,6 +90,7 @@ DEPENDENCIES
   async-io
   concurrent-ruby
   console
+  coveralls
   druuid
   faker
   get_process_mem
@@ -84,12 +98,10 @@ DEPENDENCIES
   minitest
   nio4r
   oj
-  parallel
   pastel
   pg
   pry
   rake
-  rbzip2
   rspec
   sequel
   simplecov
