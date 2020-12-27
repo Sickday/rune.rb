@@ -1,13 +1,4 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'simplecov'
-
-require 'pry'
-require_relative '../app/pp/rune'
-require_relative '../staging/changes/constants'
-require_relative '../staging/changes/message/writeable'
-require_relative '../staging/changes/message/readable'
-require_relative '../staging/changes/message/message'
+require 'test_helper'
 
 class ReadableTest < Minitest::Test
   def setup

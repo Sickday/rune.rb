@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/sickday/rune.rb/badges/master/pipeline.svg)](https://gitlab.com/sickday/rune.rb/-/commits/master)
+
 ## About
 
 **Rune.rb** is a game server written in Ruby targeting the 2006 era of RuneScape (or the 317-377 protocols). I'm writing all this from scratch and coverage is an on-going effort. 
