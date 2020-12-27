@@ -103,7 +103,7 @@ test_staging:
     - bundle exec ruby staging/test/*.rb
 
 on_merge:
-  stage: post_merge_test
+  stage: test_app
   before_script:
     - bundle install
   script:
