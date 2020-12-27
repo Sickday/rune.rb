@@ -1,4 +1,5 @@
 [![pipeline status](https://gitlab.com/sickday/rune.rb/badges/master/pipeline.svg)](https://gitlab.com/sickday/rune.rb/-/commits/master)
+[![coverage](https://gitlab.com/sickday/rune.rb/badges/master/coverage.svg?job=test_app)](https://gitlab.com/sickday/rune.rb/-/commits/master)
 
 ## About
 
