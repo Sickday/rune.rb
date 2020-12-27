@@ -5,12 +5,13 @@ group :development do
   gem 'async'
   gem 'async-container'
   gem 'async-io'
-  gem 'coveralls', require: false
+  gem 'coveralls_reborn', '~> 0.19.0', require: false
   gem 'faker'
   gem 'get_process_mem'
   gem 'minitest'
   gem 'pry'
   gem 'rake'
+  gem 'rest-client', '>= 1.8.0'
   gem 'rspec'
   gem 'simplecov', require: false, group: :test
   gem 'yard'
@@ -22,8 +23,8 @@ group :production do
   gem 'console'
   gem 'druuid'
   gem 'logging'
-  gem 'oj'
   gem 'nio4r'
+  gem 'oj'
   gem 'pastel'
   gem 'pg'
   gem 'sequel'
