@@ -1,4 +1,5 @@
 Dir[File.dirname(__FILE__)].each { |file| $LOAD_PATH.unshift(file) if File.directory? file }
+$LOAD_PATH.unshift File.dirname(__FILE__)
 
 require 'async'
 require 'async/io/tcp_socket'

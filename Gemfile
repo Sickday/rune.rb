@@ -2,9 +2,8 @@ source 'https://rubygems.org'
 
 # Development Gems
 group :development do
-  gem 'async'
-  gem 'async-container'
-  gem 'async-io'
+  gem 'concurrent-ruby'
+  gem 'concurrent-ruby-ext'
   gem 'faker'
   gem 'get_process_mem'
   gem 'minitest'
@@ -18,7 +17,9 @@ end
 
 # Production Gems
 group :production do
-  gem 'concurrent-ruby'
+  gem 'async'
+  gem 'async-container'
+  gem 'async-io'
   gem 'console'
   gem 'druuid'
   gem 'logging'
@@ -28,4 +29,5 @@ group :production do
   gem 'pg'
   gem 'sequel'
   gem 'sqlite3'
+  gem 'timers'
 end
