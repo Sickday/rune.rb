@@ -5,7 +5,6 @@ group :development do
   gem 'async'
   gem 'async-container'
   gem 'async-io'
-  gem 'coveralls_reborn', '~> 0.19.0', require: false
   gem 'faker'
   gem 'get_process_mem'
   gem 'minitest'
