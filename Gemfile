@@ -1,9 +1,10 @@
-source 'https://www.rubygems.org'
+source 'https://rubygems.org'
 
 # Development Gems
 group :development do
-  gem 'faker'
   gem 'concurrent-ruby-ext'
+  gem 'faker'
+  gem 'get_process_mem'
   gem 'minitest'
   gem 'pry'
   gem 'rake'
@@ -19,6 +20,6 @@ group :production do
   gem 'oj'
   gem 'pastel'
   gem 'pg'
-  gem 'sequel', '5.34.0'
+  gem 'sequel'
   gem 'sqlite3'
 end
