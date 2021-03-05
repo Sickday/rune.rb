@@ -10,12 +10,11 @@ describe Message do
 
   context 'when mode is readable' do
     let(:readable) do
-      256.times.inject([]) do |pool, itr|
+      256.times.each_with_object([]) do |itr, pool|
         body = rand(itr).to_i.times.inject('') { |buf| buf << [rand(itr).to_i].pack('c*') }
         header = { op_code: itr, size: body.bytesize }
         # Add to the pools
         pool << Message.new('r', header, body)
-        pool
       end
     end
 
@@ -31,12 +30,6 @@ describe Message do
       readable.each do |message|
         # Expect message to respond true to Message#readable?
         expect(message.readable?).to eq(true)
-      end
-    end
-
-    it 'freezes the Message#header' do
-      readable.each do |message|
-        expect(message.header.frozen?).to eq(true)
       end
     end
 
@@ -59,21 +52,14 @@ describe Message do
         expect { message.writeable? }.to raise_error(NoMethodError)
       end
     end
-
-    it 'raises a FrozenError on modifications to the Message#header' do
-      readable.each do |message|
-        expect { message.header[:op_code] = 20 }.to raise_error(FrozenError)
-      end
-    end
   end
 
   context 'when mode is writable' do
     let(:writeable) do
-      256.times.inject([]) do |pool, itr|
+      256.times.each_with_object([]) do |itr, pool|
         header = { op_code: itr, size: itr }
         # Add to the pools
         pool << Message.new('w', header)
-        pool
       end
     end
 
@@ -108,7 +94,7 @@ describe Message do
     it 'raises a NoMethodError on Readable function calls' do
       writeable.each do |message|
         # Expect readable functions to result in NoMethodError
-        expect{ message.readable? }.to raise_error(NoMethodError)
+        expect { message.readable? }.to raise_error(NoMethodError)
       end
     end
   end
@@ -116,19 +102,17 @@ describe Message do
   describe '#peek' do
 
     let(:generic) do
-      256.times.inject([]) do |pool, itr|
+      256.times.each_with_object([]) do |itr, pool|
         body = rand(itr).to_i.times.inject('') { |buf| buf << [rand(itr).to_i].pack('c*') }
         header = { op_code: itr, size: body.bytesize }
         # Add to the pools
         pool << Message.new('rw', header, body)
-        pool
       end
     end
 
-    it 'returns a duplicate of Message#writeable or Message#readable' do
+    it 'returns a duplicate of Message#payload' do
       generic.each do |message|
-        expect(message.peek(:writeable) == message.writeable).to eq(true)
-        expect(message.peek(:readable) == message.readable).to eq(true)
+        expect(message.peek.size == message.header[:length]).to eql(true)
       end
     end
   end

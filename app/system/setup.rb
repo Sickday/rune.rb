@@ -1,100 +1,118 @@
-module Setup
-  ##
-  # INITIALIZES GLOBAL SETTINGS
-  begin
-    GLOBAL = {}.tap do |settings|
-      Oj.load(File.read('assets/config/rune.rb.json')).each do |key, value|
-        settings[key.to_sym] = value
-      end
-    end
+# Copyright (c) 2020, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-    GLOBAL[:RRB_STORAGE] = GLOBAL[:RRB_STORAGE].to_sym
-  rescue StandardError => e
-    puts "An error occurred while loading Global settings!"
-    puts e
-    puts e.backtrace
-    exit
-  end
+module RuneRb::System::Setup
+  extend self
 
-  ##
-  # INITIALIZE LOGGER
-  begin
-    if GLOBAL[:RRB_LOGS_PATH]
-      # Set the logfile path.
-      LOG_FILE_PATH = GLOBAL[:RRB_LOGS_PATH]
-    else
-      # Create the asset log folder if it does not exist.
-      FileUtils.mkdir_p("#{FileUtils.pwd}/assets/log")
-      LOG_FILE_PATH = "#{FileUtils.pwd}/assets/log/rune_rb-#{Time.now.strftime('%Y-%m-%d').chomp}.log"
-    end
-    # Initialize a new log file
-    LOG_FILE = Logger.new(LOG_FILE_PATH, progname: GLOBAL[:RRB_TITLE])
-    # Initialize a new logger
-    LOG = Console.logger
-    # Log Coloring
-    COL = Pastel.new
-  rescue StandardError => e
-    puts "An error occurred while initializing logger!"
-    puts e
-    puts e.backtrace
-    exit
-  end
-
-  ###
-  # INITIALIZE DATABASE CONNECTION
-  begin
-    case GLOBAL[:RRB_STORAGE]
+  def load_mob_data(settings)
+    case settings[:STORAGE_TYPE]
     when :sqlite
-      # A connection to the sqlite database
-      CONNECTION = Sequel.sqlite(GLOBAL[:SQLITE_DATABASE])
-      # A dataset containing player appearances.
-      PLAYER_APPEARANCES = CONNECTION[:appearance]
-      # A dataset containing player profiles.
-      PLAYER_PROFILES = CONNECTION[:profile]
-      # A dataset containing player location information.
-      PLAYER_LOCATIONS = CONNECTION[:location]
-      # A dataset containing player setting information.
-      PLAYER_SETTINGS = CONNECTION[:settings]
-      # A dataset containing player stats.
-      PLAYER_STATS = CONNECTION[:stats]
-      # A dataset containing player status information.
-      PLAYER_STATUS = CONNECTION[:status]
-      # A dataset containing Item definitions.
-      ITEM_DEFINITIONS = CONNECTION[:items]
-      # A dataset containing banned names.
-      BANNED_NAMES = CONNECTION[:banned_names]
-      # A dataset containing snapshots.
-      SNAPSHOTS = CONNECTION[:snapshots]
+      settings[:MOB_SPAWNS] = settings[:CONNECTION][:mob_spawns]
+      settings[:MOB_STATS] = settings[:CONNECTION][:mob_stats]
+      settings[:MOB_ANIMATIONS] = settings[:CONNECTION][:mob_animations]
+      settings[:MOB_DEFINITIONS] = settings[:CONNECTION][:mob_definitions]
     when :postgres
-      # A connection to the Profiles database
-      PROFILES = Sequel.postgres(GLOBAL[:PROFILE_DATABASE], user: GLOBAL[:DATABASE_USER], password: GLOBAL[:DATABASE_PASS], host: GLOBAL[:DATABASE_HOST], port: GLOBAL[:DATABASE_PORT])
-      # A connection to the Systems database
-      SYSTEMS = Sequel.postgres(GLOBAL[:SYSTEM_DATABASE], user: GLOBAL[:DATABASE_USER], password: GLOBAL[:DATABASE_PASS], host: GLOBAL[:DATABASE_HOST], port: GLOBAL[:DATABASE_PORT])
-      # A connection to the Definitions database.
-      DEFINITIONS = Sequel.postgres(GLOBAL[:DEFINITIONS_DATABASE], user: GLOBAL[:DATABASE_USER], password: GLOBAL[:DATABASE_PASS], host: GLOBAL[:DATABASE_HOST], port: GLOBAL[:DATABASE_PORT])
-      # A dataset containing player appearances.
-      PLAYER_APPEARANCES = PROFILES[:appearance]
-      # A dataset containing player profiles.
-      PLAYER_PROFILES = PROFILES[:profile]
-      # A dataset containing player locations.
-      PLAYER_LOCATIONS = PROFILES[:location]
-      # A dataset containing player settings.
-      PLAYER_SETTINGS = PROFILES[:settings]
-      # A dataset containing player stats.
-      PLAYER_STATS = PROFILES[:stats]
-      # A dataset containing player status information.
-      PLAYER_STATUS = PROFILES[:status]
-      # A dataset containing Item Definitions
-      ITEM_DEFINITIONS = DEFINITIONS[:items]
-      # A dataset containing banned names.
-      BANNED_NAMES = SYSTEMS[:banned_names]
-      # A dataset containing snapshots.
-      SNAPSHOTS = SYSTEMS[:snapshots]
+    else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
   rescue StandardError => e
-    puts "An error occurred while initializing datasets!"
-    puts e
-    puts e.backtrace
-    exit
+    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error e
+    settings[:LOG].error e.backtrace&.join("\n")
+  end
+
+  def load_player_data(settings)
+    case settings[:STORAGE_TYPE]
+    when :sqlite
+      settings[:PLAYER_APPEARANCES] = settings[:CONNECTION][:player_appearance]
+      settings[:PLAYER_PROFILES] = settings[:CONNECTION][:player_profiles]
+      settings[:PLAYER_SETTINGS] = settings[:CONNECTION][:player_settings]
+      settings[:PLAYER_STATS] = settings[:CONNECTION][:player_stats]
+      settings[:PLAYER_STATUS] = settings[:CONNECTION][:player_status]
+    when :postgres
+    else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
+    end
+  rescue StandardError => e
+    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error e
+    settings[:LOG].error e.backtrace&.join("\n")
+  end
+
+  def load_item_data(settings)
+    case settings[:STORAGE_TYPE]
+    when :sqlite
+      settings[:ITEM_SPAWNS] = settings[:CONNECTION][:item_spawns]
+      settings[:ITEM_DEFINITIONS] = settings[:CONNECTION][:item_definitions]
+      settings[:ITEM_EQUIPMENT] = settings[:CONNECTION][:item_equipment]
+    when :postgres
+    else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
+    end
+  rescue StandardError => e
+    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error e
+    settings[:LOG].error e.backtrace&.join("\n")
+  end
+
+  def load_game_data(settings)
+    case settings[:STORAGE_TYPE]
+    when :sqlite
+      settings[:GAME_BANNED_NAMES] = settings[:CONNECTION][:game_banned_names]
+      settings[:GAME_SNAPSHOTS] = settings[:CONNECTION][:game_snapshots]
+      settings[:GAME_LOCATIONS] = settings[:CONNECTION][:game_locations]
+    when :postgres
+    else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
+    end
+  rescue StandardError => e
+    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error e
+    settings[:LOG].error e.backtrace&.join("\n")
+  end
+
+  def load_logger(settings)
+    settings[:VERSION] = `rake runerb:get_version`.chomp.gsub!("\"", '')
+    FileUtils.mkdir_p("#{FileUtils.pwd}/assets/log")
+    settings[:LOG_FILE_PATH] = "#{FileUtils.pwd}/assets/log/rune_rb-#{Time.now.strftime('%Y-%m-%d').chomp}.log".freeze
+    settings[:LOG_FILE] = Logger.new(settings[:LOG_FILE_PATH], progname: "rune.rb-#{settings[:VERSION]}")
+    settings[:LOG] = Logger.new(STDOUT)
+    settings[:COLOR] = Pastel.new
+    settings[:LOG].formatter = proc do |sev, date, _prog, msg|
+      "#{settings[:COLOR].green.bold("[#{date.strftime('%H:%M')}]")}|#{settings[:COLOR].blue("[#{sev}]")} : #{msg}\n"
+    end
+  end
+
+  def load_global_data(settings)
+    Oj.load(File.read('assets/config/rune.rb.json')).each do |key, value|
+      settings[key.upcase.to_sym] = value
+    end
+    settings[:STORAGE_TYPE] = settings[:STORAGE_TYPE].to_sym
+    settings[:CONNECTION] = case settings[:STORAGE_TYPE]
+                            when :sqlite then Sequel.sqlite('assets/sample.db3')
+                            when :postgres
+                            else Sequel.sqlite('assets/sample.db3')
+                            end
   end
 end

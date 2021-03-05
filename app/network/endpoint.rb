@@ -1,114 +1,160 @@
+# Copyright (c) 2020, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 module RuneRb::Network
-  # Represents a host endpoint which accepts sockets and alerts their sessions to populate their buffers via an nio selector.
+
+  # An Endpoint object accepts Socket connections via TCP/IP, creates RuneRb::Network::Session objects from the accepted TCPSockets, and then transfers context to the RuneRb::Network::Session to allow them to process their updates.
+  # @author Patrick W.
   class Endpoint
     using RuneRb::System::Patches::IntegerRefinements
     include RuneRb::System::Log
 
-    # @return [RuneRb::Game::World::Instance] the World associated with the Endpoint
-    attr :world
-
-    # @return [Integer] the id for the endpoint.
+    # @!attribute [r] id
+    # @return [Integer] the id for the Endpoint.
     attr :id
 
-    # Called when a new Endpoint is created.
-    # @param config [Hash] the configuration for the controller.
-    def initialize(config = {})
-      parse_config(config)
-      @server = Async::IO::TCPServer.new(@host, @port)
-      @selector = NIO::Selector.new
-      @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
+    # @!attribute [r] settings
+    # @return [Hash] the settings for the Endpoint.
+    attr :settings
+
+    # @!attribute [r] node
+    # @return [Fiber] the Fiber executing the main logic of the Endpoint.
+    attr :node
+
+    # Constructs a new Endpoint object
+    # == Parameters:
+    #   node:
+    #     The Node which the Endpoint will be attached to.
+    #   config:
+    #     The configuration options for the Endpoint object.
+    def initialize
+      parse_config
+      setup_pipeline
+      @world = RuneRb::Game::World::Instance.new
+      @server = TCPServer.new(@host, @port)
       @sessions = {}
-    end
-
-    def deploy(task: Async::Task.current)
-      task.async do |sub|
-        log RuneRb::COL.blue("Endpoint listening: #{RuneRb::COL.cyan(@host)}:#{RuneRb::COL.cyan(@port)} @ #{RuneRb::COL.cyan(@start[:stamp])}")
-        @selector.register(@server, :r).value = -> { register_sessions(task: sub) }
-
+      @node = Fiber.new do
         loop do
-          # Make a select call
-          @selector.select { |monitor| monitor.value.call }
-          # Yield to the original task to allow execution to continue
-          sub.yield
+          break if @closed
+
+          @pipeline[:process].resume
         end
       end
-    rescue StandardError => e
-      shutdown(graceful: false)
-      err 'An error occurred while deploying Endpoint!', e
-      puts e.backtrace
-    rescue Interrupt
-      shutdown(graceful: true)
-      log! "Up-time: #{up_time.to_i.to_ftime}"
+      @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
+      log RuneRb::GLOBAL[:COLOR].blue("Endpoint constructed: #{RuneRb::GLOBAL[:COLOR].cyan(@host)}:#{RuneRb::GLOBAL[:COLOR].cyan(@port)} @ #{RuneRb::GLOBAL[:COLOR].cyan(@start[:stamp])}")
     end
 
-    # Shuts the endpoint down.
-    # @param graceful [Boolean] gracefully shut down?
-    def shutdown(graceful: true)
-      # Release all session contexts from the world.
-      @sessions.each_value { |session| @world.release(session.context) } if graceful
-    ensure
-      # Ensure the server is closed.
-      @server&.close
-      # Ensure all sessions are disconnected.
-      @sessions.each_value(&:disconnect)
-    end
-
-    # The current up-time for the server.
+    # The current up-time for the Endpoint.
+    #
+    # @return [Integer, Float] the current up-time for the Endpoint.
     def up_time
       (Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@start[:time] || Time.now)).round(3)
     end
 
+    # Closes the Endpoint.
+    # == Parameters:
+    #   graceful:
+    #     Should a graceful shutdown be attempted? This will attempt to cleanly close all attached Session objects before closing the <@server> and <@selector> objects.
+    #
+    #
+    # @param graceful [Boolean] Should a graceful shutdown be attempted?
+    def shutdown(graceful: true)
+      @sessions.each_key(&:close) if graceful
+      log! "Up-time: #{up_time.to_i.to_ftime}"
+    ensure
+      @server.close
+      @closed = true
+    end
+
     private
 
-    # TODO: update documentation.
-    # Accepts a new socket connection via TCPServer#accept_nonblock and registers it with the Endpoint#clients hash. Sockets that are accepted are registered with the Endpoint#selector with an :r (readable) interest. The returned monitor object is passed a proc to execute `Endpoint#touch_clients` which is called when an interest is raised for the corresponding socket (it becomes readable/writable).
-    def register_sessions(task: Async::Task.current)
-      task.async do |sub|
-        peers = @server.accept_nonblock
-        task.yield if peers.empty?
-        peers.compact!
-        peers.each do |socket|
-          @selector.register(socket, :r).value = ->{ process_session(sub, socket) }
-          @sessions[socket] = RuneRb::Network::Session.new(socket)
-          log "Registered new socket for #{@sessions[socket].ip}"
+    # Parses the configuration supplied on Endpoint construction
+    # @api private
+    def parse_config
+      config = Oj.load(File.read('assets/config/endpoint.json'))
+      @id = config['ID'].to_i || Druuid.gen
+      @host = config['HOST'] || 'localhost'
+      @port = config['PORT'].to_i || 43594
+    end
+
+    # Releases a Session from the Endpoint.
+    #
+    # @param session [RuneRb::Network::Session] the Session to release.
+    def release(session)
+      log! "Ending session #{session.id}"
+      session.disconnect(:manual) unless session.nil? || session.status[:active] == false
+      @sessions.delete(session)
+    end
+
+    def setup_pipeline
+      @pipeline = {
+        accept: Fiber.new do
+          loop do
+            socket = @server.accept_nonblock
+            @sessions[socket] = RuneRb::Network::Session.new(socket)
+            log! "Accepted connection from #{@sessions[socket].ip}"
+          rescue IO::WaitReadable
+            Fiber.yield
+          end
+        end,
+        update: Fiber.new do |socket|
+          loop do
+            @sessions[socket].node.resume
+            @world.receive(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
+            release(@sessions[socket]) unless @sessions[socket].status[:active]
+            Fiber.yield
+          end
+        end,
+        process: Fiber.new do
+          loop do
+            # The Socket may be raised again after we've read the connection info, but either way, this will raise ANY sockets with data waiting.
+            # Gather and disconnect sessions whose sockets are already closed prior to select operation
+            pre_closed_sockets = @sessions.keys.collect do |socket|
+              next if socket.is_a?(TCPServer)
+
+              socket.closed?
+            end
+            pre_closed_sockets&.each { |socket| release(@sessions[socket]) unless socket.nil? || @sessions[socket].nil? }
+
+            # Perform select operation for Readable interests.
+            readable_sockets = select(@sessions.keys + [@server])&.first
+            readable_sockets&.each do |socket|
+              if socket.is_a?(TCPServer)
+                @pipeline[:accept].resume(socket)
+              else
+                @pipeline[:update].resume(socket)
+              end
+            end
+
+            Fiber.yield
+          end
         end
-      end
-    rescue StandardError => e
-      err 'An error occurred while registering sessions!', e
-      puts e.backtrace
-    rescue IO::EAGAINWaitReadable
-      err 'No sockets to register!' if RuneRb::GLOBAL[:RRB_DEBUG]
-    end
-
-    # Unregisters a socket from the selector and removes it's reference from the system client list.
-    def unregister(session)
-      @sessions.delete(session.socket)
-      @selector.deregister(session.socket)
-      log RuneRb::COL.green("De-registered socket for #{session.ip}")
-    rescue StandardError => e
-      err 'An error occurred while unregistering session!',e
-      puts e.backtrace
-    end
-
-    # Processes active sessions and removes inactive sessions.
-    def process_session(task = Async::Task.current, socket)
-      task.async do |sub|
-        @sessions[socket].update(task: sub)
-        @world.login(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
-        unregister(@sessions[socket]) unless @sessions[socket].status[:active]
-      end
-    rescue StandardError => e
-      err 'An error occurred while processing session!', e
-      puts e.backtrace
-    end
-
-    def parse_config(config)
-      raise 'No RuneRb::Game::World::Instance provided to the Endpoint!' unless config[:world]
-
-      @id = config[:id] || config[:endpoint_id] || Druuid.gen
-      @world = config[:world]
-      @host = config[:host] || RuneRb::GLOBAL[:RRB_HOST]
-      @port = config[:port] || RuneRb::GLOBAL[:RRB_PORT]
+      }.freeze
     end
   end
 end

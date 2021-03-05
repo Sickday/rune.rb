@@ -8,6 +8,6 @@ SimpleCov.start
 
 require_relative '../../app/rune'
 require_relative '../changes/constants'
-require_relative '../changes/message/writeable'
-require_relative '../changes/message/readable'
-require_relative '../changes/message/message'
+require_relative '../../app/network/message/writeable'
+require_relative '../../app/network/message/readable'
+require_relative '../../app/network/message/rb'

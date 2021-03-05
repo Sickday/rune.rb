@@ -57,10 +57,7 @@ test_specs:
   before_script:
     - bundle install
   script:
-    - bundle exec rspec spec/chain_spec.rb[1:1]
-    - bundle exec rspec spec/chain_spec.rb[1:2]
-    - bundle exec rspec spec/routine_spec.rb[1:1]
-    - bundle exec rspec spec/routine_spec.rb[1:2]
+    - echo "No specs to test"
 
 test_app:
   stage: test_app
@@ -76,7 +73,7 @@ test_staging_units:
   before_script:
     - bundle install
   script:
-    - bundle exec ruby staging/test/readable_message_test.rb --name test_read_from
+    - echo "No Staging units to test"
 
 test_staging_specs:
   stage: test_staging_specs
@@ -84,15 +81,7 @@ test_staging_specs:
   before_script:
     - bundle install
   script:
-    - bundle exec rspec staging/spec/channel_spec.rb[1:1]
-    - bundle exec rspec staging/spec/channel_spec.rb[1:2]
-    - bundle exec rspec staging/spec/channel_spec.rb[1:3]
-    - bundle exec rspec staging/spec/channel_spec.rb[1:4]
-    - bundle exec rspec staging/spec/channel_spec.rb[1:5]
-    - bundle exec rspec staging/spec/message_spec.rb[1:1]
-    - bundle exec rspec staging/spec/message_spec.rb[1:2]
-    - bundle exec rspec staging/spec/message_spec.rb[1:3]
-    - bundle exec rspec staging/spec/message_spec.rb[1:4]
+    - echo "No Staging specs to test"
 
 test_staging:
   stage: test_staging
@@ -100,8 +89,7 @@ test_staging:
   before_script:
     - bundle install
   script:
-    - bundle exec rspec staging/spec/*.rb
-    - bundle exec ruby staging/test/*.rb
+    - echo "No Staging units or specs to test"
 
 on_merge:
   stage: test_app

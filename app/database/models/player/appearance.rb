@@ -1,0 +1,61 @@
+# Copyright (c) 2020, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+module RuneRb::Database
+  class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:PLAYER_APPEARANCES])
+    def to_mob(id)
+      update(mob_id: id)
+    end
+
+    def from_mob
+      update(mob_id: -1)
+    end
+
+    def to_head(id)
+      update(head_icon: id)
+    end
+
+    # Reads and parses an appearance from a message.
+    # @param message [RuneRb::Network::Message] the message to read from
+    def from_message(message)
+      update(gender: message.read(type: :byte, mutation: :STD),
+             head: message.read(type: :byte, mutation: :STD),
+             beard: message.read(type: :byte, mutation: :STD),
+             chest: message.read(type: :byte, mutation: :STD),
+             arms: message.read(type: :byte, mutation: :STD),
+             hands: message.read(type: :byte, mutation: :STD),
+             legs: message.read(type: :byte, mutation: :STD),
+             feet: message.read(type: :byte, mutation: :STD),
+             hair_color: message.read(type: :byte, mutation: :STD),
+             torso_color: message.read(type: :byte, mutation: :STD),
+             leg_color: message.read(type: :byte, mutation: :STD),
+             feet_color: message.read(type: :byte, mutation: :STD),
+             skin_color: message.read(type: :byte, mutation: :STD))
+    end
+  end
+end

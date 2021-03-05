@@ -3,7 +3,7 @@
   "RRB_HOST" : "0.0.0.0",
   "RRB_PORT" : 43594,
   "RRB_DEBUG" : true,
-  "RRB_STORAGE" : "sqlite",
+  "RRB_STORAGE_TYPE" : "sqlite",
   "SQLITE_DATABASE" : "assets/sample.db3",
   "PROFILE_DATABASE" : "rune_rb_profiles",
   "DEFINITIONS_DATABASE" : "rune_rb_defs",
