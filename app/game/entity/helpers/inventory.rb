@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -52,7 +52,7 @@ module RuneRb::Game::Entity::Helpers::Inventory
   # @param data [Hash] database to initialize the inventory with.
   def setup_inventory(data = nil)
     @inventory = {
-        container: RuneRb::Game::Item::Container.new(28, false),
+        container: RuneRb::Game::Item::Container.new(28, stackable: false),
         weight: 0
     }
     data&.each { |slot, stack| @inventory[:container].data[slot] = stack }

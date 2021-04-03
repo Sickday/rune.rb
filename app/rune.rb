@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -164,6 +164,7 @@ module RuneRb
       autoload :Instance,             'game/world/instance'
       autoload :Authorization,        'game/world/helpers/authorization'
       autoload :Pipeline,             'game/world/helpers/pipeline'
+      autoload :Setup,                'game/world/helpers/setup'
       autoload :Task,                 'game/world/models/task'
     end
 

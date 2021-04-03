@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,5 +31,5 @@ module RuneRb::Game::Entity
     PLAYER: 0,
     MODERATOR: 1,
     ADMINISTRATOR: 2
-  }
+  }.freeze
 end

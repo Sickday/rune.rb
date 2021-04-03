@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ module RuneRb::Game::World::Authorization
 
   def authorized?(session)
     @responses[session] ||= RuneRb::Network::Message.new('w', { op_code: -1 })
-    
+
     false unless valid_operation_code?(session)
     false unless valid_seed?(session)
     false unless valid_magic?(session)

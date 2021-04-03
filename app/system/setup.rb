@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -6,7 +6,7 @@
 #
 # * Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
-#
+# 
 # * Redistributions in binary form must reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
@@ -40,7 +40,7 @@ module RuneRb::System::Setup
     else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
   rescue StandardError => e
-    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error 'An error occurred while loading game database!'
     settings[:LOG].error e
     settings[:LOG].error e.backtrace&.join("\n")
   end
@@ -57,7 +57,7 @@ module RuneRb::System::Setup
     else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
   rescue StandardError => e
-    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error 'An error occurred while loading game database!'
     settings[:LOG].error e
     settings[:LOG].error e.backtrace&.join("\n")
   end
@@ -72,7 +72,7 @@ module RuneRb::System::Setup
     else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
   rescue StandardError => e
-    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error 'An error occurred while loading game database!'
     settings[:LOG].error e
     settings[:LOG].error e.backtrace&.join("\n")
   end
@@ -87,13 +87,13 @@ module RuneRb::System::Setup
     else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
   rescue StandardError => e
-    settings[:LOG].error "An error occurred while loading game database!"
+    settings[:LOG].error 'An error occurred while loading game database!'
     settings[:LOG].error e
     settings[:LOG].error e.backtrace&.join("\n")
   end
 
   def load_logger(settings)
-    settings[:VERSION] = `rake runerb:get_version`.chomp.gsub!("\"", '')
+    settings[:VERSION] = `rake runerb:get_version`.chomp.gsub!('"', '')
     FileUtils.mkdir_p("#{FileUtils.pwd}/assets/log")
     settings[:LOG_FILE_PATH] = "#{FileUtils.pwd}/assets/log/rune_rb-#{Time.now.strftime('%Y-%m-%d').chomp}.log".freeze
     settings[:LOG_FILE] = Logger.new(settings[:LOG_FILE_PATH], progname: "rune.rb-#{settings[:VERSION]}")

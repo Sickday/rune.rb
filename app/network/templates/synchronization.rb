@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -6,7 +6,7 @@
 #
 # * Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
-#
+# 
 # * Redistributions in binary form must reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
@@ -41,11 +41,11 @@ module RuneRb::Network::Templates
       # Write Context entity movement
       write_movement(context)
       # Create a state block which to write the appearance of the context mob and surrounding mobs to.
-       state_block = RuneRb::Network::Templates::StateBlockMessage.new(context)
+      state_block = RuneRb::Network::Templates::StateBlockMessage.new(context)
       # Write the number of existing local players other than the context
-       write_bits(8, context.locals[:players].size)
+      write_bits(8, context.locals[:players].size)
       # Update and write the local list for the context.
-       write_locals(state_block, context, context.world)
+      write_locals(state_block, context, context.world)
       # Switch to byte access
       switch_access
       # Push the bytes from the state block.

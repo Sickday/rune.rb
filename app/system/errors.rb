@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -6,7 +6,7 @@
 #
 # * Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
-#
+# 
 # * Redistributions in binary form must reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
@@ -35,13 +35,13 @@ module RuneRb::System::Errors
       when :seed then super("Mismatched seed received in handshake!\t[Expected:] #{RuneRb::GLOBAL[:COLOR].green.bold(expected)}, [Received:] #{RuneRb::GLOBAL[:COLOR].red.bold(received)}")
       when :magic then super("Unexpected Magic received in handshake!\t[Expected:] #{RuneRb::GLOBAL[:COLOR].green.bold(expected)}, [Received:] #{RuneRb::GLOBAL[:COLOR].red.bold(received)}")
       when :username then super("Invalid Username in handshake!\t[Received:] #{RuneRb::GLOBAL[:COLOR]::red.bold(received)}")
-      when :password then super("Incorrect Password in handshake!")
+      when :password then super('Incorrect Password in handshake!')
       when :revision then super("Incompatible revision received in handshake!\t[Received:] #{RuneRb::GLOBAL[:COLOR]::red.bold(received)}")
       else super("Unspecified SessionReceptionError! [Type: #{type.inspect}][Ex: #{RuneRb::GLOBAL[:COLOR].green.bold(expected)}][Rec: #{RuneRb::GLOBAL[:COLOR].red.bold(received)}]")
       end
     end
   end
-  
+
   class ConflictingNameError < StandardError
     def initialize(type, received)
       case type

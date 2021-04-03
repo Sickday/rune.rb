@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Note: We can't guarantee compatibility with older versions of Ruby.
+ruby '2.7'
+
 # Development Gems
 group :development do
   gem 'concurrent-ruby-ext'

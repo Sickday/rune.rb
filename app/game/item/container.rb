@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ module RuneRb::Game::Item
     # Called when a new ItemContainer is created.
     # @param capacity [Integer] the capacity of the ItemContainer
     # @param stackable [Boolean] should all ItemStacks in the ItemContainer be stacked?
-    def initialize(capacity, stackable = false)
+    def initialize(capacity, stackable: false)
       @stackable = stackable
       @limit = capacity
       empty!
