@@ -22,9 +22,9 @@ git clone https://gitlab.com/sickday/rune.rb.git
 
 Install gem dependencies and use the included `boostrap.rb`
 ```shell
-`cd rune.rb/`
-`bundle install`
-`ruby boostrap.rb`
+cd rune.rb/
+bundle install
+ruby boostrap.rb
 ```
 
 Modify the JSON files located in `assets/config` to change application behavior.
