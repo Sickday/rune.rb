@@ -30,11 +30,6 @@ module RuneRb::Game::Entity::Helpers::Button
   # Parses a button press
   # @param message [RuneRb::Network::Message] the message payload to parse
   def parse_button(message)
-    id = message.read(type: :short, signed: false, mutation: :STD, order: :BIG)
-    case id
-    when 2458 then @world.release(self)
-    when 3651 then @session.write_message(:clear_interfaces)
-    else err "Unhandled button! ID: #{id}"
-    end
+
   end
 end

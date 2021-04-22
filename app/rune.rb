@@ -29,8 +29,8 @@
 Dir[File.dirname(__FILE__)].each { |file| $LOAD_PATH.unshift(file) if File.directory? file }
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
-require 'concurrent'
 require 'druuid'
+require 'eventmachine'
 require 'fileutils'
 require 'fiber'
 require 'logger'
@@ -39,6 +39,7 @@ require 'pastel'
 require 'pry'
 require 'rake'
 require 'sequel'
+require 'singleton'
 require 'socket'
 
 ##
@@ -52,7 +53,7 @@ module RuneRb
 
   # Ths module contains internally used Errors, Patches, and Modules.
   module System
-    PRIORITIES = { HIGH: 2, MEDIUM: 1, LOW: 0 }.freeze
+    autoload :Controller,           'system/controller'
     autoload :Setup,                'system/setup'
     autoload :Log,                  'system/log'
 
@@ -74,16 +75,17 @@ module RuneRb
       RuneRb::System::Setup.load_global_data(data)
       RuneRb::System::Setup.load_logger(data)
       data[:LOG].info "RuneRb v#{data[:VERSION]} loading.."
+      data[:LOG].info "Protocol: #{data[:PROTOCOL]}."
       RuneRb::System::Setup.load_game_data(data)
-      data[:LOG].info "Loaded Game database."
+      data[:LOG].info 'Loaded Game database.'
       RuneRb::System::Setup.load_item_data(data)
-      data[:LOG].info "Loaded Item database."
+      data[:LOG].info 'Loaded Item database.'
       RuneRb::System::Setup.load_player_data(data)
-      data[:LOG].info "Loaded Player database."
+      data[:LOG].info 'Loaded Player database.'
       RuneRb::System::Setup.load_mob_data(data)
-      data[:LOG].info "Loaded Mob database."
+      data[:LOG].info 'Loaded Mob database.'
     end
-    GLOBAL[:LOG].info GLOBAL[:COLOR].green.bold("Completed Loading!")
+    GLOBAL[:LOG].info GLOBAL[:COLOR].green.bold('Completed Loading!')
   rescue StandardError => e
     puts 'An error occurred while loading Global settings!'
     puts e
@@ -94,7 +96,6 @@ module RuneRb
   # This module contains various database model objects which map to rows within database tables.
   module Database
     autoload :GameBannedNames,            'database/models/game/banned_names'
-    autoload :GameLocation,               'database/models/game/location'
     autoload :GameSnapshot,               'database/models/game/snapshot'
 
     autoload :ItemEquipment,              'database/models/item/equipment'
@@ -111,6 +112,7 @@ module RuneRb
     autoload :PlayerStats,                'database/models/player/stats'
     autoload :PlayerStatus,               'database/models/player/status'
     autoload :PlayerSettings,             'database/models/player/settings'
+    autoload :PlayerLocation,             'database/models/player/location'
   end
 
   # This module encapsulates all Game-related objects, modules, and classes.
@@ -154,18 +156,22 @@ module RuneRb
 
     # This module contains models and objects related to game items.
     module Item
-      MAX_SIZE = 2**31 - 1
+      MAX_SIZE = (2**31 - 1).freeze
+
       autoload :Stack,                'game/item/stack'
       autoload :Container,            'game/item/container'
     end
 
     # This module contains objects, models, and helpers to simulate and handle a virtual game world.
     module World
+      ACTION_PRIORITIES = { HIGH: 1, MEDIUM: 2, LOW: 3 }.freeze
+
       autoload :Instance,             'game/world/instance'
-      autoload :Authorization,        'game/world/helpers/authorization'
+      autoload :Gateway,              'game/world/helpers/gateway'
       autoload :Pipeline,             'game/world/helpers/pipeline'
       autoload :Setup,                'game/world/helpers/setup'
-      autoload :Task,                 'game/world/models/task'
+      autoload :Synchronization,      'game/world/helpers/synchronization'
+      autoload :Action,               'game/world/models/action'
     end
 
     # This module contains models, functions, and objects related to coordinating and mapping the virtual game world
@@ -181,32 +187,64 @@ module RuneRb
 
   # This module contains objects, models, and helpers related to network activity.
   module Network
-    require_relative 'network/constants'
-    include Constants
-
+    autoload :Dispatcher,           'network/message/dispatcher'
     autoload :Endpoint,             'network/endpoint'
-    autoload :Dispatcher,           'network/dispatcher'
-    autoload :ISAAC,                'network/isaac'
     autoload :Handshake,            'network/handshake'
+    autoload :ISAAC,                'network/isaac'
     autoload :Message,              'network/message'
-    autoload :Parser,               'network/parser'
+    autoload :Parser,               'network/message/parser'
     autoload :Session,              'network/session'
+    autoload :Constants,            'network/constants'
 
-    # This module contains subclasses of the RuneRb::Network::Message object type.
-    module Templates
-      autoload :CenterRegionMessage,            'network/templates/center_region'
-      autoload :ClearInterfacesMessage,         'network/templates/clear_interfaces'
-      autoload :ContextInventoryMessage,        'network/templates/context_inventory'
-      autoload :EquipmentSlotMessage,           'network/templates/equipment_slot'
-      autoload :InterfaceMessage,               'network/templates/interface'
-      autoload :LogoutMessage,                  'network/templates/logout'
-      autoload :MembersAndIndexMessage,         'network/templates/membership_and_index'
-      autoload :ServerTextMessage,              'network/templates/server_text'
-      autoload :StatMessage,                    'network/templates/stat'
-      autoload :SwitchSidebarMessage,           'network/templates/switch_sidebar'
-      autoload :OverlayMessage,                 'network/templates/overlay'
-      autoload :SynchronizationMessage,         'network/templates/synchronization'
-      autoload :StateBlockMessage,              'network/templates/state'
+    # Messages compatible with the 317 protocol of RS.
+    module RS317
+      autoload :CenterRegionMessage,            'network/protocol/rs317/outgoing/center_region'
+      autoload :ClearInterfacesMessage,         'network/protocol/rs317/outgoing/clear_interfaces'
+      autoload :ContextStateBlock,              'network/protocol/rs317/outgoing/state'
+      autoload :ContextSynchronizationMessage,  'network/protocol/rs317/outgoing/synchronization'
+      autoload :DisplayInterfaceMessage,        'network/protocol/rs317/outgoing/interface'
+      autoload :DisplaySidebarMessage,          'network/protocol/rs317/outgoing/sidebar'
+      autoload :DisplayOverlayMessage,          'network/protocol/rs317/outgoing/overlay'
+      autoload :LogoutMessage,                  'network/protocol/rs317/outgoing/logout'
+      autoload :MembersAndIndexMessage,         'network/protocol/rs317/outgoing/membership_and_index'
+      autoload :SystemTextMessage,              'network/protocol/rs317/outgoing/system_text'
+      autoload :UpdateItemsMessage,             'network/protocol/rs317/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,       'network/protocol/rs317/outgoing/update_slotted'
+      autoload :StatUpdateMessage,              'network/protocol/rs317/outgoing/stat'
+
+      autoload :ActionClickMessage,             'network/protocol/rs317/incoming/action'
+      autoload :ArrowKeyMessage,                'network/protocol/rs317/incoming/arrow'
+      autoload :ButtonClickMessage,             'network/protocol/rs317/incoming/button'
+      autoload :PublicChatMessage,              'network/protocol/rs317/incoming/chat'
+      autoload :MouseClickMessage,              'network/protocol/rs317/incoming/click'
+      autoload :CommandMessage,                 'network/protocol/rs317/incoming/command'
+      autoload :ContextDesignMessage,           'network/protocol/rs317/incoming/design'
+      autoload :WindowFocusMessage,             'network/protocol/rs317/incoming/focus'
+      autoload :HeartbeatMessage,               'network/protocol/rs317/incoming/heartbeat'
+      autoload :MouseEventMessage,              'network/protocol/rs317/incoming/mouse'
+      autoload :MovementMessage,                'network/protocol/rs317/incoming/movement'
+      autoload :OptionClickMessage,             'network/protocol/rs317/incoming/option'
+      autoload :PingMessage,                    'network/protocol/rs317/incoming/ping'
+      autoload :SwitchItemMessage,              'network/protocol/rs317/incoming/switch'
     end
+
+    # This module contains Messages compatible with the 377 protocol of RS.
+    module RS377
+      autoload :CenterRegionMessage,            'network/protocol/rs377/outgoing/center_region'
+      autoload :ClearInterfacesMessage,         'network/protocol/rs377/outgoing/clear_interfaces'
+      autoload :ContextSynchronizationMessage,  'network/protocol/rs377/outgoing/synchronization'
+      autoload :ContextStateBlock,              'network/protocol/rs377/outgoing/state'
+      autoload :DisplayInterfaceMessage,        'network/protocol/rs377/outgoing/interface'
+      autoload :DisplayOverlayMessage,          'network/protocol/rs377/outgoing/overlay'
+      autoload :DisplaySidebarMessage,          'network/protocol/rs377/outgoing/sidebar'
+      autoload :LogoutMessage,                  'network/protocol/rs377/outgoing/logout'
+      autoload :MembersAndIndexMessage,         'network/protocol/rs377/outgoing/membership_and_index'
+      autoload :SystemTextMessage,              'network/protocol/rs377/outgoing/system_text'
+      autoload :UpdateItemsMessage,             'network/protocol/rs377/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,       'network/protocol/rs377/outgoing/update_slotted'
+      autoload :UpdateStatMessage,              'network/protocol/rs377/outgoing/stat'
+    end
+
+    include Constants
   end
 end

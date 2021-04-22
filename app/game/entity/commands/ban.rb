@@ -36,7 +36,7 @@ module RuneRb::Game::Entity::Commands
       begin
         # First we update the banned status for the user
         RuneRb::Database::PlayerProfile[@assets[:command][0].downcase].update(banned: true)
-        @assets[:context].session.write_message(:sys_message, message: "The player, #{@assets[:command][0]}, has been banned.")
+        @assets[:context].session.write_message(:SystemTextMessage, message: "The player, #{@assets[:command][0]}, has been banned.")
       rescue StandardError => e
         err "An error occurred retrieving profile for: #{@assets[:command][0]}!", e
         puts e.backtrace
@@ -48,7 +48,7 @@ module RuneRb::Game::Entity::Commands
       if target
         @assets[:context].world.release(target)
       else
-        @assets[:context].session.write_message(:sys_message, message: "Could not locate #{@assets[:command][0]} in any existing world instances.")
+        @assets[:context].session.write_message(:SystemTextMessage, message: "Could not locate #{@assets[:command][0]} in any existing world instances.")
       end
     end
   end

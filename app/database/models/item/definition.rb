@@ -31,7 +31,7 @@ module RuneRb::Database
     plugin :static_cache
 
     one_to_one :equipment, class: RuneRb::Database::ItemEquipment, key: :id
-    one_to_many :spawn, class: RuneRb::Database::ItemSpawn, key: :id
+    # one_to_many :spawn, class: RuneRb::Database::ItemSpawn, key: :id
 
     def alchemy_price
       { high_level: (0.6 * self[:value]).to_i,

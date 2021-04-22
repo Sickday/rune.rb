@@ -27,36 +27,36 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Game::World::Pipeline
-=begin
-  def process
-    return if @jobs.empty?
 
-    log! "#{@jobs.size} jobs in pipeline"
+  def start_pipeline
+    # Execute pending actions
+    unless @stack.empty?
+      begin
+        log! "#{@stack.size} Actions in stack"
 
-    @jobs.sort!
-    @jobs.each do |task|
-      break if task.nil? || task == @jobs.last
+        # Call the <=> function on each item in the collection and arrange them in an descending order.
+        @stack.sort!
 
-      @jobs[@stack.index(task) + 1].start
-      task.target_to(@jobs[@jobs.index(task) + 1].process)
+        # Update each Action#target to point to the next member of <@stack>
+        @stack.each do |action|
+          break if action.nil? || action == @stack.last
+
+          action.target_to(@stack[@stack.index(action) + 1].start(auto: false))
+        end
+
+        # Start the first action.
+        @stack.first.start(auto: true)
+
+        @stack.clear
+      rescue StandardError => e
+        err "An error occurred while processing Jobs! Halted at Job with ID: #{@stack&.first&.id}", @stack&.first&.inspect, e
+        err e.backtrace&.join("\n")
+      end
     end
-
-    @jobs.first&.start
-    @jobs.first&.process.resume
-    clear
-  rescue StandardError => e
-    err "An error occurred while processing Jobs! Halted at Job with ID: #{@jobs&.first&.id}", @jobs&.first&.inspect, e
-    err e.backtrace&.join("\n")
   end
 
   # Adds a job to be performed in the pipeline
-  def post(params = { id: Druuid.gen, assets: [], priority: :LOW }, &job)
-    @jobs << RuneRb::Game::World::Task.new(params) { job.call(params[:assets]) }
+  def post(params, &action)
+    @stack << RuneRb::Game::World::Action.new(params) { action.call(params[:assets]) }
   end
-
-  # Clears all jobs within the stack
-  def clear
-    @jobs.clear
-  end
-=end
 end

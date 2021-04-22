@@ -47,7 +47,7 @@ module Readable
     when :reverse_bytes, :negative_bytes, :reverse, :negatives then read_bytes_reverse(opt[:amount] || opt[:length], opt[:mutation])
     when :io, :socket then read_from(opt[:io] || opt[:source] || opt[:socket], opt[:length])
     when :header then read_header(opt[:source])
-    else raise 'Unrecognized read type!'
+    else raise "Unrecognized read type! #{type}"
     end
   end
 
@@ -60,12 +60,14 @@ module Readable
     @payload << data
   end
 
+  def parse; end
+
   private
 
   # Read a byte value from the payload
   # @param signed [Boolean] should the value be signed.
   # @param mut [Symbol] mutation that should be applied to the byte value.
-  def read_byte(signed, mut)
+  def read_byte(signed = false, mut = :STD)
     val = 0
     val |= mutate(@payload.next_byte, mut)
     signed ? val : val & 0xff
@@ -75,15 +77,15 @@ module Readable
   # @param signed [Boolean] should the value be signed.
   # @param mut [Symbol] mutation that should be applied to the short value
   # @param order [Symbol] they byte order to read the short value
-  def read_short(signed, mut, order)
+  def read_short(signed = false, mut = :STD, order = :BIG)
     val = 0
     case order
     when :BIG
-      val |= read(:byte, signed: signed) << 8
-      val |= read(:byte, signed: signed, mutation: mut)
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed, mut)
     when :LITTLE
-      val |= read(:byte, signed: signed, mutation: mut)
-      val |= read(:byte, signed: signed) << 8
+      val |= read_byte(signed, mut)
+      val |= read_byte(signed) << 8
     end
     val
   end
@@ -92,21 +94,21 @@ module Readable
   # @param signed [Boolean] should the value be signed.
   # @param mut [Symbol] mutation that should be applied to the medium value
   # @param order [Symbol] they byte order to read the medium value
-  def read_medium(signed, mut, order)
+  def read_medium(signed = false, mut = :STD, order = :BIG)
     val = 0
     case order
     when :BIG
-      val |= read(:byte, signed: signed, mutations: mut) << 16
-      val |= read(:byte, signed: signed, mutations: mut) << 8
-      val |= read(:byte, signed: signed, mutations: mut)
+      val |= read_byte(signed) << 16
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed, mut)
     when :MIDDLE
-      val |= read(:byte, signed: signed, mutations: mut) << 8
-      val |= read(:byte, signed: signed, mutations: mut)
-      val |= read(:byte, signed: signed, mutations: mut) << 16
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed)
+      val |= read_byte(signed) << 16
     when :LITTLE
-      val |= read(:byte, signed: signed, mutations: mut)
-      val |= read(:byte, signed: signed, mutations: mut) << 8
-      val |= read(:byte, signed: signed, mutations: mut) << 16
+      val |= read_byte(signed, mut)
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed) << 16
     end
     val
   end
@@ -115,29 +117,29 @@ module Readable
   # @param signed [Boolean] should the value be signed.
   # @param mut [Symbol] mutation that should be applied to the integer value
   # @param order [Symbol] they byte order to read the integer value
-  def read_int(signed, mut, order)
+  def read_int(signed = false, mut = :STD, order = :BIG)
     val = 0
     case order
     when :BIG
-      val |= read(:byte, signed: signed, mutation: mut) << 24
-      val |= read(:byte, signed: signed, mutation: mut) << 16
-      val |= read(:byte, signed: signed, mutation: mut) << 8
-      val |= read(:byte, signed: signed, mutation: mut)
+      val |= read_byte(signed) << 24
+      val |= read_byte(signed) << 16
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed, mut)
     when :MIDDLE
-      val |= read(:byte, signed: signed, mutation: mut) << 8
-      val |= read(:byte, signed: signed, mutation: mut)
-      val |= read(:byte, signed: signed, mutation: mut) << 24
-      val |= read(:byte, signed: signed, mutation: mut) << 16
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed)
+      val |= read_byte(signed) << 24
+      val |= read_byte(signed) << 16
     when :INVERSE_MIDDLE
-      val |= read(:byte, signed: signed, mutation: mut) << 16
-      val |= read(:byte, signed: signed, mutation: mut) << 24
-      val |= read(:byte, signed: signed, mutation: mut)
-      val |= read(:byte, signed: signed, mutation: mut) << 8
+      val |= read_byte(signed) << 16
+      val |= read_byte(signed) << 24
+      val |= read_byte(signed)
+      val |= read_byte(signed) << 8
     when :LITTLE
-      val |= read(:byte, signed: signed, mutation: mut)
-      val |= read(:byte, signed: signed, mutation: mut) << 8
-      val |= read(:byte, signed: signed, mutation: mut) << 16
-      val |= read(:byte, signed: signed, mutation: mut) << 24
+      val |= read_byte(signed, mut)
+      val |= read_byte(signed) << 8
+      val |= read_byte(signed) << 16
+      val |= read_byte(signed) << 24
     end
     val
   end
@@ -146,35 +148,15 @@ module Readable
   # @param signed [Boolean] should the value be signed.
   # @param mut [Symbol] mutation that should be applied to the long value
   # @param order [Symbol] they byte order to read the long value
-  def read_long(signed, mut, order)
+  def read_long(signed = false, mut = :STD, order = :BIG)
     val = 0
     case order
     when :BIG
-          (BYTE_SIZE * 7).downto(0) { |div| ((div % 8).zero? and div.positive?) ? val |= read(:byte, signed: signed, mutation: mut) << div : next }
-          val |= read(:byte, signed: signed, mutation: mut)
+      (BYTE_SIZE * 7).downto(0) { |div| ((div % 8).zero? and div.positive?) ? val |= read_byte(signed) << div : next }
+      val |= read_byte(signed, mut)
     when :LITTLE
-          (0).upto(BYTE_SIZE * 7) { |div| ((div % 8).zero? and div.positive?) ? val |= read(:byte, signed: signed, mutation: mut) << div: next }
-          val |= read(:byte, signed: signed, mutation: mut)
-=begin
-    when :BIG
-      val |= read(:byte, signed: signed, mutation: mut) << 56
-      val |= read(:byte, signed: signed, mutation: mut) << 48
-      val |= read(:byte, signed: signed, mutation: mut) << 40
-      val |= read(:byte, signed: signed, mutation: mut) << 32
-      val |= read(:byte, signed: signed, mutation: mut) << 24
-      val |= read(:byte, signed: signed, mutation: mut) << 16
-      val |= read(:byte, signed: signed, mutation: mut) << 8
-      val |= read(:byte, signed: signed, mutation: mut)
-    when :LITTLE
-      val |= read(:byte, signed: signed, mutation: mut)
-      val |= read(:byte, signed: signed, mutation: mut) << 8
-      val |= read(:byte, signed: signed, mutation: mut) << 16
-      val |= read(:byte, signed: signed, mutation: mut) << 24
-      val |= read(:byte, signed: signed, mutation: mut) << 32
-      val |= read(:byte, signed: signed, mutation: mut) << 40
-      val |= read(:byte, signed: signed, mutation: mut) << 48
-      val |= read(:byte, signed: signed, mutation: mut) << 56
-=end
+      (0).upto(BYTE_SIZE * 7) { |div| ((div % 8).zero? and div.positive?) ? val |= read_byte(signed) << div: next }
+      val |= read_byte(signed, mut)
     end
     val
   end
@@ -195,7 +177,7 @@ module Readable
   # @param amount [Integer] the amount of bytes to read
   # @param mut [Symbol] the mutation to apply to read bytes.
   def read_bytes(amount, mut)
-    amount.times.each_with_object([]) { |_idx, arr| arr << read(:byte, mutation: mut) }
+    amount.times.each_with_object([]) { |_idx, arr| arr << read_byte(false, mut) }
   end
 
   # Probably did this wrong

@@ -33,9 +33,10 @@ module RuneRb::Game::World
     using RuneRb::System::Patches::IntegerRefinements
 
     include RuneRb::System::Log
-    include Authorization
+    include Gateway
+    include Pipeline
+    include Synchronization
     include Setup
-    #include Pipeline
 
     # @return [Hash] a map of entities the Instance has spawned
     attr :entities
@@ -49,60 +50,7 @@ module RuneRb::Game::World
     # Called when a new World Instance is created
     def initialize
       setup
-      @pulse.execute
       log 'New World Instance initialized!'
-    end
-
-    # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
-    # @param context [RuneRb::Game::Entity::Context] the context mob to release
-    def release(context)
-      # Remove the context from the entity list
-      @entities[:players].delete(context.index)
-      # Logout the context.
-      context.logout
-      log RuneRb::GLOBAL[:COLOR].green.bold("Released Context for #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
-      log RuneRb::GLOBAL[:COLOR].magenta("See ya, #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}!")
-    rescue StandardError => e
-      err 'An error occurred while releasing context!', e
-      puts e.backtrace
-    end
-
-    # Requests actions for the world to perform.
-    # @param type [Symbol] the type of request
-    # @param params [Hash] the parameters for the request.
-    def request(type, params = {})
-      case type
-      when :local_contexts
-        @entities[:players].values.select { |ctx| params[:context].position[:current].in_view?(ctx.position[:current]) }
-      when :local_mobs
-        @entities[:mobs].values.select { |mob| params[:context].position[:current].in_view?(mob.position[:current]) }
-      when :spawn_mob
-        @entities[:mobs] << RuneRb::Game::Entity::Mob.new(params[:definition]).teleport(params[:position])
-      when :context
-        @entities[:players].values.detect { |ctx| ctx.profile.name == params[:name] }
-      else err "Unrecognized request type for world Instance! #{type}"
-      end
-    rescue StandardError => e
-      err 'An error occurred while processing request!', e
-      puts e.backtrace
-    end
-
-    # Creates a context mob, adds the mob to the Instance#entities hash, assigns the mob's index, then calls Context#login providing the Instance as the parameter
-    #   # Receives a session and attempts to register it to the World Instance.
-    #   # @param session [RuneRb::Network::Session] the session that is attempting to login
-    # @param session [RuneRb::Net::Session] the session session for the context
-    def receive(session)
-      return unless authorized?(session)
-
-      ctx = RuneRb::Game::Entity::Context.new(session, RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials]), self)
-      ctx.index = @entities[:players].empty? ? 1 : @entities[:players].keys.last + 1
-      @entities[:players][ctx.index] = ctx
-      ctx.login
-      log RuneRb::GLOBAL[:COLOR].green("Registered new Context for #{RuneRb::GLOBAL[:COLOR].yellow(ctx.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
-      log RuneRb::GLOBAL[:COLOR].green("Welcome, #{RuneRb::GLOBAL[:COLOR].yellow.bold(ctx.profile[:name].capitalize)}!")
-    rescue StandardError => e
-      err 'An error occurred while receiving context!', e
-      puts e.backtrace
     end
 
     def inspect
@@ -110,10 +58,9 @@ module RuneRb::Game::World
     end
 
     # Shut down the world instance, releasing it's contexts.
-    def shutdown(graceful: true)
+    def shutdown
       # release all contexts
-      @pulse.shutdown
-      @entities[:players].each_value { |context| release(context) } if graceful
+      @entities[:players].each_value { |context| release(context) }
       @status = :CLOSED
       # RuneRb::World::Instance.dump(self) if graceful
     ensure

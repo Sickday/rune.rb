@@ -29,7 +29,7 @@
 module RuneRb::Network::Handshake
   using RuneRb::System::Patches::StringRefinements
 
-  # @return [Hash] a structured map of login block database.
+  # @return [Hash] a structured map of login block data.
   attr :login
 
   private
@@ -41,6 +41,7 @@ module RuneRb::Network::Handshake
       hash[:NameHash] =  @buffer.next_byte
       hash[:ConnectionSeed] = @id & 0xFFFFFFFF
     end
+    log! "Read connection: #{@login.inspect}"
 
     case @login[:Type]
     when RuneRb::Network::CONNECTION_TYPES[:GAME_ONLINE_COUNT]
@@ -58,15 +59,16 @@ module RuneRb::Network::Handshake
       send_data([@login[:ConnectionSeed]].pack('q'))
       @status[:auth] = :PENDING_BLOCK
     else # Unrecognized Connection type
-    err RuneRb::GLOBAL[:COLOR].magenta("Unrecognized ConnectionType: #{@login[:Type]}")
-    send_data([RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION]].pack('C')) # 11	"Login server rejected session. Please try again."
-    disconnect(:handshake)
+      err RuneRb::GLOBAL[:COLOR].magenta("Unrecognized ConnectionType: #{@login[:Type]}")
+      send_data([RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION]].pack('C')) # 11	"Login server rejected session. Please try again."
+      disconnect(:handshake)
     end
   end
 
   # Reads a login block from the provided message
   def read_block
     block = RuneRb::Network::Message.new('r', { op_code: -1 }, :FIXED, @buffer)
+
     @login.tap do |hash|
       hash[:OperationCode] = block.read(:byte, signed: false, mutation: :STD)                 # Op Code
       hash[:PayloadSize] =   block.read(:byte, signed: false, mutation: :STD) - 40             # Size
@@ -87,7 +89,9 @@ module RuneRb::Network::Handshake
       hash[:LoginSeed] =      [hash[:ServerPart] >> 32, hash[:ServerPart]].pack('NN').unpack1('L')
       hash[:SessionSeed] =    [hash[:ClientPart] >> 32, hash[:ClientPart], hash[:ServerPart] >> 32, hash[:ServerPart]]
     end
- 
+
+    log! "Read login: #{@login.inspect}"
+
     @cipher = { decryptor: RuneRb::Network::ISAAC.new(@login[:SessionSeed]),
                 encryptor: RuneRb::Network::ISAAC.new(@login[:SessionSeed].map { |seed_idx| seed_idx + 50 }) }
     @status[:auth] = :PENDING_WORLD

@@ -51,33 +51,25 @@ module RuneRb::Game::Entity::Helpers::Equipment
 
   private
 
-  # Creates default equipment database.
-  # @param data [Hash] database that should be contained in this Equipment.
-  def setup_equipment(data = nil)
-    @equipment = data || { 0 => -1, # Hat
-                           1 => -1, # Cape
-                           2 => -1, # Amulet
-                           3 => -1, # Weapon
-                           4 => -1,
-                           5 => -1,
-                           6 => -1,
-                           7 => -1,
-                           8 => -1,
-                           9 => -1,
-                           10 => -1,
-                           11 => -1,
-                           12 => -1,
-                           13 => -1 }
+  def setup_equipment
+    @equipment = {
+      HAT: RuneRb::Game::Item::Stack.new(-1, 0),
+      CAPE: RuneRb::Game::Item::Stack.new(-1, 0),
+      AMULET: RuneRb::Game::Item::Stack.new(-1, 0),
+      WEAPON: RuneRb::Game::Item::Stack.new(-1, 0),
+      CHEST: RuneRb::Game::Item::Stack.new(-1, 0),
+      SHIELD: RuneRb::Game::Item::Stack.new(-1, 0),
+      LEGS: RuneRb::Game::Item::Stack.new(-1, 0),
+      GLOVES: RuneRb::Game::Item::Stack.new(-1, 0),
+      BOOTS: RuneRb::Game::Item::Stack.new(-1, 0),
+      RING: RuneRb::Game::Item::Stack.new(-1, 0),
+      ARROWS: RuneRb::Game::Item::Stack.new(-1, 0)
+    }
   end
 
   # Initialize Equipment for the Context. Attempts to load equipment from serialized dump or create a new empty Equipment model for the context.
-  def load_equipment
-    if !@profile.equipment.nil? && !Oj.load(@profile.equipment).empty?
-      restore_equipment
-    else
-      setup_equipment
-    end
-    update(:equipment)
+  def load_equipment(first)
+    first ? setup_equipment : restore_equipment
     log(RuneRb::GLOBAL[:COLOR].green("Loaded Equipment for #{RuneRb::GLOBAL[:COLOR].yellow(@profile.name)}")) if RuneRb::GLOBAL[:DEBUG]
   end
 
@@ -89,14 +81,13 @@ module RuneRb::Game::Entity::Helpers::Equipment
   # Restores the equipment of the context
   def restore_equipment
     data = Oj.load(@profile[:equipment])
-    parsed = {}.tap do |hash|
+    @equipment = {}.tap do |hash|
       data.each do |slot, stack|
-        hash[slot.to_i] = -1
+        hash[slot.to_sym] = RuneRb::Game::Item::Stack.new(-1, -1)
         next if stack == -1 || stack.nil?
 
-        hash[slot.to_i] = RuneRb::Game::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i)
+        hash[slot.to_sym] = RuneRb::Game::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i)
       end
     end
-    setup_equipment(parsed)
   end
 end

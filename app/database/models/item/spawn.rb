@@ -28,10 +28,10 @@
 
 module RuneRb::Database
   class ItemSpawn < Sequel::Model(RuneRb::GLOBAL[:ITEM_SPAWNS])
-    one_to_one :location, class: RuneRb::Database::GameLocation, key: :spawn_id
+    # one_to_one :location, class: RuneRb::Database::GameLocation, key: :spawn_id
 
-    def location
-      location.to_position
-    end
+    # def location
+    #  location.to_position
+    #end
   end
 end

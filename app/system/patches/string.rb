@@ -32,7 +32,8 @@ module RuneRb::System::Patches::StringRefinements
 
     # returns the next byte.
     def next_byte
-      slice!(0)&.unpack1('c')
+      byte = slice!(0)
+      byte.nil? ? 0 : byte.unpack1('c')
     end
 
     # Returns the next x amount of byte values.

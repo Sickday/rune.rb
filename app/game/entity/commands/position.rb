@@ -32,7 +32,7 @@ module RuneRb::Game::Entity::Commands
   class Position < RuneRb::Game::Entity::Command
     # Executes the Command.
     def execute
-      @assets[:context].session.write_message(:sys_message, message: "You current location is #{@assets[:context].position[:current].inspect}")
+      @assets[:context].session.write_message(:SystemTextMessage, message: "You current location is #{@assets[:context].position[:current].inspect}")
     end
   end
 end

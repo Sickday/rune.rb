@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Note: We can't guarantee compatibility with older versions of Ruby.
-ruby '~> 2.7'
+# ruby '~> 2.7'
 
 # Development Gems
 group :development do
@@ -18,7 +18,7 @@ end
 
 # Production Gems
 group :production do
-  gem 'concurrent-ruby'
+  gem 'eventmachine'
   gem 'druuid'
   gem 'oj'
   gem 'pastel'

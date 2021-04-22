@@ -99,6 +99,10 @@ module RuneRb::Game::Item
       end
     end
 
+    def from(data)
+      @data = data if data.is_a? Hash
+    end
+
     # Checks if the container has an entry with the specified ID and optional amount.
     # @param id [Integer] the ID of the item
     # @param at [Integer] an optional slot specifier
@@ -141,7 +145,7 @@ module RuneRb::Game::Item
       string = "\n"
       string << @data.inject('') do |str, values|
         itr += 1
-        str << "\tS#{values[0]}:#{values[1]&.definition&.name}x#{values[1]&.size}\t|"
+        str << "\tS#{values[0]}:#{values[1]&.definition&.name} x #{values[1]&.size}\t|"
         str << "\n" if (itr % 4).zero?
         str
       end

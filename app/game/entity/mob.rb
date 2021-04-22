@@ -60,14 +60,14 @@ module RuneRb::Game::Entity
     end
 
     # Called before a pulse is called
-    def pre_pulse
-      move
+    def pre_sync
+      #move
     end
 
-    def pulse; end
+    def sync; end
 
     # Called after a pulse call
-    def post_pulse
+    def post_sync
       reset_movement
       reset_flags
     end
@@ -82,7 +82,7 @@ module RuneRb::Game::Entity
     # Initializes certain mob variables from it's definition.
     def load_definition(definition)
       @id = definition.id
-      @position = { current: definition.position, previous: definition.position }
+      @position = { current: definition.location.to_position, previous: definition.location.to_position }
       @regional = @position[:current].regional
       @definition = definition
     end

@@ -30,6 +30,9 @@ module RuneRb::Game::Entity
 
   # A entity Message is the object created when an Entity chats via the chatbox.
   class ChatMessage
+    using RuneRb::System::Patches::StringRefinements
+    using RuneRb::System::Patches::IntegerRefinements
+
     # @return [String] the text contained within the Message
     attr :text
 
@@ -39,20 +42,98 @@ module RuneRb::Game::Entity
     # @return [Integer] the colors of the Message
     attr :colors
 
+    MessageData = Struct.new(:compressed,
+                             :decompressed,
+                             :recompressed)
+
     # Called when a new entity Message is created.
-    # @param text [String] The text contained within the Message.
     # @param effects [Integer] the effects the Message will have.
     # @param colors [Integer] the colors the Message will have.
-    def initialize(effects, colors, text)
-      @text = text
+    def initialize(effects, colors, message)
       @effects = effects
       @colors = colors
+      parse(message)
     end
 
-    def self.from_message(message)
-      RuneRb::Game::Entity::ChatMessage.new(message.read(:byte, signed: false, mutation: :S),
-                                        message.read(:byte, signed: false, mutation: :S),
-                                        message.read(:reverse, length: message.header[:length] - 2, mutation: :A))
+    def parse(message)
+
+    end
+
+    class << self
+      TRANSLATION_MAP = [' ', 'e', 't', 'a', 'o', 'i', 'h', 'n', 's', 'r', 'd', 'l',
+                         'u', 'm', 'w', 'c', 'y', 'f', 'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3', '4', '5',
+                         '6', '7', '8', '9', ' ', '!', '?', '.', ',', ':', ';', '(', ')', '-', '&', '*', '\\', '\'', '@', '#', '+',
+                         '=', '\243', '$', '%', '"', '[', ']'].freeze
+
+      # Compresses the passed data into the resulting array of bytes.
+      # @param data [String] the string data to compress.
+      def compress(data)
+        result = []
+        data = data.slice!(0..80).downcase!
+        carry = -1
+        result_idx = 0
+
+        data.length.times do |itr|
+          char = data[itr]
+          index = TRANSLATION_MAP.index(char) || 0
+          index += 195 if index > 12
+
+          if carry == -1
+            if index < 13
+              carry = index
+            else
+              result[result_idx += 1] = index
+            end
+          elsif index < 13
+            result[result_idx += 1] = ((carry << 4) + index)
+            carry = -1
+          else
+            result[result_idx += 1] = ((carry << 4) + (index >> 4))
+            carry = index & 0xF
+          end
+        end
+
+        result[result_idx += 1] = (carry << 4) if carry != -1
+        result
+      end
+
+      def decompress(data, length)
+        result = Array.new(4096, 0)
+        index = 0
+        carry = -1
+
+        length.times do |itr|
+          value = data[itr / 2] >> 4 - 4 * (itr % 2 ) & 0xF
+          if carry == -1
+            if value < 13
+              result[index += 1] = TRANSLATION_MAP[value].bytes.first & 0xFF
+            else
+              carry = value
+            end
+          else
+            result[index += 1] = TRANSLATION_MAP[(carry << 4) + value - 195].bytes.first & 0xFF
+            carry = -1
+          end
+        end
+
+        result[0...index].pack('C*')
+      end
+
+      # Slims a substring.
+      def slim(text)
+        term = true
+        text.size.times do |itr|
+          if term &&
+            text[itr].chr >= 'a' &&
+            text[itr].chr <= 'z'
+            text[itr] = (text[itr].bytes.first - 0x20).chr
+            term = false
+          end
+
+          term = true if text[itr].chr == '.'|| text[itr].chr == '!' || text[itr].chr == '?'
+        end
+        text
+      end
     end
   end
 end

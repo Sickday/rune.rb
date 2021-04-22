@@ -44,16 +44,14 @@ module RuneRb::Game::World::Setup
     end.freeze
     @entities = { players: {}, mobs: {} }
     @responses = {}
+    @stack ||= []
     @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
-    @pulse = Concurrent::TimerTask.new(execution_interval: 0.600) do
-      @entities[:players].each_value do |context|
-        break if @entities[:players].values.empty?
 
-        context.pre_pulse
-        context.pulse
-        context.post_pulse
-      end
-    end
+    # Ensure the pipeline is processed every iteration of the EventMachine reactor
+    EventMachine.tick_loop { start_pipeline }
+
+    # Launch the sync service deferment(s?)
+    start_sync_service
   rescue StandardError => e
     err "An error occurred while running setup!", e
     err e.backtrace&.join("\n")

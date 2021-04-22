@@ -50,6 +50,7 @@ module RuneRb::System::Setup
     when :sqlite
       settings[:PLAYER_APPEARANCES] = settings[:CONNECTION][:player_appearance]
       settings[:PLAYER_PROFILES] = settings[:CONNECTION][:player_profiles]
+      settings[:PLAYER_LOCATIONS] = settings[:CONNECTION][:player_locations]
       settings[:PLAYER_SETTINGS] = settings[:CONNECTION][:player_settings]
       settings[:PLAYER_STATS] = settings[:CONNECTION][:player_stats]
       settings[:PLAYER_STATUS] = settings[:CONNECTION][:player_status]
@@ -82,7 +83,6 @@ module RuneRb::System::Setup
     when :sqlite
       settings[:GAME_BANNED_NAMES] = settings[:CONNECTION][:game_banned_names]
       settings[:GAME_SNAPSHOTS] = settings[:CONNECTION][:game_snapshots]
-      settings[:GAME_LOCATIONS] = settings[:CONNECTION][:game_locations]
     when :postgres
     else "Invalid storage mode! #{settings[:RRB_STORAGE_TYPE]}"
     end
@@ -110,9 +110,11 @@ module RuneRb::System::Setup
     end
     settings[:STORAGE_TYPE] = settings[:STORAGE_TYPE].to_sym
     settings[:CONNECTION] = case settings[:STORAGE_TYPE]
-                            when :sqlite then Sequel.sqlite('assets/sample.db3')
+                            when :sqlite
+                              Sequel.sqlite('assets/sample.db3', pragma: :foreign_keys)
                             when :postgres
                             else Sequel.sqlite('assets/sample.db3')
                             end
+    settings[:PROTOCOL] = settings[:PROTOCOL].to_sym
   end
 end

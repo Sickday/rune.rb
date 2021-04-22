@@ -32,7 +32,7 @@ module RuneRb::Game::Entity::Commands
   class Item < RuneRb::Game::Entity::Command
     def execute
       unless @assets[:command].size >= 2
-        @assets[:context].session.write_message(:sys_message, message: "Not enough parameters for this command! Required: 2 or more, Provided: #{@assets[:command].size}")
+        @assets[:context].session.write_message(:SystemTextMessage, message: "Not enough parameters for this command! Required: 2 or more, Provided: #{@assets[:command].size}")
         return
       end
       stack = RuneRb::Game::Item::Stack.new(@assets[:command][0].to_i)

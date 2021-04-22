@@ -99,14 +99,15 @@ module RuneRb::Network
       # @return [String] binary representation of the header.
       def compile_header(header, type)
         case type
-        when :FIXED then [header[:op_code]].pack('C')
-        when :VARIABLE_SHORT then [header[:op_code], header[:length]].pack('Cn')
-        when :VARIABLE_BYTE
+        when :FIXED then [header[:op_code]].pack('C') # Fixed packet lengths are known by both the client and server, so no length packing is necesssary
+        when :VARIABLE_SHORT then [header[:op_code], header[:length]].pack('Cn') # Variable Short packet lengths fall into the range of a short type and can be packed as such
+        when :VARIABLE_BYTE # Variable Byte packet lengths fall into the range of a byte type and can be packed as such
           if header[:length].nonzero? && header[:length].positive?
-            [header[:op_code], header[:length]].pack('CC')
+            [header[:op_code], header[:length]].pack('Cc')
           else
             compile_header(header, :FIXED)
           end
+        when :RAW then return
         else
           compile_header(header, :FIXED)
         end
@@ -118,7 +119,7 @@ module RuneRb::Network
       # @param required [Symbol] the access type required for the operation.
       def valid_access?(message, required)
         unless message.access == required
-          err "Access Violation! #{required} access is required for operation!"
+          err "Invalid access for operation! #{required} access is required for operation!"
           return false
         end
         true
@@ -127,10 +128,10 @@ module RuneRb::Network
       # Validates the operation with the current mode of the message.
       # @param operation [Symbol] the operation to validate.
       def valid_mode?(message, operation)
-        return true if message.mode[:readable] && %i[peek_read read].include?(operation)
-        return true if message.mode[:writeable] && %i[peek_write write].include?(operation)
+        return false if message.mode[:readable] && %i[peek_write write].include?(operation)
+        return false if message.mode[:writeable] && %i[peek_read read].include?(operation)
 
-        false
+        true
       end
 
       # Validates the byte mutation for the operation

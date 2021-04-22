@@ -32,14 +32,14 @@ module RuneRb::Game::Entity::Commands
 
     def execute
       unless @command.size >= 1
-        @context.session.write_message(:sys_message, message: 'Invalid arguments!')
-        @context.session.write_message(:sys_message, message: 'Usage:')
-        @context.session.write_message(:sys_message, message: '::show <id>')
+        @context.session.write_message(:SystemTextMessage, message: 'Invalid arguments!')
+        @context.session.write_message(:SystemTextMessage, message: 'Usage:')
+        @context.session.write_message(:SystemTextMessage, message: '::show <id>')
         return
       end
 
       log RuneRb::GLOBAL[:COLOR].green("Writing interface: #{@command[0].to_i}")
-      @context.session.write_message(:interface, id: @command[0].to_i)
+      @context.session.write_message(:DisplayInterfaceMessage, id: @command[0].to_i)
     end
   end
 end

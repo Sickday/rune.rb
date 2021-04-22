@@ -38,7 +38,7 @@ module RuneRb::Game::Entity::Helpers::Movement
 
   # Initializes and sets the movement and locals objects.
   def load_movement
-    @movement = { type: :NONE,
+    @movement = { type: :TELEPORT,
                   directions: { primary: RuneRb::Game::Map::DIRECTIONS[:NONE],
                                 secondary: RuneRb::Game::Map::DIRECTIONS[:NONE],
                                 previous: RuneRb::Game::Map::DIRECTIONS[:NORTH] },
@@ -87,14 +87,14 @@ module RuneRb::Game::Entity::Helpers::Movement
     return unless steps.positive?
 
     path = []
-    first_x = message.read(type: :short, signed: false, mutation: :A, order: :LITTLE)
+    first_x = message.read(:short, signed: false, mutation: :A, order: :LITTLE)
     steps.times do |itr|
-      path[itr] ||= [message.read(type: :byte, signed: true, mutation: :STD),
-                     message.read(type: :byte, signed: true, mutation: :STD)]
+      path[itr] ||= [message.read(:byte, signed: true, mutation: :STD),
+                     message.read(:byte, signed: true, mutation: :STD)]
     end
 
-    first_y = message.read(type: :short, signed: false, mutation: :STD, order: :LITTLE)
-    @movement[:running] = message.read(type: :byte, signed: false, mutation: :C) == 1
+    first_y = message.read(:short, signed: false, mutation: :STD, order: :LITTLE)
+    @movement[:running] = message.read(:byte, signed: false, mutation: :C) == 1
 
     positions = []
     positions << RuneRb::Game::Map::Position.new(first_x, first_y)
@@ -115,7 +115,7 @@ module RuneRb::Game::Entity::Helpers::Movement
   # Resets the movement
   def reset_movement
     if (@movement[:waypoints][:next].empty? || @movement[:type] == :TELEPORT) && @movement[:type] != :NONE
-      @movement[:type] = :NONE
+      @movement[:type] = :STAND
     end
     @movement[:running] = false
   end
@@ -131,7 +131,7 @@ module RuneRb::Game::Entity::Helpers::Movement
     # collision = @player.world[:collision_manager]
 
     next_point = @movement[:waypoints][:next].shift
-    log "Got point #{next_point.inspect}" unless next_point.nil?
+    log "Got point #{next_point&.inspect}" unless next_point.nil?
 
     unless next_point.nil?
       directions[0] = RuneRb::Game::Map::Direction.between(@position[:current], next_point)

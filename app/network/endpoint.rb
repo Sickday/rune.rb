@@ -28,7 +28,7 @@
 
 module RuneRb::Network
 
-  # An Endpoint object accepts Socket connections via TCP/IP, creates RuneRb::Network::Session objects from the accepted TCPSockets, and then transfers context to the RuneRb::Network::Session to allow them to process their updates.
+  # An Endpoint object accepts Socket connections via TCP/IP, creates RuneRb::Network::Session objects from the accepted TCPSockets, and then transfers context to the RuneRb::Network::Sessions.
   # @author Patrick W.
   class Endpoint
     using RuneRb::System::Patches::IntegerRefinements
@@ -38,24 +38,17 @@ module RuneRb::Network
     # @return [Integer] the id for the Endpoint.
     attr :id
 
-    # @!attribute [r] settings
-    # @return [Hash] the settings for the Endpoint.
-    attr :settings
-
     # @!attribute [r] node
     # @return [Fiber] the Fiber executing the main logic of the Endpoint.
     attr :node
 
     # Constructs a new Endpoint object
     # == Parameters:
-    #   node:
-    #     The Node which the Endpoint will be attached to.
-    #   config:
-    #     The configuration options for the Endpoint object.
-    def initialize
+    #   target:
+    #     The target which will receive sessions from the Endpoint.
+    def initialize(target: nil)
       parse_config
       setup_pipeline
-      @world = RuneRb::Game::World::Instance.new
       @server = TCPServer.new(@host, @port)
       @sessions = {}
       @node = Fiber.new do
@@ -122,11 +115,17 @@ module RuneRb::Network
             Fiber.yield
           end
         end,
+        clear: Fiber.new do
+          loop do
+            @sessions.each_key do |session|
+              release(session) if session.status[:active] == false || session.status[:active].nil?
+            end
+            Fiber.yield
+          end
+        end,
         update: Fiber.new do |socket|
           loop do
             @sessions[socket].node.resume
-            @world.receive(@sessions[socket]) if @sessions[socket].status[:auth] == :PENDING_WORLD
-            release(@sessions[socket]) unless @sessions[socket].status[:active]
             Fiber.yield
           end
         end,
@@ -139,7 +138,7 @@ module RuneRb::Network
 
               socket.closed?
             end
-            pre_closed_sockets&.each { |socket| release(@sessions[socket]) unless socket.nil? || @sessions[socket].nil? }
+            pre_closed_sockets.each { |socket| release(@sessions[socket]) unless socket.nil? || @sessions[socket].nil? || socket.is_a?(TCPServer) }
 
             # Perform select operation for Readable interests.
             readable_sockets = select(@sessions.keys + [@server])&.first
@@ -151,6 +150,8 @@ module RuneRb::Network
               end
             end
 
+            # Clear inactive sessions
+            @pipeline[:clear].resume
             Fiber.yield
           end
         end

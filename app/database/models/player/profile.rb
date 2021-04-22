@@ -33,7 +33,7 @@ module RuneRb::Database
     one_to_one :settings, class: RuneRb::Database::PlayerSettings, key: :name
     one_to_one :stats, class: RuneRb::Database::PlayerStats, key: :name
     one_to_one :status,   class: RuneRb::Database::PlayerStatus,  key: :name
-    one_to_one :location, class: RuneRb::Database::GameLocation, key: :name
+    one_to_one :location, class: RuneRb::Database::PlayerLocation, key: :name
 
     # Registers a new profile with supplied database.
     # @param data [Hash, Struct] profile database to insert.
@@ -44,8 +44,9 @@ module RuneRb::Database
       RuneRb::GLOBAL[:PLAYER_APPEARANCES].insert(name: data[:Username])
       RuneRb::GLOBAL[:PLAYER_SETTINGS].insert(name: data[:Username])
       RuneRb::GLOBAL[:PLAYER_STATS].insert(name: data[:Username])
-      RuneRb::GLOBAL[:PLAYER_LOCATIONS].insert(name: data[:Username])
       RuneRb::GLOBAL[:PLAYER_STATUS].insert(name: data[:Username])
+      RuneRb::GLOBAL[:PLAYER_LOCATIONS].insert(name: data[:Username])
+
       # Return the created profile
       RuneRb::Database::PlayerProfile[data[:Username]]
     end
@@ -53,7 +54,8 @@ module RuneRb::Database
     # Get the Position for the Location associated with the Profile.
     # @return [RuneRb::Game::Map::Position] the Position object for the Location associated with the Profile.
     def position
-      location.to_position
+      binding.pry
+      self.location.to_position
     end
 
     class << self

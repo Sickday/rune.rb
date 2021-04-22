@@ -35,7 +35,7 @@ module Writeable
   # @return [Symbol] the access mode for the Message.
   attr :access
 
-  # Write database to the payload.
+  # Write data to the payload.
   # @param value [Integer, String, Message, Array] the value to write.
   # @param opt [Hash] options for the write operation.
   def write(value, opt = { type: :byte, mutation: :STD, order: :BIG })
@@ -43,12 +43,12 @@ module Writeable
 
     case opt[:type]
     when *RW_TYPES[:bit] then write_bit(value)
-    when *RW_TYPES[:byte] then write_byte(value, opt[:mutation] ||:STD)
-    when *RW_TYPES[:short] then write_short(value, opt[:mutation] ||:STD, opt[:order] || :BIG)
-    when *RW_TYPES[:medium] then write_medium(value, opt[:mutation] ||:STD, opt[:order] || :BIG)
-    when *RW_TYPES[:int] then write_int(value, opt[:mutation] ||:STD, opt[:order] || :BIG)
-    when *RW_TYPES[:long] then write_long(value, opt[:mutation] ||:STD, opt[:order] || :BIG)
-    when *RW_TYPES[:smart] then write_smart(value, opt[:mutation] ||:STD)
+    when *RW_TYPES[:byte] then write_byte(value, opt[:mutation] || :STD)
+    when *RW_TYPES[:short] then write_short(value, opt[:mutation] || :STD, opt[:order] || :BIG)
+    when *RW_TYPES[:medium] then write_medium(value, opt[:mutation] || :STD, opt[:order] || :BIG)
+    when *RW_TYPES[:int] then write_int(value, opt[:mutation] || :STD, opt[:order] || :BIG)
+    when *RW_TYPES[:long] then write_long(value, opt[:mutation] || :STD, opt[:order] || :BIG)
+    when *RW_TYPES[:smart] then write_smart(value, opt[:mutation] || :STD)
     when *RW_TYPES[:string] then write_string(value)
     when :bits then write_bits(value, opt[:amount])
     when :bytes then write_bytes(value)
@@ -71,7 +71,7 @@ module Writeable
 
   # Compiles the writeable message
   def compile
-    @payload.prepend(RuneRb::Network::Message.compile_header(@header, @type))
+    @type == :RAW ? @payload : @payload.prepend(RuneRb::Network::Message.compile_header(@header, @type))
   end
 
   def switch_access
@@ -83,7 +83,7 @@ module Writeable
   # Write a byte value to the payload.
   # @param value [Integer] the byte value to write.
   # @param mut [Symbol] mutations made to the byte.
-  def write_byte(value, mut)
+  def write_byte(value, mut = :STD)
     @payload << [mutate(value, mut)].pack('C')
   end
 
@@ -91,14 +91,14 @@ module Writeable
   # @param value [Integer] the short value to write.
   # @param mut [Symbol] the type of byte to write.
   # @param order [Symbol] the order in which bytes will be written.
-  def write_short(value, mut, order)
+  def write_short(value, mut = :STD, order = :BIG)
     case order
     when :BIG
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
+      write_byte(value >> 8)
+      write_byte(value, mut)
     when :LITTLE
-      write(value, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
+      write_byte(value, mut)
+      write_byte(value >> 8)
     end
   end
 
@@ -106,20 +106,20 @@ module Writeable
   # @param value [Integer] the medium value to write.
   # @param mut [Symbol] the mutation made to the byte.
   # @param order [Symbol] the order in which bytes will be written.
-  def write_medium(value, mut, order)
+  def write_medium(value, mut = :STD, order = :BIG)
     case order
     when :BIG
-      write(value >> 16, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
+      write_byte(value >> 16)
+      write_byte(value >> 8)
+      write_byte(value, mut)
     when :MIDDLE
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
-      write(value >> 16, type: :byte, mutation: mut)
+      write_byte(value >> 8)
+      write_byte(value)
+      write_byte(value >> 16)
     when :LITTLE
-      write(value, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value >> 16, type: :byte, mutation: mut)
+      write_byte(value, mut)
+      write_byte(value >> 8)
+      write_byte(value >> 16)
     end
   end
 
@@ -127,28 +127,28 @@ module Writeable
   # @param value [Integer] the integer value to write.
   # @param mut [Symbol] the type of byte to write.
   # @param order [Symbol] the order in which bytes will be written.
-  def write_int(value, mut, order)
+  def write_int(value, mut = :STD, order = :BIG)
     case order
     when :BIG
-      write(value >> 24, type: :byte, mutation: mut)
-      write(value >> 16, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
+      write_byte(value >> 24)
+      write_byte(value >> 16)
+      write_byte(value >> 8)
+      write_byte(value, mut)
     when :MIDDLE
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
-      write(value >> 24, type: :byte, mutation: mut)
-      write(value >> 16, type: :byte, mutation: mut)
+      write_byte(value >> 8)
+      write_byte(value, mut)
+      write_byte(value >> 24)
+      write_byte(value >> 16)
     when :INVERSE_MIDDLE
-      write(value >> 16, type: :byte, mutation: mut)
-      write(value >> 24, type: :byte, mutation: mut)
-      write(value, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
+      write_byte(value >> 16)
+      write_byte(value >> 24)
+      write_byte(value, mut)
+      write_byte(value >> 8)
     when :LITTLE
-      write(value, type: :byte, mutation: mut)
-      write(value >> 8, type: :byte, mutation: mut)
-      write(value >> 16, type: :byte, mutation: mut)
-      write(value >> 24, type: :byte, mutation: mut)
+      write_byte(value, mut)
+      write_byte(value >> 8)
+      write_byte(value >> 16)
+      write_byte(value >> 24)
     end
   end
 
@@ -156,39 +156,37 @@ module Writeable
   # @param value [Integer] the long value to write.
   # @param mut [Symbol] the type of byte to write.
   # @param order [Symbol] the order in which bytes will be written.
-  def write_long(value, mut, order)
+  def write_long(value, mut = :STD, order = :BIG)
     case order
     when :BIG
-      (BYTE_SIZE * 7).downto(0) { |div| ((div % 8).zero? and div.positive?) ? write(value >> div, type: :byte, mutation: mut) : next }
-      write(value, type: :byte, mutation: mut)
+      (BYTE_SIZE * 7).downto(0) { |div| ((div % 8).zero? and div.positive?) ? write_byte(value >> div) : next }
+      write_byte(value, mut)
     when :LITTLE
-      write(value, type: :byte, mutation: mut)
-      (0).upto(BYTE_SIZE * 7) { |div| ((div % 8).zero? and div.positive?) ? write(value >> div, type: :byte, mutation: mut) : next }
+      write_byte(value, mut)
+      (0).upto(BYTE_SIZE * 7) { |div| ((div % 8).zero? and div.positive?) ? write_byte(value >> div) : next }
     end
   end
 
-  # Write a string value to the payload. This will be escaped/terminated with a 10/\n value.
+  # Write a string value to the payload. This will be escaped/terminated with a \n[10] value.
   # @param string [String, StringIO] the byte to write to the payload.
   def write_string(string)
     @payload << string.force_encoding(Encoding::BINARY)
-    write(10, type: :byte, mutation: :STD)
+    write_byte(10)
   end
 
   # Write a 'smart' value to the payload.
   #
-  # If the value is greater than 128 a byte is written, else a short is written.
-  #
   # @param value [Integer] the smart value to write.
   # @param mut [Symbol] mutations to apply to the written smart value.
-  def write_smart(value, mut)
-    value > 128 ? write(value, type: :byte, mutation: mut) : write(value, type: :short, mutation: mut)
+  def write_smart(value, mut = :STD)
+    value > 128 ? write_byte(value, mut) : write_short(value, mut)
   end
 
   # Writes multiple bytes to the payload.
   # @param values [String, Array, RuneRb::Network::Message] the values whose bytes will be written.
   def write_bytes(values)
     case values
-    when Array then values.each { |byte| write(byte.to_i, type: :byte, mutation: :STD) }
+    when Array then values.each { |byte| write_byte(byte.to_i) }
     when RuneRb::Network::Message then @payload << values.peek
     when String then @payload << values
     end

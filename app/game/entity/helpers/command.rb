@@ -27,23 +27,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Game::Entity::Helpers::Command
-  # Attempts to parse a command packet
-  # @param message [RuneRb::Network::Message] the message to read from.
-  def parse_command(message)
-    command_string = message.read(:string).split(' ')
-    label = command_string.shift
-    log "Parsing command: #{label}" if RuneRb::GLOBAL[:DEBUG]
-    command = fetch_command(label&.capitalize&.to_sym)
-    if command
-      command.new({ context: self, world: @world, message: message, command: command_string })
-    else
-      @session.write_message(:sys_message, message: "Could not parse Command: #{label.capitalize}")
-    end
-  rescue StandardError => e
-    puts 'An error occurred during Command parsing'
-    puts e
-    puts e.backtrace
-  end
 
   # Initializes the Instance#commands hash and populates it with recognizable commands.
   def load_commands

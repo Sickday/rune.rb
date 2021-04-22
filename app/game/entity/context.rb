@@ -33,7 +33,6 @@ module RuneRb::Game::Entity
     include RuneRb::Game::Entity::Helpers::Equipment
     include RuneRb::Game::Entity::Helpers::Inventory
     include RuneRb::Game::Entity::Helpers::Button
-    include RuneRb::Game::Entity::Helpers::Click
     include RuneRb::Game::Entity::Helpers::Command
 
     # @!attribute [r] equipment
@@ -63,6 +62,10 @@ module RuneRb::Game::Entity
     # @!attribute [r] settings
     # @return [RuneRb::Database::PlayerSettings]
     attr :settings
+
+    # @!attribute [r] stats
+    # @return [RuneRb::Database::PlayerStats]
+    attr :stats
 
     # @!attribute [r] world
     # @return [RuneRb::Game::World::Instance] the world Instance the Context is registered to.
@@ -98,36 +101,31 @@ module RuneRb::Game::Entity
       @profile.status.post_session(session)
 
       # Write the actual logout.
-      @session.write_message(:logout)
+      @session.write_message(:LogoutMessage, @session)
 
       # Detach from the world.
-      @world = nil
+      @world&.release(self)
       log! 'Detached from World instance!' if RuneRb::GLOBAL[:DEBUG]
     end
 
     # Logs the context in and attaches the context to a world Instance.
-    # * loads the Context#appearance
-    # * loads the Context#inventory
-    # * loads the Context#equipment
-    # * loads the Context#stats
-    # * teleports the Context to Context#position
-    # * assigns the Context#world
-    def login
+    def login(first: true)
       @session.register(self)
       log! "Attached to Session #{@session.id}!" if RuneRb::GLOBAL[:DEBUG]
       load_status
       load_appearance
-      load_inventory
-      load_equipment
+      load_inventory(first)
+      load_equipment(first)
       load_commands
       load_stats
-      teleport(@position[:current])
+
+      @session.write_message(:MembersAndIndexMessage, members: @status.members, player_idx: @index)
+      @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
+      @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
+      @session.write_message(:SystemTextMessage, message: "VERSION: #{RuneRb::GLOBAL[:VERSION]}")
+      update(:stats)
+      update(:sidebars)
       @session.status[:auth] = :LOGGED_IN
-      @session.write_message(:login)
-    rescue StandardError => e
-      err! 'An error occurred while attaching session to Endpoint!'
-      puts e
-      puts e.backtrace
     end
 
     # @return [String] an inspection of the Context
@@ -137,9 +135,12 @@ module RuneRb::Game::Entity
       str << "[POSITION]: #{@position.inspect}"
     end
 
-    def pulse
-      #@session.write_message(:sync) if @session.status[:auth] == :LOGGED_IN && @session.status[:active] && @world
-      log! "Sample Pulse"
+    def sync
+      # Write region message if an update is required.
+      @session.write_message(:CenterRegionMessage, @regional) if @flags[:region?]
+
+      # Write synchronization message.
+      @session.write_message(:ContextSynchronizationMessage, self) if @world && @session.status[:auth] == :LOGGED_IN && @session.status[:active]
     end
 
     # Initializes Appearance for the Context.
@@ -151,7 +152,7 @@ module RuneRb::Game::Entity
     # Initializes Stats for the Context.
     def load_stats
       @stats = @profile.stats
-      @session.write_message(:stats, @stats)
+      update(:state)
     end
 
     # Initializes Status for the Context.
