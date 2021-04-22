@@ -26,12 +26,41 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-module RuneRb::Game::World::Authorization
+module RuneRb::Game::World::Gateway
+
+  # Receives a session and attempts to authorize the login attempt. If the session is valid, a Context entity is created and added to the <@entities> collection. If the session is invalid, an appropriate response is dispatched to the session before the connection is closed by the session.
+  # @param session [RuneRb::Network::Session] the session that is attempting to login
+  def receive(session)
+    post(id: :RECEIVE_SESSION, priority: :HIGH, assets: [session, @entities[:players], self]) do |sess, players, world|
+      if authorized?(sess) && players.values.none? { |player| player.session == sess }
+        ctx = RuneRb::Game::Entity::Context.new(sess, RuneRb::Database::PlayerProfile.fetch_profile(sess.login[:Credentials]), world)
+        ctx.index = players.empty? ? 1 : players.keys.last + 1
+        players[ctx.index] = ctx
+        ctx.login
+        log RuneRb::GLOBAL[:COLOR].green("Registered new Context for #{RuneRb::GLOBAL[:COLOR].yellow(ctx.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
+        log RuneRb::GLOBAL[:COLOR].green("Welcome, #{RuneRb::GLOBAL[:COLOR].yellow.bold(ctx.profile[:name].capitalize)}!")
+      end
+    end
+  end
+
+  # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
+  # @param context [RuneRb::Game::Entity::Context] the context mob to release
+  def release(context)
+    post(id: :RELEASE_CONTEXT, priority: :HIGH, assets: [@entities[:players], context]) do |players, ctx|
+      # Remove the context from the entity list
+      players.delete_if { |_idx, entity| ctx.session.id == entity.session.id }
+
+      # Logout the context.
+      ctx.logout if ctx.session.status[:auth] == :LOGGED_IN
+      log RuneRb::GLOBAL[:COLOR].green.bold("Released Context for #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
+      log RuneRb::GLOBAL[:COLOR].magenta("See ya, #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}!")
+    end
+  end
 
   private
 
   def authorized?(session)
-    @responses[session] ||= RuneRb::Network::Message.new('w', { op_code: -1 })
+    @responses[session] ||= RuneRb::Network::Message.new('w', { op_code: -1 }, :RAW)
 
     false unless valid_operation_code?(session)
     false unless valid_seed?(session)
@@ -41,15 +70,20 @@ module RuneRb::Game::World::Authorization
     false unless valid_status?(session)
 
     log! "Authorized #{session.login[:Credentials][:Username].capitalize}!"
-    session.write_message(:response,
-                          response: RuneRb::Network::LOGIN_RESPONSES[:SUCCESS],
-                          rights: RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:rights],
-                          flagged: 0)
+
+    @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:SUCCESS], type: :byte, signed: false)
+    @responses[session].write(RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:rights], type: :byte, signed: false)
+    @responses[session].write(0, type: :byte, signed: false)
+    session.write_message(:raw, message: @responses[session])
+    @responses.delete(session)
+
     true
   rescue RuneRb::System::Errors::SessionReceptionError => e
     err e.message
     session.write_message(:raw, message: @responses[session])
     session.disconnect(:authentication)
+    @responses.delete(session)
+
     false
   end
 
@@ -92,11 +126,11 @@ module RuneRb::Game::World::Authorization
   # Attempts to validate the revision in the login block.
   # @api private
   def valid_revision?(session)
-    if RuneRb::GLOBAL[:PROTOCOL] == session.login[:Revision]
+    if RuneRb::GLOBAL[:PROTOCOL].to_s.gsub('RS', '').to_i == session.login[:Revision]
       true
     else
       @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:INVALID_REVISION], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:revision, @node.settings[:target_protocol], session.login[:Revision])
+      raise RuneRb::System::Errors::SessionReceptionError.new(:revision, RuneRb::GLOBAL[:PROTOCOL].to_s.gsub('RS', '').to_i, session.login[:Revision])
     end
   end
 
@@ -113,7 +147,7 @@ module RuneRb::Game::World::Authorization
     if RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:password] == session.login[:Credentials][:Password]
       true
     else
-      @responses[session].write(RuneRb::Net::LOGIN_RESPONSES[:BAD_CREDENTIALS], type: :byte, signed: false)
+      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:BAD_CREDENTIALS], type: :byte, signed: false)
       raise RuneRb::System::Errors::SessionReceptionError.new(:password, nil, nil)
     end
     true
