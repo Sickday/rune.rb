@@ -37,6 +37,7 @@ module RuneRb::System
       @worlds = []
       @endpoints = []
       @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
+      load_configs
     end
 
     def run
@@ -66,11 +67,11 @@ module RuneRb::System
     end
 
     def deploy_worlds
-      @worlds << RuneRb::Game::World::Instance.new
+      @worlds << RuneRb::Game::World::Instance.new(@configs[:world])
     end
 
     def deploy_endpoints
-      @endpoints << EventMachine.start_server('0.0.0.0', 43594, RuneRb::Network::Session) { |session| @sessions << session }
+      @endpoints << EventMachine.start_server(@configs[:endpoint][:HOST], @configs[:endpoint][:PORT], RuneRb::Network::Session) { |session| @sessions << session }
     end
 
     def process_sessions
@@ -95,6 +96,29 @@ module RuneRb::System
       log! RuneRb::GLOBAL[:COLOR].green("[Worlds]: #{@worlds.length}")
       log! RuneRb::GLOBAL[:COLOR].green("[Endpoints]: #{@endpoints.each(&:inspect)}")
       log! RuneRb::GLOBAL[:COLOR].green("[Worlds]: #{@worlds.each(&:inspect)}")
+    end
+
+    def load_configs
+      raw_ep_data = Oj.safe_load(File.read('assets/config/endpoint.json'))
+      raw_world_data = Oj.safe_load(File.read('assets/config/world.json'))
+
+      @configs = {}.tap do |hash|
+        hash[:world] = {}
+        hash[:world][:label] = raw_world_data['LABEL'] || "WORLD_" + Druuid.gen
+        hash[:world][:max_players] = raw_world_data['MAX_PLAYERS'].to_i
+        hash[:world][:max_mobs] = raw_world_data['MAX_MOBS'].to_i
+        hash[:world][:default_mob_x] = raw_world_data['DEFAULT_MOB_X'].to_i
+        hash[:world][:default_mob_y] = raw_world_data['DEFAULT_MOB_Y'].to_i
+        hash[:world][:default_mob_z] = raw_world_data['DEFAULT_MOB_Z'].to_i
+        hash[:world][:private?] = raw_world_data['PRIVATE'] ? true : false
+
+        hash[:endpoint] = {}
+        hash[:endpoint][:HOST] = raw_ep_data['HOST']
+        hash[:endpoint][:PORT] = raw_ep_data['PORT']
+      end
+      log! "Loaded configuration."
+    rescue StandardError => e
+      err "An error occurred while loading config files.", e, e.backtrace.join("\n")
     end
   end
 end

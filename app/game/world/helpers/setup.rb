@@ -30,18 +30,8 @@ module RuneRb::Game::World::Setup
   private
 
   # Initializes and loads configuration settings for the World.
-  def setup
-    raw_data = Oj.load(File.read('assets/config/rrb_world.json'))
-
-    @settings = {}.tap do |hash|
-      hash[:label] = raw_data['LABEL'] || "WORLD_" + Druuid.gen
-      hash[:max_players] = raw_data['MAX_PLAYERS'].to_i
-      hash[:max_mobs] = raw_data['MAX_MOBS'].to_i
-      hash[:default_mob_x] = raw_data['DEFAULT_MOB_X'].to_i
-      hash[:default_mob_y] = raw_data['DEFAULT_MOB_Y'].to_i
-      hash[:default_mob_z] = raw_data['DEFAULT_MOB_Z'].to_i
-      hash[:private?] = raw_data['PRIVATE'] ? true : false
-    end.freeze
+  def setup(config)
+    @settings = config
     @entities = { players: {}, mobs: {} }
     @responses = {}
     @stack ||= []

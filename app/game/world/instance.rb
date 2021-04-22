@@ -48,8 +48,8 @@ module RuneRb::Game::World
     attr :settings
 
     # Called when a new World Instance is created
-    def initialize
-      setup
+    def initialize(config)
+      setup(config)
       log 'New World Instance initialized!'
     end
 
