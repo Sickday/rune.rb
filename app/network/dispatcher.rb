@@ -26,10 +26,39 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-module RuneRb::Game::Entity::Helpers::Button
-  # Parses a button press
-  # @param message [RuneRb::Network::Message] the message payload to parse
-  def parse_button(message)
+module RuneRb::Network::Dispatcher
 
+  # Writes a Message to the session's socket
+  # @param type [Symbol] the type of Message to write
+  # @param data [Hash] the database that will be included in the message.
+  def write_message(type, data = {})
+    if type == :raw
+      write(data[:message], raw: true)
+    else
+      write(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:PROTOCOL]][:OUTGOING][type].new(data))
+    end
   end
+
+  private
+
+  # Writes data to the underlying <@socket>
+  # @param message [RuneRb::Network::Message] a message with data to write.
+  def write(message, raw: false)
+    raise 'Invalid cipher for write operation!' unless @cipher
+
+    send_data(raw ? message&.compile : encode(message).compile)
+  end
+
+  # Encodes a RuneRb::Network::Message using the <@cipher>.
+  # @param message [RuneRb::Network::Message] the message to encode.
+  def encode(message)
+    raise 'Invalid cipher for client!' unless @cipher
+
+    message.header[:length] = message.peek.bytesize
+    message.inspect if RuneRb::GLOBAL[:DEBUG]
+    message.header[:op_code] += @cipher[:encryptor].next_value & 0xFF
+    message
+  end
+
+  alias << write
 end

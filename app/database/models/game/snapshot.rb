@@ -27,8 +27,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
-  # TODO: Complete this.
+  # Snapshot of `RuneRb::Game::World::Instance` objects that can be deserialized and serialized to restore a world's state.
+  #
+  # Models a row of the `game_snapshots` table.
+  # @todo Complete this.
   class GameSnapshot < Sequel::Model(RuneRb::GLOBAL[:GAME_SNAPSHOTS])
+=begin
     def dump_game_state(game_state)
       snapshot = {}
     end
@@ -36,5 +40,6 @@ module RuneRb::Database
     def restore_game_state(id)
       raw = Oj.load(where(id: id).get(:dump))
     end
+=end
   end
 end

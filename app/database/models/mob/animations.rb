@@ -27,5 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Information related animations performed by a Mob
+  #
+  # Models a row from the `mob_animations` table.
   class MobAnimations < Sequel::Model(RuneRb::GLOBAL[:MOB_ANIMATIONS]); end
 end

@@ -27,7 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
-
+  # Information related to the location of a player in the virtual game world
+  #
+  # Models a row from the `player_locations` table
   class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:PLAYER_LOCATIONS])
     # Constructs a <RuneRb::Game::Map::Position> from the location.
     # @return [RuneRb::Game::Map::Position]
@@ -35,7 +37,7 @@ module RuneRb::Database
       RuneRb::Game::Map::Position.new(self[:x], self[:y], self[:z])
     end
 
-    # Updates the internal [:x, :y, :z] values to that of the passed position object.
+    # Updates the <:x, :y, :z> values to that of the passed position object.
     # @param position [RuneRb::Game::Map::Position] the position to update the location coordinates with.
     def set(position)
       update(prev_x: self[:x],

@@ -30,8 +30,8 @@ module RuneRb::Network::RS317
 
   class SystemTextMessage < RuneRb::Network::Message
 
-    # Called when a new ServerTextMessage is created
-    # @param data [Hash] the database for the message.
+    # Constructs a new SystemTextMessage
+    # @param data [Hash] the data for the message.
     def initialize(data)
       super('w', { op_code: 253 }, :VARIABLE_BYTE)
       write_string(data[:message])

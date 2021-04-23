@@ -28,6 +28,8 @@
 
 module RuneRb::Network::RS377
   class ClearInterfacesMessage < RuneRb::Network::Message
+
+    # Constructs a ClearInterfacesMessage
     def initialize(_)
       super('w', { op_code: 29 }, :FIXED)
     end

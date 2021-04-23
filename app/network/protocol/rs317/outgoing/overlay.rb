@@ -28,6 +28,8 @@
 
 module RuneRb::Network::RS317
   class DisplayOverlayMessage < RuneRb::Network::Message
+    # Constructs a DisplayOverlayMessage
+    # @param data [Hash] data containing the ID of the overlay
     def initialize(data)
       super('w', { op_code: 208 }, :FIXED)
       write_short(data[:id], :STD, :LITTLE)

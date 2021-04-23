@@ -29,6 +29,8 @@
 module RuneRb::Network::RS377
   class UpdateSlottedItemMessage < RuneRb::Network::Message
 
+    # Constructs a new UpdateSlottedItemMessage
+    # @param data [Hash] data containing items, amounts and slots
     def initialize(data)
       super('w', { op_code: 134 }, :VARIABLE_SHORT)
       write_short(1688, :STD, :BIG) # EquipmentForm ID

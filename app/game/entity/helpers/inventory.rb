@@ -48,7 +48,7 @@ module RuneRb::Game::Entity::Helpers::Inventory
 
   private
 
-  # Initializes the inventory
+  # Initializes the <@inventory> object. Passed data is used to setup the inventory if present.
   # @param data [Hash] database to initialize the inventory with.
   def setup_inventory(data = nil)
     @inventory = {
@@ -64,12 +64,12 @@ module RuneRb::Game::Entity::Helpers::Inventory
     log(RuneRb::GLOBAL[:COLOR].green("Loaded Inventory for #{RuneRb::GLOBAL[:COLOR].yellow(@profile.name)}")) if RuneRb::GLOBAL[:DEBUG]
   end
 
-  # Dumps the inventory of a player.
+  # Deserializes inventory data to the inventory column of the player's <@profile> dataset.
   def dump_inventory
     @profile.update(inventory: Oj.dump(@inventory[:container].data.to_hash, mode: :compat, use_as_json: true))
   end
 
-  # Restores the inventory of a player
+  # Attempts to reconstruct the <@inventory> object with data in the player's inventory column from the <@profile> dataset. If the data is not parsable, a new empty inventory is created.
   def restore_inventory
     # Deserialize raw profile data
     data = Oj.load(@profile[:inventory])

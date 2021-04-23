@@ -28,10 +28,12 @@
 
 module RuneRb::System
 
+  # Handles the launching, processing, and shutdown of RuneRb::Network::Endpoints and RuneRb::Game::World::Instance objects.
   class Controller
     include Singleton
     include Log
 
+    # Constructs a new Controller object
     def initialize
       @sessions = []
       @worlds = []
@@ -40,6 +42,7 @@ module RuneRb::System
       load_configs
     end
 
+    # Launches the controller, deploying world insstances and endpoint instances within the EventMachine reactor.
     def run
       EventMachine.run do
         # TODO: read more into what can be done while in trap context
@@ -53,8 +56,6 @@ module RuneRb::System
 
         # Construct tick loop to process sessions
         process_sessions
-
-        about
       end
     end
 
@@ -66,14 +67,17 @@ module RuneRb::System
       EventMachine.stop
     end
 
+    # Deploys a single world
     def deploy_worlds
       @worlds << RuneRb::Game::World::Instance.new(@configs[:world])
     end
 
+    # Deploys a single endpoint instance
     def deploy_endpoints
       @endpoints << EventMachine.start_server(@configs[:endpoint][:HOST], @configs[:endpoint][:PORT], RuneRb::Network::Session) { |session| @sessions << session }
     end
 
+    # Each tick this function ensures sessions whose <status[:auth]> is equal to `:PENDING_WORLD` are logged into the next available world instance which can accept the player. This function also disconnects any lingering sessions which are no longer active.
     def process_sessions
       EventMachine.tick_loop do
         transfer_batch = @sessions.select { |session| session.status[:auth] == :PENDING_WORLD }
@@ -91,6 +95,7 @@ module RuneRb::System
       end
     end
 
+    # Logs information about the controller and it's assets.
     def about
       log! RuneRb::GLOBAL[:COLOR].green("[Endpoints]: #{@endpoints.length}")
       log! RuneRb::GLOBAL[:COLOR].green("[Worlds]: #{@worlds.length}")
@@ -98,6 +103,7 @@ module RuneRb::System
       log! RuneRb::GLOBAL[:COLOR].green("[Worlds]: #{@worlds.each(&:inspect)}")
     end
 
+    # Deserializes and attempts to parse configuration files located in `assets/config`.
     def load_configs
       raw_ep_data = Oj.safe_load(File.read('assets/config/endpoint.json'))
       raw_world_data = Oj.safe_load(File.read('assets/config/world.json'))

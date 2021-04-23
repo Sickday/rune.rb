@@ -28,8 +28,12 @@
 
 module RuneRb::Network::RS377
   class LogoutMessage < RuneRb::Network::Message
-    def initialize(_)
+
+    # Constructs a LogoutMessage
+    # @param session [RuneRb::Network::Session] the session to disconnect.
+    def initialize(session)
       super('w', { op_code: 5 }, :FIXED)
+      session.disconnect(:logout)
     end
   end
 end

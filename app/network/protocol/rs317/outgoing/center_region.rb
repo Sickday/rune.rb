@@ -28,6 +28,9 @@
 
 module RuneRb::Network::RS317
   class CenterRegionMessage < RuneRb::Network::Message
+
+    # Constructs a new CenterRegionMessage
+    # @param regional [RuneRb::Game::Map::Regional] regional data containing x and y coordinates to write to the message.
     def initialize(regional)
       super('w', { op_code: 73 }, :FIXED)
       write_short(regional[:x], :ADD)

@@ -27,6 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::System::Errors
+  # Raised when a Session is not received by a RuneRb::Game::World::Instance
   class SessionReceptionError < StandardError
     def initialize(type, expected, received)
       case type
@@ -42,6 +43,7 @@ module RuneRb::System::Errors
     end
   end
 
+  # Raised when a name conflict occurs.
   class ConflictingNameError < StandardError
     def initialize(type, received)
       case type

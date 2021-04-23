@@ -27,15 +27,30 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Information related to the appearance of a player in the virtual game world
+  #
+  # Models a row of the `player_appearance` table
   class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:PLAYER_APPEARANCES])
+
+    # Updates the `mob_id` column to the specified value.
+    #
+    # During the next ContextSynchronizationMessage this value is observed and applied to the ContextStateBlock which will ensure the appropriate mask is applied.
+    # @param id [Integer] the id of the mob to appear as.
     def to_mob(id)
       update(mob_id: id)
     end
 
+    # Resets the `mob_id` column to -1.
+    #
+    # During the next ContextSynchronizationMessage this value is observed and the player's actual appearance is sent.
     def from_mob
       update(mob_id: -1)
     end
 
+    # Updates the `head_icon` column to the specified value
+    #
+    # During the next ContextSynchronizationMessage this value is observed and applied to the ContextStateBlock which will ensure the proper value is sent for the head_icon
+    # @param id [Integer] the id of the head_icon to send.
     def to_head(id)
       update(head_icon: id)
     end

@@ -26,12 +26,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-module Parser
+module RuneRb::Network::Parser
   using RuneRb::System::Patches::StringRefinements
 
   private
 
-  # Reads the next parseable Message object directly from <@socket>.
+  # Reads data from the <@buffer>, producing a <RuneRb::Network::Message> object from the read data before attempting to parsing the newly constructed <RuneRb::Network::Message> object.
   def next_message
     @current = RuneRb::Network::Message.new('r', { op_code: @buffer.next_byte })
     @current = decode(@current)

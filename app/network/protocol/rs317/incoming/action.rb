@@ -29,6 +29,8 @@
 module RuneRb::Network::RS317::ActionClickMessage
   include RuneRb::System::Log
 
+  # Parses the ActionClickMessage
+  # @param context [RuneRb::Game::Entity::Context] the context to parse for
   def parse(context)
     case @header[:op_code]
     when 145 # First

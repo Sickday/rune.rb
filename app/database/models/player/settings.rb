@@ -27,5 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Data related to in-game individual player settings
+  #
+  # Models a row of the `player_settings` table.
   class PlayerSettings < Sequel::Model(RuneRb::GLOBAL[:PLAYER_SETTINGS]); end
 end

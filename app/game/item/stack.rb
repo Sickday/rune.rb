@@ -27,7 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Game::Item
-  # Represents a stack of items.
+
+  # Represents a stack of Items.
   class Stack
     attr :definition, :id
     attr_accessor :size

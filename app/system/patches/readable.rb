@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Patrick W.
+# Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-module Readable
+module RuneRb::System::Patches::Readable
   using RuneRb::System::Patches::StringRefinements
   include RuneRb::Network::Constants
 
@@ -56,10 +56,12 @@ module Readable
     true
   end
 
+  # Appends data directly to the <@payload>
   def push_data(data)
     @payload << data
   end
 
+  # @abstract parses the message object.
   def parse; end
 
   private

@@ -27,7 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
-  # The PlayerStatus models a row within the `player_status` table.
+  # Status information related to a player
+  #
+  # Models a row within the <player_status> table.
   class PlayerStatus < Sequel::Model(RuneRb::GLOBAL[:PLAYER_STATUS])
     # Update the status with a ban.
     def ban

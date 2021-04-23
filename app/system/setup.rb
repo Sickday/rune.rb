@@ -26,10 +26,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Contains functions for setting up the <RuneRb::GLOBAL> hash.
 module RuneRb::System::Setup
   extend self
 
-  def load_mob_data(settings)
+  # Creates dataset objects related to mob tables in the storage database.
+  # @param settings [Hash] a collection mapping keys to dataset references.
+  def init_mob_data(settings)
     case settings[:STORAGE_TYPE]
     when :sqlite
       settings[:MOB_SPAWNS] = settings[:CONNECTION][:mob_spawns]
@@ -45,7 +48,9 @@ module RuneRb::System::Setup
     settings[:LOG].error e.backtrace&.join("\n")
   end
 
-  def load_player_data(settings)
+  # Create dataset objects related to player tables in the storage database.
+  # @param settings [Hash] a collection mapping keys to dataset references.
+  def init_player_data(settings)
     case settings[:STORAGE_TYPE]
     when :sqlite
       settings[:PLAYER_APPEARANCES] = settings[:CONNECTION][:player_appearance]
@@ -63,7 +68,9 @@ module RuneRb::System::Setup
     settings[:LOG].error e.backtrace&.join("\n")
   end
 
-  def load_item_data(settings)
+  # Create dataset objects related to item tables in the storage database.
+  # @param settings [Hash] a collection mapping keys to dataset references.
+  def init_item_data(settings)
     case settings[:STORAGE_TYPE]
     when :sqlite
       settings[:ITEM_SPAWNS] = settings[:CONNECTION][:item_spawns]
@@ -78,7 +85,9 @@ module RuneRb::System::Setup
     settings[:LOG].error e.backtrace&.join("\n")
   end
 
-  def load_game_data(settings)
+  # Create dataset objects related to game tables in the storage database.
+  # @param settings [Hash] a collection mapping keys to dataset references.
+  def init_game_data(settings)
     case settings[:STORAGE_TYPE]
     when :sqlite
       settings[:GAME_BANNED_NAMES] = settings[:CONNECTION][:game_banned_names]
@@ -92,7 +101,9 @@ module RuneRb::System::Setup
     settings[:LOG].error e.backtrace&.join("\n")
   end
 
-  def load_logger(settings)
+  # Constructs a global logger (with colors!).
+  # @param settings [Hash] a collection mapping keys to logger settings.
+  def init_logger(settings)
     settings[:VERSION] = `rake runerb:get_version`.chomp.gsub!('"', '')
     FileUtils.mkdir_p("#{FileUtils.pwd}/assets/log")
     settings[:LOG_FILE_PATH] = "#{FileUtils.pwd}/assets/log/rune_rb-#{Time.now.strftime('%Y-%m-%d').chomp}.log".freeze
@@ -104,7 +115,9 @@ module RuneRb::System::Setup
     end
   end
 
-  def load_global_data(settings)
+  # Populates the passed collection with settings read from the `asset/config/rune.rb.json` file. This function also attempts to initialize a connection to a storage database based on the information in `assets/config/rune.rb.json`.
+  # @param settings [Hash] a collection mapping keys to global settings and a database connection.
+  def init_global_data(settings)
     Oj.load(File.read('assets/config/rune.rb.json')).each do |key, value|
       settings[key.upcase.to_sym] = value
     end

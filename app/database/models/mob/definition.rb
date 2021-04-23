@@ -27,6 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Defining information related to a Mob entity
+  #
+  # Models a row of the `mob_definitions` database.
   class MobDefinition < Sequel::Model(RuneRb::GLOBAL[:MOB_DEFINITIONS])
     plugin :static_cache
 

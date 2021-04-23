@@ -27,5 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Information related to a mob's combat stats
+  #
+  # Models a row of the `mob_stats` table.
   class MobStats < Sequel::Model(RuneRb::GLOBAL[:MOB_STATS]); end
 end

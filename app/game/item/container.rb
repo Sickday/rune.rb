@@ -31,11 +31,15 @@ module RuneRb::Game::Item
   class Container
     include RuneRb::System::Log
 
-    attr :data, :limit
+    # Internal container object for ItemStacks
+    attr :data
 
-    # Called when a new ItemContainer is created.
-    # @param capacity [Integer] the capacity of the ItemContainer
-    # @param stackable [Boolean] should all ItemStacks in the ItemContainer be stacked?
+    # Maximum number of slots that can be filled in this container.
+    attr :limit
+
+    # Constructs a new Container.
+    # @param capacity [Integer] the capacity of the Container
+    # @param stackable [Boolean] should all ItemStacks in the Container be stackable?
     def initialize(capacity, stackable: false)
       @stackable = stackable
       @limit = capacity
@@ -154,6 +158,7 @@ module RuneRb::Game::Item
 
     private
 
+    # Is the Container stackable?
     attr :stackable
 
     # Retrieves the first slot for which an ItemStack with the specified ID matches

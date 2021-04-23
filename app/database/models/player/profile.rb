@@ -27,7 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
-  # A profile model related to a corresponding row in the profile table.
+  # Collection of data related to a registered player
+  #
+  # Models a row of the <player_profiles> table.
   class PlayerProfile < Sequel::Model(RuneRb::GLOBAL[:PLAYER_PROFILES])
     one_to_one :appearance, class: RuneRb::Database::PlayerAppearance, key: :name
     one_to_one :settings, class: RuneRb::Database::PlayerSettings, key: :name
@@ -35,8 +37,8 @@ module RuneRb::Database
     one_to_one :status,   class: RuneRb::Database::PlayerStatus,  key: :name
     one_to_one :location, class: RuneRb::Database::PlayerLocation, key: :name
 
-    # Registers a new profile with supplied database.
-    # @param data [Hash, Struct] profile database to insert.
+    # Registers a new profile
+    # @param data [Hash, Struct] profile data to insert.
     # @return [RuneRb::Database::PlayerProfile] the created profile.
     def self.register(data)
       # Create the profile and associations
@@ -51,14 +53,16 @@ module RuneRb::Database
       RuneRb::Database::PlayerProfile[data[:Username]]
     end
 
-    # Get the Position for the Location associated with the Profile.
+    # Position for the Location associated with the Profile.
     # @return [RuneRb::Game::Map::Position] the Position object for the Location associated with the Profile.
     def position
-      binding.pry
-      self.location.to_position
+      location.to_position
     end
 
     class << self
+
+      # Attempts to fetch a profile with the supplied credentials. If no profile is found matching the credentials, a new one is registered and returned.
+      # @param credentials [Hash, Struct] credentials containing a username to search for.
       def fetch_profile(credentials)
         RuneRb::Database::PlayerProfile[credentials[:Username]] || RuneRb::Database::PlayerProfile.register(credentials)
       end

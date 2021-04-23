@@ -27,8 +27,14 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+
+  # Name that is banned from usage.
+  # Models a row of the `game_banned_names` table.
   class GameBannedNames < Sequel::Model(RuneRb::GLOBAL[:GAME_BANNED_NAMES])
     class << self
+
+      # Adds a new entry to the dataset.
+      # @param entry [String] the name to ban.
       def append(entry)
         insert(name: entry)
       rescue Sequel::ConstraintViolation

@@ -26,6 +26,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Functions to toggle, load and reset update flags for an Entity.
 module RuneRb::Game::Entity::Helpers::Flags
   # @return [Hash] a collection of flags to observe when constructing a SynchronizationMessage
   attr :flags
@@ -50,9 +51,13 @@ module RuneRb::Game::Entity::Helpers::Flags
     @flags[:moved?] = false
   end
 
-  # This function will update the Mob's update flags according to the type and assets provided. Under the hood, this function will enable certain update flags and assign values respectively in accordance with the type of update supplied.
-  # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object (Mob#update(:graphic, gfx: RuneRb::Game::Entity::Graphic). Internally, this will enable the Mob#flags[:graphic?] which will cause a graphic update flag mask and the Graphic object's database to be added to the context's state block in the next pulse.
-  # TODO: Raise an error to ensure assets are proper for each update type.
+  # Toggles the Mob's corresponding value for the passed update type within <@flags>.
+  # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object:
+  #
+  #  Mob#update(:graphic, gfx: RuneRb::Game::Entity::Graphic)
+  #
+  # This will toggle the value of the Mob#flags[:graphic?] key to true which will cause a graphic update flag mask and the Graphic object's data to be added to the context's state block in the next ContextSynchronizationMessage.
+  #
   # @param type [Symbol] the type of update to schedule
   # @param assets [Hash] the assets for the update
   def update(type, assets = {})

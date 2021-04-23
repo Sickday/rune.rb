@@ -27,7 +27,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
-  # The Stats object models the public.stats table rows which relate to a player's stats.
+  # Collection of information related to an individual player's skills/stats.
+  #
+  # Models a row of the `player_stats` taable
   class PlayerStats < Sequel::Model(RuneRb::GLOBAL[:PLAYER_STATS])
     attr :level_up
 
@@ -59,9 +61,14 @@ module RuneRb::Database
       RUNECRAFTING: %i[runecrafting_level runecrafting_exp]
     }.freeze
 
+    # Object representing a pending level increase in a specific stat
+    # @param skill [Symbol] the skill which has increased in level
+    # @param level [Integer] the new level of the skill
     LevelUpInfo = Struct.new(:skill, :level)
 
-    # Calculates the combat level
+    # Calculates the virtual combat level with the dataset's combat stats.
+    #
+    # @return [Integer] the calculated combat level
     def combat
       combat = ((self[:defence_level] + self[:hit_points_level] + (self[:prayer_level] / 2).floor) * 0.2535).to_i + 1
       melee = (self[:attack_level] + self[:strength_level]) * 0.325
@@ -75,6 +82,7 @@ module RuneRb::Database
     end
 
     # Calculates the total level of all stat levels added.
+    # @return [Integer] the sum of all levels added.
     def total
       self[:attack_level] + self[:defence_level] + self[:strength_level] + self[:hit_points_level] +
         self[:range_level] + self[:prayer_level] + self[:magic_level] + self[:cooking_level] +
@@ -109,12 +117,15 @@ module RuneRb::Database
       update_level(skill, RuneRb::System::Database::Stats.level_for_experience(self[SKILLS[skill].last]))
     end
 
+    # Adds a specified amount to the corresponding <_experience> row of the passed skill
+    # @param skill [Symbol] the skill to add experience to
+    # @param amount [Integer] the amount of experience to add
     def add_experience(skill, amount)
       eventual = self[SKILLS[skill].last] + amount
       update_exp(skill, eventual)
     end
 
-    # Updates all skills to 99.
+    # Updates all skills with a level of 99 and an experience of 13,034,430
     def max
       SKILLS.each do |_label, columns|
         update(columns.first => 99)
@@ -122,14 +133,16 @@ module RuneRb::Database
       end
     end
 
+    # Is a level up pending?
     # @return [Boolean] is a level up required?
     def level_up?
       true unless @level_up.nil?
     end
 
     class << self
+
       # Calculates the appropriate level for the amount of passed experience
-      # @param xp [Intger] the experience to fetch the level for.
+      # @param xp [Integer] the experience to fetch the level for.
       # @return [Integer] the skill level for the given amount of experience
       def level_for_experience(xp)
         if xp > 13_034_430

@@ -27,5 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Database
+  # Collection of information related to a specific item when equipped.
+  #
+  # Models a row of the `item_equipment` table.
   class ItemEquipment < Sequel::Model(RuneRb::GLOBAL[:ITEM_EQUIPMENT]); end
 end

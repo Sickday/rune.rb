@@ -29,7 +29,8 @@
 module RuneRb::Network::RS317
   class UpdateItemsMessage < RuneRb::Network::Message
 
-    # Called when a new ContextInventoryMessage is created
+    # Constructs a new ContextInventoryMessage.
+    # @param data [Hash] inventory data including items, amounts and corresponding slots
     def initialize(data)
       super('w', { op_code: 53 }, :VARIABLE_SHORT)
 

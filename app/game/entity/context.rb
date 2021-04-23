@@ -27,12 +27,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Game::Entity
-  # A Context object is a Mob that is representing the context of a connected Session.
+
+  # A Mob that is representing the context of a connected Session.
   class Context < RuneRb::Game::Entity::Mob
     include RuneRb::System::Log
     include RuneRb::Game::Entity::Helpers::Equipment
     include RuneRb::Game::Entity::Helpers::Inventory
-    include RuneRb::Game::Entity::Helpers::Button
     include RuneRb::Game::Entity::Helpers::Command
 
     # @!attribute [r] equipment
@@ -71,9 +71,10 @@ module RuneRb::Game::Entity
     # @return [RuneRb::Game::World::Instance] the world Instance the Context is registered to.
     attr :world
 
-    # Called when a new Context Entity is created.
+    # Constructs a new Context entity.
     # @param session [RuneRb::Network::Session] the session to be associated with the entity.
     # @param profile [RuneRb::Database::PlayerProfile] the profile that will act as the definition for the context mob.
+    # @param world [RuneRb::Game::World::Instance] the world instance the context is attached to/observed by.
     def initialize(session, profile, world)
       @session = session
       @profile = profile
@@ -81,12 +82,7 @@ module RuneRb::Game::Entity
       super(profile)
     end
 
-    # Logs the context out and detaches the context from the Context#world Instance.
-    # * detaches the context from the world instance via Context#detach
-    # * dumps the Context#inventory[:container]
-    # * dumps the Context#equipment
-    # * updates the Context#profile#location to the current Context#position
-    # * closes the session via Context#session#close_connection
+    # Performs a series of tasks associated with deserializing and saving player information to relevant datastores.
     def logout
       # Dump the inventory database
       dump_inventory if @inventory
@@ -108,7 +104,7 @@ module RuneRb::Game::Entity
       log! 'Detached from World instance!' if RuneRb::GLOBAL[:DEBUG]
     end
 
-    # Logs the context in and attaches the context to a world Instance.
+    # Performs a series of task related with constructing and initializing a context's data and attaching the context to the <@world> instance.
     def login(first: true)
       @session.register(self)
       log! "Attached to Session #{@session.id}!" if RuneRb::GLOBAL[:DEBUG]
@@ -135,6 +131,7 @@ module RuneRb::Game::Entity
       str << "[POSITION]: #{@position.inspect}"
     end
 
+    # Dispatches a ContextSynchronizationMessage to the <@session> assuming the Context meets the requirements for doing so. If a region change is needed, a CenterRegionMessage is written before the ContextSynchronizationMessage.
     def sync
       # Write region message if an update is required.
       @session.write_message(:CenterRegionMessage, @regional) if @flags[:region?]

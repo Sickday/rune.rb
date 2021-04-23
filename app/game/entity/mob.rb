@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Game::Entity
-  # A Mob object models a mobile model.
+  # Models a mobile model.
   class Mob
     include RuneRb::System::Log
     include RuneRb::Game::Entity::Helpers::Movement
@@ -51,7 +51,7 @@ module RuneRb::Game::Entity
     # @return [Integer] the index of the Mob within it's world Instance's mob list.
     attr_accessor :index
 
-    # Called when a new Mob is created.
+    # Constructs a new Mob object with the passed definition.
     # @param definition [Object] the Definition for the mob.
     def initialize(definition)
       register(definition)
@@ -59,14 +59,14 @@ module RuneRb::Game::Entity
       load_movement
     end
 
-    # Called before a pulse is called
+    # Called before a SynchronizationMessage is constructed and dispatched.
     def pre_sync
       #move
     end
 
     def sync; end
 
-    # Called after a pulse call
+    # Called after a SynchronizationMessage is dispatched.
     def post_sync
       reset_movement
       reset_flags

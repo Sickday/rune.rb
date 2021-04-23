@@ -29,8 +29,8 @@
 module RuneRb::Network::RS317
   class MembersAndIndexMessage < RuneRb::Network::Message
 
-    # Called when a new MembersAndIndex message is created
-    # @param data [Hash] the database for the MembersAndIndexMessage
+    # Constructs a MembersAndIndexMessage
+    # @param data [Hash] data containing the members value and player index which will be written to the message.
     def initialize(data)
       super('w', { op_code: 249 }, :FIXED)
       write_byte(data[:members] ? 1 : 0, :ADD)

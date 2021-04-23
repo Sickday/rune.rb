@@ -18,11 +18,11 @@ end
 
 # Production Gems
 group :production do
-  gem 'eventmachine'
-  gem 'druuid'
-  gem 'oj'
-  gem 'pastel'
-  gem 'pg'
-  gem 'sequel'
-  gem 'sqlite3'
+  gem 'eventmachine', '~> 1.2'
+  gem 'druuid', '~> 1.0'
+  gem 'oj', '~> 3.10'
+  gem 'pastel', '~> 0.8'
+  gem 'pg', '~> 1.2.3'
+  gem 'sequel', '~> 5.34'
+  gem 'sqlite3', '~> 1.4.2'
 end

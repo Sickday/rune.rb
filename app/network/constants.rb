@@ -66,6 +66,7 @@ module RuneRb::Network::Constants
                          12 => 147, # EMOTE
                          13 => 962 }.freeze # MUSIC
 
+  # A collection of Message buffer sizes for both the 317 and 377 protocols.
   MESSAGE_SIZES = {
     RS317: { 0 => 0, 1 => 0, 2 => 0, 3 => 1, 4 => -1, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0,
              11 => 0, 12 => 0, 13 => 0, 14 => 8, 15 => 0, 16 => 6, 17 => 2, 18 => 2, 19 => 0, 20 => 0,
@@ -121,6 +122,7 @@ module RuneRb::Network::Constants
              251 => 0, 252 => 0, 253 => 0, 254 => 0, 255 => 0 }.freeze
   }.freeze
 
+  # A collection of Message templates for both the 317 and 377 protocols.
   PROTOCOL_TEMPLATES = {
     RS317: {
       OUTGOING: {

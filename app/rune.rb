@@ -36,22 +36,20 @@ require 'fiber'
 require 'logger'
 require 'oj'
 require 'pastel'
-require 'pry'
-require 'rake'
 require 'sequel'
 require 'singleton'
 require 'socket'
 
 ##
 # RuneRb -
-# # A game server written in Ruby targeting the 2006 era (or the 317-377 protocols) of the popular MMORPG, RuneScape.
+#  A game server written in Ruby targeting the 2006 era (or the 317-377 protocols) of the popular MMORPG, RuneScape.
 #
 #
 # @author Patrick W.
 # @since 0.9.0
 module RuneRb
 
-  # Ths module contains internally used Errors, Patches, and Modules.
+  # Internally used Errors, Patches, and Modules.
   module System
     autoload :Controller,           'system/controller'
     autoload :Setup,                'system/setup'
@@ -62,38 +60,43 @@ module RuneRb
       autoload :SessionReceptionError,        'system/errors'
     end
 
-    # This module contains various refinements made to objects already defined int he stdlib. The refinements are used in the objects who require the functions defined in the refinement. Doing this prevents pollution of the global definitions of the stdlib objects.
+    # Refinements made to objects already defined in the stdlib/core lib. The refinements are used in the objects who require the functions defined in the refinement. Doing this prevents pollution of the global definitions of the stdlib objects.
     module Patches
       autoload :IntegerRefinements,     'system/patches/integer'
       autoload :SetRefinements,         'system/patches/set'
       autoload :StringRefinements,      'system/patches/string'
+      autoload :Readable,               'system/patches/readable'
+      autoload :Writeable,              'system/patches/writeable'
     end
   end
 
   begin
     GLOBAL = {}.tap do |data|
-      RuneRb::System::Setup.load_global_data(data)
-      RuneRb::System::Setup.load_logger(data)
-      data[:LOG].info "RuneRb v#{data[:VERSION]} loading.."
-      data[:LOG].info "Protocol: #{data[:PROTOCOL]}."
-      RuneRb::System::Setup.load_game_data(data)
-      data[:LOG].info 'Loaded Game database.'
-      RuneRb::System::Setup.load_item_data(data)
-      data[:LOG].info 'Loaded Item database.'
-      RuneRb::System::Setup.load_player_data(data)
-      data[:LOG].info 'Loaded Player database.'
-      RuneRb::System::Setup.load_mob_data(data)
-      data[:LOG].info 'Loaded Mob database.'
+      RuneRb::System::Setup.init_global_data(data)
+      RuneRb::System::Setup.init_logger(data)
+      data[:LOG].info 'RuneRb initializing...'
+      RuneRb::System::Setup.init_game_data(data)
+      data[:LOG].info 'Initialized Game database.'
+
+      RuneRb::System::Setup.init_item_data(data)
+      data[:LOG].info 'Initialized Item database.'
+
+      RuneRb::System::Setup.init_player_data(data)
+      data[:LOG].info 'Initialized Player database.'
+
+      RuneRb::System::Setup.init_mob_data(data)
+      data[:LOG].info 'Initialized Mob database.'
+
     end
-    GLOBAL[:LOG].info GLOBAL[:COLOR].green.bold('Completed Loading!')
+    GLOBAL[:LOG].info GLOBAL[:COLOR].green.bold("RuneRb initialized with protocol #{GLOBAL[:COLOR].yellow(GLOBAL[:PROTOCOL])}!")
   rescue StandardError => e
     puts 'An error occurred while loading Global settings!'
     puts e
-    puts e.backtrace
+    puts e.backtrace.join("\n")
     exit
   end
 
-  # This module contains various database model objects which map to rows within database tables.
+  # Database model objects which map to rows within database tables.
   module Database
     autoload :GameBannedNames,            'database/models/game/banned_names'
     autoload :GameSnapshot,               'database/models/game/snapshot'
@@ -115,10 +118,10 @@ module RuneRb
     autoload :PlayerLocation,             'database/models/player/location'
   end
 
-  # This module encapsulates all Game-related objects, modules, and classes.
+  # Game-related objects, modules, and classes.
   module Game
 
-    # This module contains objects, models, and helpers related to game entities.
+    # Entity-related objects, models, and helpers.
     module Entity
       autoload :Context,              'game/entity/context'
       autoload :Mob,                  'game/entity/mob'
@@ -127,7 +130,7 @@ module RuneRb
       autoload :Graphic,              'game/entity/models/graphic'
       autoload :ChatMessage,          'game/entity/models/chat_message'
 
-      # This module contains commands executable by an entity.
+      # Commands executable by an entity.
       module Commands
         autoload :Ascend,             'game/entity/commands/ascend'
         autoload :Animation,          'game/entity/commands/animation'
@@ -142,10 +145,8 @@ module RuneRb
         autoload :Show,               'game/entity/commands/show'
       end
 
-      # This module provides helper functions and objects to an entity
+      # Helper functions and objects used by an entity
       module Helpers
-        autoload :Button,               'game/entity/helpers/button'
-        autoload :Click,                'game/entity/helpers/click'
         autoload :Command,              'game/entity/helpers/command'
         autoload :Equipment,            'game/entity/helpers/equipment'
         autoload :Flags,                'game/entity/helpers/flags'
@@ -154,7 +155,7 @@ module RuneRb
       end
     end
 
-    # This module contains models and objects related to game items.
+    # Models and objects related to game items.
     module Item
       MAX_SIZE = (2**31 - 1).freeze
 
@@ -162,7 +163,7 @@ module RuneRb
       autoload :Container,            'game/item/container'
     end
 
-    # This module contains objects, models, and helpers to simulate and handle a virtual game world.
+    # Virtual Game world objects, models, and helpers.
     module World
       ACTION_PRIORITIES = { HIGH: 1, MEDIUM: 2, LOW: 3 }.freeze
 
@@ -174,7 +175,7 @@ module RuneRb
       autoload :Action,               'game/world/models/action'
     end
 
-    # This module contains models, functions, and objects related to coordinating and mapping the virtual game world
+    # Models, functions, and objects related to coordinating and mapping the virtual game world
     module Map
       require_relative                'game/map/constants'
       include Constants
@@ -185,14 +186,14 @@ module RuneRb
     end
   end
 
-  # This module contains objects, models, and helpers related to network activity.
+  # Network-related objects, models, and helpers.
   module Network
-    autoload :Dispatcher,           'network/message/dispatcher'
+    autoload :Dispatcher,           'network/dispatcher'
     autoload :Endpoint,             'network/endpoint'
     autoload :Handshake,            'network/handshake'
     autoload :ISAAC,                'network/isaac'
     autoload :Message,              'network/message'
-    autoload :Parser,               'network/message/parser'
+    autoload :Parser,               'network/parser'
     autoload :Session,              'network/session'
     autoload :Constants,            'network/constants'
 
@@ -228,7 +229,7 @@ module RuneRb
       autoload :SwitchItemMessage,              'network/protocol/rs317/incoming/switch'
     end
 
-    # This module contains Messages compatible with the 377 protocol of RS.
+    # Messages compatible with the 377 protocol of RS.
     module RS377
       autoload :CenterRegionMessage,            'network/protocol/rs377/outgoing/center_region'
       autoload :ClearInterfacesMessage,         'network/protocol/rs377/outgoing/clear_interfaces'

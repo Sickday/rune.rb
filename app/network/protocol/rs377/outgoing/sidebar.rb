@@ -29,8 +29,9 @@
 module RuneRb::Network::RS377
 
   class DisplaySidebarMessage < RuneRb::Network::Message
-    # Constructs a new SidebarMessage object.
-    # @param data [Hash] the sidebar database for the message.
+
+    # Constructs a new DisplaySidebarMessage object.
+    # @param data [Hash] data containing the form id and menu ID
     def initialize(data)
       super('w', { op_code: 10 }, :FIXED)
       write_byte(data[:menu_id], :SUBTRACT)

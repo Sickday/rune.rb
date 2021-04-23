@@ -189,8 +189,7 @@ module RuneRb::Network
       @bit_position = 0
 
       # Define functions on the message instance.
-      require_relative 'message/writeable'
-      self.class.include(Writeable)
+      self.class.include(RuneRb::System::Patches::Writeable)
 
       # Update the message mode
       @mode[:writeable] = true
@@ -199,8 +198,7 @@ module RuneRb::Network
     # Enables Readable functions for the Message.
     def enable_readable
       # Define functions on the message instance.
-      require_relative 'message/readable'
-      self.class.include(Readable)
+      self.class.include(RuneRb::System::Patches::Readable)
 
       # Update the message mode
       @mode[:readable] = true
