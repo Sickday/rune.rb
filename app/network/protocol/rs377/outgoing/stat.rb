@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module RuneRb::Network::RS377
-  class UpdateStatMessage < RuneRb::Network::Message
+  class StatUpdateMessage < RuneRb::Network::Message
     def initialize(data)
       super('w', { op_code: 49 }, :FIXED)
       write_byte(data[:skill_id], :NEGATE)

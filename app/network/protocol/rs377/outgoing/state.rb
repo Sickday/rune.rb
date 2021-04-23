@@ -45,28 +45,28 @@ module RuneRb::Network::RS377
       mask = 0
       # Attributes:
       # ForcedMove
-      mask |= 0x400 if context.flags[:force_move?]
+      mask |= 0x100 if context.flags[:force_move?]
       # Graphics
-      mask |= 0x100 if context.flags[:graphic?]
+      mask |= 0x200 if context.flags[:graphic?]
       # Animation
       mask |= 0x8 if context.flags[:animation?]
       # Forced Chat
-      mask |= 0x4 if context.flags[:force_chat?]
+      mask |= 0x10 if context.flags[:force_chat?]
       # Chat
-      mask |= 0x80 if context.flags[:chat?]
+      mask |= 0x40 if context.flags[:chat?]
       # Face Entity
       mask |= 0x1 if context.flags[:face_mob?]
       # Appearance
-      mask |= 0x10 if context.flags[:state?]
+      mask |= 0x4 if context.flags[:state?]
       # Face Coordinates
       mask |= 0x2 if context.flags[:turn_to?]
       # Primary Hit
-      mask |= 0x20 if context.flags[:primary_hit?]
+      mask |= 0x80 if context.flags[:primary_hit?]
       # Secondary Hit
-      mask |= 0x200 if context.flags[:secondary_hit?]
+      mask |= 0x400 if context.flags[:secondary_hit?]
       # Append the mask
       if mask >= 0x100
-        mask |= 0x40
+        mask |= 0x20
         write_short(mask, :STD, :LITTLE)
       else
         write_byte(mask)
@@ -85,14 +85,12 @@ module RuneRb::Network::RS377
     def write_appearance(context)
       appearance_message = RuneRb::Network::Message.new('w', { op_code: -1 })
 
-      puts "Writing appearance: #{context.appearance}"
       # Gender
       appearance_message.write(context.appearance[:gender], type: :byte)
-      puts "Wrote gender #{context.appearance[:gender]}"
-
+      # Skulled
+      appearance_message.write(context.appearance[:skulled], type: :byte)
       # HeadIcon
       appearance_message.write(context.appearance[:head_icon], type: :byte)
-      #puts "Wrote HeadIcon #{context.appearance[:head_icon]}"
 
       # Write the appearance normally if there is no morphing.
       if context.appearance[:mob_id] == -1
@@ -114,22 +112,23 @@ module RuneRb::Network::RS377
       appearance_message.write(context.profile.stats.total, type: :short)
 
       # Size of the State Block
-      write_byte(appearance_message.peek.bytesize, :C)
-      write(appearance_message, type: :bytes)
+      write_byte(appearance_message.peek.bytesize)
+      write_reverse_bytes(appearance_message.peek)
     end
 
     # Writes the mob morphing bytes of a context to the message
     # @param appearance [RuneRb::System::Database::Appearance] the context entity whose mob morphing bytes will be written to the message.
     def write_morph(message, appearance)
-      message.write(0xff, type: :byte)
-      message.write_short(appearance[:mob_id], :STD, :BIG)
+      message.write(0xFF, type: :byte)
+      message.write(0xFF, type: :byte)
+      message.write(appearance[:mob_id], type: :short, mutation: :STD, order: :BIG)
     end
 
     # Writes the equipment of a context to the message.
     # @param equipment [Hash] the context's equipment database
     # @param appearance [RuneRb::System::Database::Appearance] the context's appearance model
     def write_equipment(message, equipment, appearance)
-      puts "WRITiNG EQUIPMENT: #{equipment.inspect}"
+
       # HAT SLOT
       if equipment[:HAT].id != -1
         message.write(0x200 + equipment[:HAT].id, type: :short, mutation: :STD, order: :BIG)
@@ -245,7 +244,7 @@ module RuneRb::Network::RS377
     end
 
     # Writes a chat to the message
-    # @param message [RuneRb::Game::Entity::Message] the message to write.
+    # @param message [RuneRb::Game::Entity::ChatMessage] the message to write.
     # @param rights [Integer] the rights of the context whose message is being written
     def write_chat(message, rights)
       write_short((message.colors << 8 | message.effects), :STD, :LITTLE)

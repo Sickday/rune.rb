@@ -30,18 +30,16 @@ module RuneRb::Network::RS377
   class UpdateItemsMessage < RuneRb::Network::Message
 
     # Called when a new ContextInventoryMessage is created
-    # @param data [Hash] the database for the ContextInventoryMessage
-    # @param length [Integer] the length of the inventory in slots.
-    def initialize(data, length)
+    def initialize(data)
       super('w', { op_code: 206 }, :VARIABLE_SHORT)
 
       # ContextInventoryForm ID
       write_short(3214)
 
       # Container length
-      write_short(length)
+      write_short(data[:size])
 
-      data.each do |_slot_id, item_stack|
+      data[:data].each do |_slot_id, item_stack|
 
         id = item_stack.nil? || item_stack.id.nil? || item_stack.id.negative? ? -1 : item_stack.id
         amount = item_stack.nil? || item_stack.size.nil? || item_stack.size.negative? ? 0 : item_stack.size

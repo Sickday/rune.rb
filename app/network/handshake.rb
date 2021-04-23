@@ -76,7 +76,7 @@ module RuneRb::Network::Handshake
       hash[:Revision] =      block.read(:short, signed: false, mutation: :STD)     # Version
       hash[:LowMem?] =       block.read(:byte, signed: false, mutation: :STD).positive? ? :LOW : :HIGH # Memory Mode
       hash[:CRC] = [].tap { |arr| 9.times { arr << block.read(:int, signed: false, mutation: :STD) } } # CRC
-      hash[:RSA_Length] =     block.read(:byte, signed: false, mutation: :STD)                   # RSA_Block Length
+      # hash[:RSA_Length] =     block.read(:byte, signed: false, mutation: :STD)                   # RSA_Block Length
       hash[:RSA_OpCode] =     block.read(:byte, signed: false, mutation: :STD)                   # RSA_Block OpCode (10)
       hash[:ClientPart] =     block.read(:long, signed: false, mutation: :STD)      # Client Part
       hash[:ServerPart] =     block.read(:long, signed: false, mutation: :STD)     # Server Part

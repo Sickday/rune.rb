@@ -38,10 +38,15 @@ module Parser
     @current.header[:length] = @buffer.next_byte if @current.header[:length] == -1
     @current.push_data(@buffer.slice!(0...@current.header[:length]))
 
-    ##
-    # LOL
-    @current.class.include(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:PROTOCOL]][:INCOMING][@current.header[:op_code]])
-    @current.parse(@context)
+    if RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:PROTOCOL]][:INCOMING].keys.include?(@current.header[:op_code])
+      ##
+      # LOL
+      @current.class.include(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:PROTOCOL]][:INCOMING][@current.header[:op_code]])
+      @current.parse(@context)
+    else
+      log! RuneRb::GLOBAL[:COLOR].magenta.bold("Unhandled Message with Operation Code: #{@current.header[:op_code]}")
+    end
+
     next_message if @status[:active] && @status[:auth] == :LOGGED_IN && @buffer.length >= 8
   end
 

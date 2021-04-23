@@ -28,7 +28,7 @@
 
 module RuneRb::Network::RS377
   class LogoutMessage < RuneRb::Network::Message
-    def initialize
+    def initialize(_)
       super('w', { op_code: 5 }, :FIXED)
     end
   end
