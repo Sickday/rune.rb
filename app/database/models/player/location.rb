@@ -1,3 +1,27 @@
+module RuneRb::Database
+  # Information related to the location of a player in the virtual game world
+  #
+  # Models a row from the `player_locations` table
+  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:PLAYER_LOCATIONS])
+    # Constructs a <RuneRb::Game::Map::Position> from the location.
+    # @return [RuneRb::Game::Map::Position]
+    def to_position
+      RuneRb::Game::Map::Position.new(self[:x], self[:y], self[:z])
+    end
+
+    # Updates the <:x, :y, :z> values to that of the passed position object.
+    # @param position [RuneRb::Game::Map::Position] the position to update the location coordinates with.
+    def set(position)
+      update(prev_x: self[:x],
+             prev_y: self[:y],
+             prev_z: self[:z],
+             x: position[:x] || RuneRb::GLOBAL[:DEFAULT_MOB_X] || 3222,
+             y: position[:y] || RuneRb::GLOBAL[:DEFAULT_MOB_Y] || 3222,
+             z: position[:z] || RuneRb::GLOBAL[:DEFAULT_MOB_Z] || 0)
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,27 +49,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Database
-  # Information related to the location of a player in the virtual game world
-  #
-  # Models a row from the `player_locations` table
-  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:PLAYER_LOCATIONS])
-    # Constructs a <RuneRb::Game::Map::Position> from the location.
-    # @return [RuneRb::Game::Map::Position]
-    def to_position
-      RuneRb::Game::Map::Position.new(self[:x], self[:y], self[:z])
-    end
-
-    # Updates the <:x, :y, :z> values to that of the passed position object.
-    # @param position [RuneRb::Game::Map::Position] the position to update the location coordinates with.
-    def set(position)
-      update(prev_x: self[:x],
-             prev_y: self[:y],
-             prev_z: self[:z],
-             x: position[:x] || RuneRb::GLOBAL[:DEFAULT_MOB_X] || 3222,
-             y: position[:y] || RuneRb::GLOBAL[:DEFAULT_MOB_Y] || 3222,
-             z: position[:z] || RuneRb::GLOBAL[:DEFAULT_MOB_Z] || 0)
-    end
-  end
-end

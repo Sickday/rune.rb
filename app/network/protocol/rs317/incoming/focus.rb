@@ -1,3 +1,13 @@
+module RuneRb::Network::RS317::WindowFocusMessage
+  include RuneRb::System::Log
+
+  # Parses the WindowFocusMessage
+  def parse(_)
+    focused = read_byte
+    log RuneRb::GLOBAL[:COLOR].blue("Client Focus: #{RuneRb::GLOBAL[:COLOR].cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::GLOBAL[:DEBUG]
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,13 +35,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317::WindowFocusMessage
-  include RuneRb::System::Log
-
-  # Parses the WindowFocusMessage
-  def parse(_)
-    focused = read_byte
-    log RuneRb::GLOBAL[:COLOR].blue("Client Focus: #{RuneRb::GLOBAL[:COLOR].cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::GLOBAL[:DEBUG]
-  end
-end

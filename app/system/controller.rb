@@ -43,42 +43,70 @@ module RuneRb::System
     end
 
     # Launches the controller, deploying world insstances and endpoint instances within the EventMachine reactor.
-    def run
+    def run(&block)
       EventMachine.run do
         # TODO: read more into what can be done while in trap context
         Signal.trap('INT') { shutdown }
 
         # Deploy world instances
-        deploy_worlds
+        deploy_world
 
         # Deploy an endpoint to accept sessions
-        deploy_endpoints
+        deploy_endpoint
 
         # Construct tick loop to process sessions
-        process_sessions
+        setup_session_loop
+
+        block.call if block_given?
+
+        log RuneRb::GLOBAL[:COLOR].green.bold('Controller ready!')
       end
     end
 
     # Closes endpoints, shuts down worlds and stops the EventMachine reactor.
-    def shutdown
-      @endpoints.each { |ep| EventMachine.stop_server(ep) }
-      @worlds.each(&:shutdown)
-    ensure
-      EventMachine.stop
+    def shutdown(params = {})
+      case params[:type]
+      when :WORLD
+        results = @worlds.select { |world| world.settings[:LABEL] = params[:label] || params[:title] }
+        results.each(&:shutdown)
+        log "Shutdown #{results.size} world instance(s)!"
+      when :SERVER
+        if @endpoints.include?(params[:sig])
+          EventMachine.stop_server(params[:sig])
+          log "Shutdown server with signature: #{params[:sig]}!"
+        else
+          err "Could not locate server with signature: #{params[:sig]}!"
+        end
+      else
+        begin
+          @endpoints.each { |ep| EventMachine.stop_server(ep) }
+          @worlds.each(&:shutdown)
+        rescue StandardError => e
+          puts "An error occurred during shutdown!"
+          puts e
+          puts e.backtrace.join("\n")
+        ensure
+          EventMachine.stop
+        end
+      end
     end
 
     # Deploys a single world
-    def deploy_worlds
-      @worlds << RuneRb::Game::World::Instance.new(@configs[:world])
+    def deploy_world
+      inst = RuneRb::Game::World::Instance.new(@configs[:world])
+      @worlds << inst
+      inst
     end
 
     # Deploys a single endpoint instance
-    def deploy_endpoints
-      @endpoints << EventMachine.start_server(@configs[:endpoint][:HOST], @configs[:endpoint][:PORT], RuneRb::Network::Session) { |session| @sessions << session }
+    def deploy_endpoint
+      sig = EventMachine.start_server(@configs[:endpoint][:HOST], @configs[:endpoint][:PORT], RuneRb::Network::Session) { |session| @sessions << session }
+      @endpoints << sig
+      sig
     end
 
     # Each tick this function ensures sessions whose <status[:auth]> is equal to `:PENDING_WORLD` are logged into the next available world instance which can accept the player. This function also disconnects any lingering sessions which are no longer active.
-    def process_sessions
+    def setup_session_loop
       EventMachine.tick_loop do
         transfer_batch = @sessions.select { |session| session.status[:auth] == :PENDING_WORLD }
         destination = @worlds.detect { |world| world.entities[:players].length + transfer_batch.length <= world.settings[:max_players] }

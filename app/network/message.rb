@@ -27,7 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 module RuneRb::Network
 
-  # A Message object represents a composable network message that is sent via a Channel object to it's underlying IO source.
+  # A Message object represents a composable/decomposable network message that is either sent or received via a TCPSocket.
   class Message
     include Constants
     include RuneRb::System::Log
@@ -93,7 +93,7 @@ module RuneRb::Network
         true
       end
 
-      # Compiles a Hash representation of the header into a binary string.
+      # Generates a binary string representation of the <@header> object.
       # @param header [Hash] the header to compile.
       # @param type [Symbol] the type of header to compile [:FIXED, :VARIABLE_SHORT, :VARIABLE_BYTE]
       # @return [String] binary representation of the header.

@@ -1,5 +1,8 @@
-[![coverage](https://gitlab.com/sickday/rune.rb/badges/master/coverage.svg?job=test_app)](https://rubydoc.info/gems/rune.rb)
-[![Gem Version](https://badge.fury.io/rb/rune.rb.svg)](https://badge.fury.io/rb/rune.rb)
+
+[![coverage](https://gitlab.com/sickday/rune.rb/badges/master/coverage.svg?job=test_app)](https://rubydoc.info/github/Sickday/rune.rb/master)
+[![Gem Version](https://badge.fury.io/rb/rune.rb.svg)](https://rubygems.org/gems/rune.rb)
+![GitHub](https://img.shields.io/github/license/Sickday/rune.rb)
+
 ## About
 
 **Rune.rb** is a game server written in Ruby targeting the 2006 era of RuneScape (or the 317-377 protocols).

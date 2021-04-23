@@ -1,3 +1,25 @@
+module RuneRb::Game::Entity
+
+  # A Command that is executed by a context entity.
+  class Command
+    include RuneRb::System::Log
+
+    # Called when a new Command object is created
+    # @param assets [Hash] the assets for command execution.
+    def initialize(assets)
+      @context = assets[:context]
+      @world = @context.world
+      @command = assets[:command]
+      @message = assets[:message]
+      @assets = assets
+      execute
+    end
+
+    # Executes the Command.
+    def execute; end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,25 +47,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Game::Entity
-
-  # A Command that is executed by a context entity.
-  class Command
-    include RuneRb::System::Log
-
-    # Called when a new Command object is created
-    # @param assets [Hash] the assets for command execution.
-    def initialize(assets)
-      @context = assets[:context]
-      @world = @context.world
-      @command = assets[:command]
-      @message = assets[:message]
-      @assets = assets
-      execute
-    end
-
-    # Executes the Command.
-    def execute; end
-  end
-end

@@ -1,3 +1,13 @@
+module RuneRb::Network::RS317::PublicChatMessage
+  include RuneRb::System::Log
+
+  # Parses the PublicChatMessage
+  # @param context [RuneRb::Game::Entity::Context] the context to parse for
+  def parse(context)
+    context.update(:chat, message: RuneRb::Game::Entity::ChatMessage.new(read_byte(false, :S), read_byte(false, :S), self))
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,13 +35,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317::PublicChatMessage
-  include RuneRb::System::Log
-
-  # Parses the PublicChatMessage
-  # @param context [RuneRb::Game::Entity::Context] the context to parse for
-  def parse(context)
-    context.update(:chat, message: RuneRb::Game::Entity::ChatMessage.new(read_byte(false, :S), read_byte(false, :S), self))
-  end
-end

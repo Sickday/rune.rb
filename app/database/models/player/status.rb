@@ -1,3 +1,30 @@
+module RuneRb::Database
+  # Status information related to a player
+  #
+  # Models a row within the <player_status> table.
+  class PlayerStatus < Sequel::Model(RuneRb::GLOBAL[:PLAYER_STATUS])
+    # Update the status with a ban.
+    def ban
+      update(banned: true)
+    end
+
+    # Update the status with a mute.
+    def mute
+      update(muted: true)
+    end
+
+    # Updates the last session column with information from the passed session object.
+    # @param session [RuneRb::Network::Session] the session to post.
+    def post_session(session)
+      info = {}
+      info[:ip] = session.ip
+      info[:duration] = session.up_time
+      info[:date] = session.start[:stamp]
+      update(last_session: Oj.dump(info))
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,30 +52,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Database
-  # Status information related to a player
-  #
-  # Models a row within the <player_status> table.
-  class PlayerStatus < Sequel::Model(RuneRb::GLOBAL[:PLAYER_STATUS])
-    # Update the status with a ban.
-    def ban
-      update(banned: true)
-    end
-
-    # Update the status with a mute.
-    def mute
-      update(muted: true)
-    end
-
-    # Updates the last session column with information from the passed session object.
-    # @param session [RuneRb::Network::Session] the session to post.
-    def post_session(session)
-      info = {}
-      info[:ip] = session.ip
-      info[:duration] = session.up_time
-      info[:date] = session.start[:stamp]
-      update(last_session: Oj.dump(info))
-    end
-  end
-end

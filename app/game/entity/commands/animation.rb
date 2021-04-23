@@ -1,3 +1,15 @@
+module RuneRb::Game::Entity::Commands
+
+  class Animation < RuneRb::Game::Entity::Command
+    # Executes the ::anim command.
+    def execute
+      return unless @assets[:command].length >= 1
+
+      @assets[:context].update(:animation, animation: RuneRb::Game::Entity::Animation.new(@assets[:command][0].to_i, @assets[:command][1].to_i || 0))
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,15 +37,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Game::Entity::Commands
-
-  class Animation < RuneRb::Game::Entity::Command
-    # Executes the ::anim command.
-    def execute
-      return unless @assets[:command].length >= 1
-
-      @assets[:context].update(:animation, animation: RuneRb::Game::Entity::Animation.new(@assets[:command][0].to_i, @assets[:command][1].to_i || 0))
-    end
-  end
-end

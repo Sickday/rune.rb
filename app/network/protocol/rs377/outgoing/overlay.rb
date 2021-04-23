@@ -1,3 +1,15 @@
+module RuneRb::Network::RS377
+  class DisplayOverlayMessage < RuneRb::Network::Message
+
+    # Constructs a DisplayOverlayMessage
+    # @param data [Hash] data containing the ID of the overlay
+    def initialize(data)
+      super('w', { op_code: 50 }, :FIXED)
+      write_short(data[:id])
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,15 +37,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377
-  class DisplayOverlayMessage < RuneRb::Network::Message
-
-    # Constructs a DisplayOverlayMessage
-    # @param data [Hash] data containing the ID of the overlay
-    def initialize(data)
-      super('w', { op_code: 50 }, :FIXED)
-      write_short(data[:id])
-    end
-  end
-end

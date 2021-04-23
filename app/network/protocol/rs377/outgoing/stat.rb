@@ -1,3 +1,17 @@
+module RuneRb::Network::RS377
+  class StatUpdateMessage < RuneRb::Network::Message
+
+    # Constructs a new StatUpdateMessage
+    # @param data [Hash] data containing the skill ID, experience and level to write to the message.
+    def initialize(data)
+      super('w', { op_code: 49 }, :FIXED)
+      write_byte(data[:skill_id], :NEGATE)
+      write_byte(data[:level])
+      write_int(data[:experience])
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,17 +39,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377
-  class StatUpdateMessage < RuneRb::Network::Message
-
-    # Constructs a new StatUpdateMessage
-    # @param data [Hash] data containing the skill ID, experience and level to write to the message.
-    def initialize(data)
-      super('w', { op_code: 49 }, :FIXED)
-      write_byte(data[:skill_id], :NEGATE)
-      write_byte(data[:level])
-      write_int(data[:experience])
-    end
-  end
-end

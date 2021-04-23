@@ -1,3 +1,22 @@
+module RuneRb::Network::RS377::CommandMessage
+  include RuneRb::System::Log
+
+  # Parses the CommandMessage
+  # @param context [RuneRb::Game::Entity::Context] the context to parse for
+  def parse(context)
+    command_string = read_string.split(' ')
+    label = command_string.shift
+
+    log "Parsing command: #{label}" if RuneRb::GLOBAL[:DEBUG]
+    command = context.fetch_command(label&.capitalize&.to_sym)
+    if command
+      command.new({ context: context, world: context.world, message: self, command: command_string })
+    else
+      context.session.write_message(:SystemTextMessage, message: "Could not parse Command: #{label.capitalize}")
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,22 +44,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377::CommandMessage
-  include RuneRb::System::Log
-
-  # Parses the CommandMessage
-  # @param context [RuneRb::Game::Entity::Context] the context to parse for
-  def parse(context)
-    command_string = read_string.split(' ')
-    label = command_string.shift
-
-    log "Parsing command: #{label}" if RuneRb::GLOBAL[:DEBUG]
-    command = context.fetch_command(label&.capitalize&.to_sym)
-    if command
-      command.new({ context: context, world: context.world, message: self, command: command_string })
-    else
-      context.session.write_message(:SystemTextMessage, message: "Could not parse Command: #{label.capitalize}")
-    end
-  end
-end

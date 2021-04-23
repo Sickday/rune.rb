@@ -1,3 +1,29 @@
+# Sent when the client clicks a location on the game screen.
+module RuneRb::Network::RS377::MouseClickMessage
+
+  # A mouse click event.
+  # @param delay [Integer] the amount of time (in ms) that has passed since the last MouseClickMessage was sent.
+  # @param right? [Boolean] was this a right click?
+  # @param x [Integer] the x coordinate of the click
+  # @param y [Integer] the y coordinate of the click
+  Click = Struct.new(:delay, :right?, :x, :y) do
+    include RuneRb::System::Log
+
+    def inspect
+      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
+           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
+           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
+    end
+  end
+
+  # Parses the MouseClickMessage
+  def parse(_)
+    data = read_int
+    coordinates = data & 0x3FFFF
+    Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,29 +51,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-# Sent when the client clicks a location on the game screen.
-module RuneRb::Network::RS377::MouseClickMessage
-
-  # A mouse click event.
-  # @param delay [Integer] the amount of time (in ms) that has passed since the last MouseClickMessage was sent.
-  # @param right? [Boolean] was this a right click?
-  # @param x [Integer] the x coordinate of the click
-  # @param y [Integer] the y coordinate of the click
-  Click = Struct.new(:delay, :right?, :x, :y) do
-    include RuneRb::System::Log
-
-    def inspect
-      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
-    end
-  end
-
-  # Parses the MouseClickMessage
-  def parse(_)
-    data = read_int
-    coordinates = data & 0x3FFFF
-    Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
-  end
-end

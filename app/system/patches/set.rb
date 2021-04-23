@@ -1,3 +1,16 @@
+module RuneRb::System::Patches::SetRefinements
+  refine Set do
+    ##
+    # Consumes elements as they're passed to execution block.
+    # @param block [Proc] the execution block
+    def each_consume(&block)
+      raise 'Nil block passed to Set#each_consume.' unless block_given?
+
+      each { |item| block.call(item); delete(item) }
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,16 +38,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::System::Patches::SetRefinements
-  refine Set do
-    ##
-    # Consumes elements as they're passed to execution block.
-    # @param block [Proc] the execution block
-    def each_consume(&block)
-      raise 'Nil block passed to Set#each_consume.' unless block_given?
-
-      each { |item| block.call(item); delete(item) }
-    end
-  end
-end

@@ -1,3 +1,29 @@
+module RuneRb::Game::Entity::Helpers::Command
+
+  # Initializes the Instance#commands hash and populates it with recognizable commands.
+  def load_commands
+    @commands = {
+      Animation: RuneRb::Game::Entity::Commands::Animation,
+      Ban: RuneRb::Game::Entity::Commands::Ban,
+      Graphic: RuneRb::Game::Entity::Commands::Graphic,
+      Ascend: RuneRb::Game::Entity::Commands::Ascend,
+      Descend: RuneRb::Game::Entity::Commands::Descend,
+      Design: RuneRb::Game::Entity::Commands::Design,
+      Position: RuneRb::Game::Entity::Commands::Position,
+      Show: RuneRb::Game::Entity::Commands::Show,
+      To: RuneRb::Game::Entity::Commands::To,
+      Item: RuneRb::Game::Entity::Commands::Item
+    }.freeze
+  end
+
+  # Attempts to fetch a registered Command object by it's label
+  # @param label [Symbol, String] the label that will be used to fetch the Command
+  # @return [RuneRb::Game::Entity::Command, FalseClass] returns the fetched Command object or nil.
+  def fetch_command(label)
+    @commands[label].nil? ? false : @commands[label]
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,29 +51,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Game::Entity::Helpers::Command
-
-  # Initializes the Instance#commands hash and populates it with recognizable commands.
-  def load_commands
-    @commands = {
-      Animation: RuneRb::Game::Entity::Commands::Animation,
-      Ban: RuneRb::Game::Entity::Commands::Ban,
-      Graphic: RuneRb::Game::Entity::Commands::Graphic,
-      Ascend: RuneRb::Game::Entity::Commands::Ascend,
-      Descend: RuneRb::Game::Entity::Commands::Descend,
-      Design: RuneRb::Game::Entity::Commands::Design,
-      Position: RuneRb::Game::Entity::Commands::Position,
-      Show: RuneRb::Game::Entity::Commands::Show,
-      To: RuneRb::Game::Entity::Commands::To,
-      Item: RuneRb::Game::Entity::Commands::Item
-    }.freeze
-  end
-
-  # Attempts to fetch a registered Command object by it's label
-  # @param label [Symbol, String] the label that will be used to fetch the Command
-  # @return [RuneRb::Game::Entity::Command, FalseClass] returns the fetched Command object or nil.
-  def fetch_command(label)
-    @commands[label].nil? ? false : @commands[label]
-  end
-end

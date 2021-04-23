@@ -1,3 +1,28 @@
+module RuneRb::Game::Entity::Commands
+
+  # A Command to spawn items for the player.
+  class Item < RuneRb::Game::Entity::Command
+    def execute
+      unless @assets[:command].size >= 2
+        @assets[:context].session.write_message(:SystemTextMessage, message: "Not enough parameters for this command! Required: 2 or more, Provided: #{@assets[:command].size}")
+        return
+      end
+      stack = RuneRb::Game::Item::Stack.new(@assets[:command][0].to_i)
+      if stack.definition[:stackable]
+        stack.size = @assets[:command][1].to_i
+        @assets[:context].inventory[:container].add(stack)
+        log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
+      else
+        @assets[:command][1].to_i.times do
+          @assets[:context].inventory[:container].add(stack)
+          log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
+        end
+      end
+      @assets[:context].update(:inventory)
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,28 +50,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Game::Entity::Commands
-
-  # A Command to spawn items for the player.
-  class Item < RuneRb::Game::Entity::Command
-    def execute
-      unless @assets[:command].size >= 2
-        @assets[:context].session.write_message(:SystemTextMessage, message: "Not enough parameters for this command! Required: 2 or more, Provided: #{@assets[:command].size}")
-        return
-      end
-      stack = RuneRb::Game::Item::Stack.new(@assets[:command][0].to_i)
-      if stack.definition[:stackable]
-        stack.size = @assets[:command][1].to_i
-        @assets[:context].inventory[:container].add(stack)
-        log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
-      else
-        @assets[:command][1].to_i.times do
-          @assets[:context].inventory[:container].add(stack)
-          log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
-        end
-      end
-      @assets[:context].update(:inventory)
-    end
-  end
-end

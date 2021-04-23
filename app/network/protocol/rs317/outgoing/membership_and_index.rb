@@ -1,3 +1,16 @@
+module RuneRb::Network::RS317
+  class MembersAndIndexMessage < RuneRb::Network::Message
+
+    # Constructs a MembersAndIndexMessage
+    # @param data [Hash] data containing the members value and player index which will be written to the message.
+    def initialize(data)
+      super('w', { op_code: 249 }, :FIXED)
+      write_byte(data[:members] ? 1 : 0, :ADD)
+      write_short(data[:player_idx], :ADD, :LITTLE)
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,16 +38,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317
-  class MembersAndIndexMessage < RuneRb::Network::Message
-
-    # Constructs a MembersAndIndexMessage
-    # @param data [Hash] data containing the members value and player index which will be written to the message.
-    def initialize(data)
-      super('w', { op_code: 249 }, :FIXED)
-      write_byte(data[:members] ? 1 : 0, :ADD)
-      write_short(data[:player_idx], :ADD, :LITTLE)
-    end
-  end
-end

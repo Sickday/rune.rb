@@ -1,3 +1,16 @@
+module RuneRb::Database
+  # Defining information related to a Mob entity
+  #
+  # Models a row of the `mob_definitions` database.
+  class MobDefinition < Sequel::Model(RuneRb::GLOBAL[:MOB_DEFINITIONS])
+    plugin :static_cache
+
+    one_to_one :animations, class: RuneRb::Database::MobAnimations, key: :id
+    one_to_one :stats, class: RuneRb::Database::MobStats, key: :id
+    one_to_many :spawn, class: RuneRb::Database::MobSpawn, key: :id
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,16 +38,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Database
-  # Defining information related to a Mob entity
-  #
-  # Models a row of the `mob_definitions` database.
-  class MobDefinition < Sequel::Model(RuneRb::GLOBAL[:MOB_DEFINITIONS])
-    plugin :static_cache
-
-    one_to_one :animations, class: RuneRb::Database::MobAnimations, key: :id
-    one_to_one :stats, class: RuneRb::Database::MobStats, key: :id
-    one_to_many :spawn, class: RuneRb::Database::MobSpawn, key: :id
-  end
-end

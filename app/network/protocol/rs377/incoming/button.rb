@@ -1,3 +1,18 @@
+module RuneRb::Network::RS377::ButtonClickMessage
+  include RuneRb::System::Log
+
+  # Parses the ButtonClickMessage
+  # @param context [RuneRb::Game::Entity::Context] the context to parse for
+  def parse(context)
+    id = read_short
+    case id
+    when 2458 then context.logout
+    when 3651 then context.session.write_message(:ClearInterfacesMessage)
+    else err "Unhandled button! ID: #{id}"
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,18 +40,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377::ButtonClickMessage
-  include RuneRb::System::Log
-
-  # Parses the ButtonClickMessage
-  # @param context [RuneRb::Game::Entity::Context] the context to parse for
-  def parse(context)
-    id = read_short
-    case id
-    when 2458 then context.logout
-    when 3651 then context.session.write_message(:ClearInterfacesMessage)
-    else err "Unhandled button! ID: #{id}"
-    end
-  end
-end

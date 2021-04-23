@@ -1,3 +1,12 @@
+module RuneRb::Network::RS377::HeartbeatMessage
+  include RuneRb::System::Log
+
+  # Parses the HeartbeatMessage
+  def parse(_)
+    log! RuneRb::GLOBAL[:COLOR].magenta.bold "Received heartbeat" if RuneRb::GLOBAL[:DEBUG]
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,12 +34,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377::HeartbeatMessage
-  include RuneRb::System::Log
-
-  # Parses the HeartbeatMessage
-  def parse(_)
-    log! RuneRb::GLOBAL[:COLOR].magenta.bold "Received heartbeat" if RuneRb::GLOBAL[:DEBUG]
-  end
-end

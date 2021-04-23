@@ -1,3 +1,16 @@
+module RuneRb::Database
+  # Information related to an item that spawns in a specific location within the virtual game world
+  #
+  # Models a row of the `item_spawns` table.
+  class ItemSpawn < Sequel::Model(RuneRb::GLOBAL[:ITEM_SPAWNS])
+    # one_to_one :location, class: RuneRb::Database::GameLocation, key: :spawn_id
+
+    # def location
+    #  location.to_position
+    #end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,16 +38,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Database
-  # Information related to an item that spawns in a specific location within the virtual game world
-  #
-  # Models a row of the `item_spawns` table.
-  class ItemSpawn < Sequel::Model(RuneRb::GLOBAL[:ITEM_SPAWNS])
-    # one_to_one :location, class: RuneRb::Database::GameLocation, key: :spawn_id
-
-    # def location
-    #  location.to_position
-    #end
-  end
-end

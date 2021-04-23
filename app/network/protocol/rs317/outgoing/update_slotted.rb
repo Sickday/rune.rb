@@ -1,3 +1,27 @@
+module RuneRb::Network::RS317
+  class UpdateSlottedItemMessage < RuneRb::Network::Message
+
+    # Constructs a new UpdateSlottedItemMessage
+    # @param data [Hash] data containing items, amounts and slots
+    def initialize(data)
+      super('w', { op_code: 34 }, :VARIABLE_SHORT)
+      write_short(1688, :STD, :BIG) # EquipmentForm ID
+      write_smart(data[:slot].to_i)
+
+      id = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? -1 : data[:slot_data].id
+      amount = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? 0 : data[:slot_data].size
+
+      write_short(id + 1, :STD, :BIG)
+      if amount > 254
+        write_byte(0xFF, :STD)
+        write_int(amount, :STD)
+      else
+        write_byte(amount, :STD)
+      end
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,27 +49,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317
-  class UpdateSlottedItemMessage < RuneRb::Network::Message
-
-    # Constructs a new UpdateSlottedItemMessage
-    # @param data [Hash] data containing items, amounts and slots
-    def initialize(data)
-      super('w', { op_code: 34 }, :VARIABLE_SHORT)
-      write_short(1688, :STD, :BIG) # EquipmentForm ID
-      write_smart(data[:slot].to_i)
-
-      id = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? -1 : data[:slot_data].id
-      amount = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? 0 : data[:slot_data].size
-
-      write_short(id + 1, :STD, :BIG)
-      if amount > 254
-        write_byte(0xFF, :STD)
-        write_int(amount, :STD)
-      else
-        write_byte(amount, :STD)
-      end
-    end
-  end
-end

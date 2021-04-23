@@ -1,3 +1,25 @@
+module RuneRb::Network::RS317::MouseClickMessage
+
+  # A mouse click event
+  Click = Struct.new(:delay, :right?, :x, :y) do
+    include RuneRb::System::Log
+
+    def inspect
+      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
+           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
+           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
+
+    end
+  end
+
+  # Parses the MouseClickMessage
+  def parse(_)
+    data = read_int
+    coordinates = data & 0x3FFFF
+    Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,25 +47,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317::MouseClickMessage
-
-  # A mouse click event
-  Click = Struct.new(:delay, :right?, :x, :y) do
-    include RuneRb::System::Log
-
-    def inspect
-      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
-
-    end
-  end
-
-  # Parses the MouseClickMessage
-  def parse(_)
-    data = read_int
-    coordinates = data & 0x3FFFF
-    Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
-  end
-end

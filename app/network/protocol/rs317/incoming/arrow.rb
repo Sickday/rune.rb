@@ -1,3 +1,22 @@
+module RuneRb::Network::RS317::ArrowKeyMessage
+
+  # A arrow rotation event
+  # @param yaw [Integer] the yaw of the rotation
+  # @param roll [Integer] the roll of the rotation.
+  Rotation = Struct.new(:yaw, :roll) do
+    include RuneRb::System::Log
+
+    def inspect
+      log! "Camera Rotation: #{RuneRb::GLOBAL[:COLOR].blue.bold("[Roll]: #{RuneRb::GLOBAL[:COLOR].cyan(self.roll)}")} || [Yaw]: #{RuneRb::GLOBAL[:COLOR].cyan(self.yaw)}"
+    end
+  end
+
+  # Parses the ArrowKeyMessage
+  def parse(_)
+    Rotation.new(read_short(false, :STD, :LITTLE), read_short(false, :STD, :LITTLE)).inspect
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,22 +44,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317::ArrowKeyMessage
-
-  # A arrow rotation event
-  # @param yaw [Integer] the yaw of the rotation
-  # @param roll [Integer] the roll of the rotation.
-  Rotation = Struct.new(:yaw, :roll) do
-    include RuneRb::System::Log
-
-    def inspect
-      log! "Camera Rotation: #{RuneRb::GLOBAL[:COLOR].blue.bold("[Roll]: #{RuneRb::GLOBAL[:COLOR].cyan(self.roll)}")} || [Yaw]: #{RuneRb::GLOBAL[:COLOR].cyan(self.yaw)}"
-    end
-  end
-
-  # Parses the ArrowKeyMessage
-  def parse(_)
-    Rotation.new(read_short(false, :STD, :LITTLE), read_short(false, :STD, :LITTLE)).inspect
-  end
-end

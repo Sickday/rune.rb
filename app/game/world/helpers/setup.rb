@@ -1,3 +1,24 @@
+module RuneRb::Game::World::Setup
+  private
+
+  # Initializes and loads configuration settings for the World.
+  def setup(config)
+    @settings = config
+    @entities = { players: {}, mobs: {} }
+    @responses = {}
+    @stack ||= []
+    @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
+
+    # Ensure the pipeline is processed every iteration of the EventMachine reactor
+    EventMachine.tick_loop { start_pipeline }
+
+    # Launch the sync service deferment(s?)
+    start_sync_service
+  rescue StandardError => e
+    err "An error occurred while running setup!", e, e.backtrace&.join("\n")
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,25 +46,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Game::World::Setup
-  private
-
-  # Initializes and loads configuration settings for the World.
-  def setup(config)
-    @settings = config
-    @entities = { players: {}, mobs: {} }
-    @responses = {}
-    @stack ||= []
-    @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
-
-    # Ensure the pipeline is processed every iteration of the EventMachine reactor
-    EventMachine.tick_loop { start_pipeline }
-
-    # Launch the sync service deferment(s?)
-    start_sync_service
-  rescue StandardError => e
-    err "An error occurred while running setup!", e
-    err e.backtrace&.join("\n")
-  end
-end

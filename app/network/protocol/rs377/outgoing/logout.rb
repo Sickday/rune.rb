@@ -1,3 +1,15 @@
+module RuneRb::Network::RS377
+  class LogoutMessage < RuneRb::Network::Message
+
+    # Constructs a LogoutMessage
+    # @param session [RuneRb::Network::Session] the session to disconnect.
+    def initialize(session)
+      super('w', { op_code: 5 }, :FIXED)
+      session.disconnect(:logout)
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,15 +37,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS377
-  class LogoutMessage < RuneRb::Network::Message
-
-    # Constructs a LogoutMessage
-    # @param session [RuneRb::Network::Session] the session to disconnect.
-    def initialize(session)
-      super('w', { op_code: 5 }, :FIXED)
-      session.disconnect(:logout)
-    end
-  end
-end

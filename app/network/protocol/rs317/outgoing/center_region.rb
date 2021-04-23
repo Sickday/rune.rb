@@ -1,3 +1,16 @@
+module RuneRb::Network::RS317
+  class CenterRegionMessage < RuneRb::Network::Message
+
+    # Constructs a new CenterRegionMessage
+    # @param regional [RuneRb::Game::Map::Regional] regional data containing x and y coordinates to write to the message.
+    def initialize(regional)
+      super('w', { op_code: 73 }, :FIXED)
+      write_short(regional[:x], :ADD)
+      write_short(regional[:y])
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,16 +38,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Network::RS317
-  class CenterRegionMessage < RuneRb::Network::Message
-
-    # Constructs a new CenterRegionMessage
-    # @param regional [RuneRb::Game::Map::Regional] regional data containing x and y coordinates to write to the message.
-    def initialize(regional)
-      super('w', { op_code: 73 }, :FIXED)
-      write_short(regional[:x], :ADD)
-      write_short(regional[:y])
-    end
-  end
-end

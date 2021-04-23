@@ -1,3 +1,21 @@
+module RuneRb::Database
+
+  # Name that is banned from usage.
+  # Models a row of the `game_banned_names` table.
+  class GameBannedNames < Sequel::Model(RuneRb::GLOBAL[:GAME_BANNED_NAMES])
+    class << self
+
+      # Adds a new entry to the dataset.
+      # @param entry [String] the name to ban.
+      def append(entry)
+        insert(name: entry)
+      rescue Sequel::ConstraintViolation
+        raise RuneRb::System::Errors::ConflictingNameError.new(:banned_name, entry)
+      end
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,21 +43,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-module RuneRb::Database
-
-  # Name that is banned from usage.
-  # Models a row of the `game_banned_names` table.
-  class GameBannedNames < Sequel::Model(RuneRb::GLOBAL[:GAME_BANNED_NAMES])
-    class << self
-
-      # Adds a new entry to the dataset.
-      # @param entry [String] the name to ban.
-      def append(entry)
-        insert(name: entry)
-      rescue Sequel::ConstraintViolation
-        raise RuneRb::System::Errors::ConflictingNameError.new(:banned_name, entry)
-      end
-    end
-  end
-end
