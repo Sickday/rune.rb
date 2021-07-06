@@ -1,75 +1,101 @@
-module RuneRb::Entity
-  # A Context object is a Mob that is representing the context of a connected Peer session.
-  class Context < RuneRb::Entity::Mob
-    include RuneRb::Internal::Log
-    include RuneRb::Entity::Helpers::Equipment
-    include RuneRb::Entity::Helpers::Inventory
-    include RuneRb::Entity::Helpers::Button
-    include RuneRb::Entity::Helpers::Click
-    include RuneRb::Entity::Helpers::Command
+module RuneRb::Game::Entity
 
-    # @return [RuneRb::Database::Appearance] the appearance of the Context
-    attr :appearance
+  # A Mob that is representing the context of a connected Session.
+  class Context < Mob
+    include Helpers::Inventory
+    include Helpers::Equipment
+    include Helpers::Command
+    include Helpers::Status
+    include Helpers::Stats
+    include Helpers::Queue
 
-    # @return [Hash] the Equipment data for a context.
+    # @!attribute [r] equipment
     attr :equipment
 
-    # @return [Hash] the Inventory data for the Context
+    # @!attribute [r] inventory
+    # @return [RuneRb::Game::Item::Container] a container for inventory data.
     attr :inventory
 
-    # @return [RuneRb::Net::Peer] the Peer session for the Context
+    # @!attribute [r] session
+    # @return [RuneRb::Network::Session] an object encapsulating a connected socket.
     attr :session
 
-    # @return [RuneRb::Database::Profile] the Profile of the Context which acts as it's definition.
+
+    # @!attribute [r] appearance
+    # @return [RuneRb::Database::Player::Appearance] an object modeling a row within the <GLOBAL[:PLAYER_APPEARANCES]> dataset.
+    attr :appearance
+
+    # @!attribute [r] profile
+    # @return [RuneRb::Database::Player::Profile] an object modeling a row within the <GLOBAL[:PLAYER_PROFILES]> dataset.
     attr :profile
 
-    # @return [RuneRb::World::Instance] the world Instance the Context is registered to.
+    # @!attribute [r] settings
+    # @return [RuneRb::Database::Player::Settings] an object modeling a row within the <GLOBAL[:PLAYER_SETTINGS]> dataset.
+    attr :settings
+
+    # @!attribute [r] status
+    # @return [RuneRb::Database::Player::Status] an object modeling a row within the <GLOBAL[:PLAYER_STATUS]> dataset.
+    attr :status
+
+    # @!attribute [r] stats
+    # @return [RuneRb::Database::Player::Stats] an object modeling a row within the <GLOBAL[:PLAYER_STATS]> dataset.
+    attr :stats
+
+    # @!attribute [r] world
+    # @return [RuneRb::Game::World::Instance] the world Instance the Context is registered to.
     attr :world
 
-    # Called when a new Context Entity is created.
-    # @param peer [RuneRb::Net::Peer] the peer to be associated with the entity.
-    # @param profile [RuneRb::Database::Profile] the profile that will act as the definition for the context mob.
-    def initialize(peer, profile)
-      @session = peer
+
+    # @!attribute [r] forced_chat
+    # @return [String] a message the context will be forced to display.
+    attr :forced_chat
+
+    # Constructs a new Context entity.
+    # @param session [RuneRb::Network::Session] the session to be associated with the entity.
+    # @param profile [RuneRb::Database::PlayerProfile] the profile that will act as the definition for the context mob.
+    # @param world [RuneRb::Game::World::Instance] the world instance the context is attached to/observed by.
+    def initialize(session, profile, world)
+      @session = session
       @profile = profile
+      @world = world
       super(profile)
     end
 
-    # Logs the context out and detaches the context from the Context#world Instance.
-    # * detaches the context from the world instance via Context#detach
-    # * dumps the Context#inventory[:container]
-    # * dumps the Context#equipment
-    # * updates the Context#profile#location to the current Context#position
-    # * closes the peer session via Context#session#close_connection
+    # Performs a series of tasks associated with deserializing and saving player information to relevant datastores.
     def logout
-      dump_inventory
-      dump_equipment
+      # Detach from the world.
+      @world.release(self)
+
+      # Dump the inventory data
+      dump_inventory if @inventory
+
+      # Dump the equipment data
+      dump_equipment if @equipment
+
+      # Set the position.
       @profile.location.set(@position[:current])
-      @session.write(:logout)
-      @world = nil
-      log 'Detached from World instance!' if RuneRb::DEBUG
+
+      # Post the session
+      @profile.status.post_session({ ip: @session.ip, duration: @session.duration[:duration] })
+
+      # Write the actual logout.
+      @session.write_message(:LogoutMessage, @session)
+
+      log! "#{@profile[:name].capitalize} has logged out."
     end
 
-    # Logs the context in and attaches the context to a world Instance.
-    # * loads the Context#appearance
-    # * loads the Context#inventory
-    # * loads the Context#equipment
-    # * loads the Context#stats
-    # * teleports the Context to Context#position
-    # * assigns the Context#world
-    # @param world [RuneRb::World::Instance] the world to attach to.
-    def login(world)
+    # Performs a series of task related with constructing and initializing a context's data and attaching the context to the <@world> instance.
+    def login(first: true)
+      @session.register_context(self)
+      log! "Attached to Session #{@session.id}!" if RuneRb::GLOBAL[:DEBUG]
+      load_inventory(first)
+      load_equipment(first)
+      load_status
       load_appearance
-      load_inventory
-      load_equipment
-      #load_stats
-      teleport(@position[:current])
-      @world = world
-      log 'Attached to World instance!' if RuneRb::DEBUG
-    rescue StandardError => e
-      err! 'An error occurred while attaching peer to Endpoint!'
-      puts e
-      puts e.backtrace
+      load_commands
+      load_stats
+      setup_queues
+      @session.status[:auth] = :LOGGED_IN
     end
 
     # @return [String] an inspection of the Context
@@ -79,35 +105,50 @@ module RuneRb::Entity
       str << "[POSITION]: #{@position.inspect}"
     end
 
+    # Dispatches a ContextSynchronizationMessage to the <@session> assuming the Context meets the requirements for doing so. If a region change is needed, a CenterRegionMessage is written before the ContextSynchronizationMessage.
+    def sync
+      log! "Synchronizing..."
+      logout if @session.socket.closed? || !@session.status[:active] || @session.status[:auth] == :LOGGED_OUT
+
+      # Write region message if an update is required.
+      @session.write_message(:CenterRegionMessage, @regional) if @flags[:region?]
+
+      # Write synchronization message.
+      @session.write_message(:ContextSynchronizationMessage, self) if @world && @session.status[:auth] == :LOGGED_IN && @session.status[:active]
+    end
+
     # Initializes Appearance for the Context.
     def load_appearance
       @appearance = @profile.appearance
       update(:state)
     end
-
-    # Initializes Stats for the Context.
-    def load_stats
-      write(:skill, skill_id: 0, level: data[:attack_level], experience: data[:attack_exp])
-      write(:skill, skill_id: 1, level: data[:defence_level], experience: data[:defence_exp])
-      write(:skill, skill_id: 2, level: data[:strength_level], experience: data[:strength_exp])
-      write(:skill, skill_id: 3, level: data[:hit_points_level], experience: data[:hit_points_exp])
-      write(:skill, skill_id: 4, level: data[:range_level], experience: data[:range_exp])
-      write(:skill, skill_id: 5, level: data[:prayer_level], experience: data[:prayer_exp])
-      write(:skill, skill_id: 6, level: data[:magic_level], experience: data[:magic_exp])
-      write(:skill, skill_id: 7, level: data[:cooking_level], experience: data[:cooking_exp])
-      write(:skill, skill_id: 8, level: data[:woodcutting_level], experience: data[:woodcutting_exp])
-      write(:skill, skill_id: 9, level: data[:fletching_level], experience: data[:fletching_exp])
-      write(:skill, skill_id: 10, level: data[:fishing_level], experience: data[:fishing_exp])
-      write(:skill, skill_id: 11, level: data[:firemaking_level], experience: data[:firemaking_exp])
-      write(:skill, skill_id: 12, level: data[:crafting_level], experience: data[:crafting_exp])
-      write(:skill, skill_id: 13, level: data[:smithing_level], experience: data[:smithing_exp])
-      write(:skill, skill_id: 14, level: data[:mining_level], experience: data[:mining_exp])
-      write(:skill, skill_id: 15, level: data[:herblore_level], experience: data[:herblore_exp])
-      write(:skill, skill_id: 16, level: data[:agility_level], experience: data[:agility_exp])
-      write(:skill, skill_id: 17, level: data[:thieving_level], experience: data[:thieving_exp])
-      write(:skill, skill_id: 18, level: data[:slayer_level], experience: data[:slayer_exp])
-      write(:skill, skill_id: 19, level: data[:farming_level], experience: data[:farming_exp])
-      write(:skill, skill_id: 20, level: data[:runecrafting_level], experience: data[:runecrafting_exp])
-    end
   end
 end
+
+# Copyright (c) 2021, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

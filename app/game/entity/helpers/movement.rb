@@ -1,4 +1,4 @@
-module RuneRb::Entity::Helpers::Movement
+module RuneRb::Game::Entity::Helpers::Movement
   # @return [Hash] a hash containing the movement type and waypoints.
   attr :movement
 
@@ -10,10 +10,10 @@ module RuneRb::Entity::Helpers::Movement
 
   # Initializes and sets the movement and locals objects.
   def load_movement
-    @movement = { type: :NONE,
-                  directions: { primary: RuneRb::Map::DIRECTIONS[:NONE],
-                                secondary: RuneRb::Map::DIRECTIONS[:NONE],
-                                previous: RuneRb::Map::DIRECTIONS[:NORTH] },
+    @movement = { type: :TELEPORT,
+                  directions: { primary: RuneRb::Game::Map::DIRECTIONS[:NONE],
+                                secondary: RuneRb::Game::Map::DIRECTIONS[:NONE],
+                                previous: RuneRb::Game::Map::DIRECTIONS[:NORTH] },
                   waypoints: { next: [],
                                previous: [] } }
     @locals = { mobs: [], players: [] }
@@ -32,7 +32,7 @@ module RuneRb::Entity::Helpers::Movement
   end
 
   # Teleports the Mob to a new position.
-  # @param to [RuneRb::Map::Position] the position to teleport to.
+  # @param to [RuneRb::Game::Map::Position] the position to teleport to.
   def teleport(to)
     clear_waypoints
     update(:teleport, to: to)
@@ -41,37 +41,37 @@ module RuneRb::Entity::Helpers::Movement
   # Pushes a path to the queue
   # @param path [Array] an array of positions that make up the path
   def push_path(path)
-    log "Adding path: #{RuneRb::COL.yellow(path.inspect)}"
+    log "Adding path: #{RuneRb::GLOBAL[:COLOR].yellow(path.inspect)}"
     push_primary_step(path.shift) if @movement[:waypoints][:next].size.zero?
     path.each do |position|
       push_step(position)
     end
   end
 
-  # Attempts to parse movement from a frame
-  # @param frame [RuneRb::Net::Frame] the frame to read from.
-  def parse_movement(frame)
-    log "Received movement packet: #{frame.header[:op_code]}" if RuneRb::DEBUG
-    length = frame.header[:length]
-    length -= 14 if frame.header[:op_code] == 248
+  # Attempts to parse movement from a message
+  # @param message [RuneRb::Network::Message] the message to read from.
+  def parse_movement(message)
+    log "Received movement packet: #{message.header[:op_code]}" if RuneRb::GLOBAL[:DEBUG]
+    length = message.header[:length]
+    length -= 14 if message.header[:op_code] == 248
 
     steps = (length - 5) / 2
     return unless steps.positive?
 
     path = []
-    first_x = frame.read_short(false, :A, :LITTLE)
+    first_x = message.read(:short, signed: false, mutation: :A, order: :LITTLE)
     steps.times do |itr|
-      path[itr] ||= [frame.read_byte(true),
-                     frame.read_byte(true)]
+      path[itr] ||= [message.read(:byte, signed: true, mutation: :STD),
+                     message.read(:byte, signed: true, mutation: :STD)]
     end
 
-    first_y = frame.read_short(false, :STD, :LITTLE)
-    @movement[:running] = frame.read_byte(false, :C) == 1
+    first_y = message.read(:short, signed: false, mutation: :STD, order: :LITTLE)
+    @movement[:running] = message.read(:byte, signed: false, mutation: :C) == 1
 
     positions = []
-    positions << RuneRb::Map::Position.new(first_x, first_y)
+    positions << RuneRb::Game::Map::Position.new(first_x, first_y)
     steps.times do |itr|
-      positions << RuneRb::Map::Position.new(path[itr][0] + first_x,
+      positions << RuneRb::Game::Map::Position.new(path[itr][0] + first_x,
                                              path[itr][1] + first_y)
     end
 
@@ -87,7 +87,7 @@ module RuneRb::Entity::Helpers::Movement
   # Resets the movement
   def reset_movement
     if (@movement[:waypoints][:next].empty? || @movement[:type] == :TELEPORT) && @movement[:type] != :NONE
-      @movement[:type] = :NONE
+      @movement[:type] = :STAND
     end
     @movement[:running] = false
   end
@@ -96,18 +96,18 @@ module RuneRb::Entity::Helpers::Movement
 
   # Pulse through the queue
   def move
-    directions = [RuneRb::Map::DIRECTIONS[:NONE],
-                  RuneRb::Map::DIRECTIONS[:NONE]]
+    directions = [RuneRb::Game::Map::DIRECTIONS[:NONE],
+                  RuneRb::Game::Map::DIRECTIONS[:NONE]]
 
     # world = @player.world
     # collision = @player.world[:collision_manager]
 
     next_point = @movement[:waypoints][:next].shift
-    log "Got point #{next_point.inspect}" unless next_point.nil?
+    log "Got point #{next_point&.inspect}" unless next_point.nil?
 
     unless next_point.nil?
-      directions[0] = RuneRb::Map::Direction.between(@position[:current], next_point)
-      log "Worked out 1st direction to be #{RuneRb::Map::DIRECTIONS.key(directions.first)}"
+      directions[0] = RuneRb::Game::Map::Direction.between(@position[:current], next_point)
+      log "Worked out 1st direction to be #{RuneRb::Game::Map::DIRECTIONS.key(directions.first)}"
 
       # Handle collision here
       # Add this point to the previous waypoints
@@ -116,7 +116,7 @@ module RuneRb::Entity::Helpers::Movement
       @movement[:directions][:primary] = directions[0]
       # Ensure the previous position is re-assigned if there was no initial movement (indicating we're starting a path)
       @position[:previous] = @position[:current] if @movement[:type] == :NONE
-      #@position[:current].move(RuneRb::Map::X_DELTAS[directions[0]], RuneRb::Map::Y_DELTAS[directions[0]])
+      #@position[:current].move(RuneRb::Game::Map::X_DELTAS[directions[0]], RuneRb::Game::Map::Y_DELTAS[directions[0]])
       @position[:current] = next_point
       @movement[:type] = :WALK
 
@@ -125,9 +125,9 @@ module RuneRb::Entity::Helpers::Movement
   end
 
   # Push the very first step into the queue
-  # @param next_position [RuneRb::Map::Position] the next position.
+  # @param next_position [RuneRb::Game::Map::Position] the next position.
   def push_primary_step(next_position)
-    log RuneRb::COL.green("Adding primary position #{next_position.inspect}")
+    log RuneRb::GLOBAL[:COLOR].green("Adding primary position #{next_position.inspect}")
     # First we clear all previous waypoints as this is the first step in the path
     @movement[:waypoints][:previous].clear
     push_step(next_position)
@@ -143,8 +143,8 @@ module RuneRb::Entity::Helpers::Movement
   end
 
   # Pushes a forward set of steps to the queue
-  # @param current_step [RuneRb::Map::Position] the current position
-  # @param next_step [RuneRb::Map::Position] the next position
+  # @param current_step [RuneRb::Game::Map::Position] the current position
+  # @param next_step [RuneRb::Game::Map::Position] the next position
   def push_forward_step(current_step, next_step)
     height = next_step[:z]
     delta_x = next_step[:x] - current_step[:x]
@@ -154,7 +154,7 @@ module RuneRb::Entity::Helpers::Movement
     # region = region_manager.region_for_position(current_step)
     max = [delta_x.abs, delta_y.abs].max || delta_x.abs || 0
 
-    log RuneRb::COL.green("Calculating #{max} steps")
+    log RuneRb::GLOBAL[:COLOR].green("Calculating #{max} steps")
     itr = 0
     max.times do
       itr += 1
@@ -170,15 +170,13 @@ module RuneRb::Entity::Helpers::Movement
         delta_y -= 1
       end
 
-      step = RuneRb::Map::Position.new((next_step[:x] - delta_x),
-                                       (next_step[:y] - delta_y),
-                                       height)
-      log RuneRb::COL.green("Added step #{itr} #{RuneRb::COL.yellow(step.inspect)}")
+      step = RuneRb::Game::Map::Position.new((next_step[:x] - delta_x), (next_step[:y] - delta_y), height)
+      log RuneRb::GLOBAL[:COLOR].green("Added step #{itr} #{RuneRb::GLOBAL[:COLOR].yellow(step.inspect)}")
       @movement[:waypoints][:next] << step
     end
   end
 
-  # Checks if there should be a Metas::CenterRegionFrame should be sent to update the context's region
+  # Checks if there should be a Metas::CenterRegionMessage should be sent to update the context's region
   def region_change?
     delta_x = @position[:current][:x] - @position[:previous][:x]
     delta_y = @position[:current][:y] - @position[:previous][:y]
@@ -190,3 +188,31 @@ module RuneRb::Entity::Helpers::Movement
     @movement[:waypoints][:next].size
   end
 end
+
+# Copyright (c) 2021, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

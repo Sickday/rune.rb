@@ -1,85 +1,95 @@
-module RuneRb::World
+module RuneRb::Game::World
   # A World Instance object models a virtual game world. The Instance object manages mobs, events, and most of all the game logic processing.
   class Instance
-    include RuneRb::Internal::Log
-    include LoginHelper
-    include CommandHelper
+    using RuneRb::Base::Patches::SetRefinements
+    using RuneRb::Base::Patches::IntegerRefinements
+
+    include RuneRb::Base::Utils::Logging
+    include Gateway
+    include Pipeline
+    include Synchronization
+    include Setup
 
     # @return [Hash] a map of entities the Instance has spawned
     attr :entities
 
+    # @return [Integer] the id of the world instance
+    attr :id
+
+    # @return [Hash] a map of settings for the World instance.
+    attr :settings
+
+    attr :monitor
+
     # Called when a new World Instance is created
-    # @param config [Hash] the configuration for the World Instance.
-    def initialize(config = {})
-      init_config(config)
-      init_entities
-      init_commands
-      log RuneRb::COL.green('New World Instance initialized!')
+    def initialize(config = RuneRb::GLOBAL[:WORLD])
+      setup(config)
+      log 'New World Instance initialized!'
     end
 
-    # Creates a context mob, adds the mob to the Instance#entities hash, assigns the mob's index, then calls Context#login providing the Instance as the parameter
-    # @param peer [RuneRb::Net::Peer] the peer session for the context
-    # @param profile [RuneRb::Database::Profile] the profile for the context
-    def receive(peer, profile)
-      ctx = RuneRb::Entity::Context.new(peer, profile)
-      @entities[:players].tap do |hash|
-        ctx.index = hash.empty? ? 1 : hash.keys.last + 1
-        @entities[:players][ctx.index] = ctx
-      end
-      ctx.login(self)
-      peer.register(ctx)
-      log RuneRb::COL.green("Registered new Context for #{RuneRb::COL.yellow(profile.name)}") if RuneRb::DEBUG
-      log RuneRb::COL.green("Welcome, #{RuneRb::COL.yellow(profile.name)}!")
-      peer.status[:auth] = :LOGGED_IN
-    rescue StandardError => e
-      err 'An error occurred while receiving context!', e
-      puts e.backtrace
+    def inspect
+      "#{RuneRb::GLOBAL[:COLOR].green("[Title]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@settings[:LABEL])}")}\n#{RuneRb::GLOBAL[:COLOR].green("[Players]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@entities[:players].size)}/#{@settings[:MAX_PLAYERS]}]")}\n#{RuneRb::GLOBAL[:COLOR].green("[Mobs]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@entities[:mobs].size)}/#{@settings[:MAX_MOBS]}]")}"
     end
 
-    # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
-    # @param context [RuneRb::Entity::Context] the context mob to release
-    def release(context)
-      # Remove the context from the entity list
-      @entities[:players].delete(context.index)
-      # Logout the context.
-      context.logout
-      log RuneRb::COL.magenta("De-registered Context for #{RuneRb::COL.yellow(context.profile.name)}") if RuneRb::DEBUG
-      log RuneRb::COL.magenta("See ya, #{RuneRb::COL.yellow(context.profile.name)}!")
-    rescue StandardError => e
-      err 'An error occurred while releasing context!', e
-      puts e.backtrace
+    # Shut down the world instance, releasing it's contexts.
+    def shutdown(graceful: true)
+      # release all contexts
+      @entities[:players].each_value { |context| release(context) } if graceful
+      @entities.clear
+      # RuneRb::World::Instance.dump(self) if graceful
+    ensure
+      close
+      log! RuneRb::GLOBAL[:COLOR].green("Up-time: #{up_time(formatted: true)}")
     end
 
-    # Requests actions for the world to perform.
-    # @param type [Symbol] the type of request
-    # @param params [Hash] the parameters for the request.
-    def request(type, params = {})
-      case type
-      when :local_contexts
-        @entities[:players].values.select { |ctx| params[:context].position[:current].in_view?(ctx.position[:current]) }
-      when :local_mobs
-        @entities[:mobs].values.select { |mob| params[:context].position[:current].in_view?(mob.position[:current]) }
-      when :spawn_mob
-        @entities[:mobs] << RuneRb::Entity::Mob.new(params[:definition]).teleport(params[:position])
-      when :context
-        @entities[:players].values.detect { |ctx| ctx.profile.name == params[:name] }
-      else err "Unrecognized request type for world Instance! #{type}"
-      end
-    rescue StandardError => e
-      err 'An error occurred while processing request!', e
-      puts e.backtrace
+    # The current up-time for the Endpoint.
+    #
+    # @return [Integer, Float] the current up-time for the Endpoint.
+    def up_time(formatted: true)
+      up = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@duration[:time] || Time.now)).round(3)).to_i
+      formatted ? up.to_ftime : up
     end
 
-    private
-
-    # Initializes and loads configuration settings for the World.
-    def init_config(config)
-      @settings = { MAX_PLAYERS: config[:max_players], MAX_MOBS: config[:max_mobs] }.freeze
+    def include?(entity)
+      true if @entities[:players].any? { |_idx, ctx| ctx == entity || ctx.session == entity || ctx.profile == entity }
+      true if @entities[:mobs].any? { |_idx, mob| mob == entity || mob.definition == entity }
+      false
     end
 
-    # Initializes and loads entities collections.
-    def init_entities
-      @entities = { players: {}, mobs: {} }
+    def closed?
+      @closed
+    end
+
+    def close
+      @closed = true
     end
   end
 end
+
+# Copyright (c) 2021, Patrick W.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
