@@ -1,9 +1,9 @@
 module RuneRb::Network::RS317::HeartbeatMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the HeartbeatMessage
   def parse(_)
-    log! RuneRb::GLOBAL[:COLOR].magenta.bold "Received heartbeat" if RuneRb::GLOBAL[:DEBUG]
+    log! COLORS.magenta.bold 'Received heartbeat' if RuneRb::GLOBAL[:ENV].debug
   end
 end
 

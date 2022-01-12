@@ -1,9 +1,9 @@
 module RuneRb::Network::RS377::PingMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the PingMessage
   def parse(_)
-    log "Ping Received! [#{@header[:op_code]}]" if RuneRb::GLOBAL[:DEBUG] # Ping
+    log "Ping Received! [#{@header[:op_code]}]" if RuneRb::GLOBAL[:ENV].debug # Ping
   end
 end
 

@@ -4,9 +4,9 @@ module RuneRb::Network::RS377
     # Constructs a MembersAndIndexMessage
     # @param data [Hash] data containing the members value and player index which will be written to the message.
     def initialize(data)
-      super('w', { op_code: 126 }, :FIXED)
-      write_byte(data[:members] ? 1 : 0)
-      write_short(data[:player_idx], :LITTLE)
+      super(op_code: 126, type: :FIXED)
+        .write(data[:profile][:members] ? 1 : 0, type: :byte)
+        .write(data[:index], type: :short, order: 'LITTLE')
     end
   end
 end

@@ -4,26 +4,26 @@ module RuneRb::Network::RS377
     # Constructs a new ContextInventoryMessage.
     # @param data [Hash] inventory data including items, amounts and corresponding slots
     def initialize(data)
-      super('w', { op_code: 206 }, :VARIABLE_SHORT)
+      super(op_code: 206, type: :VARIABLE_SHORT)
 
       # ContextInventoryForm ID
-      write_short(3214)
+      write(3214, type: :short)
 
       # Container length
-      write_short(data[:size])
+      write(data[:size], type: :short)
 
       data[:data].each do |_slot_id, item_stack|
 
         id = item_stack.nil? || item_stack.id.nil? || item_stack.id.negative? ? -1 : item_stack.id
         amount = item_stack.nil? || item_stack.size.nil? || item_stack.size.negative? ? 0 : item_stack.size
 
-        write_short(id + 1, :ADD, :LITTLE)
+        write(id + 1, type: :short, mutation: :ADD, order: 'LITTLE')
 
         if amount > 254
-          write_byte(0xFF, :NEGATE)
-          write_int(amount, :STD, :LITTLE)
+          write(0xFF, type: :byte, mutation: :NEG)
+          write(amount, type: :int, order: 'LITTLE')
         else
-          write_byte(amount, :NEGATE)
+          write(amount, type: :byte, mutation: :NEG)
         end
       end
     end

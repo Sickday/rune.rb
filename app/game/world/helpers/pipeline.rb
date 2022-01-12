@@ -1,38 +1,35 @@
 module RuneRb::Game::World::Pipeline
 
-  # Begins executing Actions in the <@stack>.
-  def start_pipeline
-    # Execute pending actions
-    unless @stack.empty?
-      begin
-        log! "#{@stack.size} Actions in stack"
+  # Begins executing Actions in the <World#pipeline>.
+  def process_pipeline
+    return if @pipeline.empty?
 
-        # Call the <=> function on each item in the collection and arrange them in an descending order.
-        @stack.sort!
+    log! "#{@pipeline.size} Jobs in pipeline" if RuneRb::GLOBAL[:ENV].debug
 
-        # Update each Action#target to point to the next member of <@stack>
-        @stack.each do |action|
-          break if action.nil? || action == @stack.last
+    # Call the <=> function on each item in the collection and arrange them in an descending order.
+    @pipeline.sort!
 
-          action.target_to(@stack[@stack.index(action) + 1].start(auto: false))
-        end
+    # Update each Action#target to point to the next member of <@pipeline>
+    @pipeline.each do |action|
+      break if action.nil? || action == @pipeline.last
 
-        # Start the first action.
-        @stack.first.start(auto: true)
-
-        @stack.clear
-      rescue StandardError => e
-        err "An error occurred while processing Jobs! Halted at Job with ID: #{@stack&.first&.id}", @stack&.first&.inspect, e
-        err e.backtrace&.join("\n")
-      end
+      action.target_to(@pipeline[@pipeline.index(action) + 1].start(auto: false))
     end
+
+    # Start the first action.
+    @pipeline.first.start(auto: true)
+
+    @pipeline.clear
+  rescue StandardError => e
+    err "An error occurred while processing Jobs! Halted at Job with ID: #{@pipeline&.first&.id}", @pipeline&.first&.inspect, e
+    err e.backtrace&.join("\n")
   end
 
   # Adds a job to be performed in the pipeline
   # @param params [Hash] parameters for the posted Action.
   # @param action [Proc] work to be performed during the Action's execution.
   def post(params, &action)
-    @stack << RuneRb::Game::World::Action.new(params) { action.call(params[:assets]) }
+    @pipeline << RuneRb::Game::World::Action.new(params) { action.call(params[:assets]) }
   end
 end
 

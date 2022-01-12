@@ -3,10 +3,10 @@ module RuneRb::Network::RS317
   class SystemTextMessage < RuneRb::Network::Message
 
     # Constructs a new SystemTextMessage
-    # @param data [Hash] the data for the message.
-    def initialize(data)
-      super('w', { op_code: 253 }, :VARIABLE_BYTE)
-      write_string(data[:message])
+    # @param message [String] the data for the message.
+    def initialize(message)
+      super(op_code: 253, type: :VARIABLE_BYTE)
+      write(message, type: :string)
     end
   end
 end

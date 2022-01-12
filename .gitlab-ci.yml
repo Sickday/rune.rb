@@ -1,0 +1,23 @@
+image: ruby-2.7.4-buster
+stages:
+  - RUN_TESTS
+  - RUN_SPECS
+  - BUILD_CONTAINER
+
+TESTING_TESTS:
+  stage: RUN_TESTS
+  tags:
+    - rune.rb
+  before_script:
+    - bundle install
+  script:
+    - rake rune_rb:testing:run_tests
+
+TESTING_SPECS:
+  stage: RUN_SPECS
+  tags:
+    - rune.rb
+  before_script:
+    - bundle install
+  script:
+    - rake rune_rb:testing:run_specs

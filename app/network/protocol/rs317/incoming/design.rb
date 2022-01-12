@@ -1,5 +1,5 @@
 module RuneRb::Network::RS317::ContextDesignMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the ContextDesignMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for

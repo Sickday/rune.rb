@@ -1,0 +1,17 @@
+# Logfile created on 2022-01-12 18:37:51 -0500 by logger.rb/v1.5.0
+I, [2022-01-12T18:37:52.388466 #324936]  INFO -- rune.rb-0.0.1-tinderbox: (0.084595s) SET standard_conforming_strings = ON
+I, [2022-01-12T18:37:52.474574 #324936]  INFO -- rune.rb-0.0.1-tinderbox: (0.085951s) SET client_min_messages = 'WARNING'
+I, [2022-01-12T18:37:52.558355 #324936]  INFO -- rune.rb-0.0.1-tinderbox: (0.083666s) SET DateStyle = 'ISO'
+I, [2022-01-12T18:37:52.558462 #324936]  INFO -- rune.rb-data: [Environment] -> Initialized Database!
+W, [2022-01-12T18:37:52.593086 #324936]  WARN -- rune.rb: [18:37] Deployed new World instance. [signature: 13774351636355568926]
+W, [2022-01-12T18:37:52.601768 #324936]  WARN -- rune.rb: [18:37] Deployed new Server instance. [signature: 2]
+I, [2022-01-12T18:37:52.602041 #324936]  INFO -- rune.rb: [18:37] Controller is running rune.rb-0.0.1-tinderbox for protocol 317 @ 0.0.0.0:43594
+W, [2022-01-12T18:38:09.460462 #324936]  WARN -- rune.rb: [18:38] Caught INTERRUPT!
+W, [2022-01-12T18:38:09.460607 #324936]  WARN -- rune.rb: [18:38] Shutting Down...
+W, [2022-01-12T18:38:09.460712 #324936]  WARN -- rune.rb: [18:38] Ended 0 sessions..
+W, [2022-01-12T18:38:09.460840 #324936]  WARN -- rune.rb: [18:38] Total Instance Up-time: 0 days, 0 hours, 0 minutes, and 16 seconds
+W, [2022-01-12T18:38:09.460971 #324936]  WARN -- rune.rb: [18:38] Closed world with signature - 13774351636355568926.
+W, [2022-01-12T18:38:09.461089 #324936]  WARN -- rune.rb: [18:38] Closed 1 worlds..
+W, [2022-01-12T18:38:09.461223 #324936]  WARN -- rune.rb: [18:38] Closed server with signature - 2
+W, [2022-01-12T18:38:09.461310 #324936]  WARN -- rune.rb: [18:38] Closed 1 servers..
+W, [2022-01-12T18:38:10.461679 #324936]  WARN -- rune.rb: [18:38] Stopped EM Reactor!

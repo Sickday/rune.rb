@@ -1,5 +1,5 @@
 module RuneRb::Network::RS377::CommandMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the CommandMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
@@ -7,7 +7,7 @@ module RuneRb::Network::RS377::CommandMessage
     command_string = read_string.split(' ')
     label = command_string.shift
 
-    log "Parsing command: #{label}" if RuneRb::GLOBAL[:DEBUG]
+    log "Parsing command: #{label}" if RuneRb::GLOBAL[:ENV].debug
     command = context.fetch_command(label&.capitalize&.to_sym)
     if command
       command.new({ context: context, world: context.world, message: self, command: command_string })

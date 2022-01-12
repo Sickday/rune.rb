@@ -4,19 +4,19 @@ module RuneRb::Network::RS377
     # Constructs a new UpdateSlottedItemMessage
     # @param data [Hash] data containing items, amounts and slots
     def initialize(data)
-      super('w', { op_code: 134 }, :VARIABLE_SHORT)
-      write_short(1688, :STD, :BIG) # EquipmentForm ID
-      write_smart(data[:slot].to_i)
+      super(op_code: 134, type: :VARIABLE_SHORT)
+      write(1688, type: :short) # EquipmentForm ID
+      write(data[:slot].to_i, type: :smart)
 
       id = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? -1 : data[:slot_data].id
       amount = data[:slot_data].is_a?(Integer) || data[:slot_data].nil? ? 0 : data[:slot_data].size
 
-      write_short(id + 1, :STD, :BIG)
+      write(id + 1, type: :short, order: 'BIG')
       if amount > 254
-        write_byte(0xFF, :STD)
-        write_int(amount, :STD)
+        write(0xFF, type: :byte)
+        write(amount, type: :int)
       else
-        write_byte(amount, :STD)
+        write(amount, type: :byte)
       end
     end
   end

@@ -1,3 +1,95 @@
+module RuneRb::Network
+  # Represents a composable/decomposable network message that is either sent or received via a TCPSocket.
+  class Message
+    include RuneRb::Utils::Logging
+
+    # @return [Struct] the header for the message.
+    attr :header
+
+    # @return [Buffer] the access mode for the message.
+    attr :body
+
+    # Models the heading of a protocol data unit received from a peer socket.
+    # @param op_code [Integer] the Operation Code of the data unit
+    # @param length [Integer] the length of data unit's payload, excluding the header.
+    # @param type [Symbol] the type of header of the data unit.
+    # @return [Struct]
+    Header = Struct.new(:op_code, :length, :type) do
+
+      # Generates a binary string representation of the {Header} object.
+      # @return [String, NilClass] binary representation of the header.
+      def compile_header
+        case self.type
+        when :FIXED then [self.op_code].pack('C') # Fixed packet lengths are known by both the client and server, so no length packing is necesssary
+        when :RAW then ''
+        when :VARIABLE_SHORT then [self.op_code, self.length].pack('Cn') # Variable Short packet lengths fall into the range of a short type and can be packed as such
+        when :VARIABLE_BYTE # Variable Byte packet lengths fall into the range of a byte type and can be packed as such
+          if self.length.nonzero? && self.length.positive?
+            [self.op_code, self.length].pack('Cc')
+          elsif self.length.nonzero? && self.length.negative?
+            self.type = :FIXED
+            compile_header
+          end
+        else compile_header
+        end
+      end
+
+      def inspect
+        "[Header]: [OpCode]: #{self.op_code} || [Length]: #{self.length}"
+      end
+    end
+
+    # Called when a new Message is created
+    # @param op_code [Integer] the message's operation code.
+    # @param type [Symbol] the message type. [:VARIABLE_BYTE, :VARIABLE_SHORT, :FIXED]
+    # @param body [String, StringIO, RuneRb::Network::Buffer] an optional body payload for the message.
+    # @return [Message] the instance created.
+    def initialize(op_code: -1, type: :FIXED, body: RuneRb::Network::Buffer.new('rw'))
+      @header = Header.new(op_code, 0, type)
+      @body = case body
+              when RuneRb::Network::Buffer then body
+              when String, StringIO then RuneRb::Network::Buffer.new('r', data: body)
+              else raise "Invalid body type for message! Expecting: Buffer, StringIO, String Got: #{body.class}"
+              end
+      update_length
+
+      self
+    end
+
+    # Compiles the {Message} into a string of binary data.
+    # @return [String] binary representation of the message.
+    def compile
+      @header.compile_header + @body.snapshot
+    end
+
+    def inspect
+      "#{@header.inspect} || #{@body.inspect}"
+    end
+
+    # @abstract parses the message object.
+    def parse(_ctx); end
+
+    # Read data from the {Message#body}
+    def read(type: :byte, signed: false, mutation: :STD, order: 'BIG')
+      @body.read(type: type, signed: signed, mutation: mutation, order: order)
+    end
+
+    # Write data to the {Message#body}
+    def write(value, type: :byte, mutation: :STD, order: 'BIG', options: {})
+      @body.write(value, type: type, mutation: mutation, order: order, options: options)
+      update_length
+      self
+    end
+
+    private
+
+    # Updates the length of the <@header>
+    def update_length
+      @header.length = @body.length
+    end
+  end
+end
+
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #
@@ -25,188 +117,3 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-module RuneRb::Network
-
-  # A Message object represents a composable/decomposable network message that is either sent or received via a TCPSocket.
-  class Message
-    include Constants
-    include RuneRb::System::Log
-
-    # @return [Hash] the access mode for the message.
-    attr :mode
-
-    # @return [Hash] the header for the message.
-    attr :header
-
-    # Called when a new Message is created
-    # @param mode [String] access mode for the message (r w)
-    # @param header [Hash, Struct, Array] an optional header for the message
-    # @param body [String, StringIO] an optional body payload for the message.
-    # @return [Message] the instance created.
-    def initialize(mode, header = { op_code: -1, length: 0 }, type = :VARIABLE_BYTE, body = '')
-      raise "Invalid mode for Message! Expecting: r || w || rw , Got: #{mode}" unless 'rw'.include?(mode)
-
-      # Set the mode for the Message object.
-      @mode = { raw: mode }
-
-      # Optional header assignment
-      @header = header
-
-      # Payload assignment
-      @payload = body
-
-      @type = type
-
-      # Enable write functions
-      enable_writeable if mode.include?('w')
-
-      # Enable read functions
-      enable_readable if mode.include?('r')
-
-      # Return an the instance for chains.
-      self
-    end
-
-    def inspect
-      log! "[Header]: [OpCode]: #{@header[:op_code]} || [Length]: #{@header[:length]} || [Mode]: #{@mode} || [Access]: #{@access} || [Payload]: #{snapshot}"
-    end
-
-    class << self
-      include Constants
-      include RuneRb::System::Log
-
-      # Validates the passed parameters according to the options.
-      # @param options [Hash] a map of rules to validate.
-      # @todo implement a ValidationError type to be raised when a validation fails.
-      def validate(message, operation, options = {})
-        return false unless valid_mode?(message, operation)
-
-        # Validate the current access mode if we're in a writeable state
-        return false unless valid_access?(message, %i[bit bits].include?(options[:type]) ? :BIT : :BYTE) if message.mode[:writeable]
-
-        # Validate the mutation there are any
-        return false unless valid_mutation?(options[:mutation]) if options[:mutation]
-
-        # Validate the byte order if it is passed.
-        return false unless valid_order?(options[:order]) if options[:order]
-
-        true
-      end
-
-      # Generates a binary string representation of the <@header> object.
-      # @param header [Hash] the header to compile.
-      # @param type [Symbol] the type of header to compile [:FIXED, :VARIABLE_SHORT, :VARIABLE_BYTE]
-      # @return [String] binary representation of the header.
-      def compile_header(header, type)
-        case type
-        when :FIXED then [header[:op_code]].pack('C') # Fixed packet lengths are known by both the client and server, so no length packing is necesssary
-        when :VARIABLE_SHORT then [header[:op_code], header[:length]].pack('Cn') # Variable Short packet lengths fall into the range of a short type and can be packed as such
-        when :VARIABLE_BYTE # Variable Byte packet lengths fall into the range of a byte type and can be packed as such
-          if header[:length].nonzero? && header[:length].positive?
-            [header[:op_code], header[:length]].pack('Cc')
-          else
-            compile_header(header, :FIXED)
-          end
-        when :RAW then return
-        else
-          compile_header(header, :FIXED)
-        end
-      end
-
-      private
-
-      # Validates the current access mode for the write channel.
-      # @param required [Symbol] the access type required for the operation.
-      def valid_access?(message, required)
-        unless message.access == required
-          err "Invalid access for operation! #{required} access is required for operation!"
-          return false
-        end
-        true
-      end
-
-      # Validates the operation with the current mode of the message.
-      # @param operation [Symbol] the operation to validate.
-      def valid_mode?(message, operation)
-        return false if message.mode[:readable] && %i[peek_write write].include?(operation)
-        return false if message.mode[:writeable] && %i[peek_read read].include?(operation)
-
-        true
-      end
-
-      # Validates the byte mutation for the operation
-      # @param mutation [Symbol] the mutation that will be applied in the operation.
-      def valid_mutation?(mutation)
-        unless BYTE_MUTATIONS.values.any? { |mut| mut.include?(mutation) }
-          err "Unrecognized mutation! #{mutation}"
-          return false
-        end
-        true
-      end
-
-      # Validates the byte order to read for the operation
-      # @param order [Symbol] the order in which to read bytes in the operation.
-      def valid_order?(order)
-        unless BYTE_ORDERS.include?(order)
-          err "Unrecognized byte order! #{order}"
-          return false
-        end
-        true
-      end
-    end
-
-    # Fetches a snapshot of the message payload content.
-    # @return [String] a snapshot of the payload
-    def peek
-      @payload.dup
-    end
-
-    alias snapshot peek
-
-    private
-
-    # Mutates the value according to the passed mutation
-    # @param value [Integer] the value to mutate
-    # @param mutation [Symbol] the mutation to apply to the value.
-    # @todo Testcase: Test that mutations are properly applied
-    # @todo Testcase: Test that mutations are properly parsed up to this point.
-    def mutate(value, mutation)
-      case mutation
-      when *BYTE_MUTATIONS[:std] then value
-      when *BYTE_MUTATIONS[:add] then value += 128
-      when *BYTE_MUTATIONS[:neg] then value = -value
-      when *BYTE_MUTATIONS[:sub] then value = 128 - value
-      end
-      value
-    end
-
-    # Enables Writeable functions for the Message.
-    def enable_writeable
-      # Set access var for bit and byte writing.
-      @access = :BYTE
-
-      # Set the initial bit position for bit writing.
-      @bit_position = 0
-
-      # Define functions on the message instance.
-      self.class.include(RuneRb::System::Patches::Writeable)
-
-      # Update the message mode
-      @mode[:writeable] = true
-    end
-
-    # Enables Readable functions for the Message.
-    def enable_readable
-      # Define functions on the message instance.
-      self.class.include(RuneRb::System::Patches::Readable)
-
-      # Update the message mode
-      @mode[:readable] = true
-    end
-
-    # Updates the length of the <@header>
-    def update_length
-      @header[:length] = @payload.bytesize
-    end
-  end
-end

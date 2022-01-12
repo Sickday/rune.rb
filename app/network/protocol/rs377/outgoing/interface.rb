@@ -2,10 +2,10 @@ module RuneRb::Network::RS377
   class DisplayInterfaceMessage < RuneRb::Network::Message
 
     # Constructs a DisplayInterfaceMessage
-    # @param data [Hash] data containing the ID of the interface to display.
-    def initialize(data)
-      super('w', { op_code: 159 }, :FIXED)
-      write_short(data[:id], :ADD, :LITTLE)
+    # @param id [Integer] the ID of the interface to display
+    def initialize(id)
+      super(op_code: 159, type: :FIXED)
+      write(id, type: :short, mutation: :ADD, order: 'LITTLE')
     end
   end
 end

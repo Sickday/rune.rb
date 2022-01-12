@@ -2,12 +2,12 @@ module RuneRb::Network::RS317::MouseClickMessage
 
   # A mouse click event
   Click = Struct.new(:delay, :right?, :x, :y) do
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     def inspect
-      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
+      log! COLORS.blue("[DELAY_SINCE:] #{self.delay}"),
+           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}"),
+           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}")
 
     end
   end
