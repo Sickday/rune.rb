@@ -21,7 +21,7 @@ module RuneRb::Network::Helpers::Validation
     # @param length [Integer] the amount of data to read
     # @param buffer [Buffer] the buffer to read to.
     def from_io(io, length, buffer)
-      raise "Closed IO" if io.closed?
+      raise 'Closed IO' if io.closed?
 
       io.read_nonblock(length, buffer.data)
     end

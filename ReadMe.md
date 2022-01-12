@@ -3,36 +3,47 @@
 
 **Rune.rb** is a game server written in Ruby targeting the 2006 era of RuneScape (or the 317-377 protocols).
 
-## Usage
+## Setup
 
-You'll need an appropriate 317 or 377 client to connect to the server application.**
 
-### Dependencies
-#### arch
+#### Prerequisites
+Debian/Ubuntu:
 ```shell
-sudo pacman -S base-devel postgresql-libs sqlite
+$ sudo apt install libpq-dev
+```
+ArchLinux:
+```shell
+$ sudo pacman -S postgresql-libs
 ```
 
-#### ubuntu
+Fedora:
 ```shell
-sudo apt install build-essential libpq-dev libsqlite3-dev
+$ sudo dnf install postgresql-libs
 ```
 
+#### Repository
 Clone the repo
 ```shell
-git clone https://gitlab.com/sickday/rune.rb.git
+$ git clone git@git.repos.pw:rune.rb/app.git
+$ cd app
 ```
 
-Install gem dependencies and use the included `boostrap.rb`
+Install gem dependencies
 ```shell
-cd rune.rb/
-bundle install
-ruby boostrap.rb
+$ gem install bundler # Only necessary if you do not already have bundler
+$ bundle install
 ```
 
-### Connecting
+## Usage
+You'll need an appropriate 317 or 377 client to connect to the server application.** You can launch an instance of the application using `rake`:
+```shell
+$ rake rrb:live:run # live launch
+```
+or
+```shell
+$ rake rrb:dev:run # debug launch
+```
 
-Modify the JSON files located in `assets/config` to change application behavior.
 ## Current Contributors
 
 | Name | Role | Contact |
