@@ -54,6 +54,7 @@ module RuneRb::Game::World::Gateway
   def reject(session, code)
     log! COLORS.red("Rejecting Session with signature #{session.sig}")
     session.write_message(:RAW, data: [code].pack('C'))
+    session.disconnect(:authentication)
   end
 
   # Accept a {RuneRb::Network::Session}

@@ -6,13 +6,13 @@ module RuneRb::Network::RS317::OptionClickMessage
   def parse(context)
     case @header[:op_code]
     when 122 # First
-      interface = read_short(true, :ADD, :LITTLE)
-      slot = read_short(false, :ADD)
-      item_id = read_short(true, :STD, :LITTLE)
+      interface = @body.read(type: :short, signed: true, mutation: :ADD, order: :LITTLE)
+      slot = @body.read(type: :short, signed: false, mutation: :ADD)
+      item_id = @body.read(type: :short, signed: true, mutation: :STD, order: :LITTLE)
     when 41 # Second
-      item_id = read_short
-      slot = read_short(false, :A) + 1
-      interface = read_short(false, :A)
+      item_id = @body.read(type: :short)
+      slot = @body.read(type: :short, signed: false, mutation: :ADD) + 1
+      interface = @body.read(type: :short, signed: false, mutation: :ADD)
       item = context.inventory[:container].item_at(slot)
       return unless item # This check is for instances where a context may perform a 5thoptclick followed by this 2ndoptclick. this slot may be nil, so we do nothing and sort of force a proper click.
 
@@ -23,17 +23,17 @@ module RuneRb::Network::RS317::OptionClickMessage
       update(:equipment)
       update(:inventory)
     when 16 # Third
-      item_id = read_short(false, :ADD)
-      slot = read_short(false, :ADD, :LITTLE)
-      interface = read_short(false, :ADD, :LITTLE)
+      item_id = @body.read(type: :short, signed: false, mutation: :ADD)
+      slot = @body.read(type: :short,signed: false, mutation: :ADD, order: :LITTLE)
+      interface = @body.read(type: :short,signed: false, mutation: :ADD, order: :LITTLE)
     when 75 # Fourth
-      interface = read_short(false, :ADD, :LITTLE)
-      slot = read_short(false, :STD, :LITTLE)
-      item_id = read_short(false, :ADD, :BIG)
+      interface = @body.read(type: :short,signed: false, mutation: :ADD, order: :LITTLE)
+      slot = @body.read(type: :short,signed: false, mutation: :STD, order: :LITTLE)
+      item_id = @body.read(type: :short,signed: false, mutation: :ADD)
     when 87 # Fifth
-      item_id = read_short(false, :ADD)
-      interface = read_short
-      slot = read_short(false, :A) + 1
+      item_id = @body.read(type: :short,signed: false, mutation: :ADD)
+      interface = @body.read(type: :short)
+      slot = @body.read(type: :short, signed: false, mutation: :ADD) + 1
     end
 
     log_item_click(interface, slot, item_id)
