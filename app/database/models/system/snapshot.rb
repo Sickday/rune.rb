@@ -1,17 +1,12 @@
-module RuneRb::Database
+module RuneRb::Database::System
+  # TODO: Complete this.
+  class Snapshot < Sequel::Model(RuneRb::GLOBAL[:DATABASE].system[:GAME_SNAPSHOTS])
+    def dump_game_state(game_state)
+      snapshot = {}
+    end
 
-  # Name that is banned from usage.
-  # Models a row of the `game_banned_names` table.
-  class GameBannedNames < Sequel::Model(RuneRb::GLOBAL[:GAME_BANNED_NAMES])
-    class << self
-
-      # Adds a new entry to the dataset.
-      # @param entry [String] the name to ban.
-      def append(entry)
-        insert(name: entry)
-      rescue Sequel::ConstraintViolation
-        raise RuneRb::System::Errors::ConflictingNameError.new(:banned_name, entry)
-      end
+    def restore_game_state(id)
+      raw = Oj.load(where(id: id).get(:dump))
     end
   end
 end

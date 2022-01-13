@@ -9,8 +9,13 @@ module RuneRb::Network::Constants
   }.freeze
 
   # @return [Hash] a map of response codes and symbol keys indicative of their meaning.
-  LOGIN_RESPONSES = { RETRY_COUNT: -1, OK: 0, RETRY: 1, SUCCESS: 2,
-                      BAD_CREDENTIALS: 3, BANNED_ACCOUNT: 4, CONFLICTING_SESSION: 5,
+  LOGIN_RESPONSES = { RETRY_COUNT: -1,
+                      OK: 0,
+                      RETRY: 1,
+                      SUCCESS: 2,
+                      BAD_CREDENTIALS: 3,
+                      BANNED_ACCOUNT: 4,
+                      CONFLICTING_SESSION: 5,
                       INVALID_REVISION: 6, WORLD_IS_FULL: 7, LOGIN_OFFLINE: 8,
                       TOO_MANY_CONNECTIONS: 9, BAD_SESSION_ID: 10, REJECTED_SESSION: 11,
                       NON_MEMBERS: 12, WORLD_OFFLINE: 13, UPDATE_IN_PROGRESS: 14,

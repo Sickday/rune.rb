@@ -81,7 +81,7 @@ module RuneRb::System
     # @return [Integer] the signuature which corresponds to the constructed EventMachine server.
     def deploy_server(config = RuneRb::GLOBAL[:ENV].server_config)
       sig = EventMachine.start_server(config.host, config.port, RuneRb::Network::Session) do |session|
-        @sessions[session.id] = session
+        @sessions[session.sig] = session
       end
       @servers << sig
       log! "Deployed new Server instance. [signature: #{sig}]"
@@ -95,7 +95,7 @@ module RuneRb::System
       case obj
       when :all
         @sessions.each_value(&:disconnect)
-        sleep(1) unless @sessions.all?(&:closed?)
+        sleep(1) unless @sessions.values.all?(&:closed)
         log! COLORS.red.bold("Ended #{@sessions.length} sessions..")
 
         @worlds[:instances].each_key { |sig| shutdown(:world, signature: sig) }
@@ -129,12 +129,12 @@ module RuneRb::System
     def init_session_tick
       EventMachine.tick_loop do
         @sessions.each_value do |session|
-          @sessions.delete(session) if session.authentication.stage == :LOGGED_OUT || session.authentication.stage == :DISCONNECTED
+          @sessions.delete(session) if session.auth[:stage] == :logged_out
         end
 
-        transfers = @sessions.values.collect { |session| session.authentication.stage == :authenticate }
+        transfers = @sessions.values.select { |session| session.auth[:stage] == :authenticate }
         destination = @worlds[:instances].values.detect { |world| world.entities[:players].length + transfers.length <= world.properties.max_contexts }
-        transfers.each { |session| destination.authenticate(session) } unless destination.nil?
+        transfers.each { |session| destination.receive(session) } unless destination.nil?
       end
     end
 

@@ -9,7 +9,7 @@ module RuneRb::Network::Helpers::Dispatcher
       send_data(params[:data])
     else
       message = RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:OUTGOING][message_type].new(params)
-      send_data(encode(message, @cipher[:outgoing]).compile)
+      send_data(encode(message, @cipher.outgoing).compile)
     end
   rescue StandardError => e
     log! e.message, e.backtrace&.join("\n")

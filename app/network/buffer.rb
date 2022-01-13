@@ -56,7 +56,7 @@ module RuneRb::Network
     # The amount of data remaining in the buffer.
     # @return [Integer]
     def remaining
-      position - length
+      length - position
     end
 
     # The current position of the cursor

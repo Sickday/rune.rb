@@ -1,9 +1,25 @@
-module RuneRb::Database::Mob
-  class Spawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_SPAWNS])
-    one_to_one :location, class: RuneRb::Database::System::Location, key: :id
+module RuneRb::Database::Player
+  # The Attributes models a row within the `player_status` table.
+  class Attributes < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_status])
 
-    def position
-      location.to_position
+    # Update the status with a ban.
+    def ban
+      update(banned: true)
+    end
+
+    # Update the status with a mute.
+    def mute
+      update(muted: true)
+    end
+
+    # Updates the last session column with information from the passed session object.
+    # @param details [Struct] the structured object with details about the session.
+    def post_session(details)
+      info = {}
+      info[:ip] = details.ip
+      info[:duration] = details.up_time
+      info[:date] = details.date_stamp
+      update(last_session: Oj.dump(info))
     end
   end
 end

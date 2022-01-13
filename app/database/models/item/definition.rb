@@ -1,15 +1,10 @@
-module RuneRb::Database
-  # Defining information related to a single game item.
-  #
-  # Models a row of the `item_definitions` table.
-  class ItemDefinition < Sequel::Model(RuneRb::GLOBAL[:ITEM_DEFINITIONS])
+module RuneRb::Database::Item
+  class Definition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:ITEM_DEFINITIONS])
     plugin :static_cache
 
-    one_to_one :equipment, class: RuneRb::Database::ItemEquipment, key: :id
-    # one_to_many :spawn, class: RuneRb::Database::ItemSpawn, key: :id
+    one_to_one :equipment, class: RuneRb::Database::Item::Equipment, key: :id
+    one_to_many :spawn, class: RuneRb::Database::Item::Spawn, key: :id
 
-    # The amount of gold produced if a player were to use either High Level Alchemy or Low Level Alchemy spells on the item with this definition.
-    # @return [Hash] a hash containing each result mapped to `:high_level` and `:low_level`.
     def alchemy_price
       { high_level: (0.6 * self[:value]).to_i,
         low_level: (0.4 * self[:value]).to_i }.freeze

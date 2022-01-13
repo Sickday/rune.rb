@@ -1,26 +1,16 @@
-module RuneRb::Database
-  # Status information related to a player
-  #
-  # Models a row within the <player_status> table.
-  class PlayerStatus < Sequel::Model(RuneRb::GLOBAL[:PLAYER_STATUS])
-    # Update the status with a ban.
-    def ban
-      update(banned: true)
-    end
+module RuneRb::Database::System
+  class BannedNames < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:system_banned_names])
+    class << self
+      def append(entry, regex: false)
+        insert(name: entry, regex?: regex)
+      rescue Sequel::ConstraintViolation
+        # raise RuneRb::Errors::ConflictingNameError.new(:banned_name, entry)
+        puts "This name is already banned! #{entry}"
+      end
 
-    # Update the status with a mute.
-    def mute
-      update(muted: true)
-    end
-
-    # Updates the last session column with information from the passed session object.
-    # @param session [RuneRb::Network::Session] the session to post.
-    def post_session(session)
-      info = {}
-      info[:ip] = session.ip
-      info[:duration] = session.up_time
-      info[:date] = session.start[:stamp]
-      update(last_session: Oj.dump(info))
+      def check(name)
+        any? { |row| row[:regex?] && row[:name] =~ name || row[:name] == name }
+      end
     end
   end
 end

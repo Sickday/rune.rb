@@ -2,7 +2,7 @@ module RuneRb::Game::Entity
 
   # A Mob that is representing the context of a connected Session.
   class Context < RuneRb::Game::Entity::Mob
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
     include RuneRb::Game::Entity::Helpers::Equipment
     include RuneRb::Game::Entity::Helpers::Inventory
     include RuneRb::Game::Entity::Helpers::Command
@@ -78,22 +78,24 @@ module RuneRb::Game::Entity
 
     # Performs a series of task related with constructing and initializing a context's data and attaching the context to the <@world> instance.
     def login(first: true)
-      @session.register(self)
+      @session.register_context(self)
       log! "Attached to Session #{@session.id}!" if RuneRb::GLOBAL[:DEBUG]
-      load_status
+      # load_status
       load_appearance
-      load_inventory(first)
-      load_equipment(first)
+      # load_inventory(first)
+      # load_equipment(first)
       load_commands
-      load_stats
+      # load_stats
 
-      @session.write_message(:MembersAndIndexMessage, members: @status.members, player_idx: @index)
-      @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
-      @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! https://gitlab.com/Sickday/rune.rb')
-      @session.write_message(:SystemTextMessage, message: "VERSION: #{RuneRb::GLOBAL[:VERSION]}")
-      update(:stats)
+      # @session.write_message(:MembersAndIndexMessage, members: @status.members, player_idx: @index)
+      @session.write_message(:MembersAndIndexMessage, members: 1, index: @index) # temporary
+      # @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
+      @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! http://git.repos.pw/rune.rb/old')
+      @session.write_message(:SystemTextMessage, message: "VERSION: #{RuneRb::GLOBAL[:ENV].build}")
+      @session.auth[:stage] = :logged_in
+
+      # update(:stats)
       update(:sidebars)
-      @session.status[:auth] = :LOGGED_IN
     end
 
     # @return [String] an inspection of the Context

@@ -1,7 +1,7 @@
 module RuneRb::Game::Map
   # An object holding the top left X and Y coordinates of a region
   class Regional
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
     # The x and y coordinates for the regional. (comparable to Position#top_left_region_x, or Position#top_left_region_y)
     attr :coordinates
 

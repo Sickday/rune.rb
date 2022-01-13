@@ -10,7 +10,7 @@ module RuneRb::Game::Item
     # @param amount [Integer] the initial amount of the stack.
     def initialize(id, amount = 1)
       @id = id
-      @definition = id == -1 ? RuneRb::Database::ItemDefinition[0] : RuneRb::Database::ItemDefinition[id]
+      @definition = id == -1 ? RuneRb::Database::Item::Definition[0] : RuneRb::Database::Item::Definition[id]
       @size = amount
     end
 

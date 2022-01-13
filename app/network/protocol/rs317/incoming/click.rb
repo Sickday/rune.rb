@@ -1,4 +1,5 @@
 module RuneRb::Network::RS317::MouseClickMessage
+  include RuneRb::Utils::Logging
 
   # A mouse click event
   Click = Struct.new(:delay, :right?, :x, :y) do
@@ -14,7 +15,7 @@ module RuneRb::Network::RS317::MouseClickMessage
 
   # Parses the MouseClickMessage
   def parse(_)
-    data = read_int
+    data = @body.read(type: :int)
     coordinates = data & 0x3FFFF
     Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
   end

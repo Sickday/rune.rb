@@ -12,9 +12,9 @@ module RuneRb::Network::RS317::SwitchItemMessage
     case interface
     when 3214
       if old_slot >= 0 &&
-        new_slot >= 0 &&
-        old_slot <= context.inventory[:container].limit &&
-        new_slot <= context.inventory[:container].limit
+         new_slot >= 0 &&
+         old_slot <= context.inventory[:container].limit &&
+         new_slot <= context.inventory[:container].limit
         context.inventory[:container].swap(old_slot, new_slot)
         context.update(:inventory)
       end

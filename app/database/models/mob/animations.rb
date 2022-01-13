@@ -1,8 +1,5 @@
-module RuneRb::Database
-  # Information related animations performed by a Mob
-  #
-  # Models a row from the `mob_animations` table.
-  class MobAnimations < Sequel::Model(RuneRb::GLOBAL[:MOB_ANIMATIONS]); end
+module RuneRb::Database::Mob
+  class Animations < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_ANIMATIONS]); end
 end
 
 # Copyright (c) 2021, Patrick W.
