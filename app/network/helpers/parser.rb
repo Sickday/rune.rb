@@ -5,10 +5,12 @@ module RuneRb::Network::Helpers::Parser
   # Parses a message object for a specific context
   # @param message [RuneRb::Network::Message] the message to parse
   def parse(message)
-    raise "Unrecognized message! #{message.inspect}" unless RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:INCOMING].keys.include?(message.header.op_code)
-
-    message.singleton_class.include(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:INCOMING][message.header.op_code])
-    message.parse(@context)
+    if RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:INCOMING].keys.include?(message.header.op_code)
+      message.singleton_class.include(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:INCOMING][message.header.op_code])
+      message.parse(@context)
+    else
+      log! "Unrecognized message! #{message.inspect}"
+    end
   end
 
   private

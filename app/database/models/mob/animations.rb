@@ -1,5 +1,5 @@
 module RuneRb::Database::Mob
-  class Animations < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_ANIMATIONS]); end
+  class MobAnimations < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_animations]); end
 end
 
 # Copyright (c) 2021, Patrick W.

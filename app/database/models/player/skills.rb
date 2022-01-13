@@ -1,6 +1,6 @@
-module RuneRb::Database::Player
+module RuneRb::Database
   # Models the player.skills table rows which relate to a player's stats.
-  class Skills < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_skills]); end
+  class PlayerSkills < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_skills]); end
 end
 
 # Copyright (c) 2021, Patrick W.

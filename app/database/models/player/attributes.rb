@@ -1,6 +1,6 @@
-module RuneRb::Database::Player
+module RuneRb::Database
   # The Attributes models a row within the `player_status` table.
-  class Attributes < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_status])
+  class PlayerAttributes < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_status])
 
     # Update the status with a ban.
     def ban

@@ -6,51 +6,32 @@ module RuneRb::Database
 
   # Factory objects to generate fake data using models.
   module Factories
+    autoload :PlayerProfile,     'factories/player/profile'
 
-    module Player
-      autoload :Profile,     'factories/player/profile'
-    end
+    autoload :ItemDefinition,    'factories/item/definition'
+    autoload :ItemEquipment,     'factories/item/equipment'
+    autoload :ItemSpawn,         'factories/item/spawn'
 
-    module Item
-      autoload :Definition,  'factories/item/definition'
-      autoload :Equipment,   'factories/item/equipment'
-      autoload :Spawn,       'factories/item/spawn'
-    end
-
-    module Mob
-      autoload :Definition,  'factories/mob/definition'
-      autoload :Spawn,       'factories/mob/spawn'
-    end
-
-    module System
-      autoload :Location,    'factories/system/location'
-    end
+    autoload :MobDefinition,     'factories/mob/definition'
+    autoload :MobSpawn,          'factories/mob/spawn'
   end
 
-  module Player
-    autoload :Appearance,    'models/player/appearance'
-    autoload :Attributes,    'models/player/attributes'
-    autoload :Location,      'models/player/location'
-    autoload :Profile,       'models/player/profile'
-    autoload :Settings,      'models/player/settings'
-    autoload :Skills,        'models/player/skills'
-  end
+  autoload :PlayerAppearance,    'models/player/appearance'
+  autoload :PlayerAttributes,    'models/player/attributes'
+  autoload :PlayerLocation,      'models/player/location'
+  autoload :PlayerProfile,       'models/player/profile'
+  autoload :PlayerSettings,      'models/player/settings'
+  autoload :PlayerSkills,        'models/player/skills'
 
-  module Item
-    autoload :Definition,    'models/item/definition'
-    autoload :Equipment,     'models/item/equipment'
-    autoload :Spawn,         'models/item/spawn'
-  end
+  autoload :ItemDefinition,      'models/item/definition'
+  autoload :ItemEquipment,       'models/item/equipment'
+  autoload :ItemSpawn,           'models/item/spawn'
 
-  module Mob
-    autoload :Animations,    'models/mob/animations'
-    autoload :Definition,    'models/mob/definition'
-    autoload :Spawn,         'models/mob/spawn'
-    autoload :Stats,         'models/mob/stats'
-  end
+  autoload :MobAnimations,       'models/mob/animations'
+  autoload :MobDefinition,       'models/mob/definition'
+  autoload :MobSpawn,            'models/mob/spawn'
+  autoload :MobStats,            'models/mob/stats'
 
-  module System
-    autoload :BannedNames,   'models/system/banned_names'
-    autoload :Snapshots,     'models/system/snapshot'
-  end
+  autoload :SystemBannedNames,   'models/system/banned_names'
+  autoload :SystemSnapshots,     'models/system/snapshot'
 end

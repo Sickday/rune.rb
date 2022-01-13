@@ -1,8 +1,8 @@
 module RuneRb::Database::Mob
-  class Definition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_DEFINITIONS])
+  class Definition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_definitions])
     plugin :static_cache
 
-    one_to_one :animations, class: RuneRb::Database::Mob::Animations, key: :id
+    one_to_one :animations, class: RuneRb::Database::MobAnimations, key: :id
     one_to_one :stats, class: RuneRb::Database::Mob::Stats, key: :id
     one_to_many :spawn, class: RuneRb::Database::Mob::Spawn, key: :id
   end

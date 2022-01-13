@@ -1,5 +1,5 @@
-module RuneRb::Database::Item
-  class Definition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:ITEM_DEFINITIONS])
+module RuneRb::Database
+  class ItemDefinition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_item_definitions])
     plugin :static_cache
 
     one_to_one :equipment, class: RuneRb::Database::Item::Equipment, key: :id

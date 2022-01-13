@@ -1,5 +1,5 @@
-module RuneRb::Database::System
-  class BannedNames < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:system_banned_names])
+module RuneRb::Database
+  class SystemBannedNames < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:system_banned_names])
     class << self
       def append(entry, regex: false)
         insert(name: entry, regex?: regex)

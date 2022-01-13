@@ -1,6 +1,7 @@
-module RuneRb::Database::System
+module RuneRb::Database
   # TODO: Complete this.
-  class Snapshot < Sequel::Model(RuneRb::GLOBAL[:DATABASE].system[:GAME_SNAPSHOTS])
+  class SystemSnapshot < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:system_snapshots])
+=begin
     def dump_game_state(game_state)
       snapshot = {}
     end
@@ -8,6 +9,7 @@ module RuneRb::Database::System
     def restore_game_state(id)
       raw = Oj.load(where(id: id).get(:dump))
     end
+=end
   end
 end
 

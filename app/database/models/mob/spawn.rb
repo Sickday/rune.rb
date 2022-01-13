@@ -1,6 +1,5 @@
 module RuneRb::Database::Mob
-  class Spawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_SPAWNS])
-    one_to_one :location, class: RuneRb::Database::System::Location, key: :id
+  class Spawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_spawns])
 
     def position
       location.to_position

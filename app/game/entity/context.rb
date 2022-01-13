@@ -66,7 +66,7 @@ module RuneRb::Game::Entity
       @profile.location.set(@position[:current])
 
       # Post the session
-      @profile.status.post_session(session)
+      # @profile.status.post_session(session)
 
       # Write the actual logout.
       @session.write_message(:LogoutMessage, @session)
@@ -90,8 +90,8 @@ module RuneRb::Game::Entity
       # @session.write_message(:MembersAndIndexMessage, members: @status.members, player_idx: @index)
       @session.write_message(:MembersAndIndexMessage, members: 1, index: @index) # temporary
       # @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
-      @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! http://git.repos.pw/rune.rb/old')
-      @session.write_message(:SystemTextMessage, message: "VERSION: #{RuneRb::GLOBAL[:ENV].build}")
+      @session.write_message(:SystemTextMessage, message: "Welcome to rune.rb v#{RuneRb::GLOBAL[:ENV].build}")
+      @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! http://git.repos.pw/rune.rb/main')
       @session.auth[:stage] = :logged_in
 
       # update(:stats)

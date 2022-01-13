@@ -1,12 +1,12 @@
-module RuneRb::Database::Player
+module RuneRb::Database
   # A profile model related to a corresponding row in the profile table.
-  class Profile < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_profile])
+  class PlayerProfile < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_profile])
     include RuneRb::Utils::Logging
 
-    one_to_one :appearance, class: RuneRb::Database::Player::Appearance, key: :id
-    one_to_one :settings, class: RuneRb::Database::Player::Settings, key: :id
-    one_to_one :skills, class: RuneRb::Database::Player::Skills, key: :id
-    one_to_one :location, class: RuneRb::Database::Player::Location, key: :id
+    one_to_one :appearance, class: RuneRb::Database::PlayerAppearance, key: :id
+    one_to_one :settings, class: RuneRb::Database::PlayerSettings, key: :id
+    one_to_one :skills, class: RuneRb::Database::PlayerSkills, key: :id
+    one_to_one :location, class: RuneRb::Database::PlayerLocation, key: :id
 
     # Get the Position for the Location associated with the Profile.
     # @return [RuneRb::Game::Map::Position] the Position object for the Location associated with the Profile.
@@ -19,30 +19,30 @@ module RuneRb::Database::Player
 
       # Fetches a profile by the passed string
       # @param name [String] the name of the profile to fetch.
-      # @return [RuneRb::Database::Player::Profile, NilClass] the fetched profile or nil if no profile could be located.
+      # @return [RuneRb::Database::PlayerProfile, NilClass] the fetched profile or nil if no profile could be located.
       def fetch_profile(name)
-        RuneRb::Database::Player::Profile.where(username: name).first
+        RuneRb::Database::PlayerProfile.where(username: name).first
       end
 
       # Registers a new profile with supplied database.
       # @param data [Hash, Struct] profile database to insert.
-      # @return [RuneRb::Database::Player::Profile] the created profile.
-      def register(data)
+      # @return [RuneRb::Database::PlayerProfile] the created profile.
+      def register(signature, data)
         # Create the profile and associations
-        RuneRb::GLOBAL[:DATABASE].connection[:player_profile].insert(username: data[:Username],
-                                                                  password: data[:Password],
-                                                                  friends: Sequel.pg_array([], 'text'),
-                                                                  ignores: Sequel.pg_array([], 'text'),
-                                                                  inventory: Oj.dump({}),
-                                                                  equipment: Oj.dump({}),
-                                                                  name_hash: data[:NameHash],
-                                                                  id: data[:Signature])
-        RuneRb::GLOBAL[:DATABASE].connection[:player_appearance].insert(id: data[:Signature])
-        RuneRb::GLOBAL[:DATABASE].connection[:player_settings].insert(id: data[:Signature])
-        RuneRb::GLOBAL[:DATABASE].connection[:player_skills].insert(id: data[:Signature])
-        RuneRb::GLOBAL[:DATABASE].connection[:player_location].insert(id: data[:Signature])
+        RuneRb::GLOBAL[:DATABASE].connection[:player_profile].insert(username: data.username,
+                                                                     password: data.password,
+                                                                     friends: Sequel.pg_array([], 'text'),
+                                                                     ignores: Sequel.pg_array([], 'text'),
+                                                                     inventory: Oj.dump({}),
+                                                                     equipment: Oj.dump({}),
+                                                                     name_hash: data.name_hash,
+                                                                     id: signature)
+        RuneRb::GLOBAL[:DATABASE].connection[:player_appearance].insert(id: signature)
+        RuneRb::GLOBAL[:DATABASE].connection[:player_settings].insert(id: signature)
+        RuneRb::GLOBAL[:DATABASE].connection[:player_skills].insert(id: signature)
+        RuneRb::GLOBAL[:DATABASE].connection[:player_location].insert(id: signature)
         # Return the created profile
-        RuneRb::Database::Player::Profile[data[:Signature]]
+        RuneRb::Database::PlayerProfile[signature]
       rescue StandardError => e
         err 'An error occurred during registration!', e.message
         err e.backtrace&.join("\n")

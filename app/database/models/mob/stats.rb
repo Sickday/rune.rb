@@ -1,5 +1,5 @@
-module RuneRb::Database::Mob
-  class Stats < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:MOB_STATS]); end
+module RuneRb::Database
+  class MobStats < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_stats]); end
 end
 
 # Copyright (c) 2021, Patrick W.

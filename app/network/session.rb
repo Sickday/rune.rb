@@ -54,11 +54,6 @@ module RuneRb::Network
       process
     end
 
-    def send_data(data)
-      log! "Sending payload <<#{data}>>" if RuneRb::GLOBAL[:ENV].debug
-      super(data)
-    end
-
     # Registers a Context to the Session.
     # @param ctx [RuneRb::Game::Entity::Context] the Context to register
     def register_context(ctx)

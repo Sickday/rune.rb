@@ -24,7 +24,7 @@ $ sudo dnf install postgresql-libs
 #### Repository
 Clone the repo
 ```shell
-$ git clone git@git.repos.pw:rune.rb/app.git
+$ git clone git@git.repos.pw:rune.rb/main.git
 $ cd app
 ```
 
@@ -53,5 +53,5 @@ $ rake rrb:dev:run # debug launch
 
 <sub><sub>**During my tests, I used [refactored-client](https://github.com/Rabrg/refactored-client) or [refactored-317](https://gitlab.com/jscranton55/refactored-317) for all 317 testing. I exclusively used [refactored-client-377](https://github.com/Promises/refactored-client-377) for any and all 377 testing.</sub></sub>
 
-<sub><sub><sub><sub>If you're viewing this repo on github, you're looking at a mirror. The main repo is hosted on gitlab [here](https://git.repos.pw/rune.rb/old). Issues are enabled only on the main repo.
+<sub><sub><sub><sub>If you're viewing this repo on github, you're looking at a mirror. The main repo is hosted on gitlab [here](https://git.repos.pw/rune.rb/main). Issues are enabled only on the main repo.
 

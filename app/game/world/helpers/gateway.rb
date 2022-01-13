@@ -5,12 +5,13 @@ module RuneRb::Game::World::Gateway
   # @param session [RuneRb::Network::Session] the session that is attempting to login
   def receive(session)
     post(id: :RECEIVE_SESSION, priority: :HIGH, assets: [session, @entities[:players], self]) do |sess, players, world|
-      profile = RuneRb::Database::Player::Profile.fetch_profile(sess.auth[:credentials_block].username)
+      profile = RuneRb::Database::PlayerProfile.fetch_profile(sess.auth[:credentials_block].username)
       status = authenticated?(sess.auth[:seed], profile, sess.auth[:credentials_block], sess.auth[:login_block])
       if status.is_a?(Integer)
         reject(sess, status)
       else
-        profile ||= RuneRb::Database::Player::Profile.register(sess.auth[:credentials_block])
+        profile ||= RuneRb::Database::PlayerProfile.register(sess.sig.to_s, sess.auth[:credentials_block])
+        #binding.pry
         accept(sess, profile)
         ctx = RuneRb::Game::Entity::Context.new(sess, profile, world)
         ctx.index = players.empty? ? 1 : players.keys.last + 1
@@ -118,7 +119,7 @@ module RuneRb::Game::World::Gateway
   # @return [Boolean] are the credentials valid?
   # @api private
   def valid_credentials?(credential_block, profile)
-    unless credential_block.username.length >= 1 && !RuneRb::Database::System::BannedNames.check(credential_block.username)
+    unless credential_block.username.length >= 1 && !RuneRb::Database::SystemBannedNames.check(credential_block.username)
       log COLORS.red("Invalid Username for #{COLORS.yellow(credential_block.username)}")
       return false
     end
