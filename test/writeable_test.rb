@@ -13,8 +13,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :byte, mutation: :SUB))
       end
 
-      puts "TESTING WRITE UNSIGNED BYTE ADD/SUB, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE UNSIGNED BYTE ADD/SUB, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -30,8 +28,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :byte, mutation: :ADD, signed: true))
       end
 
-      puts "TESTING WRITE UNSIGNED BYTE SUB/ADD, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE UNSIGNED BYTE SUB/ADD, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -47,8 +43,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :byte, mutation: :NEG, signed: true))
       end
 
-      puts "TESTING WRITE UNSIGNED BYTE NEG, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE UNSIGNED BYTE NEG, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -64,8 +58,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :short, order: 'BIG'))
       end
 
-      puts "TESTING WRITE SHORT BIG ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE SHORT BIG ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -81,8 +73,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :short, order: 'LITTLE'))
       end
 
-      puts "TESTING WRITE SHORT LITTLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE SHORT LITTLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -98,8 +88,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :medium, order: 'BIG'))
       end
 
-      puts "TESTING WRITE MEDIUM BIG ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE MEDIUM BIG ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -115,8 +103,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :medium, order: 'MIDDLE'))
       end
 
-      puts "TESTING WRITE MEDIUM MIDDLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE MEDIUM MIDDLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -132,8 +118,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :medium, order: 'LITTLE'))
       end
 
-      puts "TESTING WRITE MEDIUM LITTLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE MEDIUM LITTLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -149,8 +133,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :int, order: 'INVERSE_MIDDLE'))
       end
 
-      puts "TESTING WRITE INT INVERSE MIDDLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE INT INVERSE MIDDLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -166,8 +148,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :int, order: 'MIDDLE'))
       end
 
-      puts "TESTING WRITE INT MIDDLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE INT MIDDLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -183,8 +163,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :int, order: 'LITTLE'))
       end
 
-      puts "TESTING WRITE INT LITTLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE INT LITTLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -200,8 +178,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :int, order: 'BIG'))
       end
 
-      puts "TESTING WRITE INT BIG ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE INT BIG ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -217,8 +193,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :long, order: 'BIG'))
       end
 
-      puts "TESTING WRITE LONG BIG ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE LONG BIG ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end
@@ -234,8 +208,6 @@ class WriteableBufferTest < Minitest::Test
         pl.push(stub_buffer.read(type: :long, order: 'LITTLE'))
       end
 
-      puts "TESTING WRITE LONG LITTLE ENDIAN, [PARSED]: #{parsed_payload}"
-      puts "TESTING WRITE LONG LITTLE ENDIAN, [WRITE_RECORD]: #{stub_write_record}"
       assert_equal(parsed_payload, stub_write_record)
     end
   end

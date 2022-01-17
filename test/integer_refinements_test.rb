@@ -64,7 +64,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_unsigned_bytes
     @unsigned[:bytes].each do |byte|
-      puts "Asserting byte #{byte}"
       # Applying a mask of 0xff will return a unsigned representation of the numeric.
       # All these values are meant to be unsigned already, they should all return themselves.
       assert_equal(byte & 0xff, byte)
@@ -76,7 +75,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_unsigned_shorts
     @unsigned[:shorts].each do |short|
-      puts "Asserting short #{short}"
       # Applying a mask of 0xffff will return a unsigned representation of the numeric.
       # All these values are meant to be unsigned already, they should all return themselves.
       assert_equal(short & 0xffff, short)
@@ -88,7 +86,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_unsigned_integers
     @unsigned[:ints].each do |int|
-      puts "Asserting int #{int}"
       # Applying a mask of 0xffffffff will return a unsigned representation of the numeric.
       # All these values are meant to be unsigned already, they should all return themselves.
       assert_equal(int & 0xffffffff, int)
@@ -100,7 +97,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_unsigned_longs
     @unsigned[:longs].each do |long|
-      puts "Asserting int #{long}"
       # Applying a mask of 0xffffffffffffffff will return a unsigned representation of the numeric.
       # All these values are meant to be unsigned already, they should all return themselves.
       assert_equal(long & 0xffffffffffffffff, long)
@@ -112,7 +108,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_signed_bytes
     @signed[:bytes].each do |byte|
-      puts "Asserting signed #{byte}"
       # Ensure the byte is within the bounds of a signed byte.
       assert(byte >= BYTE_MIN_VALUE, true)
       assert(byte <= BYTE_MAX_VALUE, true)
@@ -121,7 +116,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_signed_shorts
     @signed[:shorts].each do |short|
-      puts "Asserting signed #{short}"
       # Ensure the short is within the bounds of a signed short.
       assert(short >= SHORT_MIN_VALUE, true)
       assert(short <= SHORT_MAX_VALUE, true)
@@ -130,7 +124,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_signed_integers
     @signed[:ints].each do |int|
-      puts "Asserting signed #{int}"
       # Ensure the integer is within the bounds of a signed integer.
       assert(int >= INTEGER_MIN_VALUE, true)
       assert(int <= INTEGER_MAX_VALUE, true)
@@ -139,7 +132,6 @@ class IntegerRefinementsTest < Minitest::Test
 
   def test_signed_longs
     @signed[:longs].each do |long|
-      puts "Asserting signed #{long}"
       # Ensure the long is within the bounds of a signed long.
       assert(long >= LONG_MIN_VALUE, true)
       assert(long <= LONG_MAX_VALUE, true)

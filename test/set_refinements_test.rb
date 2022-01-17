@@ -16,22 +16,15 @@ class SetRefinementsTest < Minitest::Test
     # Capture initial set size
     initial_size = @sample_set.length
 
-    puts "Consumption size: #{initial_size}"
-
     # Initialize a counter
     consumption_count = 0
-    @sample_set.each_consume do |item|
-      puts "Consuming #{item}"
-
+    @sample_set.each_consume do
       # Increment on each consumption
       consumption_count += 1
     end
 
-    puts "Consumed #{consumption_count} items total."
-
     # Ensure the size matches up to the amount consumed
     assert_equal(initial_size, consumption_count)
-
     # Ensure the set is now empty
     assert_equal(@sample_set.length, 0)
   end

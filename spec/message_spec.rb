@@ -28,9 +28,7 @@ describe RuneRb::Network::Message do
       junk_data = JUNK_DATA_FACTORY.call
       op_code = rand(0xFF)
       stub_message = RuneRb::Network::Message.new(op_code: op_code, body: junk_data)
-      puts "Compiling message: #{stub_message.inspect}"
       bin = stub_message.compile
-      puts "Binary out: #{bin}"
       expect(bin.class).to eql(String)
       expect(bin.include?(junk_data)).to eql(true)
       expect(bin.include?([stub_message.header.op_code].pack('C'))).to eql(true)
