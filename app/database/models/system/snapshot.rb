@@ -1,6 +1,6 @@
 module RuneRb::Database
   # TODO: Complete this.
-  class SystemSnapshot < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:system_snapshots])
+  class SystemSnapshot < Sequel::Model(RuneRb::GLOBAL[:DATABASE].system[:system_snapshots])
 =begin
     def dump_game_state(game_state)
       snapshot = {}

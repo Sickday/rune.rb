@@ -1,5 +1,5 @@
 module RuneRb::Database
-  class PlayerSettings < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_settings]); end
+  class PlayerSettings < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_settings]); end
 end
 
 # Copyright (c) 2021, Patrick W.

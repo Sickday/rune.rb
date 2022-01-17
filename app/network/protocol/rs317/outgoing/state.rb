@@ -46,36 +46,37 @@ module RuneRb::Network::RS317
 
       write_graphic(context.graphic) if context.flags[:graphic?]
       write_animation(context.animation) if context.flags[:animation?]
-      write_chat(context.message, context.profile.rights) if context.flags[:chat?]
-      write_appearance(context) if context.flags[:state?]
+      write_chat(context.message, context.profile.attributes.rights) if context.flags[:chat?]
+      write_appearance(context.profile, context.equipment) if context.flags[:state?]
     end
 
     private
 
     # Writes the appearance of a Context Mob to the message.
-    # @param context [RuneRb::Game::Entity::Context] the the context whose appearance will be written.
-    def write_appearance(context)
+    # @param profile [RuneRb::Database::PlayerProfile] the profile of the player whose appearance is being written.
+    def write_appearance(profile, equipment)
       appearance_buffer = RuneRb::Network::Buffer.new('w')
       # Gender
-      appearance_buffer.write(context.appearance[:gender], type: :byte)
+      appearance_buffer.write(profile.appearance.gender, type: :byte)
       # HeadIcon
-      appearance_buffer.write(context.appearance[:head_icon], type: :byte)
+      appearance_buffer.write(profile.appearance.head_icon, type: :byte)
 
       # Write the appearance normally if there is no morphing.
-      if context.appearance[:mob_id] == -1
-        # write_equipment(appearance_buffer, context.equipment, context.appearance)
-        write_model_color(appearance_buffer, context.appearance)
-        write_model_animation(appearance_buffer, context.appearance)
+      if profile.appearance.mob_id == -1
+        write_equipment(appearance_buffer, equipment, profile.appearance)
+        write_model_color(appearance_buffer, profile.appearance)
+        write_model_animation(appearance_buffer, profile.appearance)
       else
         # Else write the morph
-        write_morph(appearance_buffer, context.appearance)
+        write_morph(appearance_buffer, profile.appearance)
       end
+
       # Player's name
-      appearance_buffer.write(context.profile[:name_hash], type: :long)
+      appearance_buffer.write(profile.name_hash, type: :long)
       # Combat Level
-      appearance_buffer.write(context.combat_level, type: :byte)
+      appearance_buffer.write(128, type: :byte)# profile.skills.combat_level, type: :byte)
       # Skill Level
-      appearance_buffer.write(context.total_level, type: :short)
+      appearance_buffer.write(profile.skills.values[:total_level], type: :short)
 
       # Size of the State Block
       write(appearance_buffer.length, type: :byte, mutation: :NEG)
@@ -88,7 +89,7 @@ module RuneRb::Network::RS317
     def write_morph(buffer, appearance)
       buffer.write(0xFF, type: :byte)
       buffer.write(0xFF, type: :byte)
-      buffer.write(appearance[:mob_id], type: :short, mutation: :STD, order: :BIG)
+      buffer.write(appearance.mob_id, type: :short, mutation: :STD, order: :BIG)
     end
 
     # Writes the equipment of a context to the buffer.
@@ -193,24 +194,24 @@ module RuneRb::Network::RS317
     # @param buffer [RuneRb::Network::Buffer] the buffer to write to.
     # @param appearance [RuneRb::System::Database::Appearance] the appearance of the context whose model color will be written to the buffer
     def write_model_color(buffer, appearance)
-      buffer.write(appearance[:hair_color], type: :byte)       # Hair color
-      buffer.write(appearance[:torso_color], type: :byte)      # Torso color
-      buffer.write(appearance[:leg_color], type: :byte)        # Leg color
-      buffer.write(appearance[:feet_color], type: :byte)       # Feet color
-      buffer.write(appearance[:skin_color], type: :byte)       # Skin color
+      buffer.write(appearance.hair_color, type: :byte)       # Hair color
+      buffer.write(appearance.torso_color, type: :byte)      # Torso color
+      buffer.write(appearance.leg_color, type: :byte)        # Leg color
+      buffer.write(appearance.feet_color, type: :byte)       # Feet color
+      buffer.write(appearance.skin_color, type: :byte)       # Skin color
     end
 
     # Writes the model animation of a context to the buffer.
     # @param buffer [RuneRb::Network::Buffer] the buffer to write to.
     # @param appearance [RuneRb::System::Database::Appearance] the appearance of the context whose model animation will be written to the buffer.
     def write_model_animation(buffer, appearance)
-      buffer.write(appearance[:stand_emote], type: :short)           # Stand Anim
-      buffer.write(appearance[:stand_turn_emote], type: :short)      # StandTurn Anim
-      buffer.write(appearance[:walk_emote], type: :short)            # Walk Anim
-      buffer.write(appearance[:turn_180_emote], type: :short)        # Turn 180
-      buffer.write(appearance[:turn_90_cw_emote], type: :short)      # Turn 90 Clockwise
-      buffer.write(appearance[:turn_90_ccw_emote], type: :short)     # Turn 90 Counter-Clockwise
-      buffer.write(appearance[:run_emote], type: :short)             # Run Anim
+      buffer.write(appearance.stand_emote, type: :short)           # Stand Anim
+      buffer.write(appearance.stand_turn_emote, type: :short)      # StandTurn Anim
+      buffer.write(appearance.walk_emote, type: :short)            # Walk Anim
+      buffer.write(appearance.turn_180_emote, type: :short)        # Turn 180
+      buffer.write(appearance.turn_90_cw_emote, type: :short)      # Turn 90 Clockwise
+      buffer.write(appearance.turn_90_ccw_emote, type: :short)     # Turn 90 Counter-Clockwise
+      buffer.write(appearance.run_emote, type: :short)             # Run Anim
     end
 
     # Writes a chat to the message

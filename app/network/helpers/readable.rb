@@ -45,7 +45,7 @@ module RuneRb::Network::Helpers::Readable
   # @param signed [Boolean] should the value be signed.
   # @param mutation [String] mutation that should be applied to the byte value.
   def read_byte(mutation: :STD, signed: false)
-    val = mutate(@data.read_nonblock(1).unpack1(signed ? 'c' : 'C'), mutation)
+    val = mutate(@data.slice!(0).unpack1(signed ? 'c' : 'C'), mutation)
     signed ? val.signed(:byte) : val.unsigned(:byte)
   end
 
@@ -156,7 +156,7 @@ module RuneRb::Network::Helpers::Readable
   # @return [String] the resulting string.
   def read_string
     val = ''
-    while (res = @data.read_nonblock(1))
+    while (res = read_byte; res != 10)
       break if res == "\n"
 
       val << res

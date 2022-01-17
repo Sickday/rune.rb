@@ -6,7 +6,7 @@ module RuneRb::Network::RS317
     def initialize(data)
       super(op_code: 249, type: :FIXED)
       write(data[:members] ? 1 : 0, type: :byte, mutation: :ADD)
-      write(data[:index], type: :short, mutation: :ADD, order: 'LITTLE')
+      write(data[:player_idx], type: :short, mutation: :ADD, order: 'LITTLE')
     end
   end
 end

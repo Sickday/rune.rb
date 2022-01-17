@@ -1,4 +1,5 @@
 module RuneRb::Game::Entity::Helpers::Equipment
+  include RuneRb::Utils::Logging
 
   # Shorthand slot assignment
   # @param value [RuneRb::Game::Item::Stack] the item to assign
@@ -40,19 +41,19 @@ module RuneRb::Game::Entity::Helpers::Equipment
   end
 
   # Initialize Equipment for the Context. Attempts to load equipment from serialized dump or create a new empty Equipment model for the context.
-  def load_equipment(first)
-    first ? setup_equipment : restore_equipment
-    log(RuneRb::GLOBAL[:COLOR].green("Loaded Equipment for #{RuneRb::GLOBAL[:COLOR].yellow(@profile.name)}")) if RuneRb::GLOBAL[:DEBUG]
+  def load_equipment(first_login: false)
+    first_login ? setup_equipment : restore_equipment
+    log(COLORS.green("Loaded Equipment for #{COLORS.yellow(@profile.username)}")) if RuneRb::GLOBAL[:ENV].debug
   end
 
   # Dumps the equipment of a context entity
   def dump_equipment
-    @profile.update(equipment: Oj.dump(@equipment.to_hash, mode: :compat, use_as_json: true))
+    @profile.items.update(equipment: Oj.dump(@equipment.to_hash, mode: :compat, use_as_json: true))
   end
 
   # Restores the equipment of the context
   def restore_equipment
-    data = Oj.load(@profile[:equipment])
+    data = Oj.load(@profile.items.equipment)
     @equipment = {}.tap do |hash|
       data.each do |slot, stack|
         hash[slot.to_sym] = RuneRb::Game::Item::Stack.new(-1, -1)

@@ -1,6 +1,6 @@
 module RuneRb::Database
   # The Attributes models a row within the `player_status` table.
-  class PlayerAttributes < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_status])
+  class PlayerAttributes < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_attributes])
 
     # Update the status with a ban.
     def ban
@@ -13,13 +13,11 @@ module RuneRb::Database
     end
 
     # Updates the last session column with information from the passed session object.
-    # @param details [Struct] the structured object with details about the session.
-    def post_session(details)
-      info = {}
-      info[:ip] = details.ip
-      info[:duration] = details.up_time
-      info[:date] = details.date_stamp
-      update(last_session: Oj.dump(info))
+    # @param ip [String] the IP address of the session
+    # @param stamp [Time] a timestamp.
+    def post_session(ip, stamp = Time.now)
+      update(last_login_ip: ip,
+             last_login_stamp: stamp)
     end
   end
 end

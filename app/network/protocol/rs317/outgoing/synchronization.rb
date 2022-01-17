@@ -19,20 +19,22 @@ module RuneRb::Network::RS317
       # Write the existing local list size
       write(context.locals[:players].size, type: :bits, options: { amount: 8 })
 
-      # write the local list for the context.
-      write_locals(state_block, context, context.world)
+      if context.locals[:players].size.positive?
+        # write the local list for the context.
+        write_locals(state_block, context, context.world)
 
-      # Update the local list
-      update_locals(state_block, context, context.world)
+        # Update the local list
+        update_locals(state_block, context, context.world)
+      end
 
       # Write 2047 in 11 bits to indicate we're no longer updating the list.
       write(2047, type: :bits, options: { amount: 11 })
 
       # Switch to byte access
-      @body.switch_access
+      @body.finish_access
 
       # Push the bytes from the state block.
-      write(state_block, type: :bytes)
+      write(state_block.body, type: :bytes)
     end
 
     private
@@ -49,9 +51,9 @@ module RuneRb::Network::RS317
         ctx = world.entities[:players][ctx_idx]
 
         if ctx.nil? ||
-          ctx.flags[:teleport?] ||
-          ctx.session.login[:stage] == :LOGGED_OUT ||
-          !ctx.position[:current].in_view?(context.position[:current])
+           ctx.flags[:teleport?] ||
+           ctx.session.auth[:stage] == :logged_out ||
+           !ctx.position[:current].in_view?(context.position[:current])
 
           # Write the actual removal bits
           write(1, type: :bits, options: { amount: 1 })
@@ -75,10 +77,10 @@ module RuneRb::Network::RS317
 
         # Skip this iteration if certain criteria are met
         next if ctx.flags[:teleport] || # Context is teleporting
-          context.locals[:players].include?(idx) || # Context is already on the list
-          ctx.session.login[:stage] == :LOGGED_OUT || # Context is logged out
-          !context.position[:current].in_view?(ctx.position[:current]) || # Context isn't in view
-          context.index == ctx.index # Context is self
+                context.locals[:players].include?(idx) || # Context is already on the list
+                ctx.session.auth[:stage] == :logged_out || # Context is logged out
+                !context.position[:current].in_view?(ctx.position[:current]) || # Context isn't in view
+                context.index == ctx.index # Context is self
 
         # Add this new index to the local list
         context.locals[:players] << idx
@@ -109,20 +111,20 @@ module RuneRb::Network::RS317
     def write_movement(context)
       case context.movement[:type]
       when :TELEPORT
-        write(true, type: :bit)
+        write(1, type: :bits, options: { amount: 1 })
         write_placement(context)
       when :RUN
-        write(true, type: :bit)
+        write(1, type: :bits, options: { amount: 1 })
         write_run(context)
       when :WALK
-        write(true, type: :bit)
+        write(1, type: :bits, options: { amount: 1 })
         write_walk(context)
       else
         if context.flags[:state?]
-          write(true, type: :bit)
+          write(1, type: :bits, options: { amount: 1 })
           write_stand
         else
-          write(false, type: :bit)
+          write(0, type: :bits, options: { amount: 1 })
         end
       end
     end

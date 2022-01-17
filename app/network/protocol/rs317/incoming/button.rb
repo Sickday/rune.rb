@@ -4,7 +4,8 @@ module RuneRb::Network::RS317::ButtonClickMessage
   # Parses the ButtonClickMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
   def parse(context)
-    id = read_short
+    id = @body.read(type: :short)
+    log! COLORS.red.bold("[Button:] #{id}")
     case id
     when 2458 then context.logout
     when 3651 then context.session.write_message(:ClearInterfacesMessage)

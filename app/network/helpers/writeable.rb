@@ -1,5 +1,4 @@
 module RuneRb::Network::Helpers::Writeable
-  using RuneRb::Utils::Patches::StringIORefinements
 
   # Write data to the payload.
   # @param type [Symbol] the type of value to write.
@@ -30,16 +29,18 @@ module RuneRb::Network::Helpers::Writeable
     @bit_access = !@bit_access
   end
 
+  def finish_access
+    @bit_position = (@bit_position + 7) / 8
+    switch_access
+  end
+
   private
 
   # Write a byte value to the payload.
   # @param value [Integer] the byte value to write.
   # @param mutation [String] mutations made to the byte.
   def write_byte(value, mutation: :STD)
-    case @data
-    when StringIO then @data.write_nonblock([mutate(value, mutation)].pack('C'))
-    when String then @data.concat([mutate(value, mutation)].pack('C'))
-    end
+    @data.concat([mutate(value, mutation)].pack('C'))
   end
 
   # Write a short value to the payload.
@@ -129,7 +130,7 @@ module RuneRb::Network::Helpers::Writeable
   # Write a string value to the payload. This will be escaped/terminated with a \n[10] value.
   # @param string [String, StringIO] the byte to write to the payload.
   def write_string(string)
-    @data.write_nonblock(string.force_encoding(Encoding::BINARY))
+    @data.concat(string.force_encoding(Encoding::BINARY))
     write_byte(10)
   end
 
@@ -151,9 +152,9 @@ module RuneRb::Network::Helpers::Writeable
   def write_bytes(values)
     case values
     when Array then values.each { |byte| write_byte(byte.to_i) }
-    when RuneRb::Network::Message then @data << values.body.snapshot
-    when RuneRb::Network::Buffer then @data << values.snapshot
-    when String then @data << values
+    when RuneRb::Network::Message then @data.concat(values.body.data)
+    when RuneRb::Network::Buffer then @data.concat(values.data)
+    when String then @data.concat(values)
     end
   end
 
@@ -169,7 +170,7 @@ module RuneRb::Network::Helpers::Writeable
   # Write a single bit with a value of 1 or 0 depending on the flag parameter.
   # @param flag [Boolean] the flag
   def write_bit(flag)
-    write_bits(flag ? 1 : 0, 1)
+    write_bits(flag == true ? 1 : 0, 1)
     self
   end
 
@@ -187,7 +188,7 @@ module RuneRb::Network::Helpers::Writeable
       @data[byte_pos] = [(@data[byte_pos].unpack1('c') | (value >> (amount - bit_offset)) & RuneRb::Network::BIT_MASK_OUT[bit_offset])].pack('c')
       byte_pos += 1
       amount -= bit_offset
-      #bit_offset = 8
+      bit_offset = 8
     end
 
     @data[byte_pos] = [0].pack('c') if @data[byte_pos].nil?

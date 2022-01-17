@@ -5,7 +5,7 @@ module RuneRb::Network::RS317
     # @param data [Hash] data containing the skill ID, experience and level to write to the message.
     def initialize(data)
       super(op_code: 134, type: :FIXED)
-      write(data[:id], type: :byte)
+      write(data[:skill_id], type: :byte)
       write(data[:experience], type: :int, order: 'MIDDLE')
       write(data[:level])
     end

@@ -1,7 +1,7 @@
 module RuneRb::Database
   # A {Location} models a row within the `locations` table.
   # @todo Perhaps consider simplifying how this is done. Maybe a single row table with a serialized column could speed this up a bit. Hashing might be worth considering as well.
-  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_location])
+  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_location])
 
     # Constructs a <RuneRb::Game::Map::Position> from the location.
     # @return [RuneRb::Game::Map::Position]

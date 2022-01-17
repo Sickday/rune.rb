@@ -14,7 +14,7 @@ module RuneRb::System
     def initialize
       @sessions = {}
       @servers = []
-      @worlds = { scheduler: Concurrent::TimerSet.new(executor: :fast), instances: {} }
+      @worlds = { schedulers: {}, instances: {} }
       @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
     end
 
@@ -48,11 +48,7 @@ module RuneRb::System
         # Deploy a server to accept sessions
         deploy_server
 
-        # Initialize a EventMachine#tick_loop for session transfers
-        init_session_tick
-
-        # Initialize a EventMachine#tick_loop to process world pipelines.
-        init_world_tick
+        init_tick
 
         log "Controller is running #{COLORS.bold.cyan("rune.rb-#{RuneRb::GLOBAL[:ENV].build}")} for protocol #{COLORS.bold.cyan(RuneRb::GLOBAL[:ENV].server_config.protocol)} @ #{COLORS.bold.cyan("#{RuneRb::GLOBAL[:ENV].server_config.host}:#{RuneRb::GLOBAL[:ENV].server_config.port}")}"
       end
@@ -71,7 +67,16 @@ module RuneRb::System
     def deploy_world(config = RuneRb::GLOBAL[:ENV].world_config)
       inst = RuneRb::Game::World::Instance.new(config)
       @worlds[:instances][inst.properties.signature] = inst
-      @worlds[:scheduler].post(0.600) { @worlds[:instances][inst.properties.signature].pulse }
+      @worlds[:schedulers][inst.properties.signature] = Concurrent::TimerTask.new(execution_interval: 0.600) do
+        @worlds[:instances][inst.properties.signature].pulse
+        inst.properties.signature
+      rescue StandardError => e
+        err "An error occurred during pulse task for world #{inst.properties.signature}"
+        err e.message
+        err e.backtrace&.join("\n")
+      end
+      @worlds[:schedulers][inst.properties.signature].add_observer(self)
+      @worlds[:schedulers][inst.properties.signature].execute
       log! "Deployed new World instance. [signature: #{inst.properties.signature}]"
       inst
     end
@@ -100,10 +105,12 @@ module RuneRb::System
 
         @worlds[:instances].each_key { |sig| shutdown(:world, signature: sig) }
         sleep(1) unless @worlds[:instances].values.all?(&:closed)
-        log! COLORS.red.bold("Closed #{@worlds[:instances].length} worlds..")
+        @worlds[:schedulers].each_value(&:shutdown)
+        sleep(1) if @worlds[:schedulers].values.any?(&:running?)
+        log! COLORS.red.bold("Closed #{@worlds[:instances].length} worlds.")
 
         @servers.each { |sig| shutdown(:server, signature: sig) }
-        log! COLORS.red.bold("Closed #{@servers.length} servers..")
+        log! COLORS.red.bold("Closed #{@servers.length} servers.")
 
         EventMachine.stop
         sleep(1) if EventMachine.reactor_running?
@@ -123,27 +130,31 @@ module RuneRb::System
       err e.backtrace&.join("\n")
     end
 
+    def update(time, result, ex)
+      if result
+        #log! "Pulse task completed for #{result} @ #{time}" if RuneRb::GLOBAL[:ENV].debug
+      elsif ex.is_a?(Concurrent::TimeoutError)
+        err 'Pulse task timed out'
+      else
+        err "Pulse task failed with an error! #{ex}"
+      end
+    end
+
     private
 
     # Each tick this function ensures sessions whose <status[:auth]> is equal to `:PENDING_WORLD` are logged into the next available world instance which can accept the player. This function also disconnects any lingering sessions which are no longer active.
-    def init_session_tick
+    def init_tick
       EventMachine.tick_loop do
-        @sessions.each_value do |session|
-          @sessions.delete(session) if session.auth[:stage] == :logged_out
-        end
+        @worlds[:instances].delete_if { |_, world| world.closed }
+        @sessions.delete_if { _2.auth[:stage] == :logged_out }
 
         transfers = @sessions.values.select { |session| session.auth[:stage] == :authenticate }
         destination = @worlds[:instances].values.detect { |world| world.entities[:players].length + transfers.length <= world.properties.max_contexts }
         transfers.each { |session| destination.receive(session) } unless destination.nil?
-      end
-    end
-
-    def init_world_tick
-      EventMachine.tick_loop do
-        @worlds[:instances].delete_if { |_, world| world.closed }
         @worlds[:instances].each_value(&:process_pipeline)
       end
     end
+
   end
 end
 

@@ -1,5 +1,4 @@
 module RuneRb::Network::Helpers::Parser
-  using RuneRb::Utils::Patches::StringRefinements
   using RuneRb::Utils::Patches::IntegerRefinements
 
   # Parses a message object for a specific context
@@ -19,10 +18,10 @@ module RuneRb::Network::Helpers::Parser
   # @param buffer [RuneRb::Network::Buffer] the buffer to read the next message from
   # @return [RuneRb::Network::Message] the parsed message.
   def next_message(buffer, cipher)
-    opcode = (buffer.read_byte - cipher.next_value & 0xFF).unsigned(:byte)
+    opcode = (buffer.read(type: :byte) - cipher.next_value & 0xFF).unsigned(:byte)
     length = RuneRb::Network::MESSAGE_SIZES[RuneRb::GLOBAL[:ENV].server_config.revision][opcode]
-    length = buffer.read_byte if length.negative?
-    body = length.times.inject('') { _1 << buffer.data.read_nonblock(1) }
+    length = buffer.read(type: :byte) if length.negative?
+    body = length.times.inject('') { _1 << buffer.data.slice!(0) }
     RuneRb::Network::Message.new(op_code: opcode, body: body)
   end
 end

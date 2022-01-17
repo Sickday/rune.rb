@@ -4,8 +4,6 @@ module RuneRb::Game::World::Pipeline
   def process_pipeline
     return if @pipeline.empty?
 
-    log! "#{@pipeline.size} Jobs in pipeline" if RuneRb::GLOBAL[:ENV].debug
-
     # Call the <=> function on each item in the collection and arrange them in an descending order.
     @pipeline.sort!
 
@@ -18,7 +16,6 @@ module RuneRb::Game::World::Pipeline
 
     # Start the first action.
     @pipeline.first.start(auto: true)
-
     @pipeline.clear
   rescue StandardError => e
     err "An error occurred while processing Jobs! Halted at Job with ID: #{@pipeline&.first&.id}", @pipeline&.first&.inspect, e

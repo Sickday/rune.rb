@@ -37,16 +37,18 @@ module RuneRb::Network
       _, @ip = Socket.unpack_sockaddr_in(get_peername)
       @sig = Druuid.gen
       @duration = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), start: Time.now }
-      @channel = { buffer: RuneRb::Network::Buffer.new('rnw'), position: 0 }
-      @auth = { attempts: 0, seed: (@sig & (0xFFFFFFFF / 2)), credentials_block: CredentialsBlock.new, connection_block: ConnectionBlock.new, login_block: LoginBlock.new, stage: :parse_connection }
-
+      @channel = { buffer: RuneRb::Network::Buffer.new('rw'), position: 0 }
+      @auth = { attempts: 0, seed: (@sig & (0xFFFFFFFF / 2)),
+                credentials_block: CredentialsBlock.new,
+                connection_block: ConnectionBlock.new,
+                login_block: LoginBlock.new, stage: :parse_connection }
       log! COLORS.green.bold("New Session created @ #{@ip}")
     end
 
     # Pushes data read from the socket to the buffer.
     # @param data [String] the received data.
     def receive_data(data)
-      @channel[:buffer].push(data, rewind_cursor: true)
+      @channel[:buffer].push(data)
     rescue StandardError => e
       err 'An error occurred while receiving data!', e.message
       err e.backtrace&.join("\n")
@@ -73,7 +75,6 @@ module RuneRb::Network
     # Ends the session closing it's socket and updating the <@authentication.stage> to :LOGGED_OUT.
     # @param reason [Symbol] the reason for the disconnect. Exclusively used for logging purposes.
     def disconnect(reason = :manual)
-      @context.logout if @auth[:stage] == :logged_in && reason != :logout
       case reason
       when :logout then log! COLORS.green.bold('Session ended by client.')
       when :authentication then err 'Session disconnected during authentication.'
@@ -84,9 +85,9 @@ module RuneRb::Network
       else err "Session disconnected for reason: #{reason}"
       end
     ensure
-      close_connection_after_writing
-      @closed = true
       @auth[:stage] = :logged_out
+      @closed = true
+      close_connection_after_writing
       log! inspect
     end
 
@@ -101,10 +102,6 @@ module RuneRb::Network
       when :parse_credentials then parse_credential_data
       when :logged_in then parse(next_message(@channel[:buffer], @cipher.incoming))
       end
-    rescue EOFError
-      log! 'Read all buffer data' if RuneRb::GLOBAL[:ENV].debug
-    ensure
-      @channel[:buffer].position = @channel[:position]
     end
   end
 end

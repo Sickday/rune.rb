@@ -11,7 +11,7 @@ TESTING_TESTS:
   before_script:
     - bundle install
   script:
-    - rake rune_rb:testing:run_tests
+    - rake rrb:test:run_tests
 
 TESTING_SPECS:
   stage: RUN_SPECS
@@ -20,4 +20,4 @@ TESTING_SPECS:
   before_script:
     - bundle install
   script:
-    - rake rune_rb:testing:run_specs
+    - rake rrb:test:run_specs

@@ -1,20 +1,37 @@
-version: '3'
+version: '3.3'
+
+networks:
+  rrb_net:
+
 services:
-  rune.rb-app:
-    container_name: "rune.rb-app"
-    image: 'sickday/rune.rb-app:latest'
-    build: .
-    ports:
-      - "43594:43594" # Game Port
-      - "43595:43595" # Cache Port
   rune.rb-db:
     container_name: "rune.rb-db"
     image: 'postgres:latest'
     restart: always
     volumes:
-      - ./data/sample-rune.rb-db.sql:/docker-entrypoint-initdb.d/sample-rune.rb-db.sql
+      - ./data/sample-rrb-db.sql:/docker-entrypoint-initdb.d/sample-rrb-db.sql
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=1234567
       - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - rrb_net
+
+  rune.rb-app:
+    container_name: "rune.rb-app"
+    image: 'sickday/rrb:latest'
+    links:
+      - rune.rb-db
+    ports:
+      - "43594:43594" # Game Port
+      - "43595:43595" # Cache Port
+    depends_on:
+      - rune.rb-db
+    networks:
+      - rrb_net
+
+
+volumes:
+  database_data:
+    driver: local

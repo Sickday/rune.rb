@@ -20,7 +20,6 @@ module RuneRb::Network::Helpers::Dispatcher
   # Encodes a RuneRb::Network::Message using the <@cipher>.
   # @param message [RuneRb::Network::Message] the message to encode.
   def encode(message, cipher)
-    log!("Encoding: #{message.inspect}")
     message.header.op_code += cipher.next_value & 0xFF
     message
   end

@@ -36,7 +36,7 @@ module RuneRb::Network::Helpers::Handshake
     err 'An error occurred while reading login data in handshake.', e.message
     err e.backtrace&.join("\n")
   ensure
-    process if @channel[:buffer].remaining >= 16
+    process if @channel[:buffer].length >= 16
   end
 
   def parse_cipher_data
@@ -48,7 +48,7 @@ module RuneRb::Network::Helpers::Handshake
     err 'An error occurred while reading cipher data in handshake.', e.message
     err e.backtrace&.join("\n")
   ensure
-    process if @channel[:buffer].remaining >= 6
+    process if @channel[:buffer].length >= 6
   end
 
   # Read credential data from the buffer.
@@ -63,10 +63,8 @@ module RuneRb::Network::Helpers::Handshake
   ConnectionBlock = Struct.new(:type, :name_hash) do
 
     def read(payload)
-      return unless payload.remaining >= 2
-
-      self.type = payload.read_byte
-      self.name_hash = payload.read_byte
+      self.type = payload.read(type: :byte)
+      self.name_hash = payload.read(type: :byte)
     end
   end
 
@@ -79,8 +77,8 @@ module RuneRb::Network::Helpers::Handshake
     end
 
     def read(payload)
-      self.client_chunk = [payload.read_int, payload.read_int]
-      self.server_chunk = [payload.read_int, payload.read_int]
+      self.client_chunk = [payload.read(type: :int), payload.read(type: :int)]
+      self.server_chunk = [payload.read(type: :int), payload.read(type: :int)]
     end
   end
 
@@ -88,10 +86,8 @@ module RuneRb::Network::Helpers::Handshake
     using RuneRb::Utils::Patches::StringRefinements
 
     def read(payload, server_chunk)
-      return unless payload.remaining >= 6
-
       self.client_seed = server_chunk.pack('NN').unpack1('q')
-      self.uid = payload.read_int
+      self.uid = payload.read(type: :int)
       self.username = payload.read(type: :string).downcase
       self.password = payload.read(type: :string).downcase
       self.name_hash = username.to_base37
@@ -101,16 +97,14 @@ module RuneRb::Network::Helpers::Handshake
   LoginBlock = Struct.new(:op_code, :payload_size, :magic, :revision, :low_memory, :crc, :rsa_length, :rsa_opcode) do
 
     def read(payload)
-      return unless payload.remaining >= 44
-
-      self.op_code = payload.read_byte
-      self.payload_size = payload.read_byte - 40
-      self.magic = payload.read_byte
-      self.revision = payload.read_short
-      self.low_memory = payload.read_byte.positive? ? :LOW : :HIGH
-      self.crc = [].tap { |arr| 9.times { arr << payload.read_int } }
-      self.rsa_length = payload.read_byte if RuneRb::GLOBAL[:ENV].server_config.protocol == 317
-      self.rsa_opcode = payload.read_byte
+      self.op_code = payload.read(type: :byte)
+      self.payload_size = payload.read(type: :byte) - 40
+      self.magic = payload.read(type: :byte)
+      self.revision = payload.read(type: :short)
+      self.low_memory = payload.read(type: :byte).positive? ? :LOW : :HIGH
+      self.crc = [].tap { |arr| 9.times { arr << payload.read(type: :int) } }
+      self.rsa_length = payload.read(type: :byte) if RuneRb::GLOBAL[:ENV].server_config.protocol == 317
+      self.rsa_opcode = payload.read(type: :byte)
     end
   end
 end

@@ -17,6 +17,7 @@ module RuneRb::Database
   end
 
   autoload :PlayerAppearance,    'models/player/appearance'
+  autoload :PlayerItems,         'models/player/items'
   autoload :PlayerAttributes,    'models/player/attributes'
   autoload :PlayerLocation,      'models/player/location'
   autoload :PlayerProfile,       'models/player/profile'

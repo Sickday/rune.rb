@@ -1,8 +1,12 @@
 module RuneRb::Database
-  class ItemSpawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_item_spawns])
+  class ItemSpawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:game_item_spawns])
 
     def location
       location.to_position
+    end
+
+    def stack
+      RuneRb::Game::Item::Stack.new(id, count)
     end
   end
 end

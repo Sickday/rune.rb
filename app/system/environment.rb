@@ -12,6 +12,7 @@ module RuneRb::System::Environment
     RuneRb::GLOBAL[:LOGGER] = init_logger
     RuneRb::GLOBAL[:DATABASE] = init_database
     # RuneRb::GLOBAL[:CACHE] = init_cache
+
     RuneRb::Network.include(RuneRb::Network::Constants)
   end
 
@@ -20,6 +21,7 @@ module RuneRb::System::Environment
   # A struct for world configuration.
   # @return [Struct]
   WorldConfiguration = Struct.new(:raw, :max_mobs, :max_contexts, :login_limit) do
+
     def load_world_config(path: '.rrb.world.env')
       self.raw = Dotenv.load(File.exist?(path) ? path : 'data/sample-rrb.world.env')
       self.max_mobs = raw['RRB_GAME_MAX_MOBS']&.to_i || 256
@@ -31,6 +33,7 @@ module RuneRb::System::Environment
   # A struct for server configuration.
   # @return [Struct]
   ServerConfiguration = Struct.new(:raw, :host, :port, :revision, :protocol) do
+
     def load_server_config(path: '.rrb.server.env')
       self.raw = Dotenv.load(File.exist?(path) ? path : 'data/sample-rrb.net.env')
       self.host = raw['RRB_NET_HOST'] || 'localhost'
@@ -86,35 +89,29 @@ module RuneRb::System::Environment
     end
   end
 
-  # A struct for database sources.
-  # @return [Struct]
-  Database = Struct.new(:player, :game, :system, :connection)
+  DatabaseConfiguration = Struct.new(:raw, :player, :system, :game) do
 
-  # Initializes the Database
-  # @param config [String] the raw configuration string
-  # @param logger [Logger] the logger
-  # @return [Database] the initialized Database.
-  def init_database(config: RuneRb::GLOBAL[:ENV].raw, logger: RuneRb::GLOBAL[:LOGGER].file)
-    data = Database.new
-    case config['RRB_STORAGE_TYPE']
-    when 'sqlite'
-      data.player = Sequel.sqlite(config['RRB_PLAYER_SQLITE_PATH'] || 'data/sample.player.sqlite', pragmata: :foreign_keys, logger: logger)
-      data.game = Sequel.sqlite(config['RRB_GAME_SQLITE_PATH'] || 'data/sample.game.sqlite', pragmata: :foreign_keys, logger: logger)
-      data.system = Sequel.sqlite(config['RRB_SYSTEM_SQLITE_PATH'] || 'data/sample.system.sqlite', pragmata: :foreign_keys, logger: logger)
-    when  'pg', 'postgresql', 'postgres'
-      # We'll use the pg_array extension to support the type
-      Sequel.extension(:pg_array)
-
-      # Model plugin for JSON serialization
-      Sequel::Model.plugin(:json_serializer)
-
-      data.connection = Sequel.postgres(host: config['RRB_PG_HOST'], port: config['RRB_PG_PORT'],
-                                        user: config['RRB_PG_USER'], password: config['RRB_PG_PASS'],
-                                        database: config['RRB_PG_DB'], logger: logger)
+    def load_config(path: '.rrb.db.env')
+      self.raw = Dotenv.load(File.exist?(path) ? path : 'data/sample-rrb.db.env')
+      case self.raw['RRB_STORAGE_TYPE']
+      when 'sqlite'
+        self.player = Sequel.sqlite(raw['RRB_PLAYER_SQLITE_PATH'] || 'data/sample-rrb-player.sqlite', pragmata: :foreign_keys, logger: RuneRb::GLOBAL[:LOGGER].file)
+        self.game = Sequel.sqlite(raw['RRB_GAME_SQLITE_PATH'] || 'data/sample-rrb-game.sqlite', pragmata: :foreign_keys, logger: RuneRb::GLOBAL[:LOGGER].file)
+        self.system = Sequel.sqlite(raw['RRB_SYSTEM_SQLITE_PATH'] || 'data/sample-rrb-system.sqlite', pragmata: :foreign_keys, logger: RuneRb::GLOBAL[:LOGGER].file)
+      when 'pg', 'postgresql', 'postgres'
+        # Model plugin for JSON serialization
+        Sequel::Model.plugin(:json_serializer)
+        self.player = self.game = self.system = Sequel.postgres(host: raw['RRB_PG_HOST'], port: raw['RRB_PG_PORT'],
+                                                                user: raw['RRB_PG_USER'], password: raw['RRB_PG_PASS'],
+                                                                database: raw['RRB_PG_DB'], logger: RuneRb::GLOBAL[:LOGGER].file)
+      end
     end
-    RuneRb::GLOBAL[:LOGGER].file.info('rune.rb-data') { '[Environment] -> Initialized Database!' }
+  end
 
-    data
+  def init_database
+    database = DatabaseConfiguration.new
+    database.load_config
+    database
   rescue StandardError => e
     if RuneRb::GLOBAL[:LOGGER]
       RuneRb::GLOBAL[:LOGGER].stdout.error('rune.rb-data') { "[#{Time.now.strftime('[%H:%M')}] [DatabaseSetup] ~> A fatal error occurred while initializing a global Database!" }

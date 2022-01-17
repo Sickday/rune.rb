@@ -12,6 +12,9 @@ WORKDIR /rune.rb
 # Copy Gemfile for deps
 COPY Gemfile .
 
+# Copy Rakefile for exec.
+COPY Rakefile .
+
 # Install deps
 RUN bundle install
 
@@ -25,4 +28,4 @@ EXPOSE 43594
 EXPOSE 43595
 
 # Light that shit up yo
-CMD ["rake", "rune_rb:live:run"]
+CMD ["rake", "rrb:live:run"]

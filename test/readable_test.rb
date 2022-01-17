@@ -5,7 +5,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_unsigned_byte
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_byte = stub_readable.read(type: :byte, signed: false)
       puts "Read Unsigned Byte: #{read_byte}"
@@ -19,7 +19,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_signed_byte
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_signed_byte = stub_readable.read(type: :byte, signed: true)
       puts "Read Signed Byte: #{read_signed_byte}"
@@ -33,7 +33,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_unsigned_short
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_short = stub_readable.read(type: :short, signed: false)
       puts "Read Unsigned Short: #{read_short}"
@@ -47,7 +47,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_signed_short
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_signed_short = stub_readable.read(type: :short, signed: true)
       puts "Read Signed Short: #{read_signed_short}"
@@ -61,7 +61,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_signed_medium
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_signed_medium = stub_readable.read(type: :medium, signed: true)
       puts "Read Signed Medium: #{read_signed_medium}"
@@ -75,7 +75,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_unsigned_medium
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_medium = stub_readable.read(type: :medium, signed: false)
       puts "Read Unsigned Medium: #{read_medium}"
@@ -89,7 +89,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_unsigned_integer
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_integer = stub_readable.read(type: :int, signed: false)
       puts "Read Unsigned Integer: #{read_integer}"
@@ -103,7 +103,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_signed_integer
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_signed_integer = stub_readable.read(type: :int, signed: true)
       puts "Read Signed Integer: #{read_signed_integer}"
@@ -117,7 +117,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_unsigned_long
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_long = stub_readable.read(type: :long, signed: false)
       puts "Read Unsigned Long: #{read_long}"
@@ -131,7 +131,7 @@ class ReadableBufferTest < Minitest::Test
   def test_read_signed_long
     rand(0xFF).times do
       stub_readable = RuneRb::Network::Buffer.new('r')
-      stub_readable.push(JUNK_DATA_FACTORY.call, rewind_cursor: true)
+      stub_readable.push(JUNK_DATA_FACTORY.call)
 
       read_long = stub_readable.read(type: :long, signed: true)
       puts "Read Signed Long: #{read_long}"

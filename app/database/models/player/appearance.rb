@@ -1,6 +1,6 @@
 module RuneRb::Database
   # A model representing a player's appearance details.
-  class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:player_appearance])
+  class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_appearance])
     def to_mob(id)
       update(mob_id: id)
     end

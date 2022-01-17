@@ -46,7 +46,6 @@ require_relative 'database/index'
 require_relative 'game/index'
 require_relative 'network/index'
 
-
 # Copyright (c) 2021, Patrick W.
 # All rights reserved.
 #

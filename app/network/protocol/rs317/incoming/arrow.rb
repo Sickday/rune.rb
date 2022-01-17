@@ -1,19 +1,9 @@
 module RuneRb::Network::RS317::ArrowKeyMessage
-
-  # A arrow rotation event
-  # @param yaw [Integer] the yaw of the rotation
-  # @param roll [Integer] the roll of the rotation.
-  Rotation = Struct.new(:yaw, :roll) do
-    include RuneRb::Utils::Logging
-
-    def inspect
-      log! "Camera Rotation: #{COLORS.blue.bold("[Roll]: #{COLORS.cyan(self.roll)}")} || [Yaw]: #{COLORS.cyan(self.yaw)}"
-    end
-  end
+  include RuneRb::Utils::Logging
 
   # Parses the ArrowKeyMessage
   def parse(_)
-    Rotation.new(read_short(false, :STD, :LITTLE), read_short(false, :STD, :LITTLE)).inspect
+    log! "Camera Rotation: #{COLORS.blue.bold("[Roll]: #{COLORS.cyan(read(type: :short, signed: false, mutation: :STD, order: 'LITTLE'))}")} || [Yaw]: #{COLORS.cyan(read(type: :short, signed: false, mutation: :STD, order: 'LITTLE'))}"
   end
 end
 

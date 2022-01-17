@@ -44,29 +44,35 @@ namespace :rrb do
     # Builds the Docker container for the Rune.rb framework.
     #
     # {rune_rb:devel:build_container}
-    task :build_release do
-      Kernel.system('docker-compose', 'build')
-      sleep(1)
-      Kernel.system('docker', 'push', 'sickday/rune.rb-app:latest')
-      sleep(1)
+    task build_release: ['rrb:dev:prep_release'] do
+      image_tag = Kernel.system('docker', 'build', '-t', 'sickday/rrb:latest', '.')
+      sleep(3)
+      Kernel.system('docker', 'push', 'sickday/rrb:latest')
+      sleep(15)
+      #Kernel.system('docker-compose', 'build')
       puts 'Built and released.'
     end
 
     # Pushes current project to staging environment.
     #
     # {rune_rb:devel:release}
-    task :release => ['rune_rb:clear_logs'] do
+    task prep_release: ['rrb:clear_logs'] do
       # Remove existing release files
       Dir.chdir('release/') do
-        puts `rm -rfv ./*`  # Remove directory contents.
+        puts `rm -rfv ./*` # Remove directory contents.
         sleep(1)
         puts Dir.empty?('.') ? 'Cleared previous release files.' : "Failed to remove some release files: #{Dir['.'].sort}"
         puts `cp -rv ../app ./`
         puts `cp -rv ../data ./`
+        puts `cp -rv ../Dockerfile ./`
+        puts `cp -rv ../docker-compose.yml ./`
+        puts `cp -rv  ../Gemfile ./`
+        puts `cp -rv ../LICENSE ./`
+        puts `cp -rv ../ReadMe.md ./`
         puts `cp -rv #{__FILE__} ./`
         sleep(1)
       end
-      puts 'Completed release.'
+      puts 'Release prepared.'
     end
 
     Rake::Task['rrb:dev:run'].enhance { Rake::Task['rrb:launch'].invoke }

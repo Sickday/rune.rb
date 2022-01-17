@@ -4,36 +4,40 @@ module RuneRb::Game::World::Gateway
   # Receives a session and attempts to authorize the login attempt. If the session is valid, a Context entity is created and added to the <@entities> collection. If the session is invalid, an appropriate response is dispatched to the session before the connection is closed by the session.
   # @param session [RuneRb::Network::Session] the session that is attempting to login
   def receive(session)
-    post(id: :RECEIVE_SESSION, priority: :HIGH, assets: [session, @entities[:players], self]) do |sess, players, world|
-      profile = RuneRb::Database::PlayerProfile.fetch_profile(sess.auth[:credentials_block].username)
-      status = authenticated?(sess.auth[:seed], profile, sess.auth[:credentials_block], sess.auth[:login_block])
-      if status.is_a?(Integer)
-        reject(sess, status)
+    profile = RuneRb::Database::PlayerProfile.fetch_profile(session.auth[:credentials_block].username)
+    status = authenticated?(session.auth[:seed], profile, session.auth[:credentials_block], session.auth[:login_block])
+    if status.is_a?(Integer)
+      reject(session, status)
+    else
+      profile ||= RuneRb::Database::PlayerProfile.register(session.sig.to_s, session.auth[:credentials_block])
+      if profile.nil?
+        log COLORS.green("Registered new Context for #{COLORS.yellow(profile.username.capitalize)}") if RuneRb::GLOBAL[:ENV].debug
       else
-        profile ||= RuneRb::Database::PlayerProfile.register(sess.sig.to_s, sess.auth[:credentials_block])
-        #binding.pry
-        accept(sess, profile)
-        ctx = RuneRb::Game::Entity::Context.new(sess, profile, world)
-        ctx.index = players.empty? ? 1 : players.keys.last + 1
-        players[ctx.index] = ctx
-        ctx.login
-        log COLORS.green("Registered new Context for #{COLORS.yellow(ctx.profile[:username].capitalize)}") if RuneRb::GLOBAL[:ENV].debug
-        log COLORS.green("Welcome, #{COLORS.yellow.bold(ctx.profile[:username].capitalize)}!")
+        active = @entities[:players].values.detect { _1.profile == profile }
+
+        if active.nil?
+          accept(session, profile)
+          ctx = RuneRb::Game::Entity::Context.new(session, profile, self)
+          ctx.index = @entities[:players].empty? ? 1 : @entities[:players].keys.last + 1
+          @entities[:players][ctx.index] = ctx
+          ctx.login
+        else
+          log! COLORS.red("Conflicting context for session @ #{session.ip}!")
+          active.logout
+          release(active)
+        end
       end
+
     end
   end
 
   # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
   # @param context [RuneRb::Game::Entity::Context] the context mob to release
   def release(context)
-    post(id: :RELEASE_CONTEXT, priority: :HIGH, assets: [@entities[:players], context]) do |players, ctx|
-      # Logout the context.
-      ctx.logout if ctx.session.auth[:stage] == :logged_in
-      # Remove the context from the entity list
-      players.delete(ctx)
-      log COLORS.green.bold("Released Context for #{COLORS.yellow(context.profile[:username].capitalize)}") if RuneRb::GLOBAL[:ENV].debug
-      log COLORS.magenta("See ya, #{COLORS.yellow(context.profile[:username].capitalize)}!")
-    end
+    # Remove the context from the entity list
+    @entities[:players].delete(context.index)
+    log COLORS.green.bold("Released Context for #{COLORS.yellow(context.profile.username.capitalize)}") if RuneRb::GLOBAL[:ENV].debug
+    log COLORS.magenta("See ya, #{COLORS.yellow(context.profile.username.capitalize)}!")
   end
 
   private
@@ -53,15 +57,17 @@ module RuneRb::Game::World::Gateway
   # Rejects a {RuneRb::Network::Session}.
   # @param code [Integer] the Response code which correlates with the reason for rejection. See {Gateway#RESPONSES}
   def reject(session, code)
-    log! COLORS.red("Rejecting Session with signature #{session.sig}")
     session.write_message(:RAW, data: [code].pack('C'))
     session.disconnect(:authentication)
+    log! COLORS.red("Rejected Session with signature #{session.sig}")
   end
 
   # Accept a {RuneRb::Network::Session}
   def accept(session, profile)
-    log! COLORS.green("Accepted Session with signature #{session.sig}")
-    session.write_message(:RAW, data: [RuneRb::Network::LOGIN_RESPONSES[:SUCCESS], profile[:rights], 0].pack('ccc'))
+    session.write_message(:RAW, data: [RuneRb::Network::LOGIN_RESPONSES[:SUCCESS],
+                                       profile.attributes.nil? ? 0 : profile.attributes.rights,
+                                       0].pack('ccc'))
+    log COLORS.green("Welcome, #{COLORS.yellow.bold(profile.username.capitalize)}!")
   end
 
   # Checks if a session's login block op_code is valid.
@@ -135,7 +141,7 @@ module RuneRb::Game::World::Gateway
   # Validate the banned status of the profile
   # @param profile [RuneRb::Database::Player::Profile]
   def valid_banned_status?(profile)
-    unless profile[:banned] == false
+    unless profile.attributes.nil? || profile.attributes.banned == false
       log COLORS.red.bold("#{profile[:username]} is banned from this network!")
       return false
     end

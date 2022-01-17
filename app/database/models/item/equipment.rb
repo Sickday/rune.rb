@@ -1,5 +1,5 @@
 module RuneRb::Database
-  class ItemEquipment < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_item_equipment]); end
+  class ItemEquipment < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:game_equipment_definitions]); end
 end
 
 # Copyright (c) 2021, Patrick W.

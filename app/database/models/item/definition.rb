@@ -1,9 +1,9 @@
 module RuneRb::Database
-  class ItemDefinition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_item_definitions])
+  class ItemDefinition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:game_item_definitions])
     plugin :static_cache
 
-    one_to_one :equipment, class: RuneRb::Database::Item::Equipment, key: :id
-    one_to_many :spawn, class: RuneRb::Database::Item::Spawn, key: :id
+    one_to_one :equipment_definition, class: RuneRb::Database::ItemEquipment, key: :id
+    one_to_many :spawn, class: RuneRb::Database::ItemSpawn, key: :id
 
     def alchemy_price
       { high_level: (0.6 * self[:value]).to_i,
