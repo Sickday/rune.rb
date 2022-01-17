@@ -1,9 +1,8 @@
 image: ruby:buster
 stages:
   - RUN_TESTS
-  - RUN_SPECS
 
-TESTING_TESTS:
+TESTING:
   stage: RUN_TESTS
   tags:
     - rune.rb
@@ -11,12 +10,4 @@ TESTING_TESTS:
     - bundle install
   script:
     - rake rrb:test:run_tests
-
-TESTING_SPECS:
-  stage: RUN_SPECS
-  tags:
-    - rune.rb
-  before_script:
-    - bundle install
-  script:
     - rake rrb:test:run_specs
