@@ -155,7 +155,7 @@ module RuneRb::System
 
         # Process worlds #
         ## Process the worlds
-        @worlds[:instances].each_value(&:process_pipeline)
+        @worlds[:instances].each_value { |instance| EventMachine.defer { instance.process_pipeline } }
         ## Remove closed worlds.
         @worlds[:instances].delete_if { _2.closed }
       end

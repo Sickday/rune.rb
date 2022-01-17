@@ -1,47 +1,50 @@
 module RuneRb::Game::World::Synchronization
+  SYNC_STAGES = %i[pre_sync sync post_sync].freeze
 
   # A pulse operation executes the Synchronization#prepare_sync, Synchronization#sync, and Synchronization#post_sync functions every 600 ms.
   def pulse
     return if @entities[:players].empty? && @entities[:mobs].empty?
 
-    prepare_sync
-    sync
-    complete_sync
+    EventMachine.defer(@sync[:pipeline][:operation], @sync[:pipeline][:callback], @sync[:pipeline][:callback])
   end
 
   private
 
-  # Prepare each entity for synchronization.
-  def prepare_sync
-    post(id: :SYNC_PREPARATION, priority: :HIGH, assets: [@entities[:mobs], @entities[:players]]) do |mobs, players|
-      # Complete pre-sync work for mobs
-      mobs.each_value(&:pre_sync)
 
-      # Complete pre-sync work for players.
-      players.each_value(&:pre_sync)
+  def init_sync
+    @sync = {}
+    @sync[:succeeded] = []
+    @sync[:failed] = {}
+    @sync.tap do |hash|
+      hash[:pipeline] = {}
+      hash[:pipeline][:operation] = proc do
+        @entities[:players].each_value { |ctx| SYNC_STAGES.each { |stage| process_sync(stage, ctx) } }
+      end.freeze
+
+      hash[:pipeline][:callback] = proc do
+        if hash[:failed].empty?
+          log! "Completed pulse for #{hash[:succeeded].length} contexts" unless hash[:succeeded].empty?
+        else
+          log! "Completed pulse with #{hash[:failed].length} errors!" unless hash[:succeeded].empty?
+          hash[:failed]&.each do |idx, result|
+            result.each do |stage, error|
+              err "An error occurred during #{stage} stage for context #{@entities[:players][idx].profile.username}!"
+              err error.message
+              err error.backtrace&.join("\n")
+            end
+          end
+        end
+        hash[:failed].clear
+        hash[:succeeded].clear
+      end.freeze
     end
   end
 
-  # Synchronize all entity states.
-  def sync
-    post(id: :SYNC, priority: :MEDIUM, assets: [@entities[:mobs], @entities[:players]]) do |mobs, players|
-      # Complete synchronization for each player
-      players.each_value(&:sync)
-
-      # Complete synchronization for each mob
-      mobs.each_value(&:sync)
-    end
-  end
-
-  # Complete all post-synchronization actions for each entity.
-  def complete_sync
-    post(id: :SYNC_COMPLETE, priority: :LOW, assets: [@entities[:mobs], @entities[:players]]) do |mobs, players|
-      # Complete pre-pulse work for mobs
-      mobs.each_value(&:post_sync)
-
-      # Complete pre-pulse work for players.
-      players.each_value(&:post_sync)
-    end
+  def process_sync(stage, context)
+    context.send(stage)
+    @sync[:succeeded] << context.index if stage == :post_sync
+  rescue StandardError => e
+    @sync[:failed][context.index] = { stage => e }
   end
 end
 

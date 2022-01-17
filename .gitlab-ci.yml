@@ -1,8 +1,7 @@
-image: ruby-2.7.4-buster
+image: ruby:buster
 stages:
   - RUN_TESTS
   - RUN_SPECS
-  - BUILD_CONTAINER
 
 TESTING_TESTS:
   stage: RUN_TESTS

@@ -8,6 +8,10 @@ module RuneRb::Game::World
     include Pipeline
     include Synchronization
 
+
+    # @return [Boolean, NilClass] is the instance closed?
+    attr :closed
+
     # @return [Hash] a map of entities the Instance has spawned
     attr :entities
 
@@ -17,12 +21,12 @@ module RuneRb::Game::World
     # @return [Struct] a map of properties for the World instance.
     attr :properties
 
-    # @return [Boolean, NilClass] is the instance closed?
-    attr :closed
+    attr :sync
 
     # Called when a new World Instance is created
     def initialize(config)
       parse_config(config)
+      init_sync
       @entities = { players: {}, mobs: {} }
       @responses = {}
       @pipeline = []
@@ -30,7 +34,7 @@ module RuneRb::Game::World
     end
 
     def inspect
-      "#{COLORS.green("[Signature]: #{COLORS.yellow.bold(@properties.signature)}")}\n#{COLORS.green("[Players]: #{COLORS.yellow.bold(@entities[:players].length)}/#{@properties.max_contexts}]")}\n#{COLORS.green("[Mobs]: #{COLORS.yellow.bold(@entities[:mobs].length)}/#{@properties.max_mobs}]")}"
+      "#{COLORS.green("[Signature]: #{COLORS.yellow.bold(@properties.signature)}")} || #{COLORS.green("[Players]: #{COLORS.yellow.bold(@entities[:players].length)}/#{@properties.max_contexts}]")} || #{COLORS.green("[Mobs]: #{COLORS.yellow.bold(@entities[:mobs].length)}/#{@properties.max_mobs}]")}"
     end
 
     # Receives a session and attempts to authorize the login attempt. If the session is valid, a Context entity is created and added to the <@entities> collection. If the session is invalid, an appropriate response is dispatched to the session before the connection is closed by the session.
