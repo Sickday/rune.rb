@@ -53,7 +53,6 @@ module RuneRb::Game
     ACTION_PRIORITIES = { HIGH: 1, MEDIUM: 2, LOW: 3 }.freeze
 
     autoload :Instance,             'world/instance'
-    autoload :Gateway,              'world/helpers/gateway'
     autoload :Pipeline,             'world/helpers/pipeline'
     autoload :Synchronization,      'world/helpers/synchronization'
     autoload :Action,               'world/models/action'

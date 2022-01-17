@@ -3,6 +3,7 @@ module RuneRb::System
   # Handles the launching, processing, and shutdown of RuneRb::Network::Endpoints and RuneRb::Game::World::Instance objects.
   class Controller
     include RuneRb::Utils::Logging
+    include RuneRb::System::Helpers::Gateway
     include Singleton
 
 
@@ -145,13 +146,18 @@ module RuneRb::System
     # Each tick this function ensures sessions whose <status[:auth]> is equal to `:PENDING_WORLD` are logged into the next available world instance which can accept the player. This function also disconnects any lingering sessions which are no longer active.
     def init_tick
       EventMachine.tick_loop do
-        @worlds[:instances].delete_if { |_, world| world.closed }
+        # Process sessions #
+        ## Remove logged out sessions
         @sessions.delete_if { _2.auth[:stage] == :logged_out }
+        ## Authenticate sessions that are ready for auth
+        @sessions.values.select { |session| session.auth[:stage] == :authenticate }
+                 .each { |session| authenticate(session, @worlds[:instances].values.first) }
 
-        transfers = @sessions.values.select { |session| session.auth[:stage] == :authenticate }
-        destination = @worlds[:instances].values.detect { |world| world.entities[:players].length + transfers.length <= world.properties.max_contexts }
-        transfers.each { |session| destination.receive(session) } unless destination.nil?
+        # Process worlds #
+        ## Process the worlds
         @worlds[:instances].each_value(&:process_pipeline)
+        ## Remove closed worlds.
+        @worlds[:instances].delete_if { _2.closed }
       end
     end
 

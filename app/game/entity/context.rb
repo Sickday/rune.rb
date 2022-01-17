@@ -61,13 +61,13 @@ module RuneRb::Game::Entity
     end
 
     # Performs a series of task related with constructing and initializing a context's data and attaching the context to the <@world> instance.
-    def login(first: true)
+    def login(first_login)
       @session.register_context(self)
       log! "Attached to Session #{@session.sig}!" if RuneRb::GLOBAL[:ENV].debug
       load_attr
       load_appearance
       # load_inventory(first_login: first)
-      load_equipment(first_login: first)
+      load_equipment(first_login: first_login)
       load_commands
       load_skills
 

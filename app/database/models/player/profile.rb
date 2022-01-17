@@ -32,15 +32,16 @@ module RuneRb::Database
       def register(signature, data)
         # Create the profile and associations
         RuneRb::GLOBAL[:DATABASE].player[:player_profile].insert(username: data.username,
-                                                                     password: data.password,
-                                                                     name_hash: data.name_hash,
-                                                                     id: signature)
+                                                                 password: data.password,
+                                                                 name_hash: data.name_hash,
+                                                                 id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_attributes].insert(id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_appearance].insert(id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_settings].insert(id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_skills].insert(id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_location].insert(id: signature)
         RuneRb::GLOBAL[:DATABASE].player[:player_items].insert(id: signature)
+        log COLORS.green("Registered new profile for #{COLORS.yellow(data.username.capitalize)}")
         # Return the created profile
         RuneRb::Database::PlayerProfile[signature]
       rescue StandardError => e

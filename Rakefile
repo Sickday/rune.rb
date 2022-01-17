@@ -45,11 +45,11 @@ namespace :rrb do
     #
     # {rune_rb:devel:build_container}
     task build_release: ['rrb:dev:prep_release'] do
-      image_tag = Kernel.system('docker', 'build', '-t', 'sickday/rrb:latest', '.')
+      Kernel.system('docker', 'build', '-t', 'sickday/rrb:latest', '.')
       sleep(3)
       Kernel.system('docker', 'push', 'sickday/rrb:latest')
       sleep(15)
-      #Kernel.system('docker-compose', 'build')
+      Kernel.system('docker-compose', 'build')
       puts 'Built and released.'
     end
 

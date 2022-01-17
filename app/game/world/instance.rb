@@ -5,7 +5,6 @@ module RuneRb::Game::World
     using RuneRb::Utils::Patches::IntegerRefinements
 
     include RuneRb::Utils::Logging
-    include Gateway
     include Pipeline
     include Synchronization
 
@@ -32,6 +31,26 @@ module RuneRb::Game::World
 
     def inspect
       "#{COLORS.green("[Signature]: #{COLORS.yellow.bold(@properties.signature)}")}\n#{COLORS.green("[Players]: #{COLORS.yellow.bold(@entities[:players].length)}/#{@properties.max_contexts}]")}\n#{COLORS.green("[Mobs]: #{COLORS.yellow.bold(@entities[:mobs].length)}/#{@properties.max_mobs}]")}"
+    end
+
+    # Receives a session and attempts to authorize the login attempt. If the session is valid, a Context entity is created and added to the <@entities> collection. If the session is invalid, an appropriate response is dispatched to the session before the connection is closed by the session.
+    # @param session [RuneRb::Network::Session] the session that is attempting to login
+    def receive(session, profile, first_login: false)
+      ctx = RuneRb::Game::Entity::Context.new(session, profile, self)
+      ctx.index = @entities[:players].empty? ? 1 : @entities[:players].keys.last + 1
+      @entities[:players][ctx.index] = ctx
+      ctx.login(first_login)
+      log! COLORS.green.bold("Created new Context for #{COLORS.yellow.bold(profile.username.capitalize)}.")
+      log! COLORS.green.bold(first_login ? "#{COLORS.yellow(profile.username.capitalize)} joined for the first time!" : "Welcome back, #{COLORS.yellow(profile.username.capitalize)}!")
+    end
+
+    # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
+    # @param context [RuneRb::Game::Entity::Context] the context mob to release
+    def release(context)
+      # Remove the context from the entity list
+      @entities[:players].delete(context.index)
+      log COLORS.green.bold("Released Context for #{COLORS.yellow(context.profile.username.capitalize)}") if RuneRb::GLOBAL[:ENV].debug
+      log COLORS.magenta("See ya, #{COLORS.yellow(context.profile.username.capitalize)}!")
     end
 
     # Shut down the world instance, releasing it's contexts.
