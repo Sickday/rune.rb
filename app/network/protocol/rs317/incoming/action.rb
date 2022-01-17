@@ -1,5 +1,5 @@
 module RuneRb::Network::RS317::ActionClickMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the ActionClickMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
@@ -16,7 +16,7 @@ module RuneRb::Network::RS317::ActionClickMessage
         context.update(:equipment)
         context.update(:inventory)
       else
-        @session.write_message(:sys_text, message: "You don't have enough space in your inventory to do this.")
+        context.session.write_message(:sys_text, message: "You don't have enough space in your inventory to do this.")
       end
     when 117 # Second
       interface = read_short(false, :ADD, :LITTLE)

@@ -3,7 +3,7 @@ module RuneRb::Network::RS317
 
     # Constructs a ClearInterfacesMessage
     def initialize(_)
-      super('w', { op_code: 219 }, :FIXED)
+      super(op_code: 219, type: :FIXED)
     end
   end
 end

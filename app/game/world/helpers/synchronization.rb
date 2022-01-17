@@ -1,14 +1,12 @@
 module RuneRb::Game::World::Synchronization
 
-  # Adds a periodic timer which executes the Synchronization#prepare_sync, Synchronization#sync, and Synchronization#post_sync functions every 600 ms.
-  def start_sync_service
-    EventMachine.add_periodic_timer(0.600) do
-      unless @entities[:players].empty? && @entities[:mobs].empty?
-        prepare_sync
-        sync
-        complete_sync
-      end
-    end
+  # A pulse operation executes the Synchronization#prepare_sync, Synchronization#sync, and Synchronization#post_sync functions every 600 ms.
+  def pulse
+    return if @entities[:players].empty? && @entities[:mobs].empty?
+
+    prepare_sync
+    sync
+    complete_sync
   end
 
   private

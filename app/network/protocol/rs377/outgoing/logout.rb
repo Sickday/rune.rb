@@ -4,7 +4,7 @@ module RuneRb::Network::RS377
     # Constructs a LogoutMessage
     # @param session [RuneRb::Network::Session] the session to disconnect.
     def initialize(session)
-      super('w', { op_code: 5 }, :FIXED)
+      super(op_code: 5, type: :FIXED)
       session.disconnect(:logout)
     end
   end

@@ -1,8 +1,5 @@
 module RuneRb::Database
-  # Information related to a mob's combat stats
-  #
-  # Models a row of the `mob_stats` table.
-  class MobStats < Sequel::Model(RuneRb::GLOBAL[:MOB_STATS]); end
+  class MobStats < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_stats]); end
 end
 
 # Copyright (c) 2021, Patrick W.

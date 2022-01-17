@@ -1,23 +1,23 @@
 module RuneRb::Database
-  # Information related to the location of a player in the virtual game world
-  #
-  # Models a row from the `player_locations` table
-  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:PLAYER_LOCATIONS])
+  # A {Location} models a row within the `locations` table.
+  # @todo Perhaps consider simplifying how this is done. Maybe a single row table with a serialized column could speed this up a bit. Hashing might be worth considering as well.
+  class PlayerLocation < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_location])
+
     # Constructs a <RuneRb::Game::Map::Position> from the location.
     # @return [RuneRb::Game::Map::Position]
     def to_position
       RuneRb::Game::Map::Position.new(self[:x], self[:y], self[:z])
     end
 
-    # Updates the <:x, :y, :z> values to that of the passed position object.
+    # Updates the internal [:x, :y, :z] values to that of the passed position object.
     # @param position [RuneRb::Game::Map::Position] the position to update the location coordinates with.
     def set(position)
       update(prev_x: self[:x],
              prev_y: self[:y],
              prev_z: self[:z],
-             x: position[:x] || RuneRb::GLOBAL[:DEFAULT_MOB_X] || 3222,
-             y: position[:y] || RuneRb::GLOBAL[:DEFAULT_MOB_Y] || 3222,
-             z: position[:z] || RuneRb::GLOBAL[:DEFAULT_MOB_Z] || 0)
+             x: position[:x] || 3222,
+             y: position[:y] || 3222,
+             z: position[:z] || 0)
     end
   end
 end

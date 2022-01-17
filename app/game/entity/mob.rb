@@ -1,7 +1,7 @@
 module RuneRb::Game::Entity
   # Models a mobile model.
   class Mob
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
     include RuneRb::Game::Entity::Helpers::Movement
     include RuneRb::Game::Entity::Helpers::Flags
 

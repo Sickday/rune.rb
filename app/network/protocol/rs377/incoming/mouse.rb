@@ -2,12 +2,12 @@ module RuneRb::Network::RS377::MouseEventMessage
 
   # A mouse movement event
   Movement = Struct.new(:clicks, :x, :y, :delta?) do
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     def inspect
-      log! RuneRb::GLOBAL[:COLOR].blue("[CLICK_COUNT:] #{self.clicks}"),
-           self.delta? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
-           self.delta? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
+      log! COLORS.blue("[CLICK_COUNT:] #{self.clicks}"),
+           self.delta? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}"),
+           self.delta? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}")
     end
   end
 

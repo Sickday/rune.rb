@@ -5,9 +5,9 @@ module RuneRb::Network::RS377
     # Constructs a new DisplaySidebarMessage object.
     # @param data [Hash] data containing the form id and menu ID
     def initialize(data)
-      super('w', { op_code: 10 }, :FIXED)
-      write_byte(data[:menu_id], :SUBTRACT)
-      write_short(data[:form], :ADD)
+      super(op_code: 10, type: :FIXED)
+        .write(data[:menu_id], type: :byte, mutation: :SUB)
+        .write(data[:form], type: :short, mutation: :ADD, order: 'BIG')
     end
   end
 end

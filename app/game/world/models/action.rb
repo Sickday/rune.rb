@@ -2,7 +2,7 @@ module RuneRb::Game::World
 
   # A Action object encapsulates a Fiber that will execute code, then transfer execution context to a target Fiber.
   class Action
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     # @!attribute [r] id
     # @return [Integer, Symbol] the ID of the object.

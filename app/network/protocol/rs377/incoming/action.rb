@@ -1,5 +1,5 @@
 module RuneRb::Network::RS377::ActionClickMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   def parse(context)
     case @header[:op_code]

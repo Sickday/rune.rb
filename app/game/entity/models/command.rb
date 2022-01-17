@@ -2,7 +2,7 @@ module RuneRb::Game::Entity
 
   # A Command that is executed by a context entity.
   class Command
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     # Called when a new Command object is created
     # @param assets [Hash] the assets for command execution.

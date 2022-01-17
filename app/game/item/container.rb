@@ -1,7 +1,7 @@
 module RuneRb::Game::Item
   # A container of ItemStacks.
   class Container
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     # Internal container object for ItemStacks
     attr :data

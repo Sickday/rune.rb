@@ -1,136 +1,149 @@
 module RuneRb::Game::World::Gateway
+  include RuneRb::Utils::Logging
 
   # Receives a session and attempts to authorize the login attempt. If the session is valid, a Context entity is created and added to the <@entities> collection. If the session is invalid, an appropriate response is dispatched to the session before the connection is closed by the session.
   # @param session [RuneRb::Network::Session] the session that is attempting to login
   def receive(session)
-    post(id: :RECEIVE_SESSION, priority: :HIGH, assets: [session, @entities[:players], self]) do |sess, players, world|
-      if authorized?(sess) && players.values.none? { |player| player.session == sess }
-        ctx = RuneRb::Game::Entity::Context.new(sess, RuneRb::Database::PlayerProfile.fetch_profile(sess.login[:Credentials]), world)
-        ctx.index = players.empty? ? 1 : players.keys.last + 1
-        players[ctx.index] = ctx
-        ctx.login
-        log RuneRb::GLOBAL[:COLOR].green("Registered new Context for #{RuneRb::GLOBAL[:COLOR].yellow(ctx.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
-        log RuneRb::GLOBAL[:COLOR].green("Welcome, #{RuneRb::GLOBAL[:COLOR].yellow.bold(ctx.profile[:name].capitalize)}!")
+    profile = RuneRb::Database::PlayerProfile.fetch_profile(session.auth[:credentials_block].username)
+    status = authenticated?(session.auth[:seed], profile, session.auth[:credentials_block], session.auth[:login_block])
+    if status.is_a?(Integer)
+      reject(session, status)
+    else
+      profile ||= RuneRb::Database::PlayerProfile.register(session.sig.to_s, session.auth[:credentials_block])
+      if profile.nil?
+        log COLORS.green("Registered new Context for #{COLORS.yellow(profile.username.capitalize)}") if RuneRb::GLOBAL[:ENV].debug
+      else
+        active = @entities[:players].values.detect { _1.profile == profile }
+
+        if active.nil?
+          accept(session, profile)
+          ctx = RuneRb::Game::Entity::Context.new(session, profile, self)
+          ctx.index = @entities[:players].empty? ? 1 : @entities[:players].keys.last + 1
+          @entities[:players][ctx.index] = ctx
+          ctx.login
+        else
+          log! COLORS.red("Conflicting context for session @ #{session.ip}!")
+          active.logout
+          release(active)
+        end
       end
+
     end
   end
 
   # Removes a context mob from the Instance#entities hash, then calls Context#logout on the specified mob to ensure a logout is performed.
   # @param context [RuneRb::Game::Entity::Context] the context mob to release
   def release(context)
-    post(id: :RELEASE_CONTEXT, priority: :HIGH, assets: [@entities[:players], context]) do |players, ctx|
-      # Remove the context from the entity list
-      players.delete_if { |_idx, entity| ctx.session.id == entity.session.id }
-
-      # Logout the context.
-      ctx.logout if ctx.session.status[:auth] == :LOGGED_IN
-      log RuneRb::GLOBAL[:COLOR].green.bold("Released Context for #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}") if RuneRb::GLOBAL[:DEBUG]
-      log RuneRb::GLOBAL[:COLOR].magenta("See ya, #{RuneRb::GLOBAL[:COLOR].yellow(context.profile[:name].capitalize)}!")
-    end
+    # Remove the context from the entity list
+    @entities[:players].delete(context.index)
+    log COLORS.green.bold("Released Context for #{COLORS.yellow(context.profile.username.capitalize)}") if RuneRb::GLOBAL[:ENV].debug
+    log COLORS.magenta("See ya, #{COLORS.yellow(context.profile.username.capitalize)}!")
   end
 
   private
 
-  def authorized?(session)
-    @responses[session] ||= RuneRb::Network::Message.new('w', { op_code: -1 }, :RAW)
-
-    false unless valid_operation_code?(session)
-    false unless valid_seed?(session)
-    false unless valid_magic?(session)
-    false unless valid_revision?(session)
-    false unless valid_credentials?(session)
-    false unless valid_status?(session)
-
-    log! "Authorized #{session.login[:Credentials][:Username].capitalize}!"
-
-    @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:SUCCESS], type: :byte, signed: false)
-    @responses[session].write(RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:rights], type: :byte, signed: false)
-    @responses[session].write(0, type: :byte, signed: false)
-    session.write_message(:raw, message: @responses[session])
-    @responses.delete(session)
+  def authenticated?(seed, profile, credential_block, login_block)
+    log "Authenticating session for user #{credential_block.username}"
+    return RuneRb::Network::LOGIN_RESPONSES[:BANNED_ACCOUNT] unless profile.nil? || valid_banned_status?(profile)
+    return RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION] unless valid_op_code?(login_block)
+    return RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION] unless valid_magic?(login_block)
+    return RuneRb::Network::LOGIN_RESPONSES[:INVALID_REVISION] unless valid_revision?(login_block)
+    return RuneRb::Network::LOGIN_RESPONSES[:BAD_SESSION_ID] unless valid_seed?(credential_block, seed)
+    return RuneRb::Network::LOGIN_RESPONSES[:BAD_CREDENTIALS] unless profile.nil? || valid_credentials?(credential_block, profile)
 
     true
-  rescue RuneRb::System::Errors::SessionReceptionError => e
-    err e.message
-    session.write_message(:raw, message: @responses[session])
+  end
+
+  # Rejects a {RuneRb::Network::Session}.
+  # @param code [Integer] the Response code which correlates with the reason for rejection. See {Gateway#RESPONSES}
+  def reject(session, code)
+    session.write_message(:RAW, data: [code].pack('C'))
     session.disconnect(:authentication)
-    @responses.delete(session)
-
-    false
+    log! COLORS.red("Rejected Session with signature #{session.sig}")
   end
 
-  # Attempts to validate the connection type
-  # @api private
-  def valid_operation_code?(session)
-    if [RuneRb::Network::CONNECTION_TYPES[:GAME_ONLINE],
-        RuneRb::Network::CONNECTION_TYPES[:GAME_RECONNECT]].include?(session.login[:OperationCode])
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:op_code, [RuneRb::Network::CONNECTION_TYPES[:GAME_ONLINE], RuneRb::Network::CONNECTION_TYPES[:GAME_RECONNECT]],
-                                                              session.login[:OperationCode])
-    end
+  # Accept a {RuneRb::Network::Session}
+  def accept(session, profile)
+    session.write_message(:RAW, data: [RuneRb::Network::LOGIN_RESPONSES[:SUCCESS],
+                                       profile.attributes.nil? ? 0 : profile.attributes.rights,
+                                       0].pack('ccc'))
+    log COLORS.green("Welcome, #{COLORS.yellow.bold(profile.username.capitalize)}!")
   end
 
-  # Attempts to validate the seed received in the login block.
+  # Checks if a session's login block op_code is valid.
+  # @param login_block [Struct] the session's login_block
+  # @return [Boolean] is the op_code valid?
   # @api private
-  def valid_seed?(session)
-    if session.login[:LoginSeed] == session.login[:ConnectionSeed]
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:BAD_SESSION_ID], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:seed, session.login[:LoginSeed], session.login[:ConnectionSeed])
-    end
-  end
-
-  # Attempts to validate the magic in the login block.
-  # @api private
-  def valid_magic?(session)
-    if session.login[:Magic] == 0xff
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:REJECTED_SESSION], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:magic, session.login[:Magic], 0xff)
+  def valid_op_code?(login_block)
+    unless [RuneRb::Network::CONNECTION_TYPES[:GAME_ONLINE],
+            RuneRb::Network::CONNECTION_TYPES[:GAME_RECONNECT]].include?(login_block.op_code)
+      err "Unrecognized Connection type! [Expected: [16, 18], Received: #{login_block.op_code}]"
+      return false
     end
     true
   end
 
-  # Attempts to validate the revision in the login block.
+  # Checks if a session's seed is the same as the client's seed.
+  # @param credential_block [Struct] the session's credential_block
+  # @param seed [Integer] the session's seed
+  # @return [Boolean] is the seed valid?
   # @api private
-  def valid_revision?(session)
-    if RuneRb::GLOBAL[:PROTOCOL].to_s.gsub('RS', '').to_i == session.login[:Revision]
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:INVALID_REVISION], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:revision, RuneRb::GLOBAL[:PROTOCOL].to_s.gsub('RS', '').to_i, session.login[:Revision])
-    end
-  end
-
-  # Attempts to validate the credentials of the login block
-  # @api private
-  def valid_credentials?(session)
-    if session.login[:Credentials][:Username].length >= 1 && RuneRb::GLOBAL[:GAME_BANNED_NAMES].none? { |row| row[:name].include?(session.login[:Credentials][:Username]) }
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:BAD_CREDENTIALS], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:username, nil, session.login[:Credentials][:Username])
-    end
-
-    if RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:password] == session.login[:Credentials][:Password]
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:BAD_CREDENTIALS], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:password, nil, nil)
+  def valid_seed?(credential_block, seed)
+    unless seed == credential_block.client_seed
+      err "Seed Mismatch! [Expected: #{credential_block.seed}, Received: #{credential_block.client_seed}]"
+      return false
     end
     true
   end
 
-  def valid_status?(session)
-    if RuneRb::Database::PlayerProfile.fetch_profile(session.login[:Credentials])[:banned] == false
-      true
-    else
-      @responses[session].write(RuneRb::Network::LOGIN_RESPONSES[:BANNED_ACCOUNT], type: :byte, signed: false)
-      raise RuneRb::System::Errors::SessionReceptionError.new(:banned, nil, session.login[:Credentials][:Username])
+  # Checks if a session's magic is the same as the client's magic.
+  # @param login_block [Struct] the session's login_block
+  # @return [Boolean] is the magic valid?
+  # @api private
+  def valid_magic?(login_block)
+    unless login_block.magic == 0xff
+      err "Unexpected Magic! [Expected: 255, Received: #{login_block.magic}]"
+      return false
+    end
+    true
+  end
+
+  # Checks if a session's revision is supported by the application.
+  # @param login_block [Struct] the login_block for the session.
+  # @api private
+  def valid_revision?(login_block)
+    unless RuneRb::GLOBAL[:ENV].server_config.protocol == login_block.revision
+      err "Unsupported Protocol! [Expected: #{RuneRb::GLOBAL[:ENV].server_config.protocol}, Received: RS#{login_block.revision}]"
+      return false
+    end
+    true
+  end
+
+  # Checks the credentials of the credentials_block for a session
+  # @param credential_block [Struct] the credential_block of the session
+  # @param profile [RuneRb::Database::Player::Profile] the profile fetched by username
+  # @return [Boolean] are the credentials valid?
+  # @api private
+  def valid_credentials?(credential_block, profile)
+    unless credential_block.username.length >= 1 && !RuneRb::Database::SystemBannedNames.check(credential_block.username)
+      log COLORS.red("Invalid Username for #{COLORS.yellow(credential_block.username)}")
+      return false
+    end
+
+    unless profile[:password] == credential_block.password
+      log COLORS.red("Invalid Password for #{COLORS.yellow(profile[:username].capitalize)}!")
+      return false
+    end
+
+    true
+  end
+
+  # Validate the banned status of the profile
+  # @param profile [RuneRb::Database::Player::Profile]
+  def valid_banned_status?(profile)
+    unless profile.attributes.nil? || profile.attributes.banned == false
+      log COLORS.red.bold("#{profile[:username]} is banned from this network!")
+      return false
     end
     true
   end

@@ -1,8 +1,5 @@
 module RuneRb::Database
-  # Collection of information related to a specific item when equipped.
-  #
-  # Models a row of the `item_equipment` table.
-  class ItemEquipment < Sequel::Model(RuneRb::GLOBAL[:ITEM_EQUIPMENT]); end
+  class ItemEquipment < Sequel::Model(RuneRb::GLOBAL[:DATABASE].game[:game_equipment_definitions]); end
 end
 
 # Copyright (c) 2021, Patrick W.
