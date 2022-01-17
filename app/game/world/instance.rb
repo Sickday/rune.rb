@@ -1,14 +1,13 @@
 module RuneRb::Game::World
   # A World Instance object models a virtual game world. The Instance object manages mobs, events, and most of all the game logic processing.
   class Instance
-    using RuneRb::System::Patches::SetRefinements
-    using RuneRb::System::Patches::IntegerRefinements
+    using RuneRb::Utils::Patches::SetRefinements
+    using RuneRb::Utils::Patches::IntegerRefinements
 
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
     include Gateway
     include Pipeline
     include Synchronization
-    include Setup
 
     # @return [Hash] a map of entities the Instance has spawned
     attr :entities
@@ -16,32 +15,50 @@ module RuneRb::Game::World
     # @return [Integer] the id of the world instance
     attr :id
 
-    # @return [Hash] a map of settings for the World instance.
-    attr :settings
+    # @return [Struct] a map of properties for the World instance.
+    attr :properties
+
+    # @return [Boolean, NilClass] is the instance closed?
+    attr :closed
 
     # Called when a new World Instance is created
     def initialize(config)
-      setup(config)
-      log 'New World Instance initialized!'
+      parse_config(config)
+      @entities = { players: {}, mobs: {} }
+      @responses = {}
+      @pipeline = []
+      @start = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), stamp: Time.now }
     end
 
     def inspect
-      "#{RuneRb::GLOBAL[:COLOR].green("[Title]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@settings[:LABEL])}")}\n#{RuneRb::GLOBAL[:COLOR].green("[Players]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@entities[:players].size)}/#{@settings[:MAX_PLAYERS]}]")}\n#{RuneRb::GLOBAL[:COLOR].green("[Mobs]: #{RuneRb::GLOBAL[:COLOR].yellow.bold(@entities[:mobs].size)}/#{@settings[:MAX_MOBS]}]")}"
+      "#{COLORS.green("[Signature]: #{COLORS.yellow.bold(@properties.signature)}")}\n#{COLORS.green("[Players]: #{COLORS.yellow.bold(@entities[:players].length)}/#{@properties.max_contexts}]")}\n#{COLORS.green("[Mobs]: #{COLORS.yellow.bold(@entities[:mobs].length)}/#{@properties.max_mobs}]")}"
     end
 
     # Shut down the world instance, releasing it's contexts.
     def shutdown
       # release all contexts
       @entities[:players].each_value { |context| release(context) }
-      @status = :CLOSED
       # RuneRb::World::Instance.dump(self) if graceful
     ensure
-      log! "Total Instance Up-time: #{up_time.to_i.to_ftime}"
+      @closed = true
+      log! "Total Instance Up-time: #{up_time}"
     end
 
     # The current up-time for the server.
     def up_time
-      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@start[:time] || Time.now)).round(3)
+      (Process.clock_gettime(Process::CLOCK_MONOTONIC) - (@start[:time] || Time.now)).round(3).to_i.to_ftime
+    end
+
+    private
+
+    Properties = Struct.new(:signature, :max_contexts, :max_mobs, :login_limit)
+
+    def parse_config(config)
+      @properties = Properties.new
+      @properties.signature = Druuid.gen
+      @properties.max_contexts = config.max_contexts
+      @properties.max_mobs = config.max_mobs
+      @properties.login_limit = config.login_limit
     end
   end
 end

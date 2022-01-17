@@ -4,10 +4,10 @@ module RuneRb::Network::RS377
     # Constructs a new StatUpdateMessage
     # @param data [Hash] data containing the skill ID, experience and level to write to the message.
     def initialize(data)
-      super('w', { op_code: 49 }, :FIXED)
-      write_byte(data[:skill_id], :NEGATE)
-      write_byte(data[:level])
-      write_int(data[:experience])
+      super(op_code: 49, type: :FIXED)
+      write(data[:id], type: :byte, mutation: :NEG)
+      write(data[:level], type: :byte)
+      write(data[:experience], type: :int)
     end
   end
 end

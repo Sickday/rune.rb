@@ -1,30 +1,34 @@
 module RuneRb::Database
-  # Information related to the appearance of a player in the virtual game world
-  #
-  # Models a row of the `player_appearance` table
-  class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:PLAYER_APPEARANCES])
-
-    # Updates the `mob_id` column to the specified value.
-    #
-    # During the next ContextSynchronizationMessage this value is observed and applied to the ContextStateBlock which will ensure the appropriate mask is applied.
-    # @param id [Integer] the id of the mob to appear as.
+  # A model representing a player's appearance details.
+  class PlayerAppearance < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_appearance])
     def to_mob(id)
       update(mob_id: id)
     end
 
-    # Resets the `mob_id` column to -1.
-    #
-    # During the next ContextSynchronizationMessage this value is observed and the player's actual appearance is sent.
     def from_mob
       update(mob_id: -1)
     end
 
-    # Updates the `head_icon` column to the specified value
-    #
-    # During the next ContextSynchronizationMessage this value is observed and applied to the ContextStateBlock which will ensure the proper value is sent for the head_icon
-    # @param id [Integer] the id of the head_icon to send.
     def to_head(id)
       update(head_icon: id)
+    end
+
+    # Reads and parses an appearance from a message.
+    # @param message [RuneRb::Network::Message] the message to read from
+    def from_message(message)
+      update(gender: message.read(type: :byte, mutation: :STD),
+             head: message.read(type: :byte, mutation: :STD),
+             beard: message.read(type: :byte, mutation: :STD),
+             chest: message.read(type: :byte, mutation: :STD),
+             arms: message.read(type: :byte, mutation: :STD),
+             hands: message.read(type: :byte, mutation: :STD),
+             legs: message.read(type: :byte, mutation: :STD),
+             feet: message.read(type: :byte, mutation: :STD),
+             hair_color: message.read(type: :byte, mutation: :STD),
+             torso_color: message.read(type: :byte, mutation: :STD),
+             leg_color: message.read(type: :byte, mutation: :STD),
+             feet_color: message.read(type: :byte, mutation: :STD),
+             skin_color: message.read(type: :byte, mutation: :STD))
     end
   end
 end

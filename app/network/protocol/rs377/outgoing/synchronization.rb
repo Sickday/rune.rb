@@ -5,19 +5,19 @@ module RuneRb::Network::RS377
     # Called when a new SynchronizationMessage is created
     # @param context [RuneRb::Game::Entity::Context] the Context entity to Synchronize
     def initialize(context)
-      super('w',{ op_code: 90 }, :VARIABLE_SHORT)
+      super(op_code: 90, type: :VARIABLE_SHORT)
 
       # Switch to bit access
-      switch_access
+      @body.switch_access
 
       # Write Context entity movement
       write_movement(context)
 
       # Create a state block which to write the appearance of the context mob and surrounding mobs to.
-      state_block = ContextStateBlock.new(context)
+      state_block = RuneRb::Network::RS377::ContextStateBlock.new(context)
 
       # Write the existing local list size
-      write_bits(context.locals[:players].size, 8)
+      write(context.locals[:players].size, type: :bits, options: { amount: 8 })
 
       # write the local list for the context.
       write_locals(state_block, context, context.world)
@@ -25,14 +25,15 @@ module RuneRb::Network::RS377
       # Update the local list
       update_locals(state_block, context, context.world)
 
-      # Write 2047 in 11 bits to indicate we're no longer updating the list.
-      write_bits(2047, 11)
-
-      # Switch to byte access
-      switch_access
-
-      # Push the bytes from the state block.
-      write_bytes(state_block)
+      if state_block.header.length.positive?
+        # Write 2047 in 11 bits to indicate we're no longer updating the list.
+        write(2047, type: :bits, options: { amount: 11 })
+        # Push the bytes from the state block.
+        write(state_block, type: :bytes)
+      else
+        # Switch to byte access
+        @body.switch_access
+      end
     end
 
     private
@@ -43,15 +44,19 @@ module RuneRb::Network::RS377
     def write_locals(state, context, world)
       # Write the current list
       context.locals[:players].each do |ctx_idx|
-        next if  ctx_idx == context.index
+        next if ctx_idx == context.index
 
         # Fetch the context by it's index.
         ctx = world.entities[:players][ctx_idx]
 
-        if ctx.nil? || ctx.flags[:teleport?] || ctx.session.status[:auth] == :LOGGED_OUT || !ctx.position[:current].in_view?(context.position[:current])
+        if ctx.nil? ||
+          ctx.flags[:teleport?] ||
+          ctx.session.login[:stage] == :LOGGED_OUT ||
+          !ctx.position[:current].in_view?(context.position[:current])
+
           # Write the actual removal bits
-          write_bits(1, 1)
-          write_bits(3, 2)
+          write(1, type: :bits, options: { amount: 1 })
+          write(3, type: :bits, options: { amount: 2 })
 
           # Remove the contexts from each other's local list
           context.locals[:players].delete(ctx_idx)
@@ -72,7 +77,7 @@ module RuneRb::Network::RS377
         # Skip this iteration if certain criteria are met
         next if ctx.flags[:teleport] || # Context is teleporting
           context.locals[:players].include?(idx) || # Context is already on the list
-          ctx.session.status[:auth] == :LOGGED_OUT || # Context is logged out
+          ctx.session.login[:stage] == :LOGGED_OUT || # Context is logged out
           !context.position[:current].in_view?(ctx.position[:current]) || # Context isn't in view
           context.index == ctx.index # Context is self
 
@@ -89,15 +94,15 @@ module RuneRb::Network::RS377
     # @param context [RuneRb::Game::Entity::Context] the context to write.
     def write_new_context(context, initial)
       # Write the context's index in the world
-      write_bits(context.index, 11)
+      write(context.index, type: :bits, options: { amount: 11 })
       # Wrote the delta x for the mob
-      write_bits(initial.position[:current][:x] - context.position[:current][:x], 5)
+      write(initial.position[:current][:x] - context.position[:current][:x], type: :bits, options: { amount: 5 })
       # Write the context's state update flag bit
-      write_bit(context.flags[:state?])
+      write(context.flags[:state?] ? 1 : 0, type: :bits, options: { amount: 1 })
       # Write the context's discard_waypoints flag bit
-      write_bit(context.flags[:discard_waypoints?])
+      write(context.flags[:discard_waypoints?] ? 1 : 0, type: :bits, options: { amount: 1 })
       # Write delta y for the mob
-      write_bits(initial.position[:current][:y] - context.position[:current][:y], 5)
+      write(initial.position[:current][:y] - context.position[:current][:y], type: :bits, options: { amount: 5 })
     end
 
     # Writes the movement of a context to the message
@@ -105,20 +110,23 @@ module RuneRb::Network::RS377
     def write_movement(context)
       case context.movement[:type]
       when :TELEPORT
-        write_bit(true)
+        write(true, type: :bit)
+        write(3, type: :bits, options: { amount: 2 }) # 3 to indicate Placement
         write_placement(context)
       when :RUN
-        write_bit(true)
+        write(true, type: :bit)
+        write(2, type: :bits, options: { amount: 2 }) # 2 to indicate Running
         write_run(context)
       when :WALK
-        write_bit(true)
+        write(true, type: :bit)
+        write(1, type: :bits, options: { amount: 2 }) # 1 to indicate Walking
         write_walk(context)
       else
         if context.flags[:state?]
-          write_bit(true)
+          write(true, type: :bit)
           write_stand
         else
-          write_bit(false)
+          write(0, type: :bits, options: { amount: 1 })
         end
       end
     end
@@ -126,35 +134,32 @@ module RuneRb::Network::RS377
     # Write the placement of a context placement bits to the message
     # @param context [RuneRb::Game::Entity::Context] the context whose placement will be written.
     def write_placement(context)
-      write_bits(3, 2) # Write 3 to indicate the player needs placement on a new tile.
-      write_bits(context.flags[:region?] ? 0 : 1, 1) # Region change?
-      write_bits(context.position[:current][:z] || 0, 2) # Write the plane. 0 being ground level
-      write_bits(context.position[:current].local_y, 7) # Local Y
-      write_bits(context.position[:current].local_x, 7) # Local X
-      write_bit(context.flags[:state?]) # Update State/Appearance?
+      write(context.flags[:region?] ? 1 : 0, type: :bits, options: { amount: 1 }) # Region change?
+      write(context.position[:current][:z] || 0, type: :bits, options: { amount: 2 }) # Write the plane. 0 being ground level
+      write(context.position[:current].local_y, type: :bits, options: { amount: 7 }) # Local Y
+      write(context.position[:current].local_x, type: :bits, options: { amount: 7 }) # Local X
+      write(context.flags[:state?] ? 1 : 0, type: :bits, options: { amount: 1 }) # Update State/Appearance?
       log "Wrote [x: #{context.position[:current].local_x}, y: #{context.position[:current].local_y}]"
     end
 
     # Write the standing movement bits of a context to the message
     def write_stand
-      write_bits(0, 2) # we write 0 because we're standing
+      write(0, type: :bits, options: { amount: 2 }) # we write 0 because we're standing
     end
 
     # Write the walking movement bits of a context to the message
     # @param context [RuneRb::Game::Entity::Context] the mob whose movement will be written
     def write_walk(context)
-      write_bits(1, 2) # we write 1 because we're walking
-      write_bits(context.movement[:directions][:primary], 3)
-      write_bit(context.flags[:state?])
+      write(context.movement[:directions][:primary], type: :bits, options: { amount: 3 })
+      write(context.flags[:state?] ? 1 : 0, type: :bits, options: { amount: 1 }) # Update State/Appearance?
     end
 
     # Write running movement bits of a context to the message
     # @param context [RuneRb::Game::Entity::Context] the mob whose movement will be written
     def write_run(context)
-      write_bits(2, 2) # we write 2 because we're running
-      write_bits(context.movement[:directions][:primary], 3)
-      write_bits(context.movement[:directions][:secondary], 3)
-      write_bit(context.flags[:state?])
+      write(context.movement[:directions][:primary], type: :bits, options: { amount: 3 })
+      write(context.movement[:directions][:secondary], type: :bits, options: { amount: 3 })
+      write(context.flags[:state?] ? 1 : 0, type: :bits, options: { amount: 1 }) # Update State/Appearance?
     end
   end
 end

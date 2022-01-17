@@ -4,10 +4,10 @@ module RuneRb::Network::RS377::ArrowKeyMessage
   # @param yaw [Integer] the yaw of the rotation
   # @param roll [Integer] the roll of the rotation.
   Rotation = Struct.new(:roll, :yaw) do
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     def inspect
-      log! "Camera Rotation: #{RuneRb::GLOBAL[:COLOR].blue.bold("[Roll]: #{RuneRb::GLOBAL[:COLOR].cyan(self.roll)}")} || [Yaw]: #{RuneRb::GLOBAL[:COLOR].cyan(self.yaw)}"
+      log! "Camera Rotation: #{COLORS.blue.bold("[Roll]: #{COLORS.cyan(self.roll)}")} || [Yaw]: #{COLORS.cyan(self.yaw)}"
     end
   end
 

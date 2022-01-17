@@ -1,20 +1,20 @@
 module RuneRb::Network::RS317::SwitchItemMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the SwitchItemMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
   def parse(context)
     interface = read_short(false, :ADD, :LITTLE)
-    _insert = read_byte(false, :NEGATE).positive? # This will matter when bank is implemented. TODO: impl bank
+    insert = read_byte(false, :NEGATE).positive? # This will matter when bank is implemented
     old_slot = read_short(false, :ADD, :LITTLE)
     new_slot = read_short(false, :STD, :LITTLE)
 
     case interface
     when 3214
       if old_slot >= 0 &&
-        new_slot >= 0 &&
-        old_slot <= context.inventory[:container].limit &&
-        new_slot <= context.inventory[:container].limit
+         new_slot >= 0 &&
+         old_slot <= context.inventory[:container].limit &&
+         new_slot <= context.inventory[:container].limit
         context.inventory[:container].swap(old_slot, new_slot)
         context.update(:inventory)
       end

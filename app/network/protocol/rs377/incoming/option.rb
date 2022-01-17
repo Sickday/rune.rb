@@ -1,5 +1,5 @@
 module RuneRb::Network::RS377::OptionClickMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the OptionClickMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
@@ -13,7 +13,7 @@ module RuneRb::Network::RS377::OptionClickMessage
       interface = read_short(false, :STD, :LITTLE)
       item_id = read_short(false, :STD, :LITTLE)
       slot = read_short(false, :ADD) + 1
-      item = context.inventory[:container].at(slot)
+      item = context.inventory[:container].item_at(slot)
       return unless item # This check is for instances where a context may perform a 5thoptclick followed by this 2ndoptclick. this slot may be nil, so we do nothing and sort of force a proper click.
 
       old = context.equipment[item.definition[:slot]]

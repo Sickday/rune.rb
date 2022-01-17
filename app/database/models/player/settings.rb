@@ -1,8 +1,5 @@
 module RuneRb::Database
-  # Data related to in-game individual player settings
-  #
-  # Models a row of the `player_settings` table.
-  class PlayerSettings < Sequel::Model(RuneRb::GLOBAL[:PLAYER_SETTINGS]); end
+  class PlayerSettings < Sequel::Model(RuneRb::GLOBAL[:DATABASE].player[:player_settings]); end
 end
 
 # Copyright (c) 2021, Patrick W.

@@ -1,10 +1,10 @@
 module RuneRb::Network::RS317::WindowFocusMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the WindowFocusMessage
   def parse(_)
-    focused = read_byte
-    log RuneRb::GLOBAL[:COLOR].blue("Client Focus: #{RuneRb::GLOBAL[:COLOR].cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::GLOBAL[:DEBUG]
+    focused = @body.read(type: :byte)
+    log COLORS.blue("Client Focus: #{COLORS.cyan(focused.positive? ? '[Focused]' : '[Unfocused]')}!") if RuneRb::GLOBAL[:ENV].debug
   end
 end
 

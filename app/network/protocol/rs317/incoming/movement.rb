@@ -1,5 +1,5 @@
 module RuneRb::Network::RS317::MovementMessage
-  include RuneRb::System::Log
+  include RuneRb::Utils::Logging
 
   # Parses the MovementMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for

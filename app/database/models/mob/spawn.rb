@@ -1,15 +1,9 @@
-module RuneRb::Database
-  # Information related to a location where a mob spawns in the virtual game world.
-  #
-  # Models a row of the `mob_spawns` table.
-  class MobSpawn < Sequel::Model(RuneRb::GLOBAL[:MOB_SPAWNS])
-    #one_to_one :location, class: RuneRb::Database::GameLocation, key: :id
+module RuneRb::Database::Mob
+  class Spawn < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_spawns])
 
-=begin
     def position
       location.to_position
     end
-=end
   end
 end
 

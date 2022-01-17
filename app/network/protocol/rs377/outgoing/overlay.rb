@@ -2,10 +2,10 @@ module RuneRb::Network::RS377
   class DisplayOverlayMessage < RuneRb::Network::Message
 
     # Constructs a DisplayOverlayMessage
-    # @param data [Hash] data containing the ID of the overlay
-    def initialize(data)
-      super('w', { op_code: 50 }, :FIXED)
-      write_short(data[:id])
+    # @param id [Integer] the ID of the corresponding Overlay.
+    def initialize(id)
+      super(op_code: 50, type: :FIXED)
+      write(id, type: :short)
     end
   end
 end

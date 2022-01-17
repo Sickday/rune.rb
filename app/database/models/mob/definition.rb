@@ -1,13 +1,10 @@
-module RuneRb::Database
-  # Defining information related to a Mob entity
-  #
-  # Models a row of the `mob_definitions` database.
-  class MobDefinition < Sequel::Model(RuneRb::GLOBAL[:MOB_DEFINITIONS])
+module RuneRb::Database::Mob
+  class Definition < Sequel::Model(RuneRb::GLOBAL[:DATABASE].connection[:game_mob_definitions])
     plugin :static_cache
 
     one_to_one :animations, class: RuneRb::Database::MobAnimations, key: :id
-    one_to_one :stats, class: RuneRb::Database::MobStats, key: :id
-    one_to_many :spawn, class: RuneRb::Database::MobSpawn, key: :id
+    one_to_one :stats, class: RuneRb::Database::Mob::Stats, key: :id
+    one_to_many :spawn, class: RuneRb::Database::Mob::Spawn, key: :id
   end
 end
 

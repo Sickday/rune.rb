@@ -22,7 +22,7 @@ module RuneRb::Game::Item
 
     # An inspection of the Stack's definition.
     def inspect
-      RuneRb::GLOBAL[:COLOR].blue("[ITEM:] #{RuneRb::GLOBAL[:COLOR].cyan.bold(@definition[:name])} || [COUNT:] #{RuneRb::GLOBAL[:COLOR].cyan.bold(@size)} || [DESC:] #{RuneRb::GLOBAL[:COLOR].green(@definition[:desc])}")
+      COLORS.blue("[ITEM:] #{COLORS.cyan.bold(@definition.name)} || [COUNT:] #{COLORS.cyan.bold(@size)} ")
     end
 
     class << self

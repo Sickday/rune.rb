@@ -1,4 +1,5 @@
 module RuneRb::Game::Entity::Helpers::Inventory
+  include RuneRb::Utils::Logging
 
   # Adds an item stack to the inventory at a specific slot if provided
   # @param item_stack [RuneRb::Game::Item::Stack] the item stack to add
@@ -24,16 +25,16 @@ module RuneRb::Game::Entity::Helpers::Inventory
   # @param data [Hash] database to initialize the inventory with.
   def setup_inventory(data = nil)
     @inventory = {
-        container: RuneRb::Game::Item::Container.new(28, stackable: false),
-        weight: 0
+      container: RuneRb::Game::Item::Container.new(28, stackable: false),
+      weight: 0
     }
     @inventory[:container].from(data) unless data.nil? || !data.is_a?(Hash)
   end
 
   # Initialize Inventory for the Context. Attempts to load inventory from serialized dump or create a new empty Inventory for the context
-  def load_inventory(first)
-    first ? setup_inventory : restore_inventory
-    log(RuneRb::GLOBAL[:COLOR].green("Loaded Inventory for #{RuneRb::GLOBAL[:COLOR].yellow(@profile.name)}")) if RuneRb::GLOBAL[:DEBUG]
+  def load_inventory(first_login: true)
+    first_login ? setup_inventory : restore_inventory
+    log COLORS.green("Loaded Inventory for #{COLORS.yellow(@profile.username)}") if RuneRb::GLOBAL[:ENV].debug
   end
 
   # Deserializes inventory data to the inventory column of the player's <@profile> dataset.
@@ -44,7 +45,7 @@ module RuneRb::Game::Entity::Helpers::Inventory
   # Attempts to reconstruct the <@inventory> object with data in the player's inventory column from the <@profile> dataset. If the data is not parsable, a new empty inventory is created.
   def restore_inventory
     # Deserialize raw profile data
-    data = Oj.load(@profile[:inventory])
+    data = Oj.load(@profile.items.inventory)
 
     # Parse the deserialized data into a hash container.
     parsed = {}.tap do |hash|

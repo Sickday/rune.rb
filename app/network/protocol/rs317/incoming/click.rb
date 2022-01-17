@@ -1,20 +1,21 @@
 module RuneRb::Network::RS317::MouseClickMessage
+  include RuneRb::Utils::Logging
 
   # A mouse click event
   Click = Struct.new(:delay, :right?, :x, :y) do
-    include RuneRb::System::Log
+    include RuneRb::Utils::Logging
 
     def inspect
-      log! RuneRb::GLOBAL[:COLOR].blue("[DELAY_SINCE:] #{self.delay}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}"),
-           self.right? ? RuneRb::GLOBAL[:COLOR].cyan.bold("[X:] #{self.x}") : RuneRb::GLOBAL[:COLOR].blue.bold("[X:] #{self.x}")
+      log! COLORS.blue("[DELAY_SINCE:] #{self.delay}"),
+           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}"),
+           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}")
 
     end
   end
 
   # Parses the MouseClickMessage
   def parse(_)
-    data = read_int
+    data = @body.read(type: :int)
     coordinates = data & 0x3FFFF
     Click.new((data >> 20) * 50, (data >> 19 & 0x1) == 1, coordinates & 765, coordinates / 765).inspect
   end
