@@ -2,8 +2,8 @@ module RuneRb::Game::Entity
 
   # A entity Message is the object created when an Entity chats via the chatbox.
   class ChatMessage
-    using RuneRb::System::Patches::StringRefinements
-    using RuneRb::System::Patches::IntegerRefinements
+    using RuneRb::System::Utils::StringRefinements
+    using RuneRb::System::Utils::IntegerRefinements
 
     # @return [String] the text contained within the Message
     attr :text

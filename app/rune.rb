@@ -23,6 +23,10 @@ module RuneRb
     autoload :Controller,                     'system/controller'
     autoload :Environment,                    'system/environment'
 
+    module Helpers
+      autoload :Gateway,                      'system/helpers/gateway'
+    end
+
     module Errors
       autoload :ConflictingNameError,         'system/errors'
       autoload :SessionReceptionError,        'system/errors'
