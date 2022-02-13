@@ -2,6 +2,8 @@ module RuneRb::Game::Item
 
   # Represents a stack of Items.
   class Stack
+    include RuneRb::Utils::Logging
+
     attr :definition, :id
     attr_accessor :size
 
@@ -10,7 +12,7 @@ module RuneRb::Game::Item
     # @param amount [Integer] the initial amount of the stack.
     def initialize(id, amount = 1)
       @id = id
-      @definition = id == -1 ? RuneRb::Database::ItemDefinition[0] : RuneRb::Database::ItemDefinition[id]
+      @definition = RuneRb::Database::ItemDefinition[id == -1 ? 0 : id]
       @size = amount
     end
 

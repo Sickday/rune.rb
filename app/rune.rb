@@ -50,7 +50,7 @@ require_relative 'database/index'
 require_relative 'game/index'
 require_relative 'network/index'
 
-# Copyright (c) 2021, Patrick W.
+# Copyright (c) 2022, Patrick W.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

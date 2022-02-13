@@ -1,27 +1,5 @@
 # Functions to toggle, load and reset update flags for an Entity.
 module RuneRb::Game::Entity::Helpers::Flags
-  # @return [Hash] a collection of flags to observe when constructing a SynchronizationMessage
-  attr :flags
-
-  # Initializes and sets the state of required update flags.
-  def load_flags
-    @flags ||= {}
-    @flags[:state?] = true
-    @flags[:region?] = true
-    @flags[:teleport?] = true
-  end
-
-  # Resets the update flags for the Mob.
-  def reset_flags
-    @flags[:chat?] = false
-    @flags[:graphic?] = false
-    @flags[:animation?] = false
-    #@flags[:state?] = false
-    @flags[:region?] = false
-    @flags[:forced_chat?] = false
-    @flags[:teleport?] = false
-    @flags[:moved?] = false
-  end
 
   # Toggles the Mob's corresponding value for the passed update type within <@flags>.
   # For example, if we want to schedule a graphic update, we would pass the type :graphic as well as the actual graphic object:
@@ -40,7 +18,6 @@ module RuneRb::Game::Entity::Helpers::Flags
       @movement[:type] = :TELEPORT
       @flags[:teleport?] = true
       @flags[:region?] = true
-      @flags[:state?] = true
     when :level_up
       if @profile.stats.level_up?
         level_info = @profile.stats.level_up
@@ -51,10 +28,9 @@ module RuneRb::Game::Entity::Helpers::Flags
         end
       end
       update(:stats)
-      @flags[:state?] = true
+      @flags[:looks?] = true
     when :equipment
       @equipment.each { |slot_label, stack| @session.write_message(:UpdateSlottedItemMessage, slot: @equipment.keys.index(slot_label), slot_data: stack) }
-      @flags[:state?] = true
     when :inventory then @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
     when :sidebars then RuneRb::Network::SIDEBAR_INTERFACES.each { |key, value| @session.write_message(:DisplaySidebarMessage, menu_id: key, form: value) }
     when :stats
@@ -79,30 +55,26 @@ module RuneRb::Game::Entity::Helpers::Flags
       @session.write_message(:StatUpdateMessage, skill_id: 18, level: @profile.skills.slayer_level, experience: @profile.skills.slayer_experience)
       @session.write_message(:StatUpdateMessage, skill_id: 19, level: @profile.skills.farming_level, experience: @profile.skills.farming_experience)
       @session.write_message(:StatUpdateMessage, skill_id: 20, level: @profile.skills.runecrafting_level, experience: @profile.skills.runecrafting_experience)
-      @flags[:state?] = true
     when :morph
       @profile.appearance.to_mob(assets[:mob_id])
-      @flags[:state?] = true
+      @flags[:looks?] = true
     when :overhead
       @profile.appearance.to_head(assets[:head_icon] <= 7 && assets[:head_icon] >= -1 ? assets[:head_icon] : 0)
-      @flags[:state?] = true
+      @flags[:looks?] = true
     when :region
       @regional = @position[:current].regional
       @flags[:region?] = true
-    when :state
-      @flags[:state?] = true
+    when :looks
+      @flags[:looks?] = true
     when :graphic
       @graphic = assets[:graphic]
       @flags[:graphic?] = true
-      @flags[:state?] = true
     when :animation
       @animation = assets[:animation]
       @flags[:animation?] = true
-      @flags[:state?] = true
     when :message, :chat
       @message = assets[:message]
       @flags[:chat?] = true
-      @flags[:state?] = true
     else err "Unrecognized update type! #{type}"
     end
   end

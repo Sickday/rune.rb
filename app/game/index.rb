@@ -35,8 +35,10 @@ module RuneRb::Game
       autoload :Command,              'entity/helpers/command'
       autoload :Equipment,            'entity/helpers/equipment'
       autoload :Flags,                'entity/helpers/flags'
+      autoload :Looks,                'entity/helpers/looks'
       autoload :Inventory,            'entity/helpers/inventory'
       autoload :Movement,             'entity/helpers/movement'
+      autoload :State,                'entity/helpers/state'
     end
   end
 

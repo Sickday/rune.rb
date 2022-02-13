@@ -2,23 +2,23 @@ module RuneRb::Game::Entity::Commands
 
   # A Command to spawn items for the player.
   class Item < RuneRb::Game::Entity::Command
+
     def execute
       unless @assets[:command].size >= 2
         @assets[:context].session.write_message(:SystemTextMessage, message: "Not enough parameters for this command! Required: 2 or more, Provided: #{@assets[:command].size}")
         return
       end
       stack = RuneRb::Game::Item::Stack.new(@assets[:command][0].to_i)
-      if stack.definition[:stackable]
+      if stack.definition.can_stack
         stack.size = @assets[:command][1].to_i
-        @assets[:context].inventory[:container].add(stack)
-        log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
+        @assets[:context].add_item(stack)
+        log COLORS.green("Added item #{stack.definition.name} x #{stack.size}") if RuneRb::GLOBAL[:ENV].debug
       else
         @assets[:command][1].to_i.times do
-          @assets[:context].inventory[:container].add(stack)
-          log RuneRb::GLOBAL[:COLOR].green("Adding #{stack.definition[:name]} x #{stack.size}") if RuneRb::GLOBAL[:DEBUG]
+          @assets[:context].add_item(stack)
+          log COLORS.green("Added item #{stack.definition.name} x #{stack.size}") if RuneRb::GLOBAL[:ENV].debug
         end
       end
-      @assets[:context].update(:inventory)
     end
   end
 end

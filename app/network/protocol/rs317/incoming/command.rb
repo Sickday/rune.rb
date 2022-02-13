@@ -4,7 +4,7 @@ module RuneRb::Network::RS317::CommandMessage
   # Parses the CommandMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
   def parse(context)
-    command_string = read_string.split(' ')
+    command_string = read(type: :string).split(' ')
     label = command_string.shift
 
     log "Parsing command: #{label}" if RuneRb::GLOBAL[:ENV].debug

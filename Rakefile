@@ -4,13 +4,9 @@ require 'bundler/setup'
 ##
 # Rune.rb - a gameserver written in Ruby targeting the 317/377 protocol(s) of the popular MMORPG, RuneScape.
 # @author Pat W.
-#
-# {rune_rb}
 namespace :rrb do
 
-  # Clears logs from the `log/`
-  #
-  # {rune_rb:clear_logs}
+  desc "Clears logs from the \"data/log\" directory"
   task :clear_logs do
     Dir.glob('data/logs/*').each do |file|
       puts "Removing Log #{file}"
@@ -19,8 +15,8 @@ namespace :rrb do
     puts 'Cleared logs.'
   end
 
-  # Launch the app.
-  task :launch do
+  desc "Launches an instance of the game server using an EventMachine reactor."
+  task :launch_em do
     require_relative 'app/rune'
 
     RuneRb::System::Environment.init
@@ -30,20 +26,14 @@ namespace :rrb do
   ####
   # Development Tasks
   ####
-  #
-  # {rune_rb:devel}
   namespace :dev do
 
-    # Launches an instance of the game server using an EventMachine reactor.
-    #
-    # {rune_rb:devel:launch}
-    task :run do
+    desc "Launches a development instance of the game server application."
+    task :run do 
       Bundler.require(:dev)
     end
 
-    # Builds the Docker container for the Rune.rb framework.
-    #
-    # {rune_rb:devel:build_container}
+    desc "Builds the Docker container for the Rune.rb framework."
     task build_release: ['rrb:dev:prep_release'] do
       Kernel.system('docker', 'build', '-t', 'sickday/rrb:latest', '.')
       sleep(3)
@@ -53,9 +43,7 @@ namespace :rrb do
       puts 'Built and released.'
     end
 
-    # Pushes current project to staging environment.
-    #
-    # {rune_rb:devel:release}
+    desc "Pushes current project to staging environment."
     task prep_release: ['rrb:clear_logs'] do
       # Remove existing release files
       Dir.chdir('release/') do
@@ -75,42 +63,33 @@ namespace :rrb do
       puts 'Release prepared.'
     end
 
-    Rake::Task['rrb:dev:run'].enhance { Rake::Task['rrb:launch'].invoke }
+    Rake::Task['rrb:dev:run'].enhance { Rake::Task['rrb:launch_em'].invoke }
   end
 
   ####
   # Live Tasks
   ####
-  #
-  # {rune_rb:live}
   namespace :live do
 
-    # Run the application in live mode.
-    # {rune_rb:live:launch}
-    task :run do
+    desc "Launches a development instance of the game server application."
+    task :run do 
       Bundler.require(:live)
     end
 
-    Rake::Task['rrb:live:run'].enhance { Rake::Task['rrb:launch'].invoke }
+    Rake::Task['rrb:live:run'].enhance { Rake::Task['rrb:launch_em'].invoke }
   end
 
   ####
   # Testing Tasks
   ####
-  #
-  # {rune_rb:testing}
   namespace :test do
 
-    # Runs all specs in the `spec/` folder using RSpec.
-    #
-    # {rune_rb:testing:run_specs}
+    desc "Runs all specs in the \"spec/\" folder using RSpec."
     task :run_specs do
       Dir.glob('spec/*').each { Kernel.system('rspec', _1) }
     end
 
-    # Runs all tests in the `test/` folder using Minitest.
-    #
-    # {rune_rb:testing:run_tests}
+    desc "Runs all tests in the \"test/\" folder using Minitest."
     task :run_tests do
       Dir.glob('test/*').each { Kernel.system('ruby', _1) }
     end

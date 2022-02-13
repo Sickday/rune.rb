@@ -2,8 +2,8 @@ module RuneRb::Game::Entity
 
   # A entity Message is the object created when an Entity chats via the chatbox.
   class ChatMessage
-    using RuneRb::System::Utils::StringRefinements
-    using RuneRb::System::Utils::IntegerRefinements
+    using RuneRb::Utils::Patches::StringRefinements
+    using RuneRb::Utils::Patches::IntegerRefinements
 
     # @return [String] the text contained within the Message
     attr :text
@@ -103,7 +103,7 @@ module RuneRb::Game::Entity
             term = false
           end
 
-          term = true if text[itr].chr == '.'|| text[itr].chr == '!' || text[itr].chr == '?'
+          term = true if text[itr].chr == '.' || text[itr].chr == '!' || text[itr].chr == '?'
         end
         text
       end

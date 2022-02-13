@@ -56,12 +56,13 @@ module RuneRb::Game::Entity::Helpers::Equipment
     data = Oj.load(@profile.items.equipment)
     @equipment = {}.tap do |hash|
       data.each do |slot, stack|
-        hash[slot.to_sym] = RuneRb::Game::Item::Stack.new(-1, -1)
-        next if stack == -1 || stack.nil?
+        hash[slot.to_sym] = RuneRb::Game::Item::Stack.new(-1, 0)
+        next if stack.nil? || stack == -1 || stack['id'] == -1
 
         hash[slot.to_sym] = RuneRb::Game::Item::Stack.restore(id: stack['id'].to_i, amount: stack['amount'].to_i)
       end
     end
+    log "Parsed equipment: #{@equipment}"
   end
 end
 

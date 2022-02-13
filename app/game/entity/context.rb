@@ -6,14 +6,11 @@ module RuneRb::Game::Entity
     include RuneRb::Game::Entity::Helpers::Equipment
     include RuneRb::Game::Entity::Helpers::Inventory
     include RuneRb::Game::Entity::Helpers::Command
+    include RuneRb::Game::Entity::Helpers::State
 
     # @!attribute [r] equipment
     # @return [Hash] the Equipment database for a context.
     attr :equipment
-
-    # @!attribute [r] inventory
-    # @return [RuneRb::Game::Item::Container] the Inventory database for the Context
-    attr :inventory
 
     # @!attribute [r] session
     # @return [RuneRb::Network::Session] the Session for the Context
@@ -41,7 +38,7 @@ module RuneRb::Game::Entity
     # Performs a series of tasks associated with deserializing and saving player information to relevant datastores.
     def logout
       # Dump the inventory database
-      # dump_inventory if @inventory
+      dump_inventory if @inventory
 
       # Dump the equipment database
       dump_equipment if @equipment
@@ -52,32 +49,33 @@ module RuneRb::Game::Entity
       # Detach from the world.
       @world.release(self)
 
-      # Write the actual logout.
-      @session.write_message(:LogoutMessage, @session)
-
       # Post the session
       @profile.attributes.post_session(@session.ip)
-      log! 'Detached from World instance!' if RuneRb::GLOBAL[:ENV].debug
+
+      # Write the actual logout.
+      @session.write_message(:LogoutMessage, @session)
     end
 
     # Performs a series of task related with constructing and initializing a context's data and attaching the context to the <@world> instance.
     def login(first_login)
-      @session.register_context(self)
-      log! "Attached to Session #{@session.sig}!" if RuneRb::GLOBAL[:ENV].debug
       load_attr
+      load_state
       load_appearance
-      # load_inventory(first_login: first)
+      load_inventory(first_login: first_login)
       load_equipment(first_login: first_login)
-      load_commands
       load_skills
+      load_commands
+
+      generate_looks
+      generate_state
 
       @session.write_message(:MembersAndIndexMessage, members: @profile.attributes.members, player_idx: @index)
-      # @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
+      @session.write_message(:UpdateItemsMessage, data: @inventory[:container].data, size: 28)
       @session.write_message(:SystemTextMessage, message: "Welcome to rune.rb v#{RuneRb::GLOBAL[:ENV].build}")
       @session.write_message(:SystemTextMessage, message: 'Check the repository for updates! https://git.repos.pw/rune.rb/main')
+      @session.register_context(self)
       @session.auth[:stage] = :logged_in
 
-      update(:stats)
       update(:sidebars)
     end
 
@@ -86,6 +84,12 @@ module RuneRb::Game::Entity
       str = super
       str << "[INVENTORY]: #{@inventory.inspect}"
       str << "[POSITION]: #{@position.inspect}"
+    end
+
+    def pre_sync
+      generate_looks if looks_update?
+      generate_state if state_update?
+      super
     end
 
     # Dispatches a ContextSynchronizationMessage to the <@session> assuming the Context meets the requirements for doing so. If a region change is needed, a CenterRegionMessage is written before the ContextSynchronizationMessage.
@@ -97,21 +101,33 @@ module RuneRb::Game::Entity
       @session.write_message(:ContextSynchronizationMessage, self) if @world && @session.auth[:stage] == :logged_in
     end
 
+    def post_sync
+      @animation = nil
+      @graphic = nil
+      @chat_message = nil
+      reset_flags
+      super
+    end
+
     # Initializes Appearance for the Context.
     def load_appearance
       @appearance = @profile.appearance
-      update(:state)
+      @flags[:looks?] = true
     end
 
     # Initializes Stats for the Context.
     def load_skills
       @stats = @profile.skills
-      update(:state)
+      update(:stats)
     end
 
     # Initializes Status for the Context.
     def load_attr
       @attributes = @profile.attributes
+    end
+
+    def <=>(other_context)
+      @index <=> other_context.index
     end
   end
 end

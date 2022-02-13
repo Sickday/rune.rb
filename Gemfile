@@ -13,6 +13,15 @@ group :test do
   gem 'ruby-prof'
 end
 
+##
+# RuneRb::Network - the Network module for the Rune.rb framework.
+#
+# gem 'rrb-net', source: 'http://app.objects.pw:32968', groups: %i[dev live test]
+#
+# RuneRb::Data - the Data module for the Rune.rb framework.
+# 
+# gem 'rrb-data', source: 'https://app.objects.pw:32968', groups: %i[dev live test]
+
 # Concurrent Ruby - Modern concurrency tools for Ruby.
 #
 # https://github.com/ruby-concurrency/concurrent-ruby
