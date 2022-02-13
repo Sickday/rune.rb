@@ -105,7 +105,6 @@ module RuneRb::Network::Constants
       OUTGOING: {
         CenterRegionMessage: RuneRb::Network::RS317::CenterRegionMessage,
         ClearInterfacesMessage: RuneRb::Network::RS317::ClearInterfacesMessage,
-        ContextStateBlock: RuneRb::Network::RS317::ContextStateBlock,
         ContextSynchronizationMessage: RuneRb::Network::RS317::ContextSynchronizationMessage,
         DisplayInterfaceMessage: RuneRb::Network::RS317::DisplayInterfaceMessage,
         DisplayOverlayMessage: RuneRb::Network::RS317::DisplayOverlayMessage,

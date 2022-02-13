@@ -25,7 +25,6 @@ module RuneRb::Network
   module RS317
     autoload :CenterRegionMessage,            'network/protocol/rs317/outgoing/center_region'
     autoload :ClearInterfacesMessage,         'network/protocol/rs317/outgoing/clear_interfaces'
-    autoload :ContextStateBlock,              'network/protocol/rs317/outgoing/state'
     autoload :ContextSynchronizationMessage,  'network/protocol/rs317/outgoing/synchronization'
     autoload :DisplayInterfaceMessage,        'network/protocol/rs317/outgoing/interface'
     autoload :DisplaySidebarMessage,          'network/protocol/rs317/outgoing/sidebar'

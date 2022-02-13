@@ -6,10 +6,7 @@ module RuneRb::Network::RS317::MouseClickMessage
     include RuneRb::Utils::Logging
 
     def inspect
-      log! COLORS.blue("[DELAY_SINCE:] #{self.delay}"),
-           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}"),
-           self.right? ? COLORS.cyan.bold("[X:] #{self.x}") : COLORS.blue.bold("[X:] #{self.x}")
-
+      log! COLORS.blue("[DELAY_SINCE:] #{self.delay} || [X:] #{self.x} || [Y:] #{self.y}") if RuneRb::GLOBAL[:ENV].debug
     end
   end
 

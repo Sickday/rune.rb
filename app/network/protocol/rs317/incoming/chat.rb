@@ -4,7 +4,7 @@ module RuneRb::Network::RS317::PublicChatMessage
   # Parses the PublicChatMessage
   # @param context [RuneRb::Game::Entity::Context] the context to parse for
   def parse(context)
-    context.update(:chat, message: RuneRb::Game::Entity::ChatMessage.new(read_byte(false, :S), read_byte(false, :S), self))
+    context.update(:chat, message: RuneRb::Game::Entity::ChatMessage.new(read(type: :byte, signed: false, mutation: :S), read(type: :byte, signed: false, mutation: :S), self))
   end
 end
 

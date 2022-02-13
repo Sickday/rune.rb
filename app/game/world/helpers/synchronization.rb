@@ -1,5 +1,4 @@
 module RuneRb::Game::World::Synchronization
-  SYNC_STAGES = %i[pre_sync sync post_sync].freeze
 
   # A pulse operation executes the Synchronization#prepare_sync, Synchronization#sync, and Synchronization#post_sync functions every 600 ms.
   def pulse
@@ -10,7 +9,6 @@ module RuneRb::Game::World::Synchronization
 
   private
 
-
   def init_sync
     @sync = {}
     @sync[:succeeded] = []
@@ -18,7 +16,11 @@ module RuneRb::Game::World::Synchronization
     @sync.tap do |hash|
       hash[:pipeline] = {}
       hash[:pipeline][:operation] = proc do
-        @entities[:players].each_value { |ctx| SYNC_STAGES.each { |stage| process_sync(stage, ctx) } }
+        @entities[:players].each_value do |ctx|
+          next unless ctx.session.auth[:stage] == :logged_in
+
+          %i[pre_sync sync post_sync].each { |stage| process_sync(stage, ctx) }
+        end
       end.freeze
 
       hash[:pipeline][:callback] = proc do

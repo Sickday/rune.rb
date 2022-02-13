@@ -27,7 +27,7 @@ module RuneRb::Game::Item
     # Attempts to add an ItemStack to the container
     # @param item_stack [RuneRb::Game::Item::Stack] the Stack to add
     def add(item_stack)
-      if item_stack.definition[:stackable] || @stackable
+      if item_stack.definition.can_stack || @stackable
         if has?(item_stack.definition.id) && (item_stack.size + @data[slot_for(item_stack.definition.id)].size) < RuneRb::Game::Item::MAX_SIZE
           slot = slot_for(item_stack.definition.id)
           @data[slot].size += item_stack.size
@@ -63,7 +63,7 @@ module RuneRb::Game::Item
     # @param amt [Integer] the amount to remove.
     def remove(id, amt = 1)
       slot = slot_for(id)
-      if RuneRb::System::Database::Item[id][:stackable] || @stackable
+      if RuneRb::Database::ItemDefinition[id].can_stack || @stackable
         (@data[slot].size - amt) < 1 ? @data[slot] = nil : @data[slot].size -= amt
         true
       else

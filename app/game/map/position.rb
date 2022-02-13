@@ -102,7 +102,7 @@ module RuneRb::Game::Map
       @coordinates[coordinate] = value
     end
 
-    # The longest horizontal or vertical delta between the positions.
+    # The longest horizontal or vertical delta between this position and another..
     # @return [Integer] the longest horizontal or vertical delta between the position.
     # @param other [Position] the other position
     def longest_delta(other)

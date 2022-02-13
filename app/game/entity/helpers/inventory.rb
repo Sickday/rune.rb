@@ -1,6 +1,10 @@
 module RuneRb::Game::Entity::Helpers::Inventory
   include RuneRb::Utils::Logging
 
+  # @!attribute [r] inventory
+  # @return [RuneRb::Game::Item::Container] the Inventory database for the Context
+  attr :inventory
+
   # Adds an item stack to the inventory at a specific slot if provided
   # @param item_stack [RuneRb::Game::Item::Stack] the item stack to add
   # @param at [Integer] the slot at which to add the item (else, the next available slot is used.)
@@ -10,6 +14,8 @@ module RuneRb::Game::Entity::Helpers::Inventory
     else
       @inventory[:container].add(item_stack)
     end
+
+    update(:inventory)
   end
 
   # Removes an item with the specified parameters from the inventory container.
@@ -24,10 +30,10 @@ module RuneRb::Game::Entity::Helpers::Inventory
   # Initializes the <@inventory> object. Passed data is used to setup the inventory if present.
   # @param data [Hash] database to initialize the inventory with.
   def setup_inventory(data = nil)
-    @inventory = {
-      container: RuneRb::Game::Item::Container.new(28, stackable: false),
-      weight: 0
-    }
+    @inventory = {}.tap do |inv|
+      inv[:container] = RuneRb::Game::Item::Container.new(28, stackable: false)
+      inv[:weight] = 0
+    end
     @inventory[:container].from(data) unless data.nil? || !data.is_a?(Hash)
   end
 
@@ -39,7 +45,7 @@ module RuneRb::Game::Entity::Helpers::Inventory
 
   # Deserializes inventory data to the inventory column of the player's <@profile> dataset.
   def dump_inventory
-    @profile.update(inventory: Oj.dump(@inventory[:container].data.to_hash, mode: :compat, use_as_json: true))
+    @profile.items.update(inventory: Oj.dump(@inventory[:container].data.to_hash, mode: :compat, use_as_json: true))
   end
 
   # Attempts to reconstruct the <@inventory> object with data in the player's inventory column from the <@profile> dataset. If the data is not parsable, a new empty inventory is created.

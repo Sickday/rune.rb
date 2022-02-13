@@ -16,8 +16,7 @@ module RuneRb::Database
     # @param ip [String] the IP address of the session
     # @param stamp [Time] a timestamp.
     def post_session(ip, stamp = Time.now)
-      update(last_login_ip: ip,
-             last_login_stamp: stamp)
+      update(last_login_ip: ip, last_login_stamp: stamp)
     end
   end
 end

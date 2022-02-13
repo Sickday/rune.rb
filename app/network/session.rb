@@ -37,7 +37,7 @@ module RuneRb::Network
       _, @ip = Socket.unpack_sockaddr_in(get_peername)
       @sig = Druuid.gen
       @duration = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), start: Time.now }
-      @channel = { buffer: RuneRb::Network::Buffer.new('rw'), position: 0 }
+      @channel = { buffer: RuneRb::Network::Buffer.new('rw') }
       @auth = { attempts: 0, seed: (@sig & (0xFFFFFFFF / 2)),
                 credentials_block: CredentialsBlock.new,
                 connection_block: ConnectionBlock.new,

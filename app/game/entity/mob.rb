@@ -27,7 +27,6 @@ module RuneRb::Game::Entity
     # @param definition [Object] the Definition for the mob.
     def initialize(definition)
       register(definition)
-      load_flags
       load_movement
     end
 
@@ -41,7 +40,6 @@ module RuneRb::Game::Entity
     # Called after a SynchronizationMessage is dispatched.
     def post_sync
       reset_movement
-      reset_flags
     end
 
     # Registers a definition to the Mob.

@@ -5,6 +5,7 @@ module RuneRb::Network::RS317
     # @param data [Hash] inventory data including items, amounts and corresponding slots
     def initialize(data)
       super(op_code: 53, type: :VARIABLE_SHORT)
+      log! "Updating Inventory"
 
       # ContextInventoryForm ID
       write(3214, type: :short, order: 'BIG')
