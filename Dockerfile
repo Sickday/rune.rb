@@ -1,4 +1,4 @@
-FROM ruby:2.7.4-buster
+FROM ruby:2.7.5-buster
 
 # Hi :)
 MAINTAINER Patrick W., Sickday@pm.me
@@ -28,4 +28,4 @@ EXPOSE 43594
 EXPOSE 43595
 
 # Light that shit up yo
-CMD ["rake", "rrb:live:run"]
+CMD ["rake", "rrb:autorun"]
