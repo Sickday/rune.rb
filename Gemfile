@@ -20,10 +20,6 @@ gem 'druuid'
 # https://github.com/eventmachine/eventmachine/
 gem 'eventmachine'
 
-# fiber_space - A set of tools to organize and work with Fibers.
-#
-gem 'fiber_space', git: 'https://git.repos.pw/Sickday/fiber_space'
-
 # Logger - A simple but powerful logging utility to output messages.
 #
 # https://github.com/ruby/logger
@@ -54,11 +50,6 @@ gem 'pry'
 # https://github.com/ruby/rake
 gem 'rake'
 
-# Rune.rb Main module
-#
-# https://git.repos.pw/rune.rb/app
-gem 'rrb', git: 'https://git.repos.pw/rune.rb/app'
-
 # Sequel - A simple, flexible, and powerful SQL database access toolkit for Ruby.
 #
 # https://github.com/jeremyevans/sequel
@@ -78,6 +69,7 @@ group :test do
   gem 'minitest'
   gem 'rspec'
   gem 'ruby-prof'
+  gem 'rubocop'
 
   # Faker - Generates fake data.
   #

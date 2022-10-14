@@ -1,28 +1,27 @@
-module RuneRb::Network::Helpers::Parser
-  using RuneRb::Patches::IntegerRefinements
+# Provides functions to write arbitrary or static messages to a session.
+module RuneRb::Network::Helpers::Dispatcher
 
-  # Parses a message object for a specific context
-  # @param message [RuneRb::IO::Message] the message to parse
-  def parse(message)
-    if RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::Network::REVISION][:INCOMING].keys.include?(message.header.op_code)
-      message.singleton_class.include(RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::Network::REVISION][:INCOMING][message.header.op_code])
-      message.parse(@context)
+  # Writes a Message to the session
+  # @param message_type [Symbol] the type of message to write
+  # @param params [Object] parameters for the message.
+  def write_message(message_type, params = {})
+    if message_type == :RAW
+      send_data(params[:data])
     else
-      log! "Unrecognized message! #{message.inspect}"
+      message = RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::GLOBAL[:ENV].server_config.revision][:OUTGOING][message_type].new(params)
+      send_data(encode(message, @cipher.outgoing).compile)
     end
+  rescue StandardError => e
+    log! e.message, e.backtrace&.join("\n")
   end
 
   private
 
-  # Reads data from the <buffer> parameter, producing a readable <RuneRb::IO::Message> object.
-  # @param buffer [RuneRb::Network::Buffer] the buffer to read the next message from
-  # @return [RuneRb::IO::Message] the parsed message.
-  def next_message(buffer, cipher)
-    opcode = (buffer.read(type: :byte) - cipher.next_value & 0xFF).unsigned(:byte)
-    length = RuneRb::Network::MESSAGE_SIZES[RuneRb::Network::REVISION][opcode]
-    length = buffer.read(type: :byte) if length.negative?
-    body = length.times.inject('') { _1 << buffer.data.slice!(0) }
-    RuneRb::IO::Message.new(op_code: opcode, body: body)
+  # Encodes a RuneRb::Network::Message using the <@cipher>.
+  # @param message [RuneRb::Network::Message] the message to encode.
+  def encode(message, cipher)
+    message.header.op_code += cipher.next_value & 0xFF
+    message
   end
 end
 
