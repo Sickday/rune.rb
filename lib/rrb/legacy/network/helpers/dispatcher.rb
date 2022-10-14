@@ -1,16 +1,27 @@
-# Refinements made to the Set class of the ruby Core module.
-module RuneRb::Utils::Patches::SetRefinements
-  refine Set do
-    # Consumes elements as they're passed to execution block.
-    # @param _ [Proc] the execution block
-    def each_consume(&_)
-      raise 'Nil block passed to Set#each_consume.' unless block_given?
+# Provides functions to write arbitrary or static messages to a session.
+module RuneRb::Network::Helpers::Dispatcher
 
-      each do |item|
-        yield(item)
-        delete(item)
-      end
+  # Writes a Message to the session
+  # @param message_type [Symbol] the type of message to write
+  # @param params [Object] parameters for the message.
+  def write_message(message_type, params = {})
+    if message_type == :RAW
+      send_data(params[:data])
+    else
+      message = RuneRb::Network::PROTOCOL_TEMPLATES[RuneRb::Network::REVISION][:OUTGOING][message_type].new(params)
+      send_data(encode(message, @cipher[:outgoing]).compile)
     end
+  rescue StandardError => e
+    log! e.message, e.backtrace&.join("\n")
+  end
+
+  private
+
+  # Encodes a RuneRb::IO::Message using the <@cipher>.
+  # @param message [RuneRb::IO::Message] the message to encode.
+  def encode(message, cipher)
+    message.header.op_code = (message.header.op_code + cipher.next_value) & 0xFF
+    message
   end
 end
 
