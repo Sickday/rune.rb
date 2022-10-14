@@ -1,59 +1,64 @@
 module RuneRb::Network
   # A Session object encapsulates a connected TCPSocket object and provides functions for interacting with it.
   class Session < EventMachine::Connection
-    using RuneRb::Utils::Patches::IntegerRefinements
-    using RuneRb::Utils::Patches::StringRefinements
+    using RuneRb::Patches::IntegerRefinements
+    using RuneRb::Patches::StringRefinements
 
     include RuneRb::Utils::Logging
+
     include Helpers::Handshake
     include Helpers::Dispatcher
     include Helpers::Parser
 
-    # @!attribute [r] sig
-    # @return [Integer] the Session signature.
-    attr :sig
-
     # @!attribute [r]
-    # @return [String, IPAddr, Addrinfo] the IPV4 address that corresponds to the underlying <@socket> object.
-    attr :ip
-
-    # @!attribute [r]
-    # @return [Auth] a map of authentication data for the session.
-    attr :auth
-
-    # @!attribute [r]
-    # @return [Struct] a struct containing cipher data.
+    # @return [Hash] a map of cipher data.
     attr :cipher
 
     # @!attribute [r]
     # @return [Hash] a map of Time database for the session.
     attr :duration
 
-    # @!attribute [r]
-    # @return [Boolean, NilClass] is the session closed
-    attr :closed
+    # @!attribute [r] handshake
+    # @return [Hash] handshake related data.
+    attr :handshake
+
+    # @!attribute [r] ip
+    # @return [String, IPAddr, Addrinfo] the IPV4 address that corresponds to the underlying <@socket> object.
+    attr :ip
+
+    # @!attribute [r] sig
+    # @return [Integer] the Session signature.
+    attr :sig
+
+    # @!attribute [r] stage
+    # @return [Symbol] the current stage.
+    attr_accessor :stage
 
     def post_init
       _, @ip = Socket.unpack_sockaddr_in(get_peername)
       @sig = Druuid.gen
+      @buffer = RuneRb::IO::Buffer.new('rw')
+      @cipher = { seed: @sig & (0xFFFFFFFF / 2) }
+      @stage = :connection
       @duration = { time: Process.clock_gettime(Process::CLOCK_MONOTONIC), start: Time.now }
-      @channel = { buffer: RuneRb::Network::Buffer.new('rw') }
-      @auth = { attempts: 0, seed: (@sig & (0xFFFFFFFF / 2)),
-                credentials_block: CredentialsBlock.new,
-                connection_block: ConnectionBlock.new,
-                login_block: LoginBlock.new, stage: :parse_connection }
       log! COLORS.green.bold("New Session created @ #{@ip}")
     end
 
     # Pushes data read from the socket to the buffer.
     # @param data [String] the received data.
     def receive_data(data)
-      @channel[:buffer].push(data)
+      @buffer.push(data)
     rescue StandardError => e
       err 'An error occurred while receiving data!', e.message
       err e.backtrace&.join("\n")
     ensure
       process
+    end
+
+    # Is the Session closed?
+    # @return [Boolean]
+    def closed?
+      @closed
     end
 
     # Registers a Context to the Session.
@@ -63,13 +68,14 @@ module RuneRb::Network
     end
 
     # The current up-time for the session.
+    # @param formatted [Boolean] format the time?
     def up_time(formatted: true)
       up = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - @duration[:time]).round(3).to_i
       formatted ? up.to_ftime : up
     end
 
     def inspect
-      COLORS.blue("[IP:] #{COLORS.cyan.bold(@ip)} || [ID:] #{COLORS.cyan.bold(@sig)} || [UP:] #{COLORS.cyan.bold(up_time)} || [LOGIN_STAGE:] #{COLORS.cyan.bold(@auth[:stage])}")
+      COLORS.blue("[SIGNATURE:] #{COLORS.cyan.bold(@sig)} || [IP:] #{COLORS.cyan.bold(@ip)} || [UP:] #{COLORS.cyan.bold(up_time)} || [LOGIN_STAGE:] #{COLORS.cyan.bold(@stage)} || [ACTIVE:] #{!closed?}" )
     end
 
     # Ends the session closing it's socket and updating the <@authentication.stage> to :LOGGED_OUT.
@@ -85,7 +91,7 @@ module RuneRb::Network
       else err "Session disconnected for reason: #{reason}"
       end
     ensure
-      @auth[:stage] = :logged_out
+      @stage = :logged_out
       @closed = true
       close_connection_after_writing
       log! inspect
@@ -95,12 +101,19 @@ module RuneRb::Network
 
     # Processes data from the buffer.
     def process
-      case @auth[:stage]
-      when :parse_connection then parse_connection_data
-      when :parse_login then parse_login_data
-      when :parse_cipher then parse_cipher_data
-      when :parse_credentials then parse_credential_data
-      when :logged_in then parse(next_message(@channel[:buffer], @cipher.incoming))
+      if closed?
+        disconnect(:manual)
+      else
+        case @stage
+        when :connection then read_connection
+        when :handshake
+          read_handshake
+          @cipher[:incoming] = RuneRb::Network::ISAAC.new(@handshake[:seed].seed_array)
+          @cipher[:outgoing] = RuneRb::Network::ISAAC.new(@handshake[:seed].seed_array.map { |idx| idx + 50})
+          @stage = :authenticate
+        when :logged_in then parse(next_message(@buffer, @cipher[:incoming])) until @buffer.data.empty?
+        else nil
+        end
       end
     end
   end

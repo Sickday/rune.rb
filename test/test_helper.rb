@@ -12,7 +12,7 @@ Bundler.require(:test)
 SimpleCov.start
 
 # Load main index
-require_relative '../app/rune'
+require_relative '../lib/rune'
 
 # Setup environment
 RuneRb::System::Environment.init
