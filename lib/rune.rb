@@ -24,10 +24,10 @@ require 'socket'
 module RuneRb
 
   module Utils
-    autoload :LegacyController,    'rune/legacy/utils/controller'
+    autoload :LegacyController,    'rune/utils/controller'
 
     module Helpers
-      autoload :Gateway,           'rune/legacy/utils/helpers/gateway'
+      autoload :Gateway,           'rune/utils/helpers/gateway'
     end
   end
 
@@ -35,35 +35,35 @@ module RuneRb
 
     # Factory objects to generate fake data using models.
     module Factories
-      autoload :PlayerProfile,     'rune/legacy/database/factories/player/profile'
+      autoload :PlayerProfile,     'rune/database/factories/player/profile'
 
-      autoload :ItemDefinition,    'rune/legacy/database/factories/item/definition'
-      autoload :ItemEquipment,     'rune/legacy/database/factories/item/equipment'
-      autoload :ItemSpawn,         'rune/legacy/database/factories/item/spawn'
+      autoload :ItemDefinition,    'rune/database/factories/item/definition'
+      autoload :ItemEquipment,     'rune/database/factories/item/equipment'
+      autoload :ItemSpawn,         'rune/database/factories/item/spawn'
 
-      autoload :MobDefinition,     'rune/legacy/database/factories/mob/definition'
-      autoload :MobSpawn,          'rune/legacy/database/factories/mob/spawn'
+      autoload :MobDefinition,     'rune/database/factories/mob/definition'
+      autoload :MobSpawn,          'rune/database/factories/mob/spawn'
     end
 
-    autoload :PlayerAppearance,    'rune/legacy/database/models/player/appearance'
-    autoload :PlayerItems,         'rune/legacy/database/models/player/items'
-    autoload :PlayerAttributes,    'rune/legacy/database/models/player/attributes'
-    autoload :PlayerLocation,      'rune/legacy/database/models/player/location'
-    autoload :PlayerProfile,       'rune/legacy/database/models/player/profile'
-    autoload :PlayerSettings,      'rune/legacy/database/models/player/settings'
-    autoload :PlayerSkills,        'rune/legacy/database/models/player/skills'
+    autoload :PlayerAppearance,    'rune/database/models/player/appearance'
+    autoload :PlayerItems,         'rune/database/models/player/items'
+    autoload :PlayerAttributes,    'rune/database/models/player/attributes'
+    autoload :PlayerLocation,      'rune/database/models/player/location'
+    autoload :PlayerProfile,       'rune/database/models/player/profile'
+    autoload :PlayerSettings,      'rune/database/models/player/settings'
+    autoload :PlayerSkills,        'rune/database/models/player/skills'
 
-    autoload :ItemDefinition,      'rune/legacy/database/models/item/definition'
-    autoload :ItemEquipment,       'rune/legacy/database/models/item/equipment'
-    autoload :ItemSpawn,           'rune/legacy/database/models/item/spawn'
+    autoload :ItemDefinition,      'rune/database/models/item/definition'
+    autoload :ItemEquipment,       'rune/database/models/item/equipment'
+    autoload :ItemSpawn,           'rune/database/models/item/spawn'
 
-    autoload :MobAnimations,       'rune/legacy/database/models/mob/animations'
-    autoload :MobDefinition,       'rune/legacy/database/models/mob/definition'
-    autoload :MobSpawn,            'rune/legacy/database/models/mob/spawn'
-    autoload :MobStats,            'rune/legacy/database/models/mob/stats'
+    autoload :MobAnimations,       'rune/database/models/mob/animations'
+    autoload :MobDefinition,       'rune/database/models/mob/definition'
+    autoload :MobSpawn,            'rune/database/models/mob/spawn'
+    autoload :MobStats,            'rune/database/models/mob/stats'
 
-    autoload :SystemBannedNames,   'rune/legacy/database/models/system/banned_names'
-    autoload :SystemSnapshots,     'rune/legacy/database/models/system/snapshot'
+    autoload :SystemBannedNames,   'rune/database/models/system/banned_names'
+    autoload :SystemSnapshots,     'rune/database/models/system/snapshot'
 
     DatabaseConfiguration = Struct.new(:player, :system, :game)
 
@@ -91,63 +91,63 @@ module RuneRb
 
     # Entity-related objects, models, and helpers.
     module Entity
-      autoload :Context,              'rune/legacy/game/entity/context'
-      autoload :Mob,                  'rune/legacy/game/entity/mob'
-      autoload :Animation,            'rune/legacy/game/entity/models/animation'
-      autoload :Command,              'rune/legacy/game/entity/models/command'
-      autoload :Graphic,              'rune/legacy/game/entity/models/graphic'
-      autoload :ChatMessage,          'rune/legacy/game/entity/models/chat_message'
+      autoload :Context,              'rune/game/entity/context'
+      autoload :Mob,                  'rune/game/entity/mob'
+      autoload :Animation,            'rune/game/entity/models/animation'
+      autoload :Command,              'rune/game/entity/models/command'
+      autoload :Graphic,              'rune/game/entity/models/graphic'
+      autoload :ChatMessage,          'rune/game/entity/models/chat_message'
 
       # Commands executable by an entity.
       module Commands
-        autoload :Ascend,             'rune/legacy/game/entity/commands/ascend'
-        autoload :Animation,          'rune/legacy/game/entity/commands/animation'
-        autoload :Ban,                'rune/legacy/game/entity/commands/ban'
-        autoload :Descend,            'rune/legacy/game/entity/commands/descend'
-        autoload :Design,             'rune/legacy/game/entity/commands/design'
-        autoload :Graphic,            'rune/legacy/game/entity/commands/graphic'
-        autoload :Item,               'rune/legacy/game/entity/commands/item'
-        autoload :Morph,              'rune/legacy/game/entity/commands/morph'
-        autoload :Position,           'rune/legacy/game/entity/commands/position'
-        autoload :To,                 'rune/legacy/game/entity/commands/to'
-        autoload :Show,               'rune/legacy/game/entity/commands/show'
+        autoload :Ascend,             'rune/game/entity/commands/ascend'
+        autoload :Animation,          'rune/game/entity/commands/animation'
+        autoload :Ban,                'rune/game/entity/commands/ban'
+        autoload :Descend,            'rune/game/entity/commands/descend'
+        autoload :Design,             'rune/game/entity/commands/design'
+        autoload :Graphic,            'rune/game/entity/commands/graphic'
+        autoload :Item,               'rune/game/entity/commands/item'
+        autoload :Morph,              'rune/game/entity/commands/morph'
+        autoload :Position,           'rune/game/entity/commands/position'
+        autoload :To,                 'rune/game/entity/commands/to'
+        autoload :Show,               'rune/game/entity/commands/show'
       end
 
       # Helper functions and objects used by an entity
       module Helpers
-        autoload :Command,              'rune/legacy/game/entity/helpers/command'
-        autoload :Equipment,            'rune/legacy/game/entity/helpers/equipment'
-        autoload :Flags,                'rune/legacy/game/entity/helpers/flags'
-        autoload :Looks,                'rune/legacy/game/entity/helpers/looks'
-        autoload :Inventory,            'rune/legacy/game/entity/helpers/inventory'
-        autoload :Movement,             'rune/legacy/game/entity/helpers/movement'
-        autoload :State,                'rune/legacy/game/entity/helpers/state'
+        autoload :Command,              'rune/game/entity/helpers/command'
+        autoload :Equipment,            'rune/game/entity/helpers/equipment'
+        autoload :Flags,                'rune/game/entity/helpers/flags'
+        autoload :Looks,                'rune/game/entity/helpers/looks'
+        autoload :Inventory,            'rune/game/entity/helpers/inventory'
+        autoload :Movement,             'rune/game/entity/helpers/movement'
+        autoload :State,                'rune/game/entity/helpers/state'
       end
     end
 
     # Models and objects related to game items.
     module Item
-      autoload :Stack,                'rune/legacy/game/item/stack'
-      autoload :Container,            'rune/legacy/game/item/container'
-      autoload :Constants,            'rune/legacy/game/item/constants'
+      autoload :Stack,                'rune/game/item/stack'
+      autoload :Container,            'rune/game/item/container'
+      autoload :Constants,            'rune/game/item/constants'
     end
 
     # Virtual Game world objects, models, and helpers.
     module World
       ACTION_PRIORITIES = { HIGH: 1, MEDIUM: 2, LOW: 3 }.freeze
 
-      autoload :Instance,             'rune/legacy/game/world/instance'
-      autoload :Pipeline,             'rune/legacy/game/world/helpers/pipeline'
-      autoload :Synchronization,      'rune/legacy/game/world/helpers/synchronization'
-      autoload :Event,                'rune/legacy/game/world/event'
+      autoload :Instance,             'rune/game/world/instance'
+      autoload :Pipeline,             'rune/game/world/helpers/pipeline'
+      autoload :Synchronization,      'rune/game/world/helpers/synchronization'
+      autoload :Event,                'rune/game/world/event'
     end
 
     # Models, functions, and objects related to coordinating and mapping the virtual game world
     module Map
-      autoload :Constants,            'rune/legacy/game/map/constants'
-      autoload :Position,             'rune/legacy/game/map/position'
-      autoload :Direction,            'rune/legacy/game/map/direction'
-      autoload :Regional,             'rune/legacy/game/map/regional'
+      autoload :Constants,            'rune/game/map/constants'
+      autoload :Position,             'rune/game/map/position'
+      autoload :Direction,            'rune/game/map/direction'
+      autoload :Regional,             'rune/game/map/regional'
 
       include Constants
     end
@@ -163,77 +163,77 @@ module RuneRb
     # @return [Symbol]
     REVISION = "RS#{PROTOCOL}".to_sym
 
-    autoload :Constants,                              'rune/legacy/network/constants'
-    autoload :ISAAC,                                  'rune/legacy/network/isaac'
-    autoload :Session,                                'rune/legacy/network/session'
+    autoload :Constants,                              'rune/network/constants'
+    autoload :ISAAC,                                  'rune/network/isaac'
+    autoload :Session,                                'rune/network/session'
 
     module Helpers
-      autoload :Dispatcher,                           'rune/legacy/network/helpers/dispatcher'
-      autoload :Handshake,                            'rune/legacy/network/helpers/handshake'
-      autoload :Parser,                               'rune/legacy/network/helpers/parser'
+      autoload :Dispatcher,                           'rune/network/helpers/dispatcher'
+      autoload :Handshake,                            'rune/network/helpers/handshake'
+      autoload :Parser,                               'rune/network/helpers/parser'
     end
 
     # Messages compatible with the 317 protocol of RS.
     module RS317
-      autoload :CenterRegionMessage,            'rune/legacy/network/protocol/rs317/outgoing/center_region'
-      autoload :ClearInterfacesMessage,         'rune/legacy/network/protocol/rs317/outgoing/clear_interfaces'
-      autoload :ContextSynchronizationMessage,  'rune/legacy/network/protocol/rs317/outgoing/synchronization'
-      autoload :DisplayInterfaceMessage,        'rune/legacy/network/protocol/rs317/outgoing/interface'
-      autoload :DisplaySidebarMessage,          'rune/legacy/network/protocol/rs317/outgoing/sidebar'
-      autoload :DisplayOverlayMessage,          'rune/legacy/network/protocol/rs317/outgoing/overlay'
-      autoload :LogoutMessage,                  'rune/legacy/network/protocol/rs317/outgoing/logout'
-      autoload :MembersAndIndexMessage,         'rune/legacy/network/protocol/rs317/outgoing/membership_and_index'
-      autoload :SystemTextMessage,              'rune/legacy/network/protocol/rs317/outgoing/system_text'
-      autoload :UpdateItemsMessage,             'rune/legacy/network/protocol/rs317/outgoing/update_items'
-      autoload :UpdateSlottedItemMessage,       'rune/legacy/network/protocol/rs317/outgoing/update_slotted'
-      autoload :StatUpdateMessage,              'rune/legacy/network/protocol/rs317/outgoing/stat'
+      autoload :CenterRegionMessage,            'rune/network/protocol/rs317/outgoing/center_region'
+      autoload :ClearInterfacesMessage,         'rune/network/protocol/rs317/outgoing/clear_interfaces'
+      autoload :ContextSynchronizationMessage,  'rune/network/protocol/rs317/outgoing/synchronization'
+      autoload :DisplayInterfaceMessage,        'rune/network/protocol/rs317/outgoing/interface'
+      autoload :DisplaySidebarMessage,          'rune/network/protocol/rs317/outgoing/sidebar'
+      autoload :DisplayOverlayMessage,          'rune/network/protocol/rs317/outgoing/overlay'
+      autoload :LogoutMessage,                  'rune/network/protocol/rs317/outgoing/logout'
+      autoload :MembersAndIndexMessage,         'rune/network/protocol/rs317/outgoing/membership_and_index'
+      autoload :SystemTextMessage,              'rune/network/protocol/rs317/outgoing/system_text'
+      autoload :UpdateItemsMessage,             'rune/network/protocol/rs317/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,       'rune/network/protocol/rs317/outgoing/update_slotted'
+      autoload :StatUpdateMessage,              'rune/network/protocol/rs317/outgoing/stat'
 
-      autoload :ActionClickMessage,             'rune/legacy/network/protocol/rs317/incoming/action'
-      autoload :ArrowKeyMessage,                'rune/legacy/network/protocol/rs317/incoming/arrow'
-      autoload :ButtonClickMessage,             'rune/legacy/network/protocol/rs317/incoming/button'
-      autoload :PublicChatMessage,              'rune/legacy/network/protocol/rs317/incoming/chat'
-      autoload :MouseClickMessage,              'rune/legacy/network/protocol/rs317/incoming/click'
-      autoload :CommandMessage,                 'rune/legacy/network/protocol/rs317/incoming/command'
-      autoload :ContextDesignMessage,           'rune/legacy/network/protocol/rs317/incoming/design'
-      autoload :WindowFocusMessage,             'rune/legacy/network/protocol/rs317/incoming/focus'
-      autoload :HeartbeatMessage,               'rune/legacy/network/protocol/rs317/incoming/heartbeat'
-      autoload :MouseEventMessage,              'rune/legacy/network/protocol/rs317/incoming/mouse'
-      autoload :MovementMessage,                'rune/legacy/network/protocol/rs317/incoming/movement'
-      autoload :OptionClickMessage,             'rune/legacy/network/protocol/rs317/incoming/option'
-      autoload :PingMessage,                    'rune/legacy/network/protocol/rs317/incoming/ping'
-      autoload :SwitchItemMessage,              'rune/legacy/network/protocol/rs317/incoming/switch'
+      autoload :ActionClickMessage,             'rune/network/protocol/rs317/incoming/action'
+      autoload :ArrowKeyMessage,                'rune/network/protocol/rs317/incoming/arrow'
+      autoload :ButtonClickMessage,             'rune/network/protocol/rs317/incoming/button'
+      autoload :PublicChatMessage,              'rune/network/protocol/rs317/incoming/chat'
+      autoload :MouseClickMessage,              'rune/network/protocol/rs317/incoming/click'
+      autoload :CommandMessage,                 'rune/network/protocol/rs317/incoming/command'
+      autoload :ContextDesignMessage,           'rune/network/protocol/rs317/incoming/design'
+      autoload :WindowFocusMessage,             'rune/network/protocol/rs317/incoming/focus'
+      autoload :HeartbeatMessage,               'rune/network/protocol/rs317/incoming/heartbeat'
+      autoload :MouseEventMessage,              'rune/network/protocol/rs317/incoming/mouse'
+      autoload :MovementMessage,                'rune/network/protocol/rs317/incoming/movement'
+      autoload :OptionClickMessage,             'rune/network/protocol/rs317/incoming/option'
+      autoload :PingMessage,                    'rune/network/protocol/rs317/incoming/ping'
+      autoload :SwitchItemMessage,              'rune/network/protocol/rs317/incoming/switch'
     end
 
     # Messages compatible with the 377 protocol of RS.
     module RS377
-      autoload :CenterRegionMessage,            'rune/legacy/network/protocol/rs377/outgoing/center_region'
-      autoload :ClearInterfacesMessage,         'rune/legacy/network/protocol/rs377/outgoing/clear_interfaces'
-      autoload :ContextSynchronizationMessage,  'rune/legacy/network/protocol/rs377/outgoing/synchronization'
-      autoload :ContextStateBlock,              'rune/legacy/network/protocol/rs377/outgoing/state'
-      autoload :DisplayInterfaceMessage,        'rune/legacy/network/protocol/rs377/outgoing/interface'
-      autoload :DisplayOverlayMessage,          'rune/legacy/network/protocol/rs377/outgoing/overlay'
-      autoload :DisplaySidebarMessage,          'rune/legacy/network/protocol/rs377/outgoing/sidebar'
-      autoload :LogoutMessage,                  'rune/legacy/network/protocol/rs377/outgoing/logout'
-      autoload :MembersAndIndexMessage,         'rune/legacy/network/protocol/rs377/outgoing/membership_and_index'
-      autoload :SystemTextMessage,              'rune/legacy/network/protocol/rs377/outgoing/system_text'
-      autoload :UpdateItemsMessage,             'rune/legacy/network/protocol/rs377/outgoing/update_items'
-      autoload :UpdateSlottedItemMessage,       'rune/legacy/network/protocol/rs377/outgoing/update_slotted'
-      autoload :StatUpdateMessage,              'rune/legacy/network/protocol/rs377/outgoing/stat'
+      autoload :CenterRegionMessage,            'rune/network/protocol/rs377/outgoing/center_region'
+      autoload :ClearInterfacesMessage,         'rune/network/protocol/rs377/outgoing/clear_interfaces'
+      autoload :ContextSynchronizationMessage,  'rune/network/protocol/rs377/outgoing/synchronization'
+      autoload :ContextStateBlock,              'rune/network/protocol/rs377/outgoing/state'
+      autoload :DisplayInterfaceMessage,        'rune/network/protocol/rs377/outgoing/interface'
+      autoload :DisplayOverlayMessage,          'rune/network/protocol/rs377/outgoing/overlay'
+      autoload :DisplaySidebarMessage,          'rune/network/protocol/rs377/outgoing/sidebar'
+      autoload :LogoutMessage,                  'rune/network/protocol/rs377/outgoing/logout'
+      autoload :MembersAndIndexMessage,         'rune/network/protocol/rs377/outgoing/membership_and_index'
+      autoload :SystemTextMessage,              'rune/network/protocol/rs377/outgoing/system_text'
+      autoload :UpdateItemsMessage,             'rune/network/protocol/rs377/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,       'rune/network/protocol/rs377/outgoing/update_slotted'
+      autoload :StatUpdateMessage,              'rune/network/protocol/rs377/outgoing/stat'
 
-      autoload :ActionClickMessage,             'rune/legacy/network/protocol/rs377/incoming/action'
-      autoload :ArrowKeyMessage,                'rune/legacy/network/protocol/rs377/incoming/arrow'
-      autoload :ButtonClickMessage,             'rune/legacy/network/protocol/rs377/incoming/button'
-      autoload :PublicChatMessage,              'rune/legacy/network/protocol/rs377/incoming/chat'
-      autoload :MouseClickMessage,              'rune/legacy/network/protocol/rs377/incoming/click'
-      autoload :CommandMessage,                 'rune/legacy/network/protocol/rs377/incoming/command'
-      autoload :ContextDesignMessage,           'rune/legacy/network/protocol/rs377/incoming/design'
-      autoload :WindowFocusMessage,             'rune/legacy/network/protocol/rs377/incoming/focus'
-      autoload :HeartbeatMessage,               'rune/legacy/network/protocol/rs377/incoming/heartbeat'
-      autoload :MouseEventMessage,              'rune/legacy/network/protocol/rs377/incoming/mouse'
-      autoload :MovementMessage,                'rune/legacy/network/protocol/rs377/incoming/movement'
-      autoload :OptionClickMessage,             'rune/legacy/network/protocol/rs377/incoming/option'
-      autoload :PingMessage,                    'rune/legacy/network/protocol/rs377/incoming/ping'
-      autoload :SwitchItemMessage,              'rune/legacy/network/protocol/rs377/incoming/switch'
+      autoload :ActionClickMessage,             'rune/network/protocol/rs377/incoming/action'
+      autoload :ArrowKeyMessage,                'rune/network/protocol/rs377/incoming/arrow'
+      autoload :ButtonClickMessage,             'rune/network/protocol/rs377/incoming/button'
+      autoload :PublicChatMessage,              'rune/network/protocol/rs377/incoming/chat'
+      autoload :MouseClickMessage,              'rune/network/protocol/rs377/incoming/click'
+      autoload :CommandMessage,                 'rune/network/protocol/rs377/incoming/command'
+      autoload :ContextDesignMessage,           'rune/network/protocol/rs377/incoming/design'
+      autoload :WindowFocusMessage,             'rune/network/protocol/rs377/incoming/focus'
+      autoload :HeartbeatMessage,               'rune/network/protocol/rs377/incoming/heartbeat'
+      autoload :MouseEventMessage,              'rune/network/protocol/rs377/incoming/mouse'
+      autoload :MovementMessage,                'rune/network/protocol/rs377/incoming/movement'
+      autoload :OptionClickMessage,             'rune/network/protocol/rs377/incoming/option'
+      autoload :PingMessage,                    'rune/network/protocol/rs377/incoming/ping'
+      autoload :SwitchItemMessage,              'rune/network/protocol/rs377/incoming/switch'
     end
 
     include Constants
