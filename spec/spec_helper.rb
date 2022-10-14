@@ -14,7 +14,7 @@ SimpleCov.start
 include RSpec
 
 # Load main index file
-require_relative '../lib/rune'
+require_relative '../app/rune'
 
 # Setup environment
 RuneRb::System::Environment.init

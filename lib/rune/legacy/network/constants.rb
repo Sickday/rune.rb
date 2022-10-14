@@ -194,6 +194,23 @@ module RuneRb::Network::Constants
       }
     }.freeze
   }.freeze
+
+  # Acceptable byte orders in which multi-byte values can be read.
+  # @return [Array]
+  BYTE_ORDERS = /(?i)\bBIG|MIDDLE|INVERSE_MIDDLE|LITTLE/.freeze
+
+  # The size of one byte
+  BYTE_SIZE = 8
+
+  # Valid byte mutations
+  # @return [Hash]
+  BYTE_MUTATIONS = %i[ADD NEG SUB STD].freeze
+
+  RW_TYPES = %i[bits bit byte bytes medium int long reverse_bytes short smart string].freeze
+
+  # Bit masks for bit packing
+  # @return [Array]
+  BIT_MASK_OUT = (0...32).collect { (1 << _1) - 1 }
 end
 
 # Copyright (c) 2021, Patrick W.
