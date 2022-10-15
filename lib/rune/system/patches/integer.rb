@@ -1,5 +1,5 @@
 # A module adding overflow functions to integers to mimic the behavior of Java primitive overflow behavior.
-module RuneRb::Utils::Patches::IntegerRefinements
+module RuneRb::Patches::IntegerRefinements
 
   refine Integer do
 

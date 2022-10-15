@@ -1,4 +1,4 @@
-module RuneRb::Network
+module RuneRb::IO
   # Represents a composable/decomposable network message that is either sent or received via a TCPSocket.
   class Message
     include RuneRb::Utils::Logging
@@ -44,11 +44,11 @@ module RuneRb::Network
     # @param type [Symbol] the message type. [:VARIABLE_BYTE, :VARIABLE_SHORT, :FIXED]
     # @param body [String, StringIO, RuneRb::Network::Buffer] an optional body payload for the message.
     # @return [Message] the instance created.
-    def initialize(op_code: -1, type: :FIXED, body: RuneRb::Network::Buffer.new('rw'))
+    def initialize(op_code: -1, type: :FIXED, body: RuneRb::IO::Buffer.new('rw'))
       @header = Header.new(op_code, 0, type)
       @body = case body
-              when RuneRb::Network::Buffer then body
-              when String, StringIO then RuneRb::Network::Buffer.new('r', data: body)
+              when RuneRb::IO::Buffer then body
+              when String, StringIO then RuneRb::IO::Buffer.new('r', data: body)
               else raise "Invalid body type for message! Expecting: Buffer, StringIO, String Got: #{body.class}"
               end
       update_length

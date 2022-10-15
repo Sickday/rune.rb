@@ -2,7 +2,7 @@ require_relative 'test_helper'
 
 # Testing for RuneRb::System::Patches::IntegerRefinements refinements
 class IntegerRefinementsTest < Minitest::Test
-  using RuneRb::Utils::Patches::IntegerRefinements
+  using RuneRb::Patches::IntegerRefinements
 
   # A byte's max value according to oracle documentation:
   # https://docs.oracle.com/javase/8/docs/api/java/lang/Byte.html#MAX_VALUE

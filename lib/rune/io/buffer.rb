@@ -1,4 +1,4 @@
-module RuneRb::Network
+module RuneRb::IO
   class Buffer
     include RuneRb::Utils::Logging
 
@@ -62,9 +62,7 @@ module RuneRb::Network
 
     # @return [String] hex representation of the buffer's data.
     def hex
-      dest = ''
-      peek.each_byte { dest << "#{_1 < 16 ? '0' : ''}#{_1.to_s(16)} " }
-      dest.strip
+      peek.each_byte.inject(String.new) { |dest, byte| dest << "#{byte < 16 ? '0' : ''}#{byte.to_s(16)} " }.strip
     end
 
     private
@@ -73,17 +71,17 @@ module RuneRb::Network
     def enable_writeable
       @bit_access = false
       @bit_position = 0
-      self.singleton_class.include(RuneRb::Network::Helpers::Writeable)
+      singleton_class.include(RuneRb::IO::Helpers::Writeable)
     end
 
     # Enables Readable functions for the Message.
     def enable_readable
-      self.singleton_class.include(RuneRb::Network::Helpers::Readable)
+      singleton_class.include(RuneRb::IO::Helpers::Readable)
     end
 
     # Enables Native reading functions for the Message.
     def enable_native_readable
-      self.singleton_class.include(RuneRb::Network::Helpers::NativeReadable)
+      singleton_class.include(RuneRb::IO::Helpers::ReadableNative)
     end
 
     # Mutates the value according to the passed mutation

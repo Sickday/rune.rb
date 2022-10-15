@@ -1,10 +1,10 @@
-module RuneRb::Network::Helpers::Writeable
+module RuneRb::IO::Helpers::Writeable
 
   # Write data to the payload.
   # @param type [Symbol] the type of value to write.
   # @param value [Integer, String, Message, Array] the value to write.
   def write(value, type: :byte, mutation: :STD, order: 'BIG', options: {})
-    return unless RuneRb::Network::Helpers::Validation.validate(self, 'write', { mutation: mutation, order: order })
+    return unless RuneRb::IO::Helpers::Validation.validate(self, 'write', { mutation: mutation, order: order })
 
     case type
     when :bits then write_bits(value, options[:amount] || 1)

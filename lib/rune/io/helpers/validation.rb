@@ -1,4 +1,4 @@
-module RuneRb::Network::Helpers::Validation
+module RuneRb::IO::Helpers::Validation
   class << self
     include RuneRb::Utils::Logging
 

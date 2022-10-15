@@ -2,11 +2,11 @@
 # MDate: 10/05/2020
 
 # A module adding new functions to the String class in the form of a refinement. The functions assist when a string is used as a Stream container/buffer.
-module RuneRb::Utils::Patches::StringRefinements
+module RuneRb::Patches::StringRefinements
   VALID_CHARS = %w{_ a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 ! @ # $ % ^ & * ( ) - + = : ; . > < , " [ ] | ? / `}.freeze
 
   refine String do
-    using RuneRb::Utils::Patches::IntegerRefinements
+    using RuneRb::Patches::IntegerRefinements
 
     # returns the next byte.
     def next_byte
@@ -138,7 +138,7 @@ module RuneRb::Utils::Patches::StringRefinements
       while base37 != 0
         original = base37.signed(:long)
         base37 = (base37 / 37).signed(:long)
-        self << RuneRb::Utils::Patches::StringRefinements::VALID_CHARS[(original - base37 * 37).signed(:int)]
+        self << RuneRb::Patches::StringRefinements::VALID_CHARS[(original - base37 * 37).signed(:int)]
       end
 
       reverse!

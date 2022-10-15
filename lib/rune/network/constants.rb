@@ -1,4 +1,11 @@
 module RuneRb::Network::Constants
+  # @!attribute [r] PROTOCOL
+  # @return [Integer, String]
+  PROTOCOL = ENV['rune_PROTOCOL'] || 317
+
+  # @!attribute [r] REVISION
+  # @return [Symbol]
+  REVISION = "RS#{PROTOCOL}".to_sym
 
   # A map of valid connection types
   CONNECTION_TYPES = {
@@ -100,100 +107,100 @@ module RuneRb::Network::Constants
   }.freeze
 
   # A collection of Message templates for both the 317 and 377 protocols.
-  PROTOCOL_TEMPLATES = {
-    RS317: {
-      OUTGOING: {
-        CenterRegionMessage: RuneRb::Network::RS317::CenterRegionMessage,
-        ClearInterfacesMessage: RuneRb::Network::RS317::ClearInterfacesMessage,
-        ContextSynchronizationMessage: RuneRb::Network::RS317::ContextSynchronizationMessage,
-        DisplayInterfaceMessage: RuneRb::Network::RS317::DisplayInterfaceMessage,
-        DisplayOverlayMessage: RuneRb::Network::RS317::DisplayOverlayMessage,
-        DisplaySidebarMessage: RuneRb::Network::RS317::DisplaySidebarMessage,
-        LogoutMessage: RuneRb::Network::RS317::LogoutMessage,
-        MembersAndIndexMessage: RuneRb::Network::RS317::MembersAndIndexMessage,
-        SystemTextMessage: RuneRb::Network::RS317::SystemTextMessage,
-        UpdateItemsMessage: RuneRb::Network::RS317::UpdateItemsMessage,
-        UpdateSlottedItemMessage: RuneRb::Network::RS317::UpdateSlottedItemMessage,
-        StatUpdateMessage: RuneRb::Network::RS317::StatUpdateMessage,
-      }.freeze,
-      INCOMING: {
-        0 => RuneRb::Network::RS317::HeartbeatMessage,
-        3 => RuneRb::Network::RS317::WindowFocusMessage,
-        4 => RuneRb::Network::RS317::PublicChatMessage,
-        16 => RuneRb::Network::RS317::OptionClickMessage,
-        41 => RuneRb::Network::RS317::OptionClickMessage,
-        43 => RuneRb::Network::RS317::ActionClickMessage,
-        45 => RuneRb::Network::RS317::MouseEventMessage,
-        75 => RuneRb::Network::RS317::OptionClickMessage,
-        77 => RuneRb::Network::RS317::PingMessage,
-        78 => RuneRb::Network::RS317::PingMessage,
-        86 => RuneRb::Network::RS317::ArrowKeyMessage,
-        87 => RuneRb::Network::RS317::OptionClickMessage,
-        98 => RuneRb::Network::RS317::MovementMessage,
-        101 => RuneRb::Network::RS317::ContextDesignMessage,
-        103 => RuneRb::Network::RS317::CommandMessage,
-        117 => RuneRb::Network::RS317::ActionClickMessage,
-        121 => RuneRb::Network::RS317::PingMessage,
-        122 => RuneRb::Network::RS317::OptionClickMessage,
-        129 => RuneRb::Network::RS317::ActionClickMessage,
-        135 => RuneRb::Network::RS317::ActionClickMessage,
-        145 => RuneRb::Network::RS317::ActionClickMessage,
-        164 => RuneRb::Network::RS317::MovementMessage,
-        165 => RuneRb::Network::RS317::PingMessage,
-        185 => RuneRb::Network::RS317::ButtonClickMessage,
-        189 => RuneRb::Network::RS317::PingMessage,
-        210 => RuneRb::Network::RS317::PingMessage,
-        214 => RuneRb::Network::RS317::SwitchItemMessage,
-        226 => RuneRb::Network::RS317::PingMessage,
-        241 => RuneRb::Network::RS317::MouseClickMessage,
-        248 => RuneRb::Network::RS317::MovementMessage
-      }.freeze
-    }.freeze,
-    RS377: {
-      OUTGOING: {
-        CenterRegionMessage: RuneRb::Network::RS377::CenterRegionMessage,
-        ClearInterfacesMessage: RuneRb::Network::RS377::ClearInterfacesMessage,
-        ContextStateBlock: RuneRb::Network::RS377::ContextStateBlock,
-        ContextSynchronizationMessage: RuneRb::Network::RS377::ContextSynchronizationMessage,
-        DisplayInterfaceMessage: RuneRb::Network::RS377::DisplayInterfaceMessage,
-        DisplayOverlayMessage: RuneRb::Network::RS377::DisplayOverlayMessage,
-        DisplaySidebarMessage: RuneRb::Network::RS377::DisplaySidebarMessage,
-        LogoutMessage: RuneRb::Network::RS377::LogoutMessage,
-        MembersAndIndexMessage: RuneRb::Network::RS377::MembersAndIndexMessage,
-        SystemTextMessage: RuneRb::Network::RS377::SystemTextMessage,
-        UpdateItemsMessage: RuneRb::Network::RS377::UpdateItemsMessage,
-        UpdateSlottedItemMessage: RuneRb::Network::RS377::UpdateSlottedItemMessage,
-        StatUpdateMessage: RuneRb::Network::RS377::StatUpdateMessage,
-      }.freeze,
-      INCOMING: {
-        3 => RuneRb::Network::RS377::ActionClickMessage,
-        4 => RuneRb::Network::RS377::OptionClickMessage,
-        19 => RuneRb::Network::RS377::MouseClickMessage,
-        24 => RuneRb::Network::RS377::OptionClickMessage,
-        28 => RuneRb::Network::RS377::MovementMessage,
-        40 => RuneRb::Network::RS377::PingMessage,
-        49 => RuneRb::Network::RS377::PublicChatMessage,
-        56 => RuneRb::Network::RS377::CommandMessage,
-        79 => RuneRb::Network::RS377::ButtonClickMessage,
-        91 => RuneRb::Network::RS377::ActionClickMessage,
-        123 => RuneRb::Network::RS377::SwitchItemMessage,
-        140 => RuneRb::Network::RS377::ArrowKeyMessage,
-        158 => RuneRb::Network::RS377::ActionClickMessage,
-        161 => RuneRb::Network::RS377::OptionClickMessage,
-        163 => RuneRb::Network::RS377::ContextDesignMessage,
-        171 => RuneRb::Network::RS377::MouseEventMessage,
-        177 => RuneRb::Network::RS377::ActionClickMessage,
-        187 => RuneRb::Network::RS377::WindowFocusMessage,
-        203 => RuneRb::Network::RS377::OptionClickMessage,
-        213 => RuneRb::Network::RS377::MovementMessage,
-        228 => RuneRb::Network::RS377::OptionClickMessage,
-        231 => RuneRb::Network::RS377::ActionClickMessage,
-        244 => RuneRb::Network::RS377::PingMessage,
-        247 => RuneRb::Network::RS377::MovementMessage,
-        248 => RuneRb::Network::RS377::HeartbeatMessage
-      }
-    }.freeze
-  }.freeze
+  #PROTOCOL_TEMPLATES = {
+  #  RS317: {
+  #    OUTGOING: {
+  #      CenterRegionMessage: RuneRb::Network::RS317::CenterRegionMessage,
+  #      ClearInterfacesMessage: RuneRb::Network::RS317::ClearInterfacesMessage,
+  #      ContextSynchronizationMessage: RuneRb::Network::RS317::ContextSynchronizationMessage,
+  #      DisplayInterfaceMessage: RuneRb::Network::RS317::DisplayInterfaceMessage,
+  #      DisplayOverlayMessage: RuneRb::Network::RS317::DisplayOverlayMessage,
+  #      DisplaySidebarMessage: RuneRb::Network::RS317::DisplaySidebarMessage,
+  #      LogoutMessage: RuneRb::Network::RS317::LogoutMessage,
+  #      MembersAndIndexMessage: RuneRb::Network::RS317::MembersAndIndexMessage,
+  #      SystemTextMessage: RuneRb::Network::RS317::SystemTextMessage,
+  #      UpdateItemsMessage: RuneRb::Network::RS317::UpdateItemsMessage,
+  #      UpdateSlottedItemMessage: RuneRb::Network::RS317::UpdateSlottedItemMessage,
+  #      StatUpdateMessage: RuneRb::Network::RS317::StatUpdateMessage,
+  #    }.freeze,
+  #    INCOMING: {
+  #      0 => RuneRb::Network::RS317::HeartbeatMessage,
+  #      3 => RuneRb::Network::RS317::WindowFocusMessage,
+  #      4 => RuneRb::Network::RS317::PublicChatMessage,
+  #      16 => RuneRb::Network::RS317::OptionClickMessage,
+  #      41 => RuneRb::Network::RS317::OptionClickMessage,
+  #      43 => RuneRb::Network::RS317::ActionClickMessage,
+  #      45 => RuneRb::Network::RS317::MouseEventMessage,
+  #      75 => RuneRb::Network::RS317::OptionClickMessage,
+  #      77 => RuneRb::Network::RS317::PingMessage,
+  #      78 => RuneRb::Network::RS317::PingMessage,
+  #      86 => RuneRb::Network::RS317::ArrowKeyMessage,
+  #      87 => RuneRb::Network::RS317::OptionClickMessage,
+  #      98 => RuneRb::Network::RS317::MovementMessage,
+  #      101 => RuneRb::Network::RS317::ContextDesignMessage,
+  #      103 => RuneRb::Network::RS317::CommandMessage,
+  #      117 => RuneRb::Network::RS317::ActionClickMessage,
+  #      121 => RuneRb::Network::RS317::PingMessage,
+  #      122 => RuneRb::Network::RS317::OptionClickMessage,
+  #      129 => RuneRb::Network::RS317::ActionClickMessage,
+  #      135 => RuneRb::Network::RS317::ActionClickMessage,
+  #      145 => RuneRb::Network::RS317::ActionClickMessage,
+  #      164 => RuneRb::Network::RS317::MovementMessage,
+  #      165 => RuneRb::Network::RS317::PingMessage,
+  #      185 => RuneRb::Network::RS317::ButtonClickMessage,
+  #      189 => RuneRb::Network::RS317::PingMessage,
+  #      210 => RuneRb::Network::RS317::PingMessage,
+  #      214 => RuneRb::Network::RS317::SwitchItemMessage,
+  #      226 => RuneRb::Network::RS317::PingMessage,
+  #      241 => RuneRb::Network::RS317::MouseClickMessage,
+  #      248 => RuneRb::Network::RS317::MovementMessage
+  #    }.freeze
+  #  }.freeze,
+  #  RS377: {
+  #    OUTGOING: {
+  #      CenterRegionMessage: RuneRb::Network::RS377::CenterRegionMessage,
+  #      ClearInterfacesMessage: RuneRb::Network::RS377::ClearInterfacesMessage,
+  #      ContextStateBlock: RuneRb::Network::RS377::ContextStateBlock,
+  #      ContextSynchronizationMessage: RuneRb::Network::RS377::ContextSynchronizationMessage,
+  #      DisplayInterfaceMessage: RuneRb::Network::RS377::DisplayInterfaceMessage,
+  #      DisplayOverlayMessage: RuneRb::Network::RS377::DisplayOverlayMessage,
+  #      DisplaySidebarMessage: RuneRb::Network::RS377::DisplaySidebarMessage,
+  #     LogoutMessage: RuneRb::Network::RS377::LogoutMessage,
+  #     MembersAndIndexMessage: RuneRb::Network::RS377::MembersAndIndexMessage,
+  #     SystemTextMessage: RuneRb::Network::RS377::SystemTextMessage,
+  #     UpdateItemsMessage: RuneRb::Network::RS377::UpdateItemsMessage,
+  #     UpdateSlottedItemMessage: RuneRb::Network::RS377::UpdateSlottedItemMessage,
+  #     StatUpdateMessage: RuneRb::Network::RS377::StatUpdateMessage,
+  #   }.freeze,
+  #   INCOMING: {
+  #     3 => RuneRb::Network::RS377::ActionClickMessage,
+  #     4 => RuneRb::Network::RS377::OptionClickMessage,
+  #     19 => RuneRb::Network::RS377::MouseClickMessage,
+  #     24 => RuneRb::Network::RS377::OptionClickMessage,
+  #     28 => RuneRb::Network::RS377::MovementMessage,
+  #     40 => RuneRb::Network::RS377::PingMessage,
+  #     49 => RuneRb::Network::RS377::PublicChatMessage,
+  #     56 => RuneRb::Network::RS377::CommandMessage,
+  #     79 => RuneRb::Network::RS377::ButtonClickMessage,
+  #     91 => RuneRb::Network::RS377::ActionClickMessage,
+  #     123 => RuneRb::Network::RS377::SwitchItemMessage,
+  #     140 => RuneRb::Network::RS377::ArrowKeyMessage,
+  #     158 => RuneRb::Network::RS377::ActionClickMessage,
+  #     161 => RuneRb::Network::RS377::OptionClickMessage,
+  #     163 => RuneRb::Network::RS377::ContextDesignMessage,
+  #     171 => RuneRb::Network::RS377::MouseEventMessage,
+  #     177 => RuneRb::Network::RS377::ActionClickMessage,
+  #     187 => RuneRb::Network::RS377::WindowFocusMessage,
+  #     203 => RuneRb::Network::RS377::OptionClickMessage,
+  #     213 => RuneRb::Network::RS377::MovementMessage,
+  #     228 => RuneRb::Network::RS377::OptionClickMessage,
+  #     231 => RuneRb::Network::RS377::ActionClickMessage,
+  #     244 => RuneRb::Network::RS377::PingMessage,
+  #     247 => RuneRb::Network::RS377::MovementMessage,
+  #     248 => RuneRb::Network::RS377::HeartbeatMessage
+  #   }
+  # }.freeze
+  #}.freeze
 
   # Acceptable byte orders in which multi-byte values can be read.
   # @return [Array]

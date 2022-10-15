@@ -4,7 +4,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_byte_add_sub
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xff/2) }
 
@@ -19,7 +19,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_byte_sub_add
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xff/2) }
 
@@ -34,7 +34,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_byte_neg
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xff/2) }
 
@@ -49,7 +49,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_short_be
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffff/2) }
 
@@ -64,7 +64,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_short_le
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffff/2) }
 
@@ -79,7 +79,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_medium_be
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xfff/2) }
 
@@ -94,7 +94,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_medium_me
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xfff/2) }
 
@@ -109,7 +109,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_medium_le
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xfff/2) }
 
@@ -124,7 +124,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_int_ime
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 
@@ -139,7 +139,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_int_me
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 
@@ -154,7 +154,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_int_le
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 
@@ -169,7 +169,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_int_be
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 
@@ -184,7 +184,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_long_be
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 
@@ -199,7 +199,7 @@ class WriteableBufferTest < Minitest::Test
 
   def test_write_long_le
     rand(64).times do
-      stub_buffer = RuneRb::Network::Buffer.new('rw')
+      stub_buffer = RuneRb::IO::Buffer.new('rw')
       stub_write_record = []
       rand(0xff).times { stub_write_record << rand(0xffffffff/2) }
 

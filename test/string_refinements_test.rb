@@ -3,7 +3,7 @@ require_relative 'test_helper'
 # Test for String refinements (RuneRb::Patches::StringOverrides).
 # Ensures a String-based buffer/stream/io object behaves as expected while using my refinements.
 class StringRefinementsTest < Minitest::Test
-  using RuneRb::Utils::Patches::StringRefinements # Use the refinement object we're testing.
+  using RuneRb::Patches::StringRefinements # Use the refinement object we're testing.
 
   SIZES = { 4 => 'c', 8 => 'n', 16 => 'l', 32 => 'q' }.freeze # Pre-defined sizes for primitives we'll be working with (byte, short, integer, long) and their packing directives
   STRINGS = %w[Pat Jaime Jason Sen].freeze

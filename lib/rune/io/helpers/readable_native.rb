@@ -1,4 +1,4 @@
-module RuneRb::Network::Helpers::NativeReadable
+module RuneRb::IO::Helpers::ReadableNative
   # Read a byte value from the {Buffer#data}
   # @param signed [Boolean] should the value be signed.
   # @param mutation [String] mutation that should be applied to the byte value.

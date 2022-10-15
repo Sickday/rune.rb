@@ -1,11 +1,11 @@
-module RuneRb::Network::Helpers::Readable
-  using RuneRb::Utils::Patches::IntegerRefinements
+module RuneRb::IO::Helpers::Readable
+  using RuneRb::Patches::IntegerRefinements
 
   # Read data from the payload according to the option parameter.
   # @param type [Symbol] the type of database to read
   # @param mutation [Symbol] an option mutation to apply to the read value.
   def read(type: :byte, signed: false, mutation: :STD, order: 'BIG', options: {})
-    return unless RuneRb::Network::Helpers::Validation.validate(self, 'read', { bit_access: @bit_access, mutation: mutation, order: order })
+    return unless RuneRb::IO::Helpers::Validation.validate(self, 'read', { bit_access: @bit_access, mutation: mutation, order: order })
 
     case type
     when :bits then read_bits(options[:amount])
