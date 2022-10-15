@@ -4,7 +4,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_unsigned_byte
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_byte = stub_readable.read(type: :byte, signed: false)
 
@@ -16,7 +16,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_signed_byte
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_signed_byte = stub_readable.read(type: :byte, signed: true)
 
@@ -28,7 +28,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_unsigned_short
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_short = stub_readable.read(type: :short, signed: false)
 
@@ -40,7 +40,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_signed_short
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_signed_short = stub_readable.read(type: :short, signed: true)
 
@@ -52,7 +52,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_signed_medium
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_signed_medium = stub_readable.read(type: :medium, signed: true)
 
@@ -64,7 +64,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_unsigned_medium
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_medium = stub_readable.read(type: :medium, signed: false)
 
@@ -76,7 +76,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_unsigned_integer
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_integer = stub_readable.read(type: :int, signed: false)
 
@@ -88,7 +88,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_signed_integer
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_signed_integer = stub_readable.read(type: :int, signed: true)
 
@@ -100,7 +100,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_unsigned_long
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_long = stub_readable.read(type: :long, signed: false)
 
@@ -112,7 +112,7 @@ class ReadableBufferTest < Minitest::Test
 
   def test_read_signed_long
     rand(0xFF).times do
-      stub_readable = RuneRb::Network::Buffer.new('r')
+      stub_readable = RuneRb::IO::Buffer.new('r')
       stub_readable.push(JUNK_DATA_FACTORY.call)
       read_long = stub_readable.read(type: :long, signed: true)
 

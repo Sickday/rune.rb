@@ -14,10 +14,10 @@ SimpleCov.start
 include RSpec
 
 # Load main index file
-require_relative '../app/rune'
+require_relative '../lib/rune'
 
 # Setup environment
-RuneRb::System::Environment.init
+RuneRb::Environment.init
 
 # Useful lambdas
 JUNK_DATA_FACTORY = -> { rand(0xFF..0xFFF).times.inject('') { _1 << [rand(-0xFF..0xFF)].pack('C')}.force_encoding(Encoding::BINARY) }

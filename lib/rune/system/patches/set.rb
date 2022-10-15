@@ -1,5 +1,5 @@
 # Refinements made to the Set class of the ruby Core module.
-module RuneRb::Utils::Patches::SetRefinements
+module RuneRb::Patches::SetRefinements
   refine Set do
     # Consumes elements as they're passed to execution block.
     # @param _ [Proc] the execution block

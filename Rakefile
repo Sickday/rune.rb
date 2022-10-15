@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'rake/testtask'
 require 'bundler/setup'
 
 # Rune.rb - a gameserver written in Ruby targeting the 317/377 protocol(s) of the popular MMORPG, RuneScape.

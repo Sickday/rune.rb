@@ -4,7 +4,7 @@ require_relative 'test_helper'
 class SetRefinementsTest < Minitest::Test
 
   # Required to apply refinements in the class object's scope.
-  using RuneRb::Utils::Patches::SetRefinements
+  using RuneRb::Patches::SetRefinements
 
   # Create initial sample set
   def setup

@@ -2,15 +2,15 @@ module RuneRb::Utils::Logging
 
   # @!attribute [r] COLORS
   # @return [Pastel] provides String coloring functions.
-  COLORS = RuneRb::GLOBAL[:LOGGER].colors
+  COLORS = RuneRb::LOGGER.colors
 
   # @!attribute [r] LOG_FILE
   # @return [Logger] logger that writes to a file.
-  LOG_FILE = RuneRb::GLOBAL[:LOGGER].file
+  LOG_FILE = RuneRb::LOGGER.file
 
   # @!attribute [r] STDOUT
   # @return [Logger] logger that writes to {$stdout}.
-  LOG_STDOUT = RuneRb::GLOBAL[:LOGGER].stdout
+  LOG_STDOUT = RuneRb::LOGGER.stdout
 
   # Gets this class' name.
   def class_name
