@@ -4,7 +4,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'concurrent'
 require 'druuid'
 require 'dotenv'
-require 'eventmachine'
+require 'nio'
 require 'fileutils'
 require 'fiber'
 require 'logger'
@@ -22,6 +22,9 @@ require 'socket'
 # @author Patrick W.
 # @since 0.0.1
 module RuneRb
+  autoload :Container,                            'rune/core/component'
+  autoload :Component,                            'rune/core/component'
+
   autoload :Environment,                          'rune/system/environment'
   module IO
     autoload :Message,                            'rune/io/message'
@@ -98,19 +101,23 @@ module RuneRb
     end
   end
 
+  module Errors
+    autoload :ClientAuthenticationError,               'rune/system/errors/client_auth'
+    autoload :UnknownSocketType,                       'rune/system/errors/unknown_socket_type'
+  end
+
   module Patches
-    autoload :IntegerRefinements,                 'rune/system/patches/integer'
-    autoload :StringRefinements,                  'rune/system/patches/string'
-    autoload :SetRefinements,                     'rune/system/patches/set'
+    autoload :IntegerRefinements,                     'rune/system/patches/integer'
+    autoload :StringRefinements,                      'rune/system/patches/string'
+    autoload :SetRefinements,                         'rune/system/patches/set'
   end
 
   module Utils
-    autoload :LegacyController,    'rune/utils/controller'
+    autoload :LegacyController,                       'rune/utils/controller'
     autoload :Logging,                                'rune/utils/logging'
   end
 
   module Database
-
     # Factory objects to generate fake data using models.
     module Factories
       autoload :PlayerProfile,     'rune/database/factories/player/profile'
@@ -148,17 +155,17 @@ module RuneRb
     def self.setup_database
       db = DatabaseConfiguration.new
       case ENV['RRB_STORAGE_TYPE']
-        when 'sqlite'
-          db.player = Sequel.sqlite(ENV['RRB_PLAYER_SQLITE_PATH'] || 'data/sample-rrb-player.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
-          db.game = Sequel.sqlite(ENV['RRB_GAME_SQLITE_PATH'] || 'data/sample-rrb-game.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
-          db.system = Sequel.sqlite(ENV['RRB_SYSTEM_SQLITE_PATH'] || 'data/sample-rrb-system.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
-        when 'pg', 'postgresql', 'postgres'
-          # Model plugin for JSON serialization
-          Sequel::Model.plugin(:json_serializer)
-          db.player = db.game = db.system = Sequel.postgres(host: ENV['RRB_PG_HOST'], port: ENV['RRB_PG_PORT'],
-                                                            user: ENV['RRB_PG_USER'], password: ENV['RRB_PG_PASS'],
-                                                            database: ENV['RRB_PG_DB'], logger: RuneRb::LOG_FILE)
-        else raise TypeError, "Unknown RRB_STORAGE_TYPE! Expecting: sqlite pg postgresql postgres, Received: #{ENV['RRB_STORAGE_TYPE']}"
+      when 'sqlite'
+        db.player = Sequel.sqlite(ENV['RRB_PLAYER_SQLITE_PATH'] || 'data/sample-rrb-player.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
+        db.game = Sequel.sqlite(ENV['RRB_GAME_SQLITE_PATH'] || 'data/sample-rrb-game.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
+        db.system = Sequel.sqlite(ENV['RRB_SYSTEM_SQLITE_PATH'] || 'data/sample-rrb-system.sqlite', pragmata: :foreign_keys, logger: RuneRb::LOG_FILE)
+      when 'pg', 'postgresql', 'postgres'
+        # Model plugin for JSON serialization
+        Sequel::Model.plugin(:json_serializer)
+        db.player = db.game = db.system = Sequel.postgres(host: ENV['RRB_PG_HOST'], port: ENV['RRB_PG_PORT'],
+                                                          user: ENV['RRB_PG_USER'], password: ENV['RRB_PG_PASS'],
+                                                          database: ENV['RRB_PG_DB'], logger: RuneRb::LOG_FILE)
+      else raise TypeError, "Unknown RRB_STORAGE_TYPE! Expecting: sqlite pg postgresql postgres, Received: #{ENV['RRB_STORAGE_TYPE']}"
       end
       RuneRb.const_set(:GLOBAL_DATABASE, db)
     end
@@ -234,8 +241,10 @@ module RuneRb
   # Network-related objects, models, and helpers.
   module Network
     autoload :Constants,                              'rune/network/constants'
+    autoload :Client,                                 'rune/network/client'
     autoload :ISAAC,                                  'rune/network/isaac'
-    autoload :Session,                                'rune/network/session'
+    autoload :Gateway,                                'rune/network/gateway'
+    autoload :Server,                                 'rune/network/server'
 
     module Helpers
       autoload :Dispatcher,                           'rune/network/helpers/dispatcher'

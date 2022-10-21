@@ -10,10 +10,7 @@ namespace :rrb do
     require_relative 'lib/rune'
 
     # Initialize Rune.rb environment
-    RuneRb.init_env(fetch: true, force: true )
-
-    # Setup DB
-    RuneRb::Database.setup_database
+    RuneRb.init_env
   end
 
   desc "Clears logs from the \"data/log/\" directory"
@@ -61,6 +58,20 @@ namespace :rrb do
 
   # Testing Tasks
   namespace :test do
+
+    desc 'Launches a testing server'
+    task :launch_server do
+      require_relative 'lib/rune'
+      RuneRb::Environment.init
+
+      server = RuneRb::Network::Server.new
+      loop { server.process }
+    end
+
+    desc 'Launches a testing gateway'
+    task :launch_gateway do
+
+    end
 
     desc "Runs all specs in the \"spec/\" folder using RSpec."
     task :run_specs do

@@ -15,6 +15,11 @@ gem 'dotenv'
 # https://github.com/recurly/druuid
 gem 'druuid'
 
+# nio4r - New I/O for Ruby (nio4r): cross-platform asynchronous I/O primitives for scalable network clients and servers.
+#
+# https://github.com/socketry/nio4r
+gem 'nio4r'
+
 # EventMachine - An event-driven I/O and lightweight concurrency library for Ruby.
 #
 # https://github.com/eventmachine/eventmachine/

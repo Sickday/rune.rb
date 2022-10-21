@@ -1,30 +1,19 @@
 module RuneRb::Utils::Logging
 
-  # @!attribute [r] COLORS
-  # @return [Pastel] provides String coloring functions.
-  COLORS = RuneRb::LOGGER.colors
-
-  # @!attribute [r] LOG_FILE
-  # @return [Logger] logger that writes to a file.
-  LOG_FILE = RuneRb::LOGGER.file
-
-  # @!attribute [r] STDOUT
-  # @return [Logger] logger that writes to {$stdout}.
-  LOG_STDOUT = RuneRb::LOGGER.stdout
-
   # Gets this class' name.
   def class_name
     self.class.name.split('::').last.to_sym
   end
 
+  def condense(lines)
+    lines.is_a?(Array) ? lines.join("\n") : lines
+  end
+
   # Log info lines
-  # @param lines [Array] lines of text that are passed to the logger.
-  # @param app_name [String] the name of the application.
-  def log(*lines, app_name: @label || 'rune.rb')
-    lines.each do |line|
-      LOG_STDOUT.info(COLORS.white("[#{class_name}] -> #{line}"))
-      LOG_FILE.info(app_name) { "[#{Time.now.strftime('%H:%M')}] #{COLORS.strip(line)}" }
-    end
+  # @param lines [Array, String] lines of text that are passed to the logger.
+  def log(lines, to_stdout: true, to_file: true)
+    RuneRb::LOGGER.stdout.info(RuneRb::LOGGER.colors.white("[#{class_name}] -> #{condense(lines)}")) if to_stdout
+    RuneRb::LOGGER.file.info("[#{class_name}] -> #{condense(lines)}") if to_file
     nil
   end
 
@@ -32,12 +21,9 @@ module RuneRb::Utils::Logging
 
   # Log warning lines
   # @param lines [Array] lines of text that are passed to the RuneRb::GLOBAL[:LOGGER].
-  # @param app_name [String] the name of the application.
-  def log!(*lines, app_name: @label || 'rune.rb')
-    lines.each do |line|
-      LOG_STDOUT.warn(COLORS.yellow("[#{class_name}] -> #{line}"))
-      LOG_FILE.warn(app_name) { "[#{Time.now.strftime('%H:%M')}] #{COLORS.strip(line)}" }
-    end
+  def log!(*lines, to_stdout: true, to_file: true)
+    RuneRb::LOGGER.stdout.warn(RuneRb::LOGGER.colors.white("[#{class_name}] -> #{condense(lines)}")) if to_stdout
+    RuneRb::LOGGER.file.warn("[#{class_name}] -> #{condense(lines)}") if to_file
     nil
   end
 
@@ -46,12 +32,9 @@ module RuneRb::Utils::Logging
 
   # Log error lines
   # @param lines [Array] lines of text that are passed to the RuneRb::GLOBAL[:LOGGER].
-  # @param app_name [String] the name of the application.
-  def err(*lines, app_name: @label || 'rune.rb')
-    lines.each do |line|
-      LOG_STDOUT.error(COLORS.magenta.bold("[#{class_name}] ~> #{line}"))
-      LOG_FILE.error(app_name) { "[#{Time.now.strftime('%H:%M')}] #{COLORS.strip(line)}" }
-    end
+  def err(*lines, to_stdout: true, to_file: true)
+    RuneRb::LOGGER.stdout.error(RuneRb::LOGGER.colors.white("[#{class_name}] -> #{condense(lines)}")) if to_stdout
+    RuneRb::LOGGER.file.error("[#{class_name}] -> #{condense(lines)}") if to_file
     nil
   end
 
@@ -59,12 +42,9 @@ module RuneRb::Utils::Logging
 
   # Log fatal lines
   # @param lines [Array] lines of text that are passed to the RuneRb::GLOBAL[:LOGGER].
-  # @param app_name [String] the name of the application.
-  def err!(*lines, app_name: @label || 'rune.rb')
-    lines.each do |line|
-      LOG_STDOUT.error(COLORS.red.bold("[#{class_name}] ~> #{line}"))
-      LOG_FILE.fatal(app_name) { "[#{Time.now.strftime('%H:%M')}] #{COLORS.strip(line)}" }
-    end
+  def err!(*lines, to_stdout: true, to_file: true)
+    RuneRb::LOGGER.stdout.fatal(RuneRb::LOGGER.colors.white("[#{class_name}] -> #{condense(lines)}")) if to_stdout
+    RuneRb::LOGGER.file.fatal("[#{class_name}] -> #{condense(lines)}") if to_file
     nil
   end
 
