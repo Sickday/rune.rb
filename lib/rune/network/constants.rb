@@ -1,7 +1,7 @@
 module RuneRb::Network::Constants
   # @!attribute [r] PROTOCOL
   # @return [Integer, String]
-  PROTOCOL = ENV['rune_PROTOCOL'] || 317
+  PROTOCOL = ENV['RRB_NET_PROTOCOL']&.to_i || 317
 
   # @!attribute [r] REVISION
   # @return [Symbol]

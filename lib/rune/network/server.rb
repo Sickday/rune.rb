@@ -2,13 +2,22 @@ module RuneRb::Network
   class Server < RuneRb::Component
     include RuneRb::Utils::Logging
 
+    # @!attribute [r] gateway
+    # @return [RuneRb::Network::Gateway] the gateway
+    attr :gateway
+
     # @!attribute [r] closed
     # @return [Boolean] determines whether the server is in a closed state.
     attr :closed
 
+    # @!attribute [r] signature
+    # @return [Integer, Symbol, String] the signature for the server
+    attr :signature
+
     # Closes the Server
     def shutdown
       @clients.each_value { |client| client.disconnect(:manual) }
+      log! "Closed #{@clients.length} clients."
     ensure
       @server.close
       @closed = true
@@ -28,11 +37,15 @@ module RuneRb::Network
 
     # Create workers to handle sockets and construct a server socket.
     def setup
+      @signature = {}.tap do |sig|
+        sig[:raw] = Druuid.gen
+        sig[:seed] = sig[:raw] & (0xFFFFFFFF / 2)
+      end
       @clients ||= {}
       @server ||= TCPServer.new(ENV['RRB_NET_HOST'] || 'localhost', ENV['RRB_NET_PORT'].to_i || 43_594)
       log "Listening @ #{@server.inspect}"
 
-      @selector = NIO::Selector.new
+      @selector = NIO::Selector.new(:epoll)
       @selector.register(@server, :r).value = Fiber.new do
         loop do
           accept unless closed?
@@ -47,6 +60,7 @@ module RuneRb::Network
     # Sets a gateway object for the server to use to authenticate and balance connections.
     def use_gateway(gateway)
       @gateway = gateway
+      @gateway.register(self)
     end
 
     # Deregisters a socket from the server selector.
@@ -65,6 +79,7 @@ module RuneRb::Network
         end
       end
       @clients[socket] = RuneRb::Network::Client.new(socket, self)
+      log! "Registered new client #{@clients[socket]}!"
     end
 
     private
@@ -74,8 +89,8 @@ module RuneRb::Network
       socket = @server.accept_nonblock(exception: false)
       return unless socket.is_a?(TCPSocket)
 
-      # Pass to Gateway if one is registered
-      register(socket) # if @gateway.authenticate(socket)
+      log! 'Gateway is registered' if @gateway
+      @gateway ? @gateway.receive(socket) : register(socket)
     end
 
     # Updates a client
@@ -86,8 +101,7 @@ module RuneRb::Network
 
     # Selects readable sockets and processes them accordingly.
     def select
-      interests = @selector.select(0.600)
-      interests&.each { |monitor| monitor.value.resume }
+      @selector.select(0.001)&.each { |monitor| monitor.value.resume }
     end
 
     # Reap closed connections.

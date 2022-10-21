@@ -1,12 +1,20 @@
 module RuneRb
   class Container
+    include RuneRb::Utils::Trapping
 
     def initialize
       @components = {}
+      setup_trapping
+    end
+
+    def autorun
+      deploy
+      prepare
+      loop { run }
     end
 
     def run
-      %i[server gateway world].each {|component| component.process }
+      %i[server gateway].each { |component| @components[component].process }
     end
 
     def deploy(type = :all)
@@ -32,19 +40,25 @@ module RuneRb
       else raise ArgumentError, "Unknown component type to close, #{type}!"
       end
     end
+    alias shutdown close
 
     private
 
+    def prepare
+      @components[:server].use_gateway(@components[:gateway]) if @components.key?(:gateway)
+      @components[:world]&.use_server(@components[:server]) if @components.key?(:server)
+    end
+
     def close_world
-      @world.shutdown
+      # @components[:world].shutdown
     end
 
     def close_server
-      @server.shutdown
+      @components[:server].shutdown
     end
 
     def close_gateway
-      @gateway.shutdown
+      @components[:gateway].shutdown
     end
 
     def deploy_gateway

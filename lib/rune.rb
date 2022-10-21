@@ -22,99 +22,101 @@ require 'socket'
 # @author Patrick W.
 # @since 0.0.1
 module RuneRb
-  autoload :Container,                            'rune/core/component'
-  autoload :Component,                            'rune/core/component'
+  autoload :Container,                                  'rune/core/container'
+  autoload :Component,                                  'rune/core/component'
+  autoload :Environment,                                'rune/core/environment'
 
-  autoload :Environment,                          'rune/system/environment'
+  # In/Out-related classes, modules, and objects.
   module IO
-    autoload :Message,                            'rune/io/message'
-    autoload :Buffer,                             'rune/io/buffer'
+    autoload :Message,                                  'rune/io/message'
+    autoload :Buffer,                                   'rune/io/buffer'
 
     module Helpers
-      autoload :ReadableNative,                   'rune/io/helpers/readable_native'
-      autoload :Readable,                         'rune/io/helpers/readable'
-      autoload :Validation,                       'rune/io/helpers/validation'
-      autoload :Writeable,                        'rune/io/helpers/writeable'
+      autoload :ReadableNative,                         'rune/io/helpers/readable_native'
+      autoload :Readable,                               'rune/io/helpers/readable'
+      autoload :Validation,                             'rune/io/helpers/validation'
+      autoload :Writeable,                              'rune/io/helpers/writeable'
     end
 
     # Messages compatible with the 317 protocol of RS.
     module RS317
-      autoload :CenterRegionMessage,            'rune/network/protocol/rs317/outgoing/center_region'
-      autoload :ClearInterfacesMessage,         'rune/network/protocol/rs317/outgoing/clear_interfaces'
-      autoload :ContextSynchronizationMessage,  'rune/network/protocol/rs317/outgoing/synchronization'
-      autoload :DisplayInterfaceMessage,        'rune/network/protocol/rs317/outgoing/interface'
-      autoload :DisplaySidebarMessage,          'rune/network/protocol/rs317/outgoing/sidebar'
-      autoload :DisplayOverlayMessage,          'rune/network/protocol/rs317/outgoing/overlay'
-      autoload :LogoutMessage,                  'rune/network/protocol/rs317/outgoing/logout'
-      autoload :MembersAndIndexMessage,         'rune/network/protocol/rs317/outgoing/membership_and_index'
-      autoload :SystemTextMessage,              'rune/network/protocol/rs317/outgoing/system_text'
-      autoload :UpdateItemsMessage,             'rune/network/protocol/rs317/outgoing/update_items'
-      autoload :UpdateSlottedItemMessage,       'rune/network/protocol/rs317/outgoing/update_slotted'
-      autoload :StatUpdateMessage,              'rune/network/protocol/rs317/outgoing/stat'
+      autoload :CenterRegionMessage,                    'rune/io/protocol/rs317/outgoing/center_region'
+      autoload :ClearInterfacesMessage,                 'rune/io/protocol/rs317/outgoing/clear_interfaces'
+      autoload :ContextSynchronizationMessage,          'rune/io/protocol/rs317/outgoing/synchronization'
+      autoload :DisplayInterfaceMessage,                'rune/io/protocol/rs317/outgoing/interface'
+      autoload :DisplaySidebarMessage,                  'rune/io/protocol/rs317/outgoing/sidebar'
+      autoload :DisplayOverlayMessage,                  'rune/io/protocol/rs317/outgoing/overlay'
+      autoload :LogoutMessage,                          'rune/io/protocol/rs317/outgoing/logout'
+      autoload :MembersAndIndexMessage,                 'rune/io/protocol/rs317/outgoing/membership_and_index'
+      autoload :SystemTextMessage,                      'rune/io/protocol/rs317/outgoing/system_text'
+      autoload :UpdateItemsMessage,                     'rune/io/protocol/rs317/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,               'rune/io/protocol/rs317/outgoing/update_slotted'
+      autoload :StatUpdateMessage,                      'rune/io/protocol/rs317/outgoing/stat'
 
-      autoload :ActionClickMessage,             'rune/network/protocol/rs317/incoming/action'
-      autoload :ArrowKeyMessage,                'rune/network/protocol/rs317/incoming/arrow'
-      autoload :ButtonClickMessage,             'rune/network/protocol/rs317/incoming/button'
-      autoload :PublicChatMessage,              'rune/network/protocol/rs317/incoming/chat'
-      autoload :MouseClickMessage,              'rune/network/protocol/rs317/incoming/click'
-      autoload :CommandMessage,                 'rune/network/protocol/rs317/incoming/command'
-      autoload :ContextDesignMessage,           'rune/network/protocol/rs317/incoming/design'
-      autoload :WindowFocusMessage,             'rune/network/protocol/rs317/incoming/focus'
-      autoload :HeartbeatMessage,               'rune/network/protocol/rs317/incoming/heartbeat'
-      autoload :MouseEventMessage,              'rune/network/protocol/rs317/incoming/mouse'
-      autoload :MovementMessage,                'rune/network/protocol/rs317/incoming/movement'
-      autoload :OptionClickMessage,             'rune/network/protocol/rs317/incoming/option'
-      autoload :PingMessage,                    'rune/network/protocol/rs317/incoming/ping'
-      autoload :SwitchItemMessage,              'rune/network/protocol/rs317/incoming/switch'
+      autoload :ActionClickMessage,                     'rune/io/protocol/rs317/incoming/action'
+      autoload :ArrowKeyMessage,                        'rune/io/protocol/rs317/incoming/arrow'
+      autoload :ButtonClickMessage,                     'rune/io/protocol/rs317/incoming/button'
+      autoload :PublicChatMessage,                      'rune/io/protocol/rs317/incoming/chat'
+      autoload :MouseClickMessage,                      'rune/io/protocol/rs317/incoming/click'
+      autoload :CommandMessage,                         'rune/io/protocol/rs317/incoming/command'
+      autoload :ContextDesignMessage,                   'rune/io/protocol/rs317/incoming/design'
+      autoload :WindowFocusMessage,                     'rune/io/protocol/rs317/incoming/focus'
+      autoload :HeartbeatMessage,                       'rune/io/protocol/rs317/incoming/heartbeat'
+      autoload :MouseEventMessage,                      'rune/io/protocol/rs317/incoming/mouse'
+      autoload :MovementMessage,                        'rune/io/protocol/rs317/incoming/movement'
+      autoload :OptionClickMessage,                     'rune/io/protocol/rs317/incoming/option'
+      autoload :PingMessage,                            'rune/io/protocol/rs317/incoming/ping'
+      autoload :SwitchItemMessage,                      'rune/io/protocol/rs317/incoming/switch'
     end
 
     # Messages compatible with the 377 protocol of RS.
     module RS377
-      autoload :CenterRegionMessage,            'rune/network/protocol/rs377/outgoing/center_region'
-      autoload :ClearInterfacesMessage,         'rune/network/protocol/rs377/outgoing/clear_interfaces'
-      autoload :ContextSynchronizationMessage,  'rune/network/protocol/rs377/outgoing/synchronization'
-      autoload :ContextStateBlock,              'rune/network/protocol/rs377/outgoing/state'
-      autoload :DisplayInterfaceMessage,        'rune/network/protocol/rs377/outgoing/interface'
-      autoload :DisplayOverlayMessage,          'rune/network/protocol/rs377/outgoing/overlay'
-      autoload :DisplaySidebarMessage,          'rune/network/protocol/rs377/outgoing/sidebar'
-      autoload :LogoutMessage,                  'rune/network/protocol/rs377/outgoing/logout'
-      autoload :MembersAndIndexMessage,         'rune/network/protocol/rs377/outgoing/membership_and_index'
-      autoload :SystemTextMessage,              'rune/network/protocol/rs377/outgoing/system_text'
-      autoload :UpdateItemsMessage,             'rune/network/protocol/rs377/outgoing/update_items'
-      autoload :UpdateSlottedItemMessage,       'rune/network/protocol/rs377/outgoing/update_slotted'
-      autoload :StatUpdateMessage,              'rune/network/protocol/rs377/outgoing/stat'
+      autoload :CenterRegionMessage,            'rune/io/protocol/rs377/outgoing/center_region'
+      autoload :ClearInterfacesMessage,         'rune/io/protocol/rs377/outgoing/clear_interfaces'
+      autoload :ContextSynchronizationMessage,  'rune/io/protocol/rs377/outgoing/synchronization'
+      autoload :ContextStateBlock,              'rune/io/protocol/rs377/outgoing/state'
+      autoload :DisplayInterfaceMessage,        'rune/io/protocol/rs377/outgoing/interface'
+      autoload :DisplayOverlayMessage,          'rune/io/protocol/rs377/outgoing/overlay'
+      autoload :DisplaySidebarMessage,          'rune/io/protocol/rs377/outgoing/sidebar'
+      autoload :LogoutMessage,                  'rune/io/protocol/rs377/outgoing/logout'
+      autoload :MembersAndIndexMessage,         'rune/io/protocol/rs377/outgoing/membership_and_index'
+      autoload :SystemTextMessage,              'rune/io/protocol/rs377/outgoing/system_text'
+      autoload :UpdateItemsMessage,             'rune/io/protocol/rs377/outgoing/update_items'
+      autoload :UpdateSlottedItemMessage,       'rune/io/protocol/rs377/outgoing/update_slotted'
+      autoload :StatUpdateMessage,              'rune/io/protocol/rs377/outgoing/stat'
 
-      autoload :ActionClickMessage,             'rune/network/protocol/rs377/incoming/action'
-      autoload :ArrowKeyMessage,                'rune/network/protocol/rs377/incoming/arrow'
-      autoload :ButtonClickMessage,             'rune/network/protocol/rs377/incoming/button'
-      autoload :PublicChatMessage,              'rune/network/protocol/rs377/incoming/chat'
-      autoload :MouseClickMessage,              'rune/network/protocol/rs377/incoming/click'
-      autoload :CommandMessage,                 'rune/network/protocol/rs377/incoming/command'
-      autoload :ContextDesignMessage,           'rune/network/protocol/rs377/incoming/design'
-      autoload :WindowFocusMessage,             'rune/network/protocol/rs377/incoming/focus'
-      autoload :HeartbeatMessage,               'rune/network/protocol/rs377/incoming/heartbeat'
-      autoload :MouseEventMessage,              'rune/network/protocol/rs377/incoming/mouse'
-      autoload :MovementMessage,                'rune/network/protocol/rs377/incoming/movement'
-      autoload :OptionClickMessage,             'rune/network/protocol/rs377/incoming/option'
-      autoload :PingMessage,                    'rune/network/protocol/rs377/incoming/ping'
-      autoload :SwitchItemMessage,              'rune/network/protocol/rs377/incoming/switch'
+      autoload :ActionClickMessage,             'rune/io/protocol/rs377/incoming/action'
+      autoload :ArrowKeyMessage,                'rune/io/protocol/rs377/incoming/arrow'
+      autoload :ButtonClickMessage,             'rune/io/protocol/rs377/incoming/button'
+      autoload :PublicChatMessage,              'rune/io/protocol/rs377/incoming/chat'
+      autoload :MouseClickMessage,              'rune/io/protocol/rs377/incoming/click'
+      autoload :CommandMessage,                 'rune/io/protocol/rs377/incoming/command'
+      autoload :ContextDesignMessage,           'rune/io/protocol/rs377/incoming/design'
+      autoload :WindowFocusMessage,             'rune/io/protocol/rs377/incoming/focus'
+      autoload :HeartbeatMessage,               'rune/io/protocol/rs377/incoming/heartbeat'
+      autoload :MouseEventMessage,              'rune/io/protocol/rs377/incoming/mouse'
+      autoload :MovementMessage,                'rune/io/protocol/rs377/incoming/movement'
+      autoload :OptionClickMessage,             'rune/io/protocol/rs377/incoming/option'
+      autoload :PingMessage,                    'rune/io/protocol/rs377/incoming/ping'
+      autoload :SwitchItemMessage,              'rune/io/protocol/rs377/incoming/switch'
     end
   end
 
   module Errors
-    autoload :ClientAuthenticationError,               'rune/system/errors/client_auth'
-    autoload :UnknownSocketType,                       'rune/system/errors/unknown_socket_type'
+    autoload :ClientAuthenticationError,                'rune/system/errors/client_auth'
+    autoload :UnknownSocketType,                        'rune/system/errors/unknown_socket_type'
   end
 
   module Patches
-    autoload :IntegerRefinements,                     'rune/system/patches/integer'
-    autoload :StringRefinements,                      'rune/system/patches/string'
-    autoload :SetRefinements,                         'rune/system/patches/set'
+    autoload :IntegerRefinements,                       'rune/system/patches/integer'
+    autoload :StringRefinements,                        'rune/system/patches/string'
+    autoload :SetRefinements,                           'rune/system/patches/set'
   end
 
   module Utils
-    autoload :LegacyController,                       'rune/utils/controller'
-    autoload :Logging,                                'rune/utils/logging'
+    autoload :LegacyController,                         'rune/utils/controller'
+    autoload :Trapping,                                 'rune/utils/trapping'
+    autoload :Logging,                                  'rune/utils/logging'
   end
 
   module Database
@@ -240,16 +242,16 @@ module RuneRb
 
   # Network-related objects, models, and helpers.
   module Network
-    autoload :Constants,                              'rune/network/constants'
-    autoload :Client,                                 'rune/network/client'
-    autoload :ISAAC,                                  'rune/network/isaac'
-    autoload :Gateway,                                'rune/network/gateway'
-    autoload :Server,                                 'rune/network/server'
+    autoload :Client,                                   'rune/network/client'
+    autoload :Constants,                                'rune/network/constants'
+    autoload :ISAAC,                                    'rune/network/isaac'
+    autoload :Gateway,                                  'rune/network/gateway'
+    autoload :Server,                                   'rune/network/server'
 
     module Helpers
-      autoload :Dispatcher,                           'rune/network/helpers/dispatcher'
-      autoload :Handshake,                            'rune/network/helpers/handshake'
-      autoload :Parser,                               'rune/network/helpers/parser'
+      autoload :Authentication,                         'rune/network/helpers/auth'
+      autoload :Dispatcher,                             'rune/network/helpers/dispatcher'
+      autoload :Parser,                                 'rune/network/helpers/parser'
     end
 
     include Constants

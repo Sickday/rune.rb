@@ -6,11 +6,9 @@ require 'bundler/setup'
 # @author Pat W.
 namespace :rrb do
 
-  task :init_env do
+  task :init do
     require_relative 'lib/rune'
-
-    # Initialize Rune.rb environment
-    RuneRb.init_env
+    RuneRb::Environment.init
   end
 
   desc "Clears logs from the \"data/log/\" directory"
@@ -60,17 +58,22 @@ namespace :rrb do
   namespace :test do
 
     desc 'Launches a testing server'
-    task :launch_server do
-      require_relative 'lib/rune'
-      RuneRb::Environment.init
-
+    task launch_server: %w[rrb:init] do
       server = RuneRb::Network::Server.new
       loop { server.process }
     end
 
-    desc 'Launches a testing gateway'
-    task :launch_gateway do
+    desc 'Launches a testing server with a gateway'
+    task launch_gateway: %w[rrb:init] do
+      server = RuneRb::Network::Server.new
+      gateway = RuneRb::Network::Gateway.new
+      server.use_gateway(gateway)
+      loop { server.process }
+    end
 
+    task launch_container: %w[rrb:init] do
+      container = RuneRb::Container.new
+      container.autorun
     end
 
     desc "Runs all specs in the \"spec/\" folder using RSpec."

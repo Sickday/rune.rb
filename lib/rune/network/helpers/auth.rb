@@ -1,13 +1,19 @@
 module RuneRb::Network::Helpers::Authentication
 
-  # @!attribute [r] auth_queue
-  # @param [Hash] a queue of buffers awaiting authentication
-  attr :auth_queue
+  def valid_connection?(type)
+    RuneRb::Network::CONNECTION_TYPES.value?(type)
+  end
 
-  # Attempts to authenticate a session for a specific world target
-  # @param source [TCPSocket] the source socket to authenticate.
-  def authenticate(source)
+  def valid_handshake?(block)
+    return false unless valid_op_code?(block[:op_code])
+    return false unless valid_protocol?(block[:protocol])
+    return false unless valid_magic?(block[:magic])
+
     true
+  end
+  # Performs authentication on the passed socket.
+  # @param socket [TCPSocket] the socket to authenticate.
+  def authenticate(client)
     #profile = RuneRb::Database::PlayerProfile.fetch_profile(session.handshake[:credentials].username)
     #return unless valid?(session, profile, target, profile.nil?)
 
@@ -16,53 +22,7 @@ module RuneRb::Network::Helpers::Authentication
     #session.stage = :logged_in
   end
 
-
-  # Queues a socket for authentication.
-  # @param socket [TCPSocket] the socket to queue
-  def queue_socket(socket)
-  end
-
   private
-
-  # Checks if a session, it's requested profile, and the world requested are all valid
-  # @param session  [RuneRb::Network::Session] the session to validate
-  # @param profile [RuneRb::Database::PlayerProfile] the requested profile
-  # @param target [RuneRb::Game::World::Instance] the target world instance
-  # @param first_time [Boolean] is this a first time auth request?
-  def valid?(session, profile, target, first_time)
-    return reject(:BANNED_ACCOUNT, session) unless first_time || valid_banned_status?(profile)
-    return reject(:REJECTED_SESSION, session) unless valid_op_code?(session.handshake[:op_code])
-    return reject(:REJECTED_SESSION, session) unless valid_magic?(session.handshake[:magic])
-    return reject(:INVALID_REVISION, session) unless valid_revision?(session.handshake[:protocol])
-    return reject(:BAD_SESSION_ID, session) unless valid_seed?(session.cipher[:seed], session.handshake[:seed].raw_seed)
-    return reject(:BAD_CREDENTIALS, session) unless first_time || valid_credentials?(session.handshake[:credentials], profile)
-    return reject(:WORLD_OFFLINE, session) unless valid_availability?(target)
-    return reject(:WORLD_IS_FULL, session) unless valid_capacity?(target)
-    return reject(:CONFLICTING_SESSION, session) unless first_time || valid_profile?(profile, target)
-
-    accept(session, profile, first_time)
-  end
-
-  # Accept a {RuneRb::Network::Session}
-  # @param session [RuneRb::Network::Session] the session to accept.
-  # @param profile [RuneRb::Database::PlayerProfile] the profile requested by the session.
-  # @param first [Boolean] is this a first time login?
-  def accept(session, profile, first)
-    session.write_message(:RAW, data: [RuneRb::Network::LOGIN_RESPONSES[:SUCCESS], first ? 0 : profile.attributes.rights, 0].pack('ccc'))
-    log COLORS.green("Accepted Session with signature #{session.sig}!")
-    session.stage = :authenticated
-    true
-  end
-
-  # Rejects a {RuneRb::Network::Session}.
-  # @param reason [Symbol] the reason to reject the session.
-  # @param session [RuneRb::Network::Session] the session to reject.
-  def reject(reason, session)
-    session.write_message(:RAW, data: [RuneRb::Network::LOGIN_RESPONSES[reason]].pack('C'))
-    session.disconnect(:authentication)
-    log! COLORS.red("Rejected Session with signature #{session.sig}!")
-    false
-  end
 
   # Checks if a session's login block op_code is valid.
   # @param op_code [Integer] the integer
@@ -104,7 +64,7 @@ module RuneRb::Network::Helpers::Authentication
   # Checks if a session's revision is supported by the application.
   # @param protocol [Integer] the protocol received during handshake.
   # @api private
-  def valid_revision?(protocol)
+  def valid_protocol?(protocol)
     unless RuneRb::Network::PROTOCOL == protocol
       err "Unsupported Protocol! [Expected: #{RuneRb::Network::PROTOCOL}, Received: #{protocol}]"
       return false
